@@ -1,0 +1,378 @@
+/* 
+ * Danish Parliament API Documentation - Custom Styles
+ * 
+ * Branding based on Danish flag colors and parliamentary design
+ * Primary: Red (#C60C30 - Danish red)
+ * Secondary: White (#FFFFFF)
+ * Accent: Dark red for hover states
+ */
+
+:root {
+  /* Danish Parliament Color Palette */
+  --md-primary-fg-color: #C60C30;        /* Danish red */
+  --md-primary-fg-color--light: #E23A5C; /* Lighter Danish red */
+  --md-primary-fg-color--dark: #9C091F;  /* Darker Danish red */
+  --md-accent-fg-color: #C60C30;         /* Same as primary */
+  --md-accent-fg-color--transparent: rgba(198, 12, 48, 0.1);
+  
+  /* Custom highlights for API documentation */
+  --api-success-color: #2E7D32;          /* Green for success examples */
+  --api-warning-color: #F57C00;          /* Orange for warnings */
+  --api-error-color: #D32F2F;            /* Red for errors */
+  --api-info-color: #1976D2;             /* Blue for info */
+  
+  /* Code syntax highlighting enhancements */
+  --code-bg-light: #f8f9fa;
+  --code-bg-dark: #2d3748;
+}
+
+/* Header customization */
+.md-header {
+  background: linear-gradient(135deg, var(--md-primary-fg-color) 0%, var(--md-primary-fg-color--dark) 100%);
+}
+
+.md-header__title {
+  font-weight: 600;
+}
+
+/* Navigation customization */
+.md-tabs__item {
+  font-weight: 500;
+}
+
+.md-tabs__item:hover {
+  background-color: var(--md-accent-fg-color--transparent);
+}
+
+/* API Status Widget Styles */
+.api-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1rem 0;
+  padding: 1rem;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 8px;
+  border-left: 4px solid var(--md-primary-fg-color);
+}
+
+.api-status .status-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  min-width: 100px;
+}
+
+.api-status .status-indicator {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-bottom: 0.5rem;
+}
+
+.api-status .status-indicator.online {
+  background-color: var(--api-success-color);
+  box-shadow: 0 0 6px rgba(46, 125, 50, 0.5);
+  animation: pulse 2s infinite;
+}
+
+.api-status .status-number {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--md-primary-fg-color);
+  margin-bottom: 0.25rem;
+}
+
+.api-status .status-label {
+  font-size: 0.9rem;
+  color: var(--md-default-fg-color--light);
+}
+
+.api-status .status-text {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--api-success-color);
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+/* Enhanced code block styling */
+.highlight {
+  border-radius: 6px;
+  border-left: 4px solid var(--md-primary-fg-color);
+}
+
+.highlight .filename {
+  background-color: var(--md-primary-fg-color);
+  color: white;
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin: -1rem -1rem 1rem -1rem;
+  border-radius: 6px 6px 0 0;
+}
+
+/* API endpoint styling */
+.api-endpoint {
+  background-color: var(--code-bg-light);
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 4px;
+  padding: 0.5rem;
+  font-family: var(--md-code-font);
+  font-size: 0.9rem;
+  margin: 0.5rem 0;
+}
+
+[data-md-color-scheme="slate"] .api-endpoint {
+  background-color: var(--code-bg-dark);
+  border-color: var(--md-default-fg-color--lighter);
+}
+
+.api-endpoint.get {
+  border-left: 4px solid var(--api-success-color);
+}
+
+.api-endpoint.post {
+  border-left: 4px solid var(--api-info-color);
+}
+
+.api-endpoint.error {
+  border-left: 4px solid var(--api-error-color);
+}
+
+/* Enhanced admonitions for API documentation */
+.md-typeset .admonition.api-note {
+  border-color: var(--api-info-color);
+}
+
+.md-typeset .admonition.api-warning {
+  border-color: var(--api-warning-color);
+}
+
+.md-typeset .admonition.api-critical {
+  border-color: var(--api-error-color);
+  background-color: rgba(211, 47, 47, 0.05);
+}
+
+.md-typeset .admonition.api-success {
+  border-color: var(--api-success-color);
+  background-color: rgba(46, 125, 50, 0.05);
+}
+
+/* Entity relationship diagram styling */
+.entity-diagram {
+  background: white;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+  text-align: center;
+}
+
+[data-md-color-scheme="slate"] .entity-diagram {
+  background: var(--md-default-bg-color--light);
+  border-color: var(--md-default-fg-color--lighter);
+}
+
+/* Quick reference tables */
+.quick-ref-table {
+  margin: 1rem 0;
+}
+
+.quick-ref-table table {
+  font-size: 0.9rem;
+}
+
+.quick-ref-table th {
+  background-color: var(--md-primary-fg-color);
+  color: white;
+  font-weight: 600;
+}
+
+.quick-ref-table tr:nth-child(even) {
+  background-color: rgba(198, 12, 48, 0.03);
+}
+
+/* Interactive query builder placeholder */
+.query-builder {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border: 2px dashed var(--md-primary-fg-color);
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center;
+  margin: 1rem 0;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.query-builder h3 {
+  color: var(--md-primary-fg-color);
+  margin-bottom: 1rem;
+}
+
+.query-builder p {
+  color: var(--md-default-fg-color--light);
+  margin-bottom: 0;
+}
+
+/* Responsive design for mobile */
+@media screen and (max-width: 768px) {
+  .api-status {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .api-status .status-item {
+    margin-bottom: 1rem;
+  }
+  
+  .api-endpoint {
+    font-size: 0.8rem;
+    word-break: break-all;
+  }
+  
+  /* Enhanced table scrolling on mobile */
+  .md-typeset table:not([class]) {
+    font-size: 0.8rem;
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  .quick-ref-table table {
+    font-size: 0.75rem;
+  }
+  
+  /* Better code block handling on mobile */
+  .md-typeset .codehilite,
+  .md-typeset .highlight {
+    margin: 1rem -1rem;
+    border-radius: 0;
+  }
+  
+  .md-typeset .codehilite code,
+  .md-typeset .highlight code {
+    font-size: 0.7rem;
+    line-height: 1.4;
+  }
+  
+  /* Optimize navigation for mobile */
+  .md-tabs__item {
+    font-size: 0.9rem;
+    padding: 0.5rem;
+  }
+  
+  /* Better search on mobile */
+  .md-search__form {
+    width: 100%;
+  }
+  
+  /* Optimize admonitions for mobile */
+  .md-typeset .admonition {
+    margin: 1rem -1rem;
+    border-radius: 0;
+  }
+}
+
+/* Additional mobile breakpoint for very small screens */
+@media screen and (max-width: 480px) {
+  .api-status .status-number {
+    font-size: 1.2rem;
+  }
+  
+  .api-status .status-label,
+  .api-status .status-text {
+    font-size: 0.8rem;
+  }
+  
+  /* Even smaller code on very small screens */
+  .md-typeset .codehilite code,
+  .md-typeset .highlight code {
+    font-size: 0.65rem;
+  }
+  
+  /* Optimize table display for very small screens */
+  .md-typeset table:not([class]) {
+    font-size: 0.7rem;
+  }
+  
+  .quick-ref-table table {
+    font-size: 0.65rem;
+  }
+  
+  .quick-ref-table th,
+  .quick-ref-table td {
+    padding: 0.3rem 0.5rem;
+  }
+}
+
+/* Landscape orientation optimization */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+  .md-typeset .codehilite code,
+  .md-typeset .highlight code {
+    font-size: 0.75rem;
+  }
+}
+
+/* Print styles */
+@media print {
+  .api-status,
+  .query-builder {
+    background: white !important;
+    border: 1px solid #ccc !important;
+  }
+  
+  .highlight .filename {
+    background: #ccc !important;
+    color: black !important;
+  }
+}
+
+/* Custom scrollbar for code blocks */
+.md-typeset .codehilite::-webkit-scrollbar,
+.md-typeset .highlight::-webkit-scrollbar {
+  height: 8px;
+}
+
+.md-typeset .codehilite::-webkit-scrollbar-thumb,
+.md-typeset .highlight::-webkit-scrollbar-thumb {
+  background-color: var(--md-primary-fg-color);
+  border-radius: 4px;
+}
+
+.md-typeset .codehilite::-webkit-scrollbar-track,
+.md-typeset .highlight::-webkit-scrollbar-track {
+  background-color: var(--md-default-fg-color--lightest);
+  border-radius: 4px;
+}
+
+/* Footer customization */
+.md-footer {
+  background: linear-gradient(135deg, var(--md-primary-fg-color--dark) 0%, var(--md-primary-fg-color) 100%);
+}
+
+/* Search results enhancement */
+.md-search-result__article {
+  border-left: 3px solid var(--md-primary-fg-color);
+}
+
+/* Back to top button customization */
+.md-top {
+  background-color: var(--md-primary-fg-color);
+  box-shadow: 0 2px 8px rgba(198, 12, 48, 0.3);
+}
+
+.md-top:hover {
+  background-color: var(--md-primary-fg-color--dark);
+  transform: scale(1.1);
+  transition: all 0.2s ease;
+}

@@ -1,0 +1,328 @@
+site_name: Danish Parliament API Documentation
+site_description: Comprehensive documentation for Denmark's Parliamentary Open Data API (oda.ft.dk) - the world's gold standard for government transparency APIs
+site_url: https://brokk-sindre.github.io/ft-oda-documentation/
+repo_url: https://github.com/Brokk-Sindre/ft-oda-documentation
+repo_name: Brokk-Sindre/ft-oda-documentation
+
+theme:
+  name: material
+  custom_dir: docs/overrides
+  palette:
+    # Light mode (Danish flag colors)
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: red
+      accent: red
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: red
+      accent: red
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.path
+    - navigation.indexes
+    - toc.follow
+    - navigation.top
+    - navigation.instant
+    - navigation.instant.prefetch
+    - search.highlight
+    - search.share
+    - search.suggest
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+    - content.action.edit
+    - content.action.view
+    - header.autohide
+  
+  language: en
+  
+  font:
+    text: Roboto
+    code: Roboto Mono
+  
+  favicon: assets/images/favicon.png
+  logo: assets/images/logo.png
+
+plugins:
+  - search:
+      lang: 
+        - en
+        - da
+  - git-revision-date-localized:
+      enable_creation_date: true
+      type: datetime
+  # - social:  # Disabled until logo is added
+  #     cards: true
+  - minify:
+      minify_html: true
+      minify_js: true
+      minify_css: true
+  # - sitemap:  # Built into MkDocs core now
+  #     map_filename: sitemap.xml
+  #     pretty: true
+  #     use_directory_urls: true
+  # - redirects:  # Optional plugin, removing for now
+  #     redirect_maps: {}
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+      combine_header_slug: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+      use_pygments: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets:
+      check_paths: true
+  - attr_list
+  - md_in_html
+  - tables
+  - def_list
+  - footnotes
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+  - toc:
+      permalink: true
+
+extra:
+  analytics:
+    provider: google
+    property: G-XXXXXXXXXX  # Replace with actual GA4 property
+    feedback:
+      title: Was this page helpful?
+      ratings:
+        - icon: material/thumb-up-outline
+          name: This page was helpful
+          data: 1
+          note: Thanks for your feedback!
+        - icon: material/thumb-down-outline
+          name: This page could be improved
+          data: 0
+          note: Thanks for your feedback! Help us improve by <a href="https://github.com/yourusername/ft/issues/new" target="_blank" rel="noopener">opening an issue</a>.
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/yourusername/ft
+    - icon: fontawesome/solid/globe
+      link: https://oda.ft.dk/
+    - icon: fontawesome/solid/envelope
+      link: mailto:folketinget@ft.dk
+  version:
+    provider: mike
+    default: stable
+  generator: false
+  consent:
+    title: Cookie consent
+    description: >- 
+      We use cookies to recognize your repeated visits and preferences, as well
+      as to measure the effectiveness of our documentation and whether users
+      find what they're searching for. With your consent, you're helping us to
+      make our documentation better.
+
+extra_css:
+  - assets/css/extra.css
+
+extra_javascript:
+  - assets/js/interactive.js
+
+nav:
+  - Home: index.md
+  - Getting Started:
+    - getting-started/index.md
+    - First Query: getting-started/first-query.md
+    - No Authentication: getting-started/no-auth.md
+    - URL Encoding: getting-started/url-encoding.md
+    - Common Mistakes: getting-started/common-mistakes.md
+  - API Reference:
+    - api-reference/index.md
+    - Entities:
+      - api-reference/entities/index.md
+      - Core:
+        - Cases (Sag): api-reference/entities/core/sag.md
+        - Actors (Aktør): api-reference/entities/core/aktor.md
+        - Voting (Afstemning): api-reference/entities/core/afstemning.md
+        - Individual Votes (Stemme): api-reference/entities/core/stemme.md
+      - Documents:
+        - Documents (Dokument): api-reference/entities/documents/dokument.md
+        - Files (Fil): api-reference/entities/documents/fil.md
+      - Meetings:
+        - Meetings (Møde): api-reference/entities/meetings/mode.md
+      - Junction Tables:
+        - api-reference/entities/junction-tables/index.md
+        - Case-Actor (SagAktør): api-reference/entities/junction-tables/sag-aktor.md
+        - Document-Actor (DokumentAktør): api-reference/entities/junction-tables/dokument-aktor.md
+      - Empty Entities:
+        - EU Cases (EUSag): api-reference/entities/empty-entities/eusag.md
+        - Joint Treatments: api-reference/entities/empty-entities/sambehandlinger.md
+    - OData Protocol:
+      - api-reference/odata/index.md
+      - Filters ($filter): api-reference/odata/filters.md
+      - Expansion ($expand): api-reference/odata/expansion.md
+      - Pagination ($top/$skip): api-reference/odata/pagination.md
+      - Ordering ($orderby): api-reference/odata/ordering.md
+      - Selection ($select): api-reference/odata/selection.md
+      - Unsupported Features: api-reference/odata/unsupported.md
+    - Error Handling:
+      - api-reference/errors/index.md
+      - HTTP Status Codes: api-reference/errors/http-codes.md
+      - Silent Failures: api-reference/errors/silent-failures.md
+      - Troubleshooting: api-reference/errors/troubleshooting.md
+    - Performance:
+      - api-reference/performance/index.md
+      - Response Times: api-reference/performance/response-times.md
+      - Query Limits: api-reference/performance/query-limits.md
+      - Optimization: api-reference/performance/optimization.md
+  - Code Examples:
+    - code-examples/index.md
+    - Python:
+      - code-examples/python/index.md
+      - Basic Client: code-examples/python/basic-client.md
+      - Pagination: code-examples/python/pagination.md
+      - Error Handling: code-examples/python/error-handling.md
+      - Async Client: code-examples/python/async-client.md
+    - JavaScript:
+      - code-examples/javascript/index.md
+      - Fetch Client: code-examples/javascript/fetch-client.md
+      - Pagination: code-examples/javascript/pagination.md
+      - Browser Usage: code-examples/javascript/browser-usage.md
+    - TypeScript:
+      - code-examples/typescript/index.md
+      - Type Definitions: code-examples/typescript/types.md
+      - Type-Safe Client: code-examples/typescript/client.md
+    - cURL:
+      - code-examples/curl/index.md
+      - Basic Queries: code-examples/curl/basic-queries.md
+      - Testing: code-examples/curl/testing.md
+    - Interactive:
+      - code-examples/live-examples/index.md
+      - Query Builder: code-examples/live-examples/query-builder.md
+      - Response Viewer: code-examples/live-examples/response-viewer.md
+  - Use Case Guides:
+    - guides/index.md
+    - Voting Analysis:
+      - guides/voting-analysis/index.md
+      - Politician Votes: guides/voting-analysis/politician-votes.md
+      - Party Analysis: guides/voting-analysis/party-analysis.md
+      - Voting Patterns: guides/voting-analysis/voting-patterns.md
+    - Legislative Tracking:
+      - guides/legislative-tracking/index.md
+      - Case Progress: guides/legislative-tracking/case-progress.md
+      - Document Flow: guides/legislative-tracking/document-flow.md
+      - Committee Work: guides/legislative-tracking/committee-work.md
+    - Real-Time Monitoring:
+      - guides/real-time-monitoring/index.md
+      - Change Detection: guides/real-time-monitoring/change-detection.md
+      - Daily Updates: guides/real-time-monitoring/daily-updates.md
+      - Polling Strategies: guides/real-time-monitoring/polling-strategies.md
+    - Advanced Analysis:
+      - guides/advanced-analysis/index.md
+      - Network Analysis: guides/advanced-analysis/network-analysis.md
+      - Timeline Analysis: guides/advanced-analysis/timeline-analysis.md
+      - Data Mining: guides/advanced-analysis/data-mining.md
+  - Data Model:
+    - data-model/index.md
+    - Entity Relationships: data-model/entity-relationships.md
+    - Classification Systems:
+      - data-model/classification-systems/index.md
+      - Actor Types: data-model/classification-systems/actor-types.md
+      - Case Types: data-model/classification-systems/case-types.md
+      - Case Status: data-model/classification-systems/case-status.md
+      - Vote Types: data-model/classification-systems/vote-types.md
+      - Document Types: data-model/classification-systems/document-types.md
+    - Role Systems:
+      - data-model/role-systems/index.md
+      - Case-Actor Roles: data-model/role-systems/case-actor-roles.md
+      - Document-Actor Roles: data-model/role-systems/document-actor-roles.md
+      - Other Roles: data-model/role-systems/other-roles.md
+    - Parliamentary Process:
+      - data-model/parliamentary-process/index.md
+      - Legislative Flow: data-model/parliamentary-process/legislative-flow.md
+      - Committee System: data-model/parliamentary-process/committee-system.md
+      - Voting Procedures: data-model/parliamentary-process/voting-procedures.md
+  - Production:
+    - production/index.md
+    - Architecture:
+      - production/architecture/index.md
+      - Scaling: production/architecture/scaling.md
+      - Caching: production/architecture/caching.md
+      - Monitoring: production/architecture/monitoring.md
+    - Security:
+      - production/security/index.md
+      - HTTPS/TLS: production/security/https-tls.md
+      - No Authentication: production/security/no-auth.md
+      - Rate Limiting: production/security/rate-limiting.md
+    - Performance:
+      - production/performance/index.md
+      - Query Optimization: production/performance/query-optimization.md
+      - Pagination Strategies: production/performance/pagination-strategies.md
+      - Concurrent Requests: production/performance/concurrent-requests.md
+    - Troubleshooting:
+      - production/troubleshooting/index.md
+      - Common Errors: production/troubleshooting/common-errors.md
+      - Diagnostic Commands: production/troubleshooting/diagnostic-commands.md
+      - Support: production/troubleshooting/support.md
+  - Compliance:
+    - compliance/index.md
+    - GDPR:
+      - compliance/gdpr/index.md
+      - Personal Data: compliance/gdpr/personal-data.md
+      - Data Subject Rights: compliance/gdpr/data-subject-rights.md
+      - Lawful Basis: compliance/gdpr/lawful-basis.md
+    - Licensing:
+      - compliance/licensing/index.md
+      - Terms of Service: compliance/licensing/terms-of-service.md
+      - Attribution: compliance/licensing/attribution.md
+    - Data Quality:
+      - compliance/data-quality/index.md
+      - Freshness: compliance/data-quality/freshness.md
+      - Completeness: compliance/data-quality/completeness.md
+      - Integrity: compliance/data-quality/integrity.md
+  - Appendix:
+    - appendix/index.md
+    - Investigation:
+      - appendix/investigation/index.md
+      - Methodology: appendix/investigation/methodology.md
+      - Findings: appendix/investigation/findings.md
+    - Historical Coverage:
+      - appendix/historical-coverage/index.md
+      - Periods: appendix/historical-coverage/periods.md
+      - Data Migration: appendix/historical-coverage/data-migration.md
+    - Comparison:
+      - appendix/comparison/index.md
+      - OData Versions: appendix/comparison/odata-versions.md
+      - Similar APIs: appendix/comparison/similar-apis.md
+    - Changelog:
+      - appendix/changelog/index.md
+      - API Changes: appendix/changelog/api-changes.md
+      - Version History: appendix/changelog/version-history.md
+  - Feedback: feedback.md
+
+copyright: Copyright &copy; 2025 Danish Parliament API Documentation Project
