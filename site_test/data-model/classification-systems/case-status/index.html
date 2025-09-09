@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../../img/favicon.ico">
+        <title>Case Status System (Sagsstatus) - Test</title>
+        <link href="../../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../../css/brands.min.css" rel="stylesheet">
+        <link href="../../../css/solid.min.css" rel="stylesheet">
+        <link href="../../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../../..">Test</a>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#case-status-system-sagsstatus" class="nav-link">Case Status System (Sagsstatus)</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#overview" class="nav-link">Overview</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#complete-sagsstatus-reference" class="nav-link">Complete Sagsstatus Reference</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#status-categories" class="nav-link">Status Categories</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#parliamentary-process-flow" class="nav-link">Parliamentary Process Flow</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#query-examples" class="nav-link">Query Examples</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#data-analysis-insights" class="nav-link">Data Analysis Insights</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#conclusion" class="nav-link">Conclusion</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="case-status-system-sagsstatus">Case Status System (Sagsstatus)</h1>
+<p>The Sagsstatus system provides the most granular case lifecycle tracking of any parliamentary API worldwide. With <strong>68 distinct status values</strong>, it captures every stage of the Danish parliamentary process from initial proposal to final resolution.</p>
+<h2 id="overview">Overview</h2>
+<p>Each case (Sag) in the Danish Parliament has a current status that precisely describes its position in the parliamentary process. These statuses represent decades of refinement in parliamentary procedure tracking and provide unprecedented insight into legislative workflows.</p>
+<p><strong>Key Statistics:</strong>
+- <strong>68 distinct status values</strong> - Most granular parliamentary status system globally
+- <strong>Complete process coverage</strong> - From proposal to final decision
+- <strong>Historical consistency</strong> - Status semantics maintained across decades
+- <strong>Real-time updates</strong> - Status changes reflected within hours</p>
+<h2 id="complete-sagsstatus-reference">Complete Sagsstatus Reference</h2>
+<h3 id="proposal-and-initial-stages">Proposal and Initial Stages</h3>
+<h4 id="1-afsluttet-completedfinished">1. Afsluttet (Completed/Finished)</h4>
+<p><strong>ID:</strong> 1, 47<br />
+<strong>English:</strong> Completed/Finished<br />
+<strong>Context:</strong> Case has reached its final conclusion<br />
+<strong>Usage:</strong> Terminal status for cases that have completed their parliamentary journey<br />
+<strong>Note:</strong> Appears at IDs 1 and 47 - may represent different completion contexts</p>
+<h4 id="6-anmeldt-announcednotified">6. Anmeldt (Announced/Notified)</h4>
+<p><strong>ID:</strong> 6, 22, 52<br />
+<strong>English:</strong> Announced/Notified<br />
+<strong>Context:</strong> Case has been formally announced or notified to the parliament<br />
+<strong>Usage:</strong> Early stage in the parliamentary process, formal notification<br />
+<strong>Note:</strong> Multiple IDs may represent different announcement contexts</p>
+<h4 id="24-fremsat-proposedintroduced">24. Fremsat (Proposed/Introduced)</h4>
+<p><strong>ID:</strong> 24, 25<br />
+<strong>English:</strong> Proposed/Introduced<br />
+<strong>Context:</strong> Bill or proposal has been formally introduced to parliament<br />
+<strong>Usage:</strong> Standard entry point for legislative proposals<br />
+<strong>Note:</strong> Critical status marking formal introduction</p>
+<h4 id="26-fremsathenvist-til-udvalg-proposedreferred-to-committee">26. Fremsat/henvist til udvalg (Proposed/Referred to Committee)</h4>
+<p><strong>ID:</strong> 26<br />
+<strong>English:</strong> Proposed/Referred to Committee<br />
+<strong>Context:</strong> Proposal introduced and immediately referred to committee consideration<br />
+<strong>Usage:</strong> Combined action showing proposal and committee referral</p>
+<h3 id="parliamentary-readings">Parliamentary Readings</h3>
+<h4 id="28-1-behhenvist-til-udvalg-1st-readingreferred-to-committee">28. 1. beh./Henvist til udvalg (1st Reading/Referred to Committee)</h4>
+<p><strong>ID:</strong> 28<br />
+<strong>English:</strong> 1st Reading/Referred to Committee<br />
+<strong>Context:</strong> First reading completed, case referred to committee for detailed consideration<br />
+<strong>Usage:</strong> Standard progression after initial parliamentary consideration</p>
+<h4 id="55-1-behdirekte-til-2-beh-1st-readingdirect-to-2nd-reading">55. 1. beh./Direkte til 2. beh. (1st Reading/Direct to 2nd Reading)</h4>
+<p><strong>ID:</strong> 55<br />
+<strong>English:</strong> 1st Reading/Direct to 2nd Reading<br />
+<strong>Context:</strong> First reading completed, proceeding directly to second reading without committee phase<br />
+<strong>Usage:</strong> Fast-track procedure for certain case types</p>
+<h4 id="60-1-beh-afbrudtudsat-1st-reading-interruptedpostponed">60. 1. beh. afbrudt/udsat (1st Reading Interrupted/Postponed)</h4>
+<p><strong>ID:</strong> 60<br />
+<strong>English:</strong> 1st Reading Interrupted/Postponed<br />
+<strong>Context:</strong> First reading process was interrupted or postponed<br />
+<strong>Usage:</strong> Temporary suspension during initial consideration</p>
+<h4 id="61-1-beh-afbrudthenvist-til-udvalg-1st-reading-interruptedreferred-to-committee">61. 1. beh. afbrudt/henvist til udvalg (1st Reading Interrupted/Referred to Committee)</h4>
+<p><strong>ID:</strong> 61<br />
+<strong>English:</strong> 1st Reading Interrupted/Referred to Committee<br />
+<strong>Context:</strong> First reading interrupted with committee referral<br />
+<strong>Usage:</strong> Procedural adjustment during initial consideration</p>
+<h4 id="29-2-beh-afbrudthenvist-til-udvalg-2nd-reading-interruptedreferred-to-committee">29. 2. beh. afbrudt/henvist til udvalg (2nd Reading Interrupted/Referred to Committee)</h4>
+<p><strong>ID:</strong> 29<br />
+<strong>English:</strong> 2nd Reading Interrupted/Referred to Committee<br />
+<strong>Context:</strong> Second reading interrupted, additional committee consideration needed<br />
+<strong>Usage:</strong> Mid-process committee referral</p>
+<h4 id="32-2-behdirekte-til-3-beh-2nd-readingdirect-to-3rd-reading">32. 2. beh./Direkte til 3. beh. (2nd Reading/Direct to 3rd Reading)</h4>
+<p><strong>ID:</strong> 32<br />
+<strong>English:</strong> 2nd Reading/Direct to 3rd Reading<br />
+<strong>Context:</strong> Second reading completed, proceeding directly to final reading<br />
+<strong>Usage:</strong> Standard progression in legislative process</p>
+<h4 id="33-2-behhenvist-til-udvalg-2nd-readingreferred-to-committee">33. 2. beh./Henvist til udvalg (2nd Reading/Referred to Committee)</h4>
+<p><strong>ID:</strong> 33<br />
+<strong>English:</strong> 2nd Reading/Referred to Committee<br />
+<strong>Context:</strong> Second reading completed, referred back to committee<br />
+<strong>Usage:</strong> Additional committee consideration after second reading</p>
+<h4 id="58-2-beh-afbrudtudsat-2nd-reading-interruptedpostponed">58. 2. beh. afbrudt/udsat (2nd Reading Interrupted/Postponed)</h4>
+<p><strong>ID:</strong> 58<br />
+<strong>English:</strong> 2nd Reading Interrupted/Postponed<br />
+<strong>Context:</strong> Second reading process interrupted or postponed<br />
+<strong>Usage:</strong> Temporary suspension during second consideration</p>
+<h4 id="53-3-beh-afbrudthenvist-til-udvalg-3rd-reading-interruptedreferred-to-committee">53. 3. beh. afbrudt/henvist til udvalg (3rd Reading Interrupted/Referred to Committee)</h4>
+<p><strong>ID:</strong> 53<br />
+<strong>English:</strong> 3rd Reading Interrupted/Referred to Committee<br />
+<strong>Context:</strong> Final reading interrupted, committee referral needed<br />
+<strong>Usage:</strong> Last-minute committee consideration</p>
+<h4 id="66-3-beh-afbrudtudsat-3rd-reading-interruptedpostponed">66. 3. beh. afbrudt/udsat (3rd Reading Interrupted/Postponed)</h4>
+<p><strong>ID:</strong> 66<br />
+<strong>English:</strong> 3rd Reading Interrupted/Postponed<br />
+<strong>Context:</strong> Final reading interrupted or postponed<br />
+<strong>Usage:</strong> Temporary suspension during final consideration</p>
+<h3 id="committee-process">Committee Process</h3>
+<h4 id="19-betnkning-afgivet-report-submitted">19. Bet�nkning afgivet (Report Submitted)</h4>
+<p><strong>ID:</strong> 19<br />
+<strong>English:</strong> Report Submitted<br />
+<strong>Context:</strong> Committee has completed its consideration and submitted its report<br />
+<strong>Usage:</strong> Key milestone in committee process</p>
+<h4 id="31-tillgsbetnkning-afgivet-supplementary-report-submitted">31. Till�gsbet�nkning afgivet (Supplementary Report Submitted)</h4>
+<p><strong>ID:</strong> 31<br />
+<strong>English:</strong> Supplementary Report Submitted<br />
+<strong>Context:</strong> Committee provides additional report beyond initial consideration<br />
+<strong>Usage:</strong> Additional committee input during legislative process</p>
+<h4 id="42-beretning-afgivet-statement-submitted">42. Beretning afgivet (Statement Submitted)</h4>
+<p><strong>ID:</strong> 42<br />
+<strong>English:</strong> Statement Submitted<br />
+<strong>Context:</strong> Committee or other body submits formal statement<br />
+<strong>Usage:</strong> Administrative or informational submission</p>
+<h4 id="68-forhandlet-i-udvalgdelegation-negotiated-in-committeedelegation">68. Forhandlet i udvalg/delegation (Negotiated in Committee/Delegation)</h4>
+<p><strong>ID:</strong> 68<br />
+<strong>English:</strong> Negotiated in Committee/Delegation<br />
+<strong>Context:</strong> Case has been subject to negotiations in committee or delegation<br />
+<strong>Usage:</strong> Indicates collaborative consideration process</p>
+<h3 id="voting-and-decisions">Voting and Decisions</h3>
+<h4 id="10-vedtaget-adoptedpassed">10. Vedtaget (Adopted/Passed)</h4>
+<p><strong>ID:</strong> 10, 17, 57<br />
+<strong>English:</strong> Adopted/Passed<br />
+<strong>Context:</strong> Case has been formally adopted by parliamentary vote<br />
+<strong>Usage:</strong> Positive conclusion to legislative process<br />
+<strong>Note:</strong> Multiple IDs for different adoption contexts</p>
+<h4 id="3-forkastet-rejected">3. Forkastet (Rejected)</h4>
+<p><strong>ID:</strong> 3, 35, 64<br />
+<strong>English:</strong> Rejected<br />
+<strong>Context:</strong> Case has been rejected by parliamentary vote<br />
+<strong>Usage:</strong> Negative conclusion to legislative process<br />
+<strong>Note:</strong> Multiple IDs for different rejection contexts</p>
+<h4 id="16-2-behforkastet-2nd-readingrejected">16. 2. beh./Forkastet (2nd Reading/Rejected)</h4>
+<p><strong>ID:</strong> 16<br />
+<strong>English:</strong> 2nd Reading/Rejected<br />
+<strong>Context:</strong> Case rejected during second reading<br />
+<strong>Usage:</strong> Rejection at specific parliamentary stage</p>
+<h4 id="37-3-behforkastet-3rd-readingrejected">37. 3. beh./Forkastet (3rd Reading/Rejected)</h4>
+<p><strong>ID:</strong> 37<br />
+<strong>English:</strong> 3rd Reading/Rejected<br />
+<strong>Context:</strong> Case rejected during final reading<br />
+<strong>Usage:</strong> Rejection at final stage</p>
+<h4 id="38-1-eneste-behandlingforkastet-1st-only-readingrejected">38. 1. (eneste) behandling/Forkastet (1st (Only) Reading/Rejected)</h4>
+<p><strong>ID:</strong> 38<br />
+<strong>English:</strong> 1st (Only) Reading/Rejected<br />
+<strong>Context:</strong> Case rejected in single reading procedure<br />
+<strong>Usage:</strong> Rejection in simplified process</p>
+<h4 id="39-2-behvedtaget-2nd-readingadopted">39. 2. beh/Vedtaget (2nd Reading/Adopted)</h4>
+<p><strong>ID:</strong> 39<br />
+<strong>English:</strong> 2nd Reading/Adopted<br />
+<strong>Context:</strong> Case adopted during second reading<br />
+<strong>Usage:</strong> Adoption at specific parliamentary stage</p>
+<h4 id="41-3behvedtaget-3rd-readingadopted">41. 3.beh./Vedtaget (3rd Reading/Adopted)</h4>
+<p><strong>ID:</strong> 41<br />
+<strong>English:</strong> 3rd Reading/Adopted<br />
+<strong>Context:</strong> Case adopted during final reading<br />
+<strong>Usage:</strong> Adoption at final stage</p>
+<h4 id="34-eneste-behandlingvedtaget-single-readingadopted">34. Eneste behandling/Vedtaget (Single Reading/Adopted)</h4>
+<p><strong>ID:</strong> 34<br />
+<strong>English:</strong> Single Reading/Adopted<br />
+<strong>Context:</strong> Case adopted in single reading procedure<br />
+<strong>Usage:</strong> Adoption in simplified process</p>
+<h4 id="59-1-eneste-behandlingvedtaget-1st-only-readingadopted">59. 1. (eneste) behandling/Vedtaget (1st (Only) Reading/Adopted)</h4>
+<p><strong>ID:</strong> 59<br />
+<strong>English:</strong> 1st (Only) Reading/Adopted<br />
+<strong>Context:</strong> Case adopted in single reading procedure<br />
+<strong>Usage:</strong> Adoption in simplified process</p>
+<h4 id="11-stadfstet-confirmedratified">11. Stadf�stet (Confirmed/Ratified)</h4>
+<p><strong>ID:</strong> 11<br />
+<strong>English:</strong> Confirmed/Ratified<br />
+<strong>Context:</strong> Case has been officially confirmed or ratified<br />
+<strong>Usage:</strong> Final confirmation after adoption</p>
+<h3 id="process-states">Process States</h3>
+<h4 id="8-igangvrende-ongoingin-progress">8. Igangv�rende (Ongoing/In Progress)</h4>
+<p><strong>ID:</strong> 8, 54<br />
+<strong>English:</strong> Ongoing/In Progress<br />
+<strong>Context:</strong> Case is currently being processed<br />
+<strong>Usage:</strong> Active status during parliamentary consideration<br />
+<strong>Note:</strong> Multiple IDs for different ongoing contexts</p>
+<h4 id="5-forhandlet-negotiated">5. Forhandlet (Negotiated)</h4>
+<p><strong>ID:</strong> 5<br />
+<strong>English:</strong> Negotiated<br />
+<strong>Context:</strong> Case has been subject to negotiations<br />
+<strong>Usage:</strong> Indicates collaborative consideration</p>
+<h4 id="56-forhandling-afsluttet-negotiation-completed">56. Forhandling afsluttet (Negotiation Completed)</h4>
+<p><strong>ID:</strong> 56<br />
+<strong>English:</strong> Negotiation Completed<br />
+<strong>Context:</strong> Negotiation process has concluded<br />
+<strong>Usage:</strong> End of collaborative consideration phase</p>
+<h4 id="36-behandlet-processed">36. Behandlet (Processed)</h4>
+<p><strong>ID:</strong> 36<br />
+<strong>English:</strong> Processed<br />
+<strong>Context:</strong> Case has been processed according to procedure<br />
+<strong>Usage:</strong> General processing completion</p>
+<h4 id="49-skal-forhandles-to-be-negotiated">49. Skal forhandles (To Be Negotiated)</h4>
+<p><strong>ID:</strong> 49<br />
+<strong>English:</strong> To Be Negotiated<br />
+<strong>Context:</strong> Case scheduled for negotiation<br />
+<strong>Usage:</strong> Planned negotiation status</p>
+<h4 id="30-henstende-pending">30. Henst�ende (Pending)</h4>
+<p><strong>ID:</strong> 30<br />
+<strong>English:</strong> Pending<br />
+<strong>Context:</strong> Case is waiting for further action<br />
+<strong>Usage:</strong> Suspension pending additional requirements</p>
+<h3 id="administrative-actions">Administrative Actions</h3>
+<h4 id="2-afgivet-submitted">2. Afgivet (Submitted)</h4>
+<p><strong>ID:</strong> 2<br />
+<strong>English:</strong> Submitted<br />
+<strong>Context:</strong> Case has been formally submitted<br />
+<strong>Usage:</strong> Administrative submission status</p>
+<h4 id="4-tilbagetaget-withdrawn">4. Tilbagetaget (Withdrawn)</h4>
+<p><strong>ID:</strong> 4<br />
+<strong>English:</strong> Withdrawn<br />
+<strong>Context:</strong> Case has been withdrawn by proposer<br />
+<strong>Usage:</strong> Voluntary removal from parliamentary consideration</p>
+<h4 id="13-bortfaldet-lapsed">13. Bortfaldet (Lapsed)</h4>
+<p><strong>ID:</strong> 13<br />
+<strong>English:</strong> Lapsed<br />
+<strong>Context:</strong> Case has lapsed due to procedural requirements or time limits<br />
+<strong>Usage:</strong> Automatic termination due to procedural failure</p>
+<h4 id="48-2-behbortfaldet-2nd-readinglapsed">48. 2. beh./Bortfaldet (2nd Reading/Lapsed)</h4>
+<p><strong>ID:</strong> 48<br />
+<strong>English:</strong> 2nd Reading/Lapsed<br />
+<strong>Context:</strong> Case lapsed during second reading process<br />
+<strong>Usage:</strong> Specific stage lapse</p>
+<h4 id="9-udget-expired">9. Udg�et (Expired)</h4>
+<p><strong>ID:</strong> 9<br />
+<strong>English:</strong> Expired<br />
+<strong>Context:</strong> Case has expired according to parliamentary rules<br />
+<strong>Usage:</strong> Time-based termination</p>
+<h4 id="40-delt-divided">40. Delt (Divided)</h4>
+<p><strong>ID:</strong> 40<br />
+<strong>English:</strong> Divided<br />
+<strong>Context:</strong> Case has been divided into separate components<br />
+<strong>Usage:</strong> Procedural division for complex cases</p>
+<h4 id="67-optaget-taken-upadopted">67. Optaget (Taken Up/Adopted)</h4>
+<p><strong>ID:</strong> 67<br />
+<strong>English:</strong> Taken Up/Adopted<br />
+<strong>Context:</strong> Case has been formally taken up for consideration<br />
+<strong>Usage:</strong> Administrative acceptance for processing</p>
+<h3 id="question-and-answer-process">Question and Answer Process</h3>
+<h4 id="20-besvaret-endeligt-answered-finally">20. Besvaret, endeligt (Answered, Finally)</h4>
+<p><strong>ID:</strong> 20<br />
+<strong>English:</strong> Answered, Finally<br />
+<strong>Context:</strong> Question has received final answer<br />
+<strong>Usage:</strong> Terminal status for parliamentary questions</p>
+<h4 id="50-besvaret-forelbigt-answered-preliminarily">50. Besvaret, forel�bigt (Answered, Preliminarily)</h4>
+<p><strong>ID:</strong> 50<br />
+<strong>English:</strong> Answered, Preliminarily<br />
+<strong>Context:</strong> Question has received preliminary answer<br />
+<strong>Usage:</strong> Interim status for parliamentary questions</p>
+<h4 id="62-sprgsml-afvist-question-rejected">62. Sp�rgsm�l afvist (Question Rejected)</h4>
+<p><strong>ID:</strong> 62<br />
+<strong>English:</strong> Question Rejected<br />
+<strong>Context:</strong> Parliamentary question has been rejected<br />
+<strong>Usage:</strong> Negative outcome for question procedures</p>
+<h4 id="65-afvist-rejected">65. Afvist (Rejected)</h4>
+<p><strong>ID:</strong> 65<br />
+<strong>English:</strong> Rejected<br />
+<strong>Context:</strong> General rejection status<br />
+<strong>Usage:</strong> Administrative rejection</p>
+<h3 id="meeting-and-schedule-status">Meeting and Schedule Status</h3>
+<h4 id="18-afholdt-held">18. Afholdt (Held)</h4>
+<p><strong>ID:</strong> 18<br />
+<strong>English:</strong> Held<br />
+<strong>Context:</strong> Meeting or session has been held<br />
+<strong>Usage:</strong> Completion status for scheduled events</p>
+<h4 id="43-aflyst-cancelled">43. Aflyst (Cancelled)</h4>
+<p><strong>ID:</strong> 43<br />
+<strong>English:</strong> Cancelled<br />
+<strong>Context:</strong> Scheduled meeting or session has been cancelled<br />
+<strong>Usage:</strong> Cancellation of planned events</p>
+<h3 id="special-procedures">Special Procedures</h3>
+<h4 id="21-tiltrdt-endorsedjoined">21. Tiltr�dt (Endorsed/Joined)</h4>
+<p><strong>ID:</strong> 21<br />
+<strong>English:</strong> Endorsed/Joined<br />
+<strong>Context:</strong> Case has been endorsed or joined by additional parties<br />
+<strong>Usage:</strong> Collaborative support indication</p>
+<h4 id="27-taget-til-efterretning-notedacknowledged">27. Taget til efterretning (Noted/Acknowledged)</h4>
+<p><strong>ID:</strong> 27<br />
+<strong>English:</strong> Noted/Acknowledged<br />
+<strong>Context:</strong> Case has been formally noted or acknowledged<br />
+<strong>Usage:</strong> Administrative acknowledgment</p>
+<h4 id="44-stedfortrder-godkendt-deputy-approved">44. Stedfortr�der godkendt (Deputy Approved)</h4>
+<p><strong>ID:</strong> 44<br />
+<strong>English:</strong> Deputy Approved<br />
+<strong>Context:</strong> Deputy appointment has been approved<br />
+<strong>Usage:</strong> Specific to deputy appointment procedures</p>
+<h4 id="51-godkendt-orlov-approved-leave">51. Godkendt orlov (Approved Leave)</h4>
+<p><strong>ID:</strong> 51<br />
+<strong>English:</strong> Approved Leave<br />
+<strong>Context:</strong> Leave request has been approved<br />
+<strong>Usage:</strong> Specific to leave application procedures</p>
+<h4 id="46-ophr-anmeldt-termination-announced">46. Oph�r anmeldt (Termination Announced)</h4>
+<p><strong>ID:</strong> 46<br />
+<strong>English:</strong> Termination Announced<br />
+<strong>Context:</strong> Termination or end has been announced<br />
+<strong>Usage:</strong> Administrative termination notice</p>
+<h4 id="45-afventer-opflgning-awaiting-follow-up">45. Afventer opf�lgning (Awaiting Follow-up)</h4>
+<p><strong>ID:</strong> 45<br />
+<strong>English:</strong> Awaiting Follow-up<br />
+<strong>Context:</strong> Case is awaiting follow-up action<br />
+<strong>Usage:</strong> Suspension pending additional action</p>
+<h3 id="general-administrative">General Administrative</h3>
+<h4 id="7-fremmet-advancedpromoted">7. Fremmet (Advanced/Promoted)</h4>
+<p><strong>ID:</strong> 7<br />
+<strong>English:</strong> Advanced/Promoted<br />
+<strong>Context:</strong> Case has been advanced in the process<br />
+<strong>Usage:</strong> Procedural advancement</p>
+<h4 id="12-ingen-forhandling-no-negotiation">12. Ingen forhandling (No Negotiation)</h4>
+<p><strong>ID:</strong> 12<br />
+<strong>English:</strong> No Negotiation<br />
+<strong>Context:</strong> Case proceeds without negotiation phase<br />
+<strong>Usage:</strong> Direct processing without collaborative consideration</p>
+<h4 id="14-foretaget-undertaken">14. Foretaget (Undertaken)</h4>
+<p><strong>ID:</strong> 14<br />
+<strong>English:</strong> Undertaken<br />
+<strong>Context:</strong> Action has been undertaken<br />
+<strong>Usage:</strong> Administrative action completion</p>
+<h4 id="15-forelbig-preliminary">15. Forel�big (Preliminary)</h4>
+<p><strong>ID:</strong> 15, 63<br />
+<strong>English:</strong> Preliminary<br />
+<strong>Context:</strong> Preliminary status or action<br />
+<strong>Usage:</strong> Interim status before final determination</p>
+<h4 id="23-ikke-afgjort-not-decided">23. Ikke afgjort (Not Decided)</h4>
+<p><strong>ID:</strong> 23<br />
+<strong>English:</strong> Not Decided<br />
+<strong>Context:</strong> Case remains undecided<br />
+<strong>Usage:</strong> Pending decision status</p>
+<h2 id="status-categories">Status Categories</h2>
+<h3 id="terminal-statuses-process-complete">Terminal Statuses (Process Complete)</h3>
+<ul>
+<li><strong>Vedtaget</strong> (Adopted) - IDs 10, 17, 34, 39, 41, 57, 59</li>
+<li><strong>Forkastet</strong> (Rejected) - IDs 3, 16, 35, 37, 38, 64</li>
+<li><strong>Afsluttet</strong> (Completed) - IDs 1, 47</li>
+<li><strong>Stadf�stet</strong> (Confirmed) - ID 11</li>
+<li><strong>Besvaret, endeligt</strong> (Answered Finally) - ID 20</li>
+<li><strong>Tilbagetaget</strong> (Withdrawn) - ID 4</li>
+<li><strong>Bortfaldet</strong> (Lapsed) - IDs 13, 48</li>
+<li><strong>Udg�et</strong> (Expired) - ID 9</li>
+</ul>
+<h3 id="active-process-statuses">Active Process Statuses</h3>
+<ul>
+<li><strong>Igangv�rende</strong> (Ongoing) - IDs 8, 54</li>
+<li><strong>Fremsat</strong> (Proposed) - IDs 24, 25, 26</li>
+<li><strong>Henvist til udvalg</strong> (Referred to Committee) - Multiple IDs</li>
+<li><strong>Behandles</strong> (Being Processed) - Multiple reading stages</li>
+</ul>
+<h3 id="administrative-statuses">Administrative Statuses</h3>
+<ul>
+<li><strong>Anmeldt</strong> (Announced) - IDs 6, 22, 52</li>
+<li><strong>Afgivet</strong> (Submitted) - ID 2</li>
+<li><strong>Optaget</strong> (Taken Up) - ID 67</li>
+<li><strong>Behandlet</strong> (Processed) - ID 36</li>
+</ul>
+<h3 id="question-specific-statuses">Question-Specific Statuses</h3>
+<ul>
+<li><strong>Besvaret</strong> (Answered) - IDs 20, 50</li>
+<li><strong>Sp�rgsm�l afvist</strong> (Question Rejected) - ID 62</li>
+</ul>
+<h2 id="parliamentary-process-flow">Parliamentary Process Flow</h2>
+<pre><code class="language-mermaid">flowchart TD
+    %% Initial Stages
+    A[📋 Anmeldt&lt;br/&gt;Announced&lt;br/&gt;ID: 6,22,52] --&gt; B[📝 Fremsat&lt;br/&gt;Proposed&lt;br/&gt;ID: 24,25,26]
+
+    %% Administrative Actions
+    B --&gt; C{Process Route?}
+    C --&gt;|Standard| D[🗣️ 1. behandling&lt;br/&gt;1st Reading]
+    C --&gt;|Emergency| E[⚡ Direkte til 2. beh.&lt;br/&gt;Direct to 2nd Reading&lt;br/&gt;ID: 55]
+    C --&gt;|Withdrawn| F[❌ Tilbagetaget&lt;br/&gt;Withdrawn&lt;br/&gt;ID: 4]
+
+    %% First Reading Outcomes
+    D --&gt; G{1st Reading Result?}
+    G --&gt;|Committee Referral| H[🏛️ Henvist til udvalg&lt;br/&gt;Referred to Committee&lt;br/&gt;ID: 28]
+    G --&gt;|Rejected| I[❌ 1. beh. Forkastet&lt;br/&gt;1st Reading Rejected&lt;br/&gt;ID: 38]
+    G --&gt;|Interrupted| J[⏸️ 1. beh. afbrudt&lt;br/&gt;1st Reading Interrupted&lt;br/&gt;ID: 60,61]
+    G --&gt;|Direct to 2nd| K[⏩ Direkte til 2. beh.&lt;br/&gt;Direct to 2nd Reading&lt;br/&gt;ID: 55]
+
+    %% Committee Process
+    H --&gt; L[📊 Igangvaerende&lt;br/&gt;Committee Work&lt;br/&gt;ID: 8,54]
+    L --&gt; M[📋 Betaenkning afgivet&lt;br/&gt;Report Submitted&lt;br/&gt;ID: 19]
+    L --&gt; N[📄 Tillaegsbetaenkning&lt;br/&gt;Supplementary Report&lt;br/&gt;ID: 31]
+    L --&gt; O[📝 Beretning afgivet&lt;br/&gt;Statement Submitted&lt;br/&gt;ID: 42]
+
+    %% Negotiation Process
+    L --&gt; P[🤝 Forhandlet i udvalg&lt;br/&gt;Negotiated in Committee&lt;br/&gt;ID: 68]
+    P --&gt; Q[✅ Forhandling afsluttet&lt;br/&gt;Negotiation Completed&lt;br/&gt;ID: 56]
+
+    %% Committee Reports to Second Reading
+    M --&gt; R[🗣️ 2. behandling&lt;br/&gt;2nd Reading]
+    N --&gt; R
+    O --&gt; R
+    Q --&gt; R
+
+    %% Second Reading Outcomes  
+    R --&gt; S{2nd Reading Result?}
+    S --&gt;|Pass to 3rd| T[⏩ Direkte til 3. beh.&lt;br/&gt;Direct to 3rd Reading&lt;br/&gt;ID: 32]
+    S --&gt;|Back to Committee| U[↩️ Henvist til udvalg&lt;br/&gt;Back to Committee&lt;br/&gt;ID: 33]
+    S --&gt;|Rejected| V[❌ 2. beh. Forkastet&lt;br/&gt;2nd Reading Rejected&lt;br/&gt;ID: 16]
+    S --&gt;|Interrupted| W[⏸️ 2. beh. afbrudt&lt;br/&gt;2nd Reading Interrupted&lt;br/&gt;ID: 29,58]
+    S --&gt;|Adopted| X[✅ 2. beh. Vedtaget&lt;br/&gt;2nd Reading Adopted&lt;br/&gt;ID: 39]
+
+    %% Third Reading Process
+    T --&gt; Y[🗣️ 3. behandling&lt;br/&gt;3rd Reading]
+    X --&gt; Y
+
+    %% Third Reading Outcomes
+    Y --&gt; Z{3rd Reading Result?}
+    Z --&gt;|Adopted| AA[✅ 3. beh. Vedtaget&lt;br/&gt;3rd Reading Adopted&lt;br/&gt;ID: 41]
+    Z --&gt;|Rejected| BB[❌ 3. beh. Forkastet&lt;br/&gt;3rd Reading Rejected&lt;br/&gt;ID: 37]
+    Z --&gt;|Interrupted| CC[⏸️ 3. beh. afbrudt&lt;br/&gt;3rd Reading Interrupted&lt;br/&gt;ID: 53,66]
+    Z --&gt;|Back to Committee| DD[↩️ Henvist til udvalg&lt;br/&gt;Back to Committee&lt;br/&gt;ID: 53]
+
+    %% Final Outcomes
+    AA --&gt; EE[🎉 Vedtaget&lt;br/&gt;Final Adoption&lt;br/&gt;ID: 10,17,57]
+    EE --&gt; FF[⚖️ Stadfoestet&lt;br/&gt;Confirmed/Ratified&lt;br/&gt;ID: 11]
+
+    %% Single Reading Process
+    K --&gt; GG[🗣️ Eneste behandling&lt;br/&gt;Single Reading]
+    GG --&gt; HH{Single Reading Result?}
+    HH --&gt;|Adopted| II[✅ Eneste beh. Vedtaget&lt;br/&gt;Single Reading Adopted&lt;br/&gt;ID: 34,59]
+    HH --&gt;|Rejected| JJ[❌ Eneste beh. Forkastet&lt;br/&gt;Single Reading Rejected&lt;br/&gt;ID: 38]
+
+    %% Process Failures
+    D --&gt; KK[💤 Bortfaldet&lt;br/&gt;Lapsed&lt;br/&gt;ID: 13,48]
+    R --&gt; KK
+    L --&gt; KK
+
+    %% Administrative Completions
+    H --&gt; LL[📄 Behandlet&lt;br/&gt;Processed&lt;br/&gt;ID: 36]
+    BB --&gt; MM[🏁 Afsluttet&lt;br/&gt;Completed&lt;br/&gt;ID: 1,47]
+    V --&gt; MM
+    I --&gt; MM
+    JJ --&gt; MM
+
+    %% Question Process Branch
+    B --&gt; NN[❓ Spoergsmaal&lt;br/&gt;Question Process]
+    NN --&gt; OO[📝 Besvaret foreloebigt&lt;br/&gt;Preliminary Answer&lt;br/&gt;ID: 50]
+    OO --&gt; PP[✅ Besvaret endeligt&lt;br/&gt;Final Answer&lt;br/&gt;ID: 20]
+    NN --&gt; QQ[❌ Spoergsmaal afvist&lt;br/&gt;Question Rejected&lt;br/&gt;ID: 62]
+
+    %% Special Procedures
+    B --&gt; RR[👥 Meeting Process]
+    RR --&gt; SS[📅 Afholdt&lt;br/&gt;Meeting Held&lt;br/&gt;ID: 18]
+    RR --&gt; TT[❌ Aflyst&lt;br/&gt;Meeting Cancelled&lt;br/&gt;ID: 43]
+
+    %% Administrative Special Cases
+    B --&gt; UU[📋 Taget til efterretning&lt;br/&gt;Noted&lt;br/&gt;ID: 27]
+    B --&gt; VV[🤝 Tiltrådt&lt;br/&gt;Endorsed&lt;br/&gt;ID: 21]
+    B --&gt; WW[✅ Godkendt orlov&lt;br/&gt;Approved Leave&lt;br/&gt;ID: 51]
+    B --&gt; XX[👤 Stedfortraeder godkendt&lt;br/&gt;Deputy Approved&lt;br/&gt;ID: 44]
+
+    %% Styling
+    style AA fill:#c8e6c9
+    style II fill:#c8e6c9
+    style FF fill:#c8e6c9
+    style PP fill:#c8e6c9
+    style BB fill:#ffcdd2
+    style V fill:#ffcdd2
+    style I fill:#ffcdd2
+    style JJ fill:#ffcdd2
+    style QQ fill:#ffcdd2
+    style F fill:#fff3e0
+    style KK fill:#f3e5f5
+    style J fill:#e3f2fd
+    style W fill:#e3f2fd
+    style CC fill:#e3f2fd
+</code></pre>
+<h2 id="query-examples">Query Examples</h2>
+<h3 id="status-based-filtering">Status-Based Filtering</h3>
+<pre><code class="language-bash"># Find all adopted cases
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=sagstatusid%20in%20(10,17,34,39,41,57,59)&amp;%24expand=Sagsstatus&quot;
+
+# Find ongoing cases
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=sagstatusid%20in%20(8,54)&amp;%24expand=Sagsstatus&quot;
+
+# Find cases in committee
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=sagstatusid%20in%20(19,28,31,33,61,68)&amp;%24expand=Sagsstatus&quot;
+</code></pre>
+<h3 id="process-analysis">Process Analysis</h3>
+<pre><code class="language-bash"># Track legislative process progression
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=sagstype%20eq%20'Lovforslag'&amp;%24expand=Sagsstatus&amp;%24orderby=opdateringsdato%20desc&quot;
+
+# Monitor recently changed statuses
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=opdateringsdato%20gt%20datetime'2025-09-08T00:00:00'&amp;%24expand=Sagsstatus&quot;
+</code></pre>
+<h2 id="data-analysis-insights">Data Analysis Insights</h2>
+<h3 id="process-efficiency">Process Efficiency</h3>
+<ul>
+<li>Multiple interruption/postponement statuses (IDs 29, 53, 58, 60, 66) indicate process flexibility</li>
+<li>Direct progression options (IDs 32, 55) enable fast-track procedures</li>
+<li>Committee referral patterns show collaborative governance approach</li>
+</ul>
+<h3 id="democratic-accountability">Democratic Accountability</h3>
+<ul>
+<li>Question-answer cycle statuses (IDs 20, 50, 62) enable accountability tracking</li>
+<li>Multiple reading stages ensure thorough consideration</li>
+<li>Withdrawal and lapse options maintain process integrity</li>
+</ul>
+<h3 id="historical-consistency">Historical Consistency</h3>
+<ul>
+<li>Status semantics maintained across decades</li>
+<li>Granular tracking enables sophisticated process analysis</li>
+<li>Real-time updates provide current parliamentary state</li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<p>The 68-status Sagsstatus system represents the most sophisticated parliamentary process tracking system in any democratic API. This granular classification enables:</p>
+<ul>
+<li><strong>Complete process visibility</strong> from proposal to final decision</li>
+<li><strong>Detailed workflow analysis</strong> of parliamentary procedures</li>
+<li><strong>Democratic accountability tracking</strong> through question-answer cycles</li>
+<li><strong>Process efficiency measurement</strong> via timing and progression analysis</li>
+<li><strong>Historical legislative research</strong> with consistent status semantics</li>
+</ul>
+<p>The complexity of this system reflects the sophistication of Danish parliamentary democracy and provides researchers, journalists, and citizens with unprecedented insight into how democratic processes actually function in practice.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../../js/base.js"></script>
+        <script src="../../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

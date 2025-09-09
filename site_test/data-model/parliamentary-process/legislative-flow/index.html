@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../../img/favicon.ico">
+        <title>Legislative Flow - Test</title>
+        <link href="../../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../../css/brands.min.css" rel="stylesheet">
+        <link href="../../../css/solid.min.css" rel="stylesheet">
+        <link href="../../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../../..">Test</a>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#legislative-flow" class="nav-link">Legislative Flow</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#overview" class="nav-link">Overview</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#complete-legislative-process-flow" class="nav-link">Complete Legislative Process Flow</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#case-step-progression-sagstrin" class="nav-link">Case Step Progression (Sagstrin)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#status-progression-chart" class="nav-link">Status Progression Chart</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#document-flow-in-legislative-process" class="nav-link">Document Flow in Legislative Process</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#voting-session-details" class="nav-link">Voting Session Details</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#committee-system-integration" class="nav-link">Committee System Integration</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#api-query-examples-for-legislative-tracking" class="nav-link">API Query Examples for Legislative Tracking</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#process-insights" class="nav-link">Process Insights</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="legislative-flow">Legislative Flow</h1>
+<p>This document visualizes the complete Danish parliamentary legislative process using Mermaid diagrams, showing how cases (Sag) progress through the system from initial proposal to final decision.</p>
+<h2 id="overview">Overview</h2>
+<p>The Danish Parliament (Folketinget) uses a complex multi-stage process for handling legislative cases. The API tracks this entire process through entities like Sag (cases), Sagstrin (case steps), Sagsstatus (case status), and related actors and documents.</p>
+<h2 id="complete-legislative-process-flow">Complete Legislative Process Flow</h2>
+<pre><code class="language-mermaid">flowchart TD
+    %% Initial Proposal Stage
+    A[=Ý Initial Proposal] --&gt; B{Proposal Type?}
+    B --&gt;|Government Bill| C[&lt;Û Government Proposal&lt;br/&gt;Minister Introduces]
+    B --&gt;|Private Member Bill| D[=d Member Proposal&lt;br/&gt;MP Introduces]
+    B --&gt;|Committee Motion| E[&lt;Û Committee Motion&lt;br/&gt;Committee Introduces]
+
+    %% First Reading Preparation
+    C --&gt; F[=Ë Case Created&lt;br/&gt;Sag Entity]
+    D --&gt; F
+    E --&gt; F
+
+    F --&gt; G[=Ä Initial Document&lt;br/&gt;Dokument Created]
+    G --&gt; H[= SagDokument&lt;br/&gt;Case-Document Link]
+
+    %% Parliamentary Processing
+    H --&gt; I[=Å First Reading Scheduled&lt;br/&gt;Dagsordenspunkt]
+    I --&gt; J[=ã First Reading Debate&lt;br/&gt;Møde]
+
+    %% Decision Points
+    J --&gt; K{First Reading Result?}
+    K --&gt;|Referred to Committee| L[&lt;Û Committee Review&lt;br/&gt;SagstrinAktør]
+    K --&gt;|Rejected| M[L Case Rejected&lt;br/&gt;Final Status]
+    K --&gt;|Emergency Bill| N[¡ Emergency Process&lt;br/&gt;Fast Track]
+
+    %% Committee Stage
+    L --&gt; O[=Ý Committee Work&lt;br/&gt;Multiple Sagstrin]
+    O --&gt; P[=Ë Committee Report&lt;br/&gt;New Dokument]
+    P --&gt; Q[=Å Second Reading&lt;br/&gt;Scheduled]
+
+    %% Second Reading
+    Q --&gt; R[=ã Second Reading Debate]
+    R --&gt; S{Voting Required?}
+    S --&gt;|Yes| T[=ó Voting Session&lt;br/&gt;Afstemning]
+    S --&gt;|No| U[=Ä Further Committee Work]
+
+    %% Voting Process
+    T --&gt; V[ Individual Votes&lt;br/&gt;Stemme Records]
+    V --&gt; W{Vote Result?}
+    W --&gt;|Passed| X[ Second Reading Passed]
+    W --&gt;|Failed| Y[L Bill Failed]
+    W --&gt;|Amendments| Z[=Ý Amendments Proposed]
+
+    %% Third Reading
+    X --&gt; AA[=Å Third Reading&lt;br/&gt;Final Debate]
+    Z --&gt; AA
+    AA --&gt; BB[=ó Final Voting&lt;br/&gt;Afstemning]
+    BB --&gt; CC[ Final Votes&lt;br/&gt;Stemme Records]
+
+    %% Final Outcomes
+    CC --&gt; DD{Final Result?}
+    DD --&gt;|Passed| EE[ Law Adopted&lt;br/&gt;lovnummer assigned]
+    DD --&gt;|Failed| FF[L Bill Rejected]
+
+    %% Status Updates
+    F -.-&gt; GG[=Ê Status: Under Behandling]
+    L -.-&gt; HH[=Ê Status: I Udvalg]
+    EE -.-&gt; II[=Ê Status: Vedtaget]
+    FF -.-&gt; JJ[=Ê Status: Forkastet]
+
+    %% Actor Participation
+    subgraph &quot;Actor Participation Throughout&quot;
+        Ministers[=T Ministers&lt;br/&gt;SagAktør Roles]
+        MPs[=d MPs&lt;br/&gt;SagAktør Roles]
+        Committees[&lt;Û Committees&lt;br/&gt;SagAktør Roles]
+        Experts[=h
+&lt; Expert Witnesses&lt;br/&gt;SagAktør Roles]
+    end
+
+    style A fill:#e1f5fe
+    style EE fill:#c8e6c9
+    style FF fill:#ffcdd2
+    style M fill:#ffcdd2
+    style Y fill:#ffcdd2
+</code></pre>
+<h2 id="case-step-progression-sagstrin">Case Step Progression (Sagstrin)</h2>
+<pre><code class="language-mermaid">sequenceDiagram
+    participant Initiator as =Ý Proposal Initiator
+    participant Parliament as &lt;Û Parliament
+    participant Committee as =e Committee
+    participant Members as =d MPs
+    participant System as =¾ API System
+
+    Note over System: Sag entity created with initial status
+
+    Initiator-&gt;&gt;Parliament: Submit Proposal
+    Parliament-&gt;&gt;System: Create Sag record
+    System-&gt;&gt;System: Assign initial Sagsstatus
+
+    Parliament-&gt;&gt;Committee: Refer to Committee
+    System-&gt;&gt;System: Create Sagstrin (Committee Review)
+    System-&gt;&gt;System: Update SagstrinAktør relationships
+
+    Committee-&gt;&gt;Committee: Review and Analysis
+    Committee-&gt;&gt;System: Create committee documents
+    System-&gt;&gt;System: Link via SagstrinDokument
+
+    Committee-&gt;&gt;Parliament: Submit Report
+    Parliament-&gt;&gt;Members: Schedule Reading
+    System-&gt;&gt;System: Create Møde and Dagsordenspunkt
+
+    Members-&gt;&gt;Parliament: Debate
+    Parliament-&gt;&gt;Members: Call Vote
+    System-&gt;&gt;System: Create Afstemning record
+
+    Members-&gt;&gt;System: Cast Votes
+    System-&gt;&gt;System: Record individual Stemme
+    System-&gt;&gt;System: Calculate Afstemning result
+
+    alt Bill Passes
+        Parliament-&gt;&gt;System: Update Sagsstatus to &quot;Vedtaget&quot;
+        System-&gt;&gt;System: Assign lovnummer if applicable
+    else Bill Fails
+        Parliament-&gt;&gt;System: Update Sagsstatus to &quot;Forkastet&quot;
+    end
+
+    System-&gt;&gt;System: Update opdateringsdato
+    System--&gt;&gt;All: Real-time data available via API
+</code></pre>
+<h2 id="status-progression-chart">Status Progression Chart</h2>
+<pre><code class="language-mermaid">stateDiagram-v2
+    [*] --&gt; Modtaget: Initial Proposal
+
+    Modtaget --&gt; UnderBehandling: Case Accepted
+    Modtaget --&gt; Bortfaldet: Case Withdrawn
+
+    UnderBehandling --&gt; IUdvalg: Sent to Committee
+    UnderBehandling --&gt; TilFørstelæsning: Direct to First Reading
+
+    IUdvalg --&gt; UdvalgsBetænkning: Committee Report Ready
+    UdvalgsBetænkning --&gt; TilAndenlæsning: Second Reading Scheduled
+
+    TilFørstelæsning --&gt; EfterFørstelæsning: First Reading Complete
+    EfterFørstelæsning --&gt; IUdvalg: Referred to Committee
+    EfterFørstelæsning --&gt; Forkastet: Rejected at First Reading
+
+    TilAndenlæsning --&gt; EfterAndenlæsning: Second Reading Complete
+    EfterAndenlæsning --&gt; TilTredjelæsning: Third Reading Scheduled
+    EfterAndenlæsning --&gt; IUdvalg: Back to Committee
+
+    TilTredjelæsning --&gt; Vedtaget: Bill Passed
+    TilTredjelæsning --&gt; Forkastet: Bill Rejected
+
+    %% Final States
+    Vedtaget --&gt; [*]: Law Created
+    Forkastet --&gt; [*]: Bill Rejected  
+    Bortfaldet --&gt; [*]: Case Withdrawn
+
+    %% Status Annotations
+    note right of IUdvalg
+        68 detailed status codes
+        track exact position
+        in process
+    end note
+
+    note right of Vedtaget
+        lovnummer assigned
+        Law becomes effective
+        per specified date
+    end note
+</code></pre>
+<h2 id="document-flow-in-legislative-process">Document Flow in Legislative Process</h2>
+<pre><code class="language-mermaid">flowchart LR
+    subgraph &quot;Initial Stage&quot;
+        A[=Ä Original Proposal&lt;br/&gt;Dokument] --&gt; B[= SagDokument&lt;br/&gt;Link to Case]
+    end
+
+    subgraph &quot;Committee Stage&quot;
+        B --&gt; C[=Ë Committee Agenda&lt;br/&gt;Dokument]
+        C --&gt; D[=Ý Expert Statements&lt;br/&gt;Multiple Dokument]
+        D --&gt; E[=Ê Committee Report&lt;br/&gt;Betænkning Dokument]
+    end
+
+    subgraph &quot;Parliamentary Debates&quot;
+        E --&gt; F[=ã Debate Transcript&lt;br/&gt;Dokument]
+        F --&gt; G[=Ý Amendment Proposals&lt;br/&gt;Ændringsforslag Dokument]
+        G --&gt; H[=Ê Voting Results&lt;br/&gt;Results Dokument]
+    end
+
+    subgraph &quot;Final Documentation&quot;
+        H --&gt; I[ Final Law Text&lt;br/&gt;Dokument with lovnummer]
+        I --&gt; J[=ð Official Publication&lt;br/&gt;Dokument]
+    end
+
+    %% Actor Relationships
+    A -.-&gt; K[=T Minister&lt;br/&gt;DokumentAktør]
+    C -.-&gt; L[=e Committee&lt;br/&gt;DokumentAktør]
+    D -.-&gt; M[=h
+&lt; Experts&lt;br/&gt;DokumentAktør]
+    F -.-&gt; N[=d MPs&lt;br/&gt;DokumentAktør]
+    I -.-&gt; O[=Q Royal Assent&lt;br/&gt;DokumentAktør]
+
+    style A fill:#e3f2fd
+    style I fill:#c8e6c9
+    style J fill:#c8e6c9
+</code></pre>
+<h2 id="voting-session-details">Voting Session Details</h2>
+<pre><code class="language-mermaid">flowchart TD
+    A[=ó Afstemning Created&lt;br/&gt;Voting Session] --&gt; B[=Ê Voting Configuration&lt;br/&gt;Afstemningstype]
+
+    B --&gt; C{Voting Type}
+    C --&gt;|Navneopråb| D[=â Roll Call Vote&lt;br/&gt;Individual Names Called]
+    C --&gt;|Håndsoprækning| E[=K Show of Hands&lt;br/&gt;Simple Count]
+    C --&gt;|Elektronisk| F[=» Electronic Vote&lt;br/&gt;Button System]
+
+    D --&gt; G[=d Individual Responses&lt;br/&gt;Stemme Records]
+    E --&gt; G
+    F --&gt; G
+
+    G --&gt; H{Vote Options}
+    H --&gt; I[ For&lt;br/&gt;Stemmetype: For]
+    H --&gt; J[L Imod&lt;br/&gt;Stemmetype: Imod]
+    H --&gt; K[=« Fravær&lt;br/&gt;Stemmetype: Fravær]
+    H --&gt; L[U Hverken for eller imod&lt;br/&gt;Stemmetype: Hverken]
+
+    I --&gt; M[=Ê Vote Counting]
+    J --&gt; M
+    K --&gt; M
+    L --&gt; M
+
+    M --&gt; N[=È Final Tally&lt;br/&gt;Result Calculation]
+    N --&gt; O{Result}
+    O --&gt;|Majority For| P[ Motion Passed]
+    O --&gt;|Majority Against| Q[L Motion Failed]
+    O --&gt;|Tie| R[ Tie - Speaker Decides]
+
+    %% Link to Actors
+    G -.-&gt; S[=d Aktør Records&lt;br/&gt;Who voted how]
+    S -.-&gt; T[=Ê Voting History&lt;br/&gt;Per Politician]
+
+    style P fill:#c8e6c9
+    style Q fill:#ffcdd2
+    style R fill:#fff3e0
+</code></pre>
+<h2 id="committee-system-integration">Committee System Integration</h2>
+<pre><code class="language-mermaid">graph TD
+    subgraph &quot;Committee Types (Aktørtype = Udvalg)&quot;
+        A[&lt;Û Standing Committees&lt;br/&gt;Fagudvalg]
+        B[ Special Committees&lt;br/&gt;Særlige Udvalg]
+        C[=
+ Investigation Committees&lt;br/&gt;Undersøgelsesudvalg]
+    end
+
+    subgraph &quot;Committee Work Process&quot;
+        D[=å Case Received&lt;br/&gt;SagAktør Link] --&gt; E[=e Committee Members&lt;br/&gt;MødeAktør]
+        E --&gt; F[=Å Committee Meetings&lt;br/&gt;Møde]
+        F --&gt; G[=Ë Hearing Sessions&lt;br/&gt;Expert Testimony]
+        G --&gt; H[=Ý Committee Report&lt;br/&gt;Betænkning]
+    end
+
+    subgraph &quot;Committee Outputs&quot;
+        H --&gt; I[ Recommendation&lt;br/&gt;Indstilling til vedtagelse]
+        H --&gt; J[L Against Recommendation&lt;br/&gt;Indstilling til forkastelse]
+        H --&gt; K[=Ý Minority Opinion&lt;br/&gt;Mindretalsudtalelse]
+    end
+
+    %% Link Committee Types to Process
+    A --&gt; D
+    B --&gt; D
+    C --&gt; D
+
+    %% Connect to Main Process
+    I --&gt; L[=Ê Parliamentary Vote&lt;br/&gt;Influenced by Committee]
+    J --&gt; L
+    K --&gt; L
+
+    %% Actor Participation
+    E -.-&gt; M[=T Committee Chair&lt;br/&gt;SagAktørRolle: Formand]
+    E -.-&gt; N[=d Committee Members&lt;br/&gt;SagAktørRolle: Medlem]
+    G -.-&gt; O[=h
+&lt; Expert Witnesses&lt;br/&gt;SagAktørRolle: Ekspert]
+
+    style H fill:#e1f5fe
+    style I fill:#c8e6c9
+    style J fill:#ffcdd2
+</code></pre>
+<h2 id="api-query-examples-for-legislative-tracking">API Query Examples for Legislative Tracking</h2>
+<h3 id="track-case-progress">Track Case Progress</h3>
+<pre><code class="language-bash"># Get case with current status
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=id%20eq%20102903&amp;%24expand=Sagsstatus&quot;
+
+# Get all steps in case progression  
+curl &quot;https://oda.ft.dk/api/Sagstrin?%24filter=sagid%20eq%20102903&amp;%24expand=Sagstrinsstatus&amp;%24orderby=dato&quot;
+
+# Get all actors involved in case
+curl &quot;https://oda.ft.dk/api/SagAktør?%24filter=sagid%20eq%20102903&amp;%24expand=Aktør,SagAktørRolle&quot;
+</code></pre>
+<h3 id="track-voting-history">Track Voting History</h3>
+<pre><code class="language-bash"># Get all voting sessions for a case
+curl &quot;https://oda.ft.dk/api/Afstemning?%24filter=sagid%20eq%20102903&amp;%24expand=Stemme&quot;
+
+# Get specific politician's votes on a case
+curl &quot;https://oda.ft.dk/api/Stemme?%24filter=afstemningid%20eq%20X%20and%20aktørid%20eq%20Y&amp;%24expand=Stemmetype,Aktør&quot;
+</code></pre>
+<h3 id="monitor-recent-activity">Monitor Recent Activity</h3>
+<pre><code class="language-bash"># Cases updated today
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=opdateringsdato%20gt%20datetime'2025-09-09T00:00:00'&amp;%24top=20&quot;
+
+# Recent voting sessions
+curl &quot;https://oda.ft.dk/api/Afstemning?%24filter=opdateringsdato%20gt%20datetime'2025-09-09T00:00:00'&amp;%24expand=Sag&quot;
+</code></pre>
+<h2 id="process-insights">Process Insights</h2>
+<h3 id="key-characteristics">Key Characteristics</h3>
+<ol>
+<li><strong>Multi-Stage Process</strong>: Cases progress through defined stages with clear status tracking</li>
+<li><strong>Actor Participation</strong>: Rich modeling of who participates at each stage and in what role</li>
+<li><strong>Document Trail</strong>: Complete paper trail from initial proposal to final law</li>
+<li><strong>Voting Transparency</strong>: Individual vote records for democratic accountability</li>
+<li><strong>Real-Time Updates</strong>: Parliamentary activity reflected in API within hours</li>
+</ol>
+<h3 id="data-model-strengths">Data Model Strengths</h3>
+<ul>
+<li><strong>Historical Preservation</strong>: Complete legislative history maintained</li>
+<li><strong>Relationship Richness</strong>: Complex parliamentary relationships accurately modeled  </li>
+<li><strong>Process Flexibility</strong>: Accommodates various legislative procedures</li>
+<li><strong>Democratic Transparency</strong>: Every vote and decision tracked and queryable</li>
+<li><strong>Real-World Complexity</strong>: Models actual Danish parliamentary procedures without oversimplification</li>
+</ul>
+<p>The legislative flow visualization demonstrates why the Danish Parliament API is considered the gold standard for parliamentary transparency - it captures the full complexity of democratic decision-making while maintaining data integrity and queryability.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../../js/base.js"></script>
+        <script src="../../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

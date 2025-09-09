@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../../img/favicon.ico">
+        <title>Filter Documentation - Test</title>
+        <link href="../../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../../css/brands.min.css" rel="stylesheet">
+        <link href="../../../css/solid.min.css" rel="stylesheet">
+        <link href="../../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../../..">Test</a>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#filter-documentation" class="nav-link">Filter Documentation</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#filter-syntax-overview" class="nav-link">Filter Syntax Overview</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#string-functions-danish-text-search" class="nav-link">String Functions (Danish Text Search)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#date-and-time-functions" class="nav-link">Date and Time Functions</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#complex-filter-examples-with-danish-content" class="nav-link">Complex Filter Examples with Danish Content</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#danish-character-support" class="nav-link">Danish Character Support</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#critical-filter-warnings" class="nav-link">Critical Filter Warnings</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#url-encoding-requirements" class="nav-link">URL Encoding Requirements</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#performance-optimization" class="nav-link">Performance Optimization</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#entity-specific-filter-examples" class="nav-link">Entity-Specific Filter Examples</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#advanced-filter-patterns" class="nav-link">Advanced Filter Patterns</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#filter-function-reference" class="nav-link">Filter Function Reference</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#best-practices-summary" class="nav-link">Best Practices Summary</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="filter-documentation">Filter Documentation</h1>
+<p>The Danish Parliament API's <code>$filter</code> parameter provides powerful querying capabilities with full support for text search, date operations, and complex logical expressions. This guide covers all filtering syntax with practical Danish parliamentary data examples.</p>
+<h2 id="filter-syntax-overview">Filter Syntax Overview</h2>
+<p>The API uses <strong>OData 3.0 filter syntax</strong> with these key operators and functions:</p>
+<h3 id="comparison-operators">Comparison Operators</h3>
+<table>
+<thead>
+<tr>
+<th>Operator</th>
+<th>Meaning</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>eq</code></td>
+<td>Equals</td>
+<td><code>offentlighedskode eq 'O'</code></td>
+</tr>
+<tr>
+<td><code>ne</code></td>
+<td>Not equals</td>
+<td><code>offentlighedskode ne 'O'</code></td>
+</tr>
+<tr>
+<td><code>gt</code></td>
+<td>Greater than</td>
+<td><code>id gt 100000</code></td>
+</tr>
+<tr>
+<td><code>ge</code></td>
+<td>Greater or equal</td>
+<td><code>id ge 100000</code></td>
+</tr>
+<tr>
+<td><code>lt</code></td>
+<td>Less than</td>
+<td><code>year(opdateringsdato) lt 2025</code></td>
+</tr>
+<tr>
+<td><code>le</code></td>
+<td>Less or equal</td>
+<td><code>year(opdateringsdato) le 2024</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="logical-operators">Logical Operators</h3>
+<table>
+<thead>
+<tr>
+<th>Operator</th>
+<th>Meaning</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>and</code></td>
+<td>Logical AND</td>
+<td><code>offentlighedskode eq 'O' and year(opdateringsdato) eq 2025</code></td>
+</tr>
+<tr>
+<td><code>or</code></td>
+<td>Logical OR</td>
+<td><code>substringof('klima',titel) or substringof('miljø',titel)</code></td>
+</tr>
+<tr>
+<td><code>not</code></td>
+<td>Logical NOT</td>
+<td><code>not (offentlighedskode eq 'O')</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="string-functions-danish-text-search">String Functions (Danish Text Search)</h2>
+<h3 id="substringof-text-contains">substringof() - Text Contains</h3>
+<p>Most commonly used function for searching Danish parliamentary content:</p>
+<pre><code class="language-bash"># Find climate legislation (klima = climate)
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=substringof('klima',titel)&amp;%24top=5&quot;
+
+# Find environment-related cases (miljø = environment)
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=substringof('miljø',titel)&amp;%24top=5&quot;
+
+# Search for minister mentions (ministeren = the minister)
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=substringof('ministeren',titel)&amp;%24top=5&quot;
+
+# Find EU-related legislation
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=substringof('eu',titel)&amp;%24top=5&quot;
+</code></pre>
+<h3 id="startswith-text-prefix">startswith() - Text Prefix</h3>
+<p>Perfect for finding specific types of parliamentary documents:</p>
+<pre><code class="language-bash"># Find legislative proposals (Forslag = Proposal)
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=startswith(titel,'Forslag')&amp;%24top=5&quot;
+
+# Find committee reports (Betænkning = Report)
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=startswith(titel,'Betænkning')&amp;%24top=5&quot;
+
+# Find government bills (Lovforslag = Bill)
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=startswith(titel,'Lovforslag')&amp;%24top=5&quot;
+</code></pre>
+<h3 id="endswith-text-suffix">endswith() - Text Suffix</h3>
+<p>Useful for finding documents by their conclusion type:</p>
+<pre><code class="language-bash"># Find laws (ends with 'lov')
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=endswith(titel,'lov')&amp;%24top=5&quot;
+
+# Find questions (ends with '?')
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=endswith(titel,'%3F')&amp;%24top=5&quot;
+</code></pre>
+<h2 id="date-and-time-functions">Date and Time Functions</h2>
+<h3 id="year-extract-year">year() - Extract Year</h3>
+<pre><code class="language-bash"># All cases from 2025
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=year(opdateringsdato)%20eq%202025&amp;%24top=10&quot;
+
+# Historical cases from specific years
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=year(opdateringsdato)%20eq%201995&amp;%24top=5&quot;
+
+# Cases from multiple years
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=(year(opdateringsdato)%20eq%202024%20or%20year(opdateringsdato)%20eq%202025)&amp;%24top=10&quot;
+</code></pre>
+<h3 id="month-and-day-specific-dates">month() and day() - Specific Dates</h3>
+<pre><code class="language-bash"># Cases updated in September (month 9)
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=month(opdateringsdato)%20eq%209&amp;%24top=10&quot;
+
+# Cases from a specific day
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=day(opdateringsdato)%20eq%209%20and%20month(opdateringsdato)%20eq%209&amp;%24top=5&quot;
+</code></pre>
+<h3 id="datetime-comparisons">DateTime Comparisons</h3>
+<pre><code class="language-bash"># Cases updated since January 1st, 2025
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=opdateringsdato%20gt%20datetime'2025-01-01T00:00:00'&amp;%24top=10&quot;
+
+# Cases updated today (replace with current date)
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=opdateringsdato%20gt%20datetime'2025-09-09T00:00:00'&amp;%24top=10&quot;
+
+# Date range queries
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=opdateringsdato%20gt%20datetime'2025-09-08T00:00:00'%20and%20opdateringsdato%20lt%20datetime'2025-09-09T00:00:00'&amp;%24top=5&quot;
+</code></pre>
+<h2 id="complex-filter-examples-with-danish-content">Complex Filter Examples with Danish Content</h2>
+<h3 id="legislative-type-filtering">Legislative Type Filtering</h3>
+<pre><code class="language-bash"># Climate AND environment legislation
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=(substringof('klima',titel)%20or%20substringof('miljø',titel))%20and%20year(opdateringsdato)%20gt%202020&amp;%24top=5&quot;
+
+# Government proposals vs. member proposals
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=startswith(titel,'Forslag')%20and%20substringof('regeringen',titel)&amp;%24top=5&quot;
+
+# Budget-related legislation (budget = budget)
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=(substringof('budget',titel)%20or%20substringof('finanslov',titel))&amp;%24top=5&quot;
+</code></pre>
+<h3 id="actor-based-filtering">Actor-Based Filtering</h3>
+<pre><code class="language-bash"># Cases involving specific politicians
+curl &quot;https://oda.ft.dk/api/Stemme?%24filter=Aktør/navn%20eq%20'Frank%20Aaen'&amp;%24expand=Afstemning&amp;%24top=10&quot;
+
+# Cases from specific committees
+curl &quot;https://oda.ft.dk/api/SagAktør?%24filter=substringof('udvalg',Aktør/navn)&amp;%24expand=Sag,Aktør&amp;%24top=10&quot;
+</code></pre>
+<h3 id="status-and-category-filtering">Status and Category Filtering</h3>
+<pre><code class="language-bash"># Only public cases
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=offentlighedskode%20eq%20'O'&amp;%24top=10&quot;
+
+# Cases by specific status
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=Sagsstatus/status%20eq%20'Afsluttet'&amp;%24expand=Sagsstatus&amp;%24top=5&quot;
+</code></pre>
+<h2 id="danish-character-support">Danish Character Support</h2>
+<p>The API fully supports Danish special characters in filters:</p>
+<h3 id="vowels-with-accents">Vowels with Accents</h3>
+<pre><code class="language-bash"># Search for ø character
+curl &quot;https://oda.ft.dk/api/Aktør?%24filter=substringof('ø',navn)&amp;%24top=3&quot;
+
+# Search for å character  
+curl &quot;https://oda.ft.dk/api/Aktør?%24filter=substringof('å',navn)&amp;%24top=3&quot;
+
+# Search for æ character
+curl &quot;https://oda.ft.dk/api/Aktør?%24filter=substringof('æ',navn)&amp;%24top=3&quot;
+</code></pre>
+<h3 id="common-danish-terms-in-politics">Common Danish Terms in Politics</h3>
+<pre><code class="language-bash"># Folketinget (Parliament)
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=substringof('Folketinget',titel)&amp;%24top=5&quot;
+
+# Statsministeren (Prime Minister)
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=substringof('statsministeren',titel)&amp;%24top=5&quot;
+
+# Finansministeren (Finance Minister)
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=substringof('finansministeren',titel)&amp;%24top=5&quot;
+
+# Udvalg (Committee)
+curl &quot;https://oda.ft.dk/api/Aktør?%24filter=substringof('udvalg',navn)&amp;%24top=5&quot;
+</code></pre>
+<h2 id="critical-filter-warnings">Critical Filter Warnings</h2>
+<p>!!! danger "Silent Filter Failures"
+    <strong>Invalid filter field names are silently ignored</strong> and return the complete unfiltered dataset. This is the most dangerous behavior in the API.</p>
+<pre><code>```bash
+# This returns ALL records (not an error!)
+curl "https://oda.ft.dk/api/Sag?%24filter=invalid_field%20eq%20'test'&amp;%24top=5"  # Returns 100 records!
+```
+</code></pre>
+<h3 id="how-to-detect-silent-failures">How to Detect Silent Failures</h3>
+<ol>
+<li><strong>Always test with small <code>$top</code> values first</strong>:</li>
+</ol>
+<pre><code class="language-bash"># Test your filter with a small result set
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=your_filter_here&amp;%24top=1&quot;
+</code></pre>
+<ol>
+<li><strong>Monitor result counts</strong>:</li>
+</ol>
+<pre><code class="language-python"># Python: Check for unexpected result sizes
+response = requests.get(url)
+data = response.json()
+if len(data['value']) == 100 and '$top=100' not in url:
+    print(&quot;Warning: Filter may have been ignored&quot;)
+</code></pre>
+<ol>
+<li><strong>Validate field names</strong> against <a href="https://oda.ft.dk/api/$metadata">OData metadata</a>:</li>
+</ol>
+<pre><code class="language-bash"># Get valid field names for an entity
+curl &quot;https://oda.ft.dk/api/\$metadata&quot; | grep &quot;Property Name&quot;
+</code></pre>
+<h2 id="url-encoding-requirements">URL Encoding Requirements</h2>
+<p>!!! warning "Critical: Special Character Encoding"
+    All special characters in filters must be URL encoded:</p>
+<table>
+<thead>
+<tr>
+<th>Character</th>
+<th>Encoding</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>$</code></td>
+<td><code>%24</code></td>
+<td><code>%24filter=</code></td>
+</tr>
+<tr>
+<td>Space</td>
+<td><code>%20</code></td>
+<td><code>navn%20eq%20'Frank%20Aaen'</code></td>
+</tr>
+<tr>
+<td><code>'</code></td>
+<td><code>%27</code></td>
+<td><code>eq%20%27O%27</code></td>
+</tr>
+<tr>
+<td><code>(</code></td>
+<td><code>%28</code></td>
+<td><code>%28substringof</code></td>
+</tr>
+<tr>
+<td><code>)</code></td>
+<td><code>%29</code></td>
+<td><code>titel%29</code></td>
+</tr>
+<tr>
+<td><code>?</code></td>
+<td><code>%3F</code></td>
+<td><code>endswith(titel,'%3F')</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="performance-optimization">Performance Optimization</h2>
+<h3 id="filter-early-expand-late">Filter Early, Expand Late</h3>
+<pre><code class="language-bash"># Efficient: Filter first, then expand
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=year(opdateringsdato)%20eq%202025&amp;%24expand=Sagskategori&amp;%24top=10&quot;
+
+# Less efficient: Expand everything, then filter  
+curl &quot;https://oda.ft.dk/api/Sag?%24expand=Sagskategori,Sagstrin,SagAktør&amp;%24filter=year(opdateringsdato)%20eq%202025&amp;%24top=10&quot;
+</code></pre>
+<h3 id="index-friendly-filters">Index-Friendly Filters</h3>
+<p>The API performs best with these filter patterns:
+- <strong>ID-based filtering</strong>: <code>id eq 12345</code>
+- <strong>Year-based filtering</strong>: <code>year(opdateringsdato) eq 2025</code>
+- <strong>Exact string matches</strong>: <code>offentlighedskode eq 'O'</code></p>
+<h2 id="entity-specific-filter-examples">Entity-Specific Filter Examples</h2>
+<h3 id="sag-cases-entity">Sag (Cases) Entity</h3>
+<pre><code class="language-bash"># Public legislation from current year
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=offentlighedskode%20eq%20'O'%20and%20year(opdateringsdato)%20eq%202025&amp;%24top=10&quot;
+
+# Bills containing climate provisions
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=substringof('lovforslag',titel)%20and%20substringof('klima',titel)&amp;%24top=5&quot;
+</code></pre>
+<h3 id="aktr-actors-entity">Aktør (Actors) Entity</h3>
+<pre><code class="language-bash"># Current members of parliament (active politicians)
+curl &quot;https://oda.ft.dk/api/Aktør?%24filter=Aktørtype/type%20eq%20'person'%20and%20substringof('MF',navn)&amp;%24expand=Aktørtype&amp;%24top=10&quot;
+
+# Parliamentary committees
+curl &quot;https://oda.ft.dk/api/Aktør?%24filter=substringof('udvalg',navn)&amp;%24top=10&quot;
+</code></pre>
+<h3 id="stemme-votes-entity">Stemme (Votes) Entity</h3>
+<pre><code class="language-bash"># Votes by specific politician on climate issues
+curl &quot;https://oda.ft.dk/api/Stemme?%24filter=Aktør/navn%20eq%20'Frank%20Aaen'&amp;%24expand=Aktør,Afstemning&amp;%24top=10&quot;
+
+# All &quot;yes&quot; votes (typeid = 1)  
+curl &quot;https://oda.ft.dk/api/Stemme?%24filter=typeid%20eq%201&amp;%24expand=Stemmetype&amp;%24top=10&quot;
+</code></pre>
+<h2 id="advanced-filter-patterns">Advanced Filter Patterns</h2>
+<h3 id="multi-language-search">Multi-Language Search</h3>
+<pre><code class="language-bash"># Search in both Danish and English terms
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=(substringof('klima',titel)%20or%20substringof('climate',titel))&amp;%24top=5&quot;
+</code></pre>
+<h3 id="temporal-filtering">Temporal Filtering</h3>
+<pre><code class="language-bash"># Recent activity (last 7 days)
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=opdateringsdato%20gt%20datetime'2025-09-02T00:00:00'&amp;%24top=10&quot;
+
+# Historical comparison (same month, different years)
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=month(opdateringsdato)%20eq%209%20and%20(year(opdateringsdato)%20eq%202024%20or%20year(opdateringsdato)%20eq%202025)&amp;%24top=10&quot;
+</code></pre>
+<h3 id="negation-patterns">Negation Patterns</h3>
+<pre><code class="language-bash"># Non-public cases
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=not%20(offentlighedskode%20eq%20'O')&amp;%24top=10&quot;
+
+# Cases NOT containing specific terms
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=not%20substringof('eu',titel)&amp;%24top=10&quot;
+</code></pre>
+<h2 id="filter-function-reference">Filter Function Reference</h2>
+<h3 id="tested-and-working-functions">Tested and Working Functions</h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Syntax</th>
+<th>Purpose</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>substringof(needle, haystack)</code></td>
+<td>Text contains</td>
+<td><code>substringof('klima', titel)</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>startswith(text, prefix)</code></td>
+<td>Text starts with</td>
+<td><code>startswith(titel, 'Forslag')</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>endswith(text, suffix)</code></td>
+<td>Text ends with</td>
+<td><code>endswith(titel, 'lov')</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>year(date)</code></td>
+<td>Extract year</td>
+<td><code>year(opdateringsdato) eq 2025</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>month(date)</code></td>
+<td>Extract month</td>
+<td><code>month(opdateringsdato) eq 9</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>day(date)</code></td>
+<td>Extract day</td>
+<td><code>day(opdateringsdato) eq 9</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="unsupported-functions-odata-40">Unsupported Functions (OData 4.0+)</h3>
+<ul>
+<li><code>contains()</code> - Use <code>substringof()</code> instead</li>
+<li><code>toupper()</code>, <code>tolower()</code> - Not available</li>
+<li><code>length()</code> - Not supported</li>
+<li><code>indexof()</code> - Not supported</li>
+</ul>
+<h2 id="best-practices-summary">Best Practices Summary</h2>
+<ol>
+<li><strong>Always URL encode</strong> special characters (<code>$</code>  <code>%24</code>)</li>
+<li><strong>Test filters with small <code>$top</code></strong> values first </li>
+<li><strong>Monitor result sizes</strong> to detect silent failures</li>
+<li><strong>Use specific field names</strong> from the metadata</li>
+<li><strong>Filter early</strong> before expanding relationships</li>
+<li><strong>Leverage Danish character support</strong> for authentic searches</li>
+<li><strong>Combine multiple criteria</strong> with logical operators</li>
+<li><strong>Validate field names</strong> against the OData metadata</li>
+</ol>
+<p>The Danish Parliament API's filter capabilities provide exceptional access to 74+ years of parliamentary data when used correctly. Master these patterns and you'll efficiently find exactly the democratic information you need.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../../js/base.js"></script>
+        <script src="../../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

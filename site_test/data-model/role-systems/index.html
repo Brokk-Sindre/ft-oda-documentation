@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Role Systems - Test</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Test</a>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#role-systems" class="nav-link">Role Systems</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#overview" class="nav-link">Overview</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#primary-role-systems" class="nav-link">Primary Role Systems</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#supporting-role-systems" class="nav-link">Supporting Role Systems</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#role-system-architecture" class="nav-link">Role System Architecture</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#query-patterns-for-role-systems" class="nav-link">Query Patterns for Role Systems</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#role-system-benefits" class="nav-link">Role System Benefits</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#data-quality-in-role-systems" class="nav-link">Data Quality in Role Systems</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#advanced-role-analysis" class="nav-link">Advanced Role Analysis</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#implementation-best-practices" class="nav-link">Implementation Best Practices</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#conclusion" class="nav-link">Conclusion</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="role-systems">Role Systems</h1>
+<p>The Danish Parliament API uses sophisticated role-based junction tables to model the complex relationships between entities. Rather than simple many-to-many relationships, these role systems provide semantic meaning to connections, enabling precise understanding of how different actors, documents, and cases interact.</p>
+<h2 id="overview">Overview</h2>
+<p>Role systems in the Danish Parliament API create a semantic layer on top of entity relationships. They transform simple connections into meaningful relationships that capture the nuanced ways parliamentary democracy functions.</p>
+<p><strong>Key Characteristics:</strong>
+- <strong>Semantic richness</strong> - Roles provide meaning beyond simple links
+- <strong>Historical consistency</strong> - Role semantics maintained across decades
+- <strong>Process modeling</strong> - Roles reflect actual parliamentary procedures
+- <strong>Complete coverage</strong> - All significant relationships have role context</p>
+<h2 id="primary-role-systems">Primary Role Systems</h2>
+<h3 id="1-case-actor-roles-sagaktrrolle">1. Case-Actor Roles (SagAktørRolle)</h3>
+<p><strong>System:</strong> 23 distinct role types defining how actors participate in cases<br />
+<strong>Junction Table:</strong> SagAktør<br />
+<strong>Documentation:</strong> <a href="case-actor-roles/">Complete SagAktørRolle Reference</a></p>
+<p><strong>Key Role Categories:</strong>
+- <strong>Legislative Roles</strong>: Forslagsstiller, Ordfører, Taler
+- <strong>Government Roles</strong>: Minister, Ministerområde<br />
+- <strong>Process Roles</strong>: Henvist til, Spørger, Besvaret af
+- <strong>Administrative Roles</strong>: Udsteder, Optaget af, Stedfortræder</p>
+<p><strong>Most Common Roles:</strong>
+1. <strong>Minister</strong> (ID 14) - Government minister responsible
+2. <strong>Forslagsstiller (reg.)</strong> (ID 19) - Regular proposer
+3. <strong>Spørger</strong> (ID 10) - Questioner
+4. <strong>Henvist til</strong> (ID 11) - Referred to</p>
+<h3 id="2-document-actor-roles-dokumentaktrrolle">2. Document-Actor Roles (DokumentAktørRolle)</h3>
+<p><strong>System:</strong> 25 distinct role types defining how actors interact with documents<br />
+<strong>Junction Table:</strong> DokumentAktør<br />
+<strong>Documentation:</strong> <a href="document-actor-roles/">Complete DokumentAktørRolle Reference</a></p>
+<p><strong>Key Role Categories:</strong>
+- <strong>Communication Roles</strong>: Afsender, Til, Modtager, Kopi til
+- <strong>Response Roles</strong>: Spørger, Besvaret af, Medspørger
+- <strong>Administrative Roles</strong>: Minister, Ministerområde, Kontakt
+- <strong>Process Roles</strong>: Stiller, Forslagsstiller, Ordfører</p>
+<p><strong>Most Common Roles:</strong>
+1. <strong>Afsender</strong> (ID 1) - Document sender
+2. <strong>Til</strong> (ID 8) - Primary recipient<br />
+3. <strong>Minister</strong> (ID 5) - Government minister
+4. <strong>Kopi til</strong> (ID 2) - Copy recipient
+5. <strong>Besvaret af</strong> (ID 4) - Who provided the answer</p>
+<h2 id="supporting-role-systems">Supporting Role Systems</h2>
+<h3 id="3-case-document-roles-sagdokumentrolle">3. Case-Document Roles (SagDokumentRolle)</h3>
+<p><strong>Purpose:</strong> Defines how documents function within cases<br />
+<strong>Junction Table:</strong> SagDokument<br />
+<strong>Context:</strong> Document types and purposes within legislative process</p>
+<h3 id="4-case-step-actor-roles-sagstrinaktrrolle">4. Case Step-Actor Roles (SagstrinAktørRolle)</h3>
+<p><strong>Purpose:</strong> Defines actor participation in specific case steps<br />
+<strong>Junction Table:</strong> SagstrinAktør<br />
+<strong>Context:</strong> Step-by-step actor involvement in parliamentary process</p>
+<h3 id="5-actor-actor-roles-aktraktrrolle">5. Actor-Actor Roles (AktørAktørRolle)</h3>
+<p><strong>Purpose:</strong> Defines relationships between actors<br />
+<strong>Junction Table:</strong> AktørAktør<br />
+<strong>Context:</strong> Professional, organizational, and procedural relationships</p>
+<p><strong>Examples:</strong>
+- Deputy relationships (Stedfortræder)
+- Committee membership
+- Ministry hierarchies
+- Professional associations</p>
+<h2 id="role-system-architecture">Role System Architecture</h2>
+<h3 id="role-assignment-pattern">Role Assignment Pattern</h3>
+<pre><code class="language-mermaid">graph LR
+    A[Entity 1] --&gt; B[Junction Table]
+    B --&gt; C[Entity 2]
+    B --&gt; D[Role Table]
+    D --&gt; E[Role Semantics]
+
+    style D fill:#f9f,stroke:#333,stroke-width:2px
+    style E fill:#bbf,stroke:#333,stroke-width:2px
+</code></pre>
+<h3 id="example-case-actor-relationship">Example: Case-Actor Relationship</h3>
+<pre><code class="language-mermaid">graph TD
+    A[Sag&lt;br/&gt;Case ID: 102903] --&gt; B[SagAktør&lt;br/&gt;Junction Record]
+    B --&gt; C[Aktør&lt;br/&gt;Lars Løkke Rasmussen]
+    B --&gt; D[SagAktørRolle&lt;br/&gt;ID: 14]
+    D --&gt; E[Rolle: Minister&lt;br/&gt;Semantic Meaning]
+
+    style D fill:#f9f,stroke:#333,stroke-width:2px
+    style E fill:#bbf,stroke:#333,stroke-width:2px
+</code></pre>
+<h2 id="query-patterns-for-role-systems">Query Patterns for Role Systems</h2>
+<h3 id="1-find-entities-by-role-type">1. Find Entities by Role Type</h3>
+<pre><code class="language-bash"># Find all ministers in case relationships
+curl &quot;https://oda.ft.dk/api/SagAktør?%24filter=rolleid%20eq%2014&amp;%24expand=Sag,Aktør&quot;
+
+# Find all document senders  
+curl &quot;https://oda.ft.dk/api/DokumentAktør?%24filter=rolleid%20eq%201&amp;%24expand=Dokument,Aktør&quot;
+</code></pre>
+<h3 id="2-analyze-actor-role-patterns">2. Analyze Actor Role Patterns</h3>
+<pre><code class="language-bash"># Find all roles for a specific actor
+curl &quot;https://oda.ft.dk/api/SagAktør?%24filter=aktørid%20eq%2012345&amp;%24expand=SagAktørRolle,Sag&quot;
+
+# Find all document interactions for an actor
+curl &quot;https://oda.ft.dk/api/DokumentAktør?%24filter=aktørid%20eq%2012345&amp;%24expand=DokumentAktørRolle,Dokument&quot;
+</code></pre>
+<h3 id="3-process-flow-analysis">3. Process Flow Analysis</h3>
+<pre><code class="language-bash"># Track question-answer processes
+curl &quot;https://oda.ft.dk/api/SagAktør?%24filter=rolleid%20in%20(10,4)&amp;%24expand=Aktør,SagAktørRolle&quot;
+
+# Monitor committee referral patterns
+curl &quot;https://oda.ft.dk/api/SagAktør?%24filter=rolleid%20eq%2011&amp;%24expand=Aktør,Sag&quot;
+</code></pre>
+<h2 id="role-system-benefits">Role System Benefits</h2>
+<h3 id="1-semantic-precision">1. Semantic Precision</h3>
+<p>Traditional approach: "Actor X is connected to Case Y"<br />
+Role-based approach: "Actor X is the <strong>Minister</strong> responsible for Case Y"</p>
+<h3 id="2-process-understanding">2. Process Understanding</h3>
+<p>Roles reveal the actual mechanics of parliamentary democracy:
+- <strong>Forslagsstiller</strong> - Who proposes legislation
+- <strong>Ordfører</strong> - Who speaks for a group<br />
+- <strong>Henvist til</strong> - Committee jurisdiction
+- <strong>Besvaret af</strong> - Government accountability</p>
+<h3 id="3-network-analysis">3. Network Analysis</h3>
+<p>Role systems enable sophisticated relationship analysis:
+- <strong>Collaboration patterns</strong> - Who works together in what capacity
+- <strong>Communication flows</strong> - How information moves through parliament
+- <strong>Power structures</strong> - Who has what authority in different contexts
+- <strong>Accountability chains</strong> - How responsibility flows through the system</p>
+<h3 id="4-historical-research">4. Historical Research</h3>
+<p>Consistent role semantics across decades enable:
+- <strong>Longitudinal studies</strong> of parliamentary behavior
+- <strong>Institutional change analysis</strong> over time
+- <strong>Individual career tracking</strong> through different roles
+- <strong>Process evolution</strong> understanding</p>
+<h2 id="data-quality-in-role-systems">Data Quality in Role Systems</h2>
+<h3 id="consistency-standards">Consistency Standards</h3>
+<ul>
+<li><strong>Role semantics</strong> maintained across different parliamentary periods</li>
+<li><strong>Complete coverage</strong> - All significant relationships have role context  </li>
+<li><strong>Real-time updates</strong> - New role assignments created as parliamentary work progresses</li>
+<li><strong>Historical preservation</strong> - Role relationships maintained even when entities change</li>
+</ul>
+<h3 id="validation-patterns">Validation Patterns</h3>
+<ul>
+<li><strong>Referential integrity</strong> - All role IDs link to valid role definitions</li>
+<li><strong>Semantic consistency</strong> - Roles used appropriately for relationship types</li>
+<li><strong>Process alignment</strong> - Role assignments follow parliamentary procedures</li>
+</ul>
+<h2 id="advanced-role-analysis">Advanced Role Analysis</h2>
+<h3 id="cross-role-analysis">Cross-Role Analysis</h3>
+<pre><code class="language-bash"># Find actors who frequently switch between roles
+curl &quot;https://oda.ft.dk/api/SagAktør?%24filter=aktørid%20eq%20[ID]&amp;%24expand=SagAktørRolle&quot; 
+
+# Analyze role co-occurrence patterns
+curl &quot;https://oda.ft.dk/api/SagAktør?%24filter=sagid%20eq%20[ID]&amp;%24expand=Aktør,SagAktørRolle&quot;
+</code></pre>
+<h3 id="temporal-role-evolution">Temporal Role Evolution</h3>
+<pre><code class="language-bash"># Track role changes over time
+curl &quot;https://oda.ft.dk/api/SagAktør?%24filter=opdateringsdato%20gt%20datetime'2025-01-01'&amp;%24expand=SagAktørRolle&quot;
+
+# Monitor new relationship creation
+curl &quot;https://oda.ft.dk/api/DokumentAktør?%24filter=opdateringsdato%20gt%20datetime'2025-09-01'&amp;%24expand=DokumentAktørRolle&quot;
+</code></pre>
+<h2 id="implementation-best-practices">Implementation Best Practices</h2>
+<h3 id="query-optimization">Query Optimization</h3>
+<ol>
+<li><strong>Filter by role</strong> - Role-based filtering is well-optimized</li>
+<li><strong>Use specific role IDs</strong> - More efficient than string matching</li>
+<li><strong>Combine role filters</strong> - Use <code>in</code> operator for multiple roles</li>
+<li><strong>Limit expansions</strong> - Only expand needed related entities</li>
+</ol>
+<h3 id="analysis-strategies">Analysis Strategies</h3>
+<ol>
+<li><strong>Start with roles</strong> - Begin analysis with role-based queries</li>
+<li><strong>Combine role systems</strong> - Cross-reference case and document roles</li>
+<li><strong>Use temporal filters</strong> - Add date ranges for focused analysis</li>
+<li><strong>Aggregate by role</strong> - Group results by role type for patterns</li>
+</ol>
+<h2 id="conclusion">Conclusion</h2>
+<p>The role systems in the Danish Parliament API represent one of the most sophisticated relationship modeling approaches in any government API. By providing semantic context to entity relationships, these systems enable:</p>
+<ul>
+<li><strong>Precise understanding</strong> of parliamentary processes</li>
+<li><strong>Rich analytical capabilities</strong> for democratic research</li>
+<li><strong>Historical consistency</strong> for longitudinal studies  </li>
+<li><strong>Network analysis</strong> of political relationships</li>
+<li><strong>Accountability tracking</strong> through government processes</li>
+</ul>
+<p>The 23 case-actor roles and 25 document-actor roles, combined with supporting role systems, create a comprehensive semantic layer that transforms raw data connections into meaningful insights about how parliamentary democracy actually functions in practice.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

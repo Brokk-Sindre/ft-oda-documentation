@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Python Client Library - Danish Parliament API Code Examples - Test</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Test</a>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#python-client-library" class="nav-link">Python Client Library</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#installation" class="nav-link">Installation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#quick-start" class="nav-link">Quick Start</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#features" class="nav-link">Features</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#client-libraries" class="nav-link">Client Libraries</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#examples" class="nav-link">Examples</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#error-handling" class="nav-link">Error Handling</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#best-practices" class="nav-link">Best Practices</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="python-client-library">Python Client Library</h1>
+<p>A production-ready Python client for the Danish Parliament API (oda.ft.dk) with comprehensive error handling, pagination support, and async capabilities.</p>
+<h2 id="installation">Installation</h2>
+<pre><code class="language-bash">pip install requests  # Required dependency
+# For async support:
+pip install aiohttp
+</code></pre>
+<h2 id="quick-start">Quick Start</h2>
+<pre><code class="language-python">from danish_parliament_api import DanishParliamentAPI
+
+# Initialize client
+api = DanishParliamentAPI()
+
+# Get recent cases
+cases = api.get_cases(top=10)
+print(f&quot;Found {len(cases['value'])} cases&quot;)
+
+# Search for climate legislation
+climate_cases = api.get_cases(filter_expr=&quot;substringof('klima', titel)&quot;)
+print(f&quot;Climate cases: {len(climate_cases['value'])}&quot;)
+
+# Get voting records for a politician
+votes = api.get_voting_records(&quot;Frank Aaen&quot;)
+print(f&quot;Found {len(votes)} votes&quot;)
+</code></pre>
+<h2 id="features">Features</h2>
+<ul>
+<li><strong>Production-Ready</strong>: Comprehensive error handling and retry logic</li>
+<li><strong>Pagination Support</strong>: Automatic handling of large datasets</li>
+<li><strong>Type Hints</strong>: Full type annotations for better IDE support</li>
+<li><strong>Async Support</strong>: Both sync and async clients available</li>
+<li><strong>Rate Limiting</strong>: Built-in request throttling</li>
+<li><strong>Caching</strong>: Optional response caching</li>
+</ul>
+<h2 id="client-libraries">Client Libraries</h2>
+<ol>
+<li><strong><a href="basic-client/">Basic Client</a></strong> - Complete synchronous client</li>
+<li><strong><a href="pagination/">Pagination</a></strong> - Large dataset handling</li>
+<li><strong><a href="error-handling/">Error Handling</a></strong> - Robust error patterns</li>
+<li><strong><a href="async-client/">Async Client</a></strong> - Concurrent requests</li>
+</ol>
+<h2 id="examples">Examples</h2>
+<h3 id="parliamentary-monitoring">Parliamentary Monitoring</h3>
+<pre><code class="language-python"># Monitor recent activity
+recent_changes = api.get_recent_changes(hours_back=4)
+for case in recent_changes['value']:
+    print(f&quot;Updated: {case['titel']} at {case['opdateringsdato']}&quot;)
+</code></pre>
+<h3 id="voting-analysis">Voting Analysis</h3>
+<pre><code class="language-python"># Get all votes by party in a specific session
+votes = api.get_voting_session_details(12345, expand_actors=True)
+party_votes = api.analyze_party_voting(votes)
+</code></pre>
+<h3 id="document-tracking">Document Tracking</h3>
+<pre><code class="language-python"># Find documents with file attachments
+docs = api.get_documents_with_files(
+    filter_expr=&quot;substringof('budget', titel)&quot;
+)
+</code></pre>
+<h2 id="error-handling">Error Handling</h2>
+<p>The client handles all common API errors:</p>
+<ul>
+<li><strong>HTTP 400</strong>: Invalid OData syntax - provides detailed error message</li>
+<li><strong>HTTP 404</strong>: Invalid entity or ID - graceful fallback</li>
+<li><strong>HTTP 501</strong>: Unsupported operations - clear error messages</li>
+<li><strong>Network errors</strong>: Automatic retry with exponential backoff</li>
+<li><strong>Rate limiting</strong>: Built-in throttling to respect API limits</li>
+</ul>
+<h2 id="best-practices">Best Practices</h2>
+<ol>
+<li><strong>Use pagination</strong> for large datasets (max 100 records per request)</li>
+<li><strong>Always URL encode</strong> OData parameters (<code>%24</code> not <code>$</code>)</li>
+<li><strong>Handle empty results</strong> gracefully</li>
+<li><strong>Use field selection</strong> (<code>$select</code>) for better performance</li>
+<li><strong>Cache responses</strong> when appropriate</li>
+</ol></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

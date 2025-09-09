@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../../img/favicon.ico">
+        <title>Relationship Expansion Documentation - Test</title>
+        <link href="../../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../../css/brands.min.css" rel="stylesheet">
+        <link href="../../../css/solid.min.css" rel="stylesheet">
+        <link href="../../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../../..">Test</a>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#relationship-expansion-documentation" class="nav-link">Relationship Expansion Documentation</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#expand-syntax-overview" class="nav-link">$expand Syntax Overview</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#single-relationship-expansion" class="nav-link">Single Relationship Expansion</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#multiple-relationship-expansion" class="nav-link">Multiple Relationship Expansion</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#nested-relationship-expansion" class="nav-link">Nested Relationship Expansion</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#junction-table-expansion-patterns" class="nav-link">Junction Table Expansion Patterns</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#real-world-expansion-examples" class="nav-link">Real-World Expansion Examples</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#error-handling-in-expansions" class="nav-link">Error Handling in Expansions</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#performance-optimization-strategies" class="nav-link">Performance Optimization Strategies</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#complete-entity-relationship-map" class="nav-link">Complete Entity Relationship Map</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#advanced-expansion-patterns" class="nav-link">Advanced Expansion Patterns</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#best-practices-summary" class="nav-link">Best Practices Summary</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#quick-reference" class="nav-link">Quick Reference</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="relationship-expansion-documentation">Relationship Expansion Documentation</h1>
+<p>The Danish Parliament API's <code>$expand</code> parameter allows you to include related data in a single request, dramatically reducing the number of API calls needed. This guide covers all expansion patterns, performance implications, and junction table strategies.</p>
+<h2 id="expand-syntax-overview">$expand Syntax Overview</h2>
+<p>The <code>$expand</code> parameter follows <strong>OData 3.0 expansion syntax</strong>:</p>
+<h3 id="basic-expansion-patterns">Basic Expansion Patterns</h3>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Purpose</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Single relationship</td>
+<td>Include one related entity</td>
+<td><code>$expand=Sagskategori</code></td>
+</tr>
+<tr>
+<td>Multiple relationships</td>
+<td>Include several related entities</td>
+<td><code>$expand=Sagskategori,Sagstrin</code></td>
+</tr>
+<tr>
+<td>Nested expansion</td>
+<td>Multi-level relationship traversal</td>
+<td><code>$expand=Stemme/Aktør</code></td>
+</tr>
+<tr>
+<td>Complex nested</td>
+<td>Multiple nested relationships</td>
+<td><code>$expand=SagAktør/Aktør,SagDokument/Dokument</code></td>
+</tr>
+</tbody>
+</table>
+<p>!!! warning "URL Encoding Required"
+    Always use <code>%24expand</code> instead of <code>$expand</code> in URLs:
+    <code> Correct: ?%24expand=Sagskategori
+    L Wrong: ?$expand=Sagskategori</code></p>
+<h2 id="single-relationship-expansion">Single Relationship Expansion</h2>
+<h3 id="core-entity-expansions">Core Entity Expansions</h3>
+<h4 id="sag-cases-expansions">Sag (Cases) Expansions</h4>
+<pre><code class="language-bash"># Cases with their categories
+curl &quot;https://oda.ft.dk/api/Sag?%24expand=Sagskategori&amp;%24top=3&quot;
+
+# Cases with their status information
+curl &quot;https://oda.ft.dk/api/Sag?%24expand=Sagsstatus&amp;%24top=3&quot;
+
+# Cases with their type information
+curl &quot;https://oda.ft.dk/api/Sag?%24expand=Sagstype&amp;%24top=3&quot;
+
+# Cases with parliamentary period
+curl &quot;https://oda.ft.dk/api/Sag?%24expand=Periode&amp;%24top=3&quot;
+</code></pre>
+<h4 id="aktr-actors-expansions">Aktør (Actors) Expansions</h4>
+<pre><code class="language-bash"># Actors with their type information
+curl &quot;https://oda.ft.dk/api/Aktør?%24expand=Aktørtype&amp;%24top=5&quot;
+</code></pre>
+<h4 id="stemme-votes-expansions">Stemme (Votes) Expansions</h4>
+<pre><code class="language-bash"># Individual votes with voting session details
+curl &quot;https://oda.ft.dk/api/Stemme?%24expand=Afstemning&amp;%24top=10&quot;
+
+# Individual votes with politician details
+curl &quot;https://oda.ft.dk/api/Stemme?%24expand=Aktør&amp;%24top=10&quot;
+
+# Individual votes with vote type
+curl &quot;https://oda.ft.dk/api/Stemme?%24expand=Stemmetype&amp;%24top=10&quot;
+</code></pre>
+<h4 id="dokument-documents-expansions">Dokument (Documents) Expansions</h4>
+<pre><code class="language-bash"># Documents with their type
+curl &quot;https://oda.ft.dk/api/Dokument?%24expand=Dokumenttype&amp;%24top=5&quot;
+
+# Documents with attached files
+curl &quot;https://oda.ft.dk/api/Dokument?%24expand=Fil&amp;%24top=5&quot;
+
+# Documents with their status
+curl &quot;https://oda.ft.dk/api/Dokument?%24expand=Dokumentstatus&amp;%24top=5&quot;
+</code></pre>
+<h2 id="multiple-relationship-expansion">Multiple Relationship Expansion</h2>
+<p>Expand several relationships in one request using comma separation:</p>
+<h3 id="common-multi-expansion-patterns">Common Multi-Expansion Patterns</h3>
+<pre><code class="language-bash"># Cases with category and status
+curl &quot;https://oda.ft.dk/api/Sag?%24expand=Sagskategori,Sagsstatus&amp;%24top=3&quot;
+
+# Cases with category, status, and type  
+curl &quot;https://oda.ft.dk/api/Sag?%24expand=Sagskategori,Sagsstatus,Sagstype&amp;%24top=2&quot;
+
+# Cases with steps and documents
+curl &quot;https://oda.ft.dk/api/Sag?%24expand=Sagstrin,SagDokument&amp;%24top=2&quot;
+
+# Votes with session, politician, and vote type
+curl &quot;https://oda.ft.dk/api/Stemme?%24expand=Afstemning,Aktør,Stemmetype&amp;%24top=5&quot;
+</code></pre>
+<h3 id="performance-considerations-for-multiple-expansions">Performance Considerations for Multiple Expansions</h3>
+<table>
+<thead>
+<tr>
+<th>Expansion Count</th>
+<th>Response Time</th>
+<th>Recommendation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1-2 expansions</td>
+<td>~90-150ms</td>
+<td> Optimal</td>
+</tr>
+<tr>
+<td>3-4 expansions</td>
+<td>~200-400ms</td>
+<td>  Monitor performance</td>
+</tr>
+<tr>
+<td>5+ expansions</td>
+<td>~500ms+</td>
+<td>L Consider multiple requests</td>
+</tr>
+</tbody>
+</table>
+<h2 id="nested-relationship-expansion">Nested Relationship Expansion</h2>
+<p>Navigate through multiple levels of relationships:</p>
+<h3 id="two-level-expansions-most-common">Two-Level Expansions (Most Common)</h3>
+<pre><code class="language-bash"># Votes with politician biography information  
+curl &quot;https://oda.ft.dk/api/Stemme?%24expand=Aktør&amp;%24top=5&quot;
+# Note: Aktør includes biografi field directly
+
+# Cases with actor relationships and actor details
+curl &quot;https://oda.ft.dk/api/Sag?%24expand=SagAktør/Aktør&amp;%24top=2&quot;
+
+# Cases with document relationships and document details
+curl &quot;https://oda.ft.dk/api/Sag?%24expand=SagDokument/Dokument&amp;%24top=2&quot;
+
+# Voting sessions with individual votes and politicians
+curl &quot;https://oda.ft.dk/api/Afstemning?%24expand=Stemme/Aktør&amp;%24top=1&quot;
+</code></pre>
+<h3 id="three-level-expansions-maximum-depth">Three-Level Expansions (Maximum Depth)</h3>
+<pre><code class="language-bash"># Documents with actor relationships and full actor details
+curl &quot;https://oda.ft.dk/api/Dokument?%24expand=DokumentAktør/Aktør/Aktørtype&amp;%24top=1&quot;
+
+# Cases with steps and step documents
+curl &quot;https://oda.ft.dk/api/Sag?%24expand=Sagstrin/SagstrinDokument/Dokument&amp;%24top=1&quot;
+</code></pre>
+<p>!!! danger "Performance Warning"
+    <strong>Three-level expansions can be very slow</strong> (~2+ seconds). Use sparingly and with small <code>$top</code> values.</p>
+<h2 id="junction-table-expansion-patterns">Junction Table Expansion Patterns</h2>
+<p>The Danish Parliament API uses junction tables extensively to model complex relationships. Master these patterns for effective data access.</p>
+<h3 id="sagaktr-case-actor-junction">SagAktør (Case-Actor Junction)</h3>
+<p>The <code>SagAktør</code> entity connects cases to actors with 23 different role types:</p>
+<pre><code class="language-bash"># Cases with all related actors and their roles
+curl &quot;https://oda.ft.dk/api/Sag?%24expand=SagAktør&amp;%24top=2&quot;
+
+# Cases with actor details through junction table
+curl &quot;https://oda.ft.dk/api/Sag?%24expand=SagAktør/Aktør&amp;%24top=2&quot;
+
+# Cases with actor details AND role information
+curl &quot;https://oda.ft.dk/api/Sag?%24expand=SagAktør/Aktør,SagAktør/SagAktørRolle&amp;%24top=2&quot;
+
+# Direct junction table access with full expansion
+curl &quot;https://oda.ft.dk/api/SagAktør?%24expand=Sag,Aktør,SagAktørRolle&amp;%24top=10&quot;
+</code></pre>
+<h3 id="dokumentaktr-document-actor-junction">DokumentAktør (Document-Actor Junction)</h3>
+<p>The <code>DokumentAktør</code> entity connects documents to actors with 25 role types:</p>
+<pre><code class="language-bash"># Documents with all related actors  
+curl &quot;https://oda.ft.dk/api/Dokument?%24expand=DokumentAktør&amp;%24top=3&quot;
+
+# Documents with actor details through junction
+curl &quot;https://oda.ft.dk/api/Dokument?%24expand=DokumentAktør/Aktør&amp;%24top=3&quot;
+
+# Direct access to document-actor relationships
+curl &quot;https://oda.ft.dk/api/DokumentAktør?%24expand=Dokument,Aktør,DokumentAktørRolle&amp;%24top=10&quot;
+</code></pre>
+<h3 id="sagdokument-case-document-junction">SagDokument (Case-Document Junction)</h3>
+<pre><code class="language-bash"># Cases with all related documents
+curl &quot;https://oda.ft.dk/api/Sag?%24expand=SagDokument&amp;%24top=2&quot;
+
+# Cases with full document details
+curl &quot;https://oda.ft.dk/api/Sag?%24expand=SagDokument/Dokument&amp;%24top=2&quot;
+
+# Documents attached to cases with relationship info
+curl &quot;https://oda.ft.dk/api/SagDokument?%24expand=Sag,Dokument,SagDokumentRolle&amp;%24top=10&quot;
+</code></pre>
+<h2 id="real-world-expansion-examples">Real-World Expansion Examples</h2>
+<h3 id="political-analysis-expansions">Political Analysis Expansions</h3>
+<h4 id="get-complete-politician-voting-records">Get Complete Politician Voting Records</h4>
+<pre><code class="language-bash"># All votes by Frank Aaen with session details
+curl &quot;https://oda.ft.dk/api/Stemme?%24filter=Aktør/navn%20eq%20'Frank%20Aaen'&amp;%24expand=Afstemning,Aktør&amp;%24top=20&quot;
+</code></pre>
+<h4 id="get-legislative-process-details">Get Legislative Process Details</h4>
+<pre><code class="language-bash"># Climate legislation with complete process information
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=substringof('klima',titel)&amp;%24expand=Sagstrin,SagAktør/Aktør&amp;%24top=3&quot;
+</code></pre>
+<h4 id="get-committee-work-overview">Get Committee Work Overview</h4>
+<pre><code class="language-bash"># Cases handled by specific committees with actor details
+curl &quot;https://oda.ft.dk/api/SagAktør?%24filter=substringof('udvalg',Aktør/navn)&amp;%24expand=Sag,Aktør&amp;%24top=10&quot;
+</code></pre>
+<h3 id="document-analysis-expansions">Document Analysis Expansions</h3>
+<h4 id="get-complete-document-context">Get Complete Document Context</h4>
+<pre><code class="language-bash"># Documents with authors and attached files
+curl &quot;https://oda.ft.dk/api/Dokument?%24expand=DokumentAktør/Aktør,Fil&amp;%24top=5&quot;
+</code></pre>
+<h4 id="get-parliamentary-meeting-records">Get Parliamentary Meeting Records</h4>
+<pre><code class="language-bash"># Meetings with agenda items and related documents
+curl &quot;https://oda.ft.dk/api/Møde?%24expand=Dagsordenspunkt&amp;%24top=3&quot;
+</code></pre>
+<h3 id="voting-analysis-expansions">Voting Analysis Expansions</h3>
+<h4 id="complete-voting-session-analysis">Complete Voting Session Analysis</h4>
+<pre><code class="language-bash"># Voting sessions with all individual votes and politicians
+curl &quot;https://oda.ft.dk/api/Afstemning?%24expand=Stemme/Aktør&amp;%24top=1&quot;
+</code></pre>
+<p>!!! warning "Performance Impact"
+    This query can take 2+ seconds due to the large number of individual votes per session.</p>
+<h4 id="efficient-voting-analysis-alternative">Efficient Voting Analysis Alternative</h4>
+<pre><code class="language-bash"># Get voting session details first
+curl &quot;https://oda.ft.dk/api/Afstemning?%24top=1&amp;%24expand=Møde&quot;
+
+# Then get votes for specific session  
+curl &quot;https://oda.ft.dk/api/Stemme?%24filter=afstemningid%20eq%2012345&amp;%24expand=Aktør&amp;%24top=100&quot;
+</code></pre>
+<h2 id="error-handling-in-expansions">Error Handling in Expansions</h2>
+<h3 id="valid-vs-invalid-expansion-names">Valid vs. Invalid Expansion Names</h3>
+<h4 id="valid-expansions-http-200">Valid Expansions (HTTP 200)</h4>
+<pre><code class="language-bash"># These work correctly
+curl &quot;https://oda.ft.dk/api/Sag?%24expand=Sagskategori&amp;%24top=1&quot;         # 
+curl &quot;https://oda.ft.dk/api/Sag?%24expand=SagAktør/Aktør&amp;%24top=1&quot;       #   
+curl &quot;https://oda.ft.dk/api/Stemme?%24expand=Afstemning,Aktør&amp;%24top=1&quot;  # 
+</code></pre>
+<h4 id="invalid-expansions-http-400">Invalid Expansions (HTTP 400)</h4>
+<pre><code class="language-bash"># These return HTTP 400 Bad Request
+curl -i &quot;https://oda.ft.dk/api/Sag?%24expand=NonExistentRelation&amp;%24top=1&quot;     # L
+curl -i &quot;https://oda.ft.dk/api/Sag?%24expand=InvalidPath/BadEntity&amp;%24top=1&quot;   # L
+</code></pre>
+<h3 id="error-response-format">Error Response Format</h3>
+<pre><code class="language-json">{
+  &quot;odata.error&quot;: {
+    &quot;code&quot;: &quot;&quot;,
+    &quot;message&quot;: {
+      &quot;lang&quot;: &quot;en-US&quot;, 
+      &quot;value&quot;: &quot;Could not find a property named 'NonExistentRelation'...&quot;
+    }
+  }
+}
+</code></pre>
+<h2 id="performance-optimization-strategies">Performance Optimization Strategies</h2>
+<h3 id="1-strategic-expansion-selection">1. Strategic Expansion Selection</h3>
+<pre><code class="language-bash"># Efficient: Only expand what you need
+curl &quot;https://oda.ft.dk/api/Sag?%24expand=Sagskategori&amp;%24top=10&quot;
+
+# Less efficient: Expanding everything
+curl &quot;https://oda.ft.dk/api/Sag?%24expand=Sagskategori,Sagsstatus,Sagstype,SagAktør,SagDokument&amp;%24top=10&quot;
+</code></pre>
+<h3 id="2-filter-before-expansion">2. Filter Before Expansion</h3>
+<pre><code class="language-bash"># Efficient: Filter first, then expand
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=year(opdateringsdato)%20eq%202025&amp;%24expand=SagAktør/Aktør&amp;%24top=10&quot;
+
+# Less efficient: Expand first, filter gets applied to larger dataset
+curl &quot;https://oda.ft.dk/api/Sag?%24expand=SagAktør/Aktør&amp;%24filter=year(opdateringsdato)%20eq%202025&amp;%24top=10&quot;
+</code></pre>
+<h3 id="3-pagination-with-expansion">3. Pagination with Expansion</h3>
+<pre><code class="language-bash"># Efficient pattern for large expanded datasets
+for skip in {0..500..50}; do  # Note: smaller batch size with expansion
+    curl &quot;https://oda.ft.dk/api/Sag?%24expand=SagAktør/Aktør&amp;%24skip=$skip&amp;%24top=50&quot;
+    sleep 0.2  # Rate limiting for complex queries
+done
+</code></pre>
+<h3 id="4-alternative-multi-request-strategy">4. Alternative Multi-Request Strategy</h3>
+<p>Sometimes multiple simple requests are faster than complex expansions:</p>
+<pre><code class="language-python"># Python: Multi-request strategy for complex data
+import requests
+
+# Strategy 1: Single complex request (may be slow)
+complex_url = &quot;https://oda.ft.dk/api/Sag?$expand=SagAktør/Aktør,SagDokument/Dokument&amp;$top=10&quot;
+
+# Strategy 2: Multiple simple requests (may be faster)
+cases = requests.get(&quot;https://oda.ft.dk/api/Sag?$top=10&quot;).json()
+for case in cases['value']:
+    case_id = case['id']
+
+    # Get actors for this case
+    actors_url = f&quot;https://oda.ft.dk/api/SagAktør?$filter=sagid eq {case_id}&amp;$expand=Aktør&quot;
+    case['actors'] = requests.get(actors_url).json()['value']
+
+    # Get documents for this case  
+    docs_url = f&quot;https://oda.ft.dk/api/SagDokument?$filter=sagid eq {case_id}&amp;$expand=Dokument&quot;
+    case['documents'] = requests.get(docs_url).json()['value']
+</code></pre>
+<h2 id="complete-entity-relationship-map">Complete Entity Relationship Map</h2>
+<h3 id="core-entities-and-their-expansions">Core Entities and Their Expansions</h3>
+<h4 id="sag-cases-15-expandable-relationships">Sag (Cases) - 15+ Expandable Relationships</h4>
+<ul>
+<li><code>Sagskategori</code> - Case category</li>
+<li><code>Sagsstatus</code> - Case status  </li>
+<li><code>Sagstype</code> - Case type</li>
+<li><code>Periode</code> - Parliamentary period</li>
+<li><code>Sagstrin</code> - Case steps</li>
+<li><code>SagAktør</code> - Related actors (junction)</li>
+<li><code>SagDokument</code> - Related documents (junction)  </li>
+<li><code>EmneordSag</code> - Keywords (junction)</li>
+<li><code>DagsordenspunktSag</code> - Agenda items (junction)</li>
+</ul>
+<h4 id="aktr-actors-10-expandable-relationships">Aktør (Actors) - 10+ Expandable Relationships</h4>
+<ul>
+<li><code>Aktørtype</code> - Actor type</li>
+<li><code>AktørAktør</code> - Actor relationships (junction)</li>
+<li><code>SagAktør</code> - Related cases (junction)</li>
+<li><code>DokumentAktør</code> - Related documents (junction)  </li>
+<li><code>MødeAktør</code> - Meeting participation (junction)</li>
+<li><code>SagstrinAktør</code> - Case step participation (junction)</li>
+</ul>
+<h4 id="dokument-documents-8-expandable-relationships">Dokument (Documents) - 8+ Expandable Relationships</h4>
+<ul>
+<li><code>Dokumenttype</code> - Document type</li>
+<li><code>Dokumentstatus</code> - Document status</li>
+<li><code>Dokumentkategori</code> - Document category</li>
+<li><code>Fil</code> - Attached files</li>
+<li><code>DokumentAktør</code> - Related actors (junction)</li>
+<li><code>SagDokument</code> - Related cases (junction)</li>
+<li><code>EmneordDokument</code> - Keywords (junction)</li>
+</ul>
+<h2 id="advanced-expansion-patterns">Advanced Expansion Patterns</h2>
+<h3 id="conditional-expansion-based-on-entity-type">Conditional Expansion Based on Entity Type</h3>
+<pre><code class="language-python"># Python: Smart expansion based on entity characteristics
+def expand_entity_smartly(entity_name, record_id):
+    &quot;&quot;&quot;Apply optimal expansion strategy based on entity type&quot;&quot;&quot;
+
+    expansion_strategies = {
+        'Sag': 'Sagskategori,Sagsstatus',  # Core info only
+        'Aktør': 'Aktørtype',  # Type information
+        'Stemme': 'Afstemning,Aktør',  # Full voting context
+        'Dokument': 'Dokumenttype,Fil',  # Type and files
+        'Afstemning': 'Møde',  # Meeting context (not all votes - too slow)
+    }
+
+    expand = expansion_strategies.get(entity_name, '')
+    url = f&quot;https://oda.ft.dk/api/{entity_name}?$filter=id eq {record_id}&quot;
+
+    if expand:
+        url += f&quot;&amp;$expand={expand}&quot;
+
+    return requests.get(url).json()
+</code></pre>
+<h3 id="expansion-aware-pagination">Expansion-Aware Pagination</h3>
+<pre><code class="language-python"># Python: Adjust pagination batch size based on expansion complexity
+def get_expansion_batch_size(expansion_string):
+    &quot;&quot;&quot;Recommend batch size based on expansion complexity&quot;&quot;&quot;
+
+    if not expansion_string:
+        return 100  # No expansion: use maximum
+
+    expansion_count = expansion_string.count(',') + 1
+    nested_levels = expansion_string.count('/')
+
+    # Reduce batch size for complex expansions
+    if nested_levels &gt;= 2:
+        return 10  # Very complex: small batches
+    elif expansion_count &gt;= 3:
+        return 25  # Multiple expansions: medium batches  
+    else:
+        return 50  # Simple expansion: standard batches
+
+# Usage
+expansion = &quot;SagAktør/Aktør,SagDokument/Dokument&quot;
+batch_size = get_expansion_batch_size(expansion)  # Returns 10
+
+url = f&quot;https://oda.ft.dk/api/Sag?$expand={expansion}&amp;$top={batch_size}&quot;
+</code></pre>
+<h2 id="best-practices-summary">Best Practices Summary</h2>
+<ol>
+<li><strong>Use URL encoding</strong> (<code>%24expand</code> not <code>$expand</code>)</li>
+<li><strong>Start with simple expansions</strong> and add complexity gradually  </li>
+<li><strong>Filter before expanding</strong> to reduce data processing</li>
+<li><strong>Monitor response times</strong> and adjust batch sizes accordingly</li>
+<li><strong>Use junction tables strategically</strong> to access relationship data</li>
+<li><strong>Consider multi-request strategies</strong> for very complex data needs</li>
+<li><strong>Cache frequently accessed relationship data</strong> to minimize API calls</li>
+<li><strong>Test expansion paths</strong> against metadata to avoid HTTP 400 errors</li>
+</ol>
+<h2 id="quick-reference">Quick Reference</h2>
+<h3 id="most-useful-expansion-patterns">Most Useful Expansion Patterns</h3>
+<pre><code class="language-bash"># Cases with essential metadata
+?%24expand=Sagskategori,Sagsstatus
+
+# Complete voting context  
+?%24expand=Afstemning,Aktør,Stemmetype
+
+# Document with files and author
+?%24expand=Fil,DokumentAktør/Aktør
+
+# Junction table with full relationship context
+?%24expand=Sag,Aktør,SagAktørRolle
+</code></pre>
+<h3 id="performance-guidelines">Performance Guidelines</h3>
+<ul>
+<li><strong>1-2 expansions</strong>: ~90-150ms ( Optimal)</li>
+<li><strong>3+ expansions</strong>: ~200ms+ (  Monitor)  </li>
+<li><strong>Nested expansions</strong>: ~500ms+ (L Use carefully)</li>
+<li><strong>Voting with actors</strong>: ~2s+ (L Paginate aggressively)</li>
+</ul>
+<p>The Danish Parliament API's expansion capabilities provide powerful access to the complex relationships within parliamentary data. Master these patterns and you'll efficiently navigate the interconnected web of Danish democratic information.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../../js/base.js"></script>
+        <script src="../../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

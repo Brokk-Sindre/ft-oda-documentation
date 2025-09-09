@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../../../img/favicon.ico">
+        <title>Aktør (Actors) Entity - Test</title>
+        <link href="../../../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../../../css/brands.min.css" rel="stylesheet">
+        <link href="../../../../css/solid.min.css" rel="stylesheet">
+        <link href="../../../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../../../..">Test</a>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#aktr-actors-entity" class="nav-link">Aktør (Actors) Entity</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#overview" class="nav-link">Overview</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#field-reference" class="nav-link">Field Reference</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#actor-types-reference" class="nav-link">Actor Types Reference</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#common-query-examples" class="nav-link">Common Query Examples</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#relationship-expansion" class="nav-link">Relationship Expansion</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#data-analysis-examples" class="nav-link">Data Analysis Examples</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#performance-optimization" class="nav-link">Performance Optimization</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#common-use-cases" class="nav-link">Common Use Cases</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#important-notes" class="nav-link">Important Notes</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="aktr-actors-entity">Aktør (Actors) Entity</h1>
+<p>The <code>Aktør</code> entity represents all actors in the Danish parliamentary system, including politicians, committees, ministries, parliamentary groups, and other institutional actors. With <strong>18,139+ records</strong>, it provides comprehensive coverage of Danish political actors.</p>
+<h2 id="overview">Overview</h2>
+<ul>
+<li><strong>Entity Name</strong>: <code>Aktør</code></li>
+<li><strong>Endpoint</strong>: <code>https://oda.ft.dk/api/Aktør</code> (also accessible as <code>https://oda.ft.dk/api/Akt%C3%B8r</code>)</li>
+<li><strong>Total Records</strong>: 18,139+ (as of September 2025)</li>
+<li><strong>Primary Key</strong>: <code>id</code> (Int32)</li>
+<li><strong>Types</strong>: 13 different actor types (individuals to institutions)</li>
+</ul>
+<h2 id="field-reference">Field Reference</h2>
+<h3 id="core-identification-fields">Core Identification Fields</h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>Int32</td>
+<td>Primary key, unique actor identifier</td>
+<td><code>12</code></td>
+</tr>
+<tr>
+<td><code>navn</code></td>
+<td>String</td>
+<td>Full name</td>
+<td><code>"Nicolai Wammen"</code></td>
+</tr>
+<tr>
+<td><code>fornavn</code></td>
+<td>String</td>
+<td>First name</td>
+<td><code>"Nicolai"</code></td>
+</tr>
+<tr>
+<td><code>efternavn</code></td>
+<td>String</td>
+<td>Last name</td>
+<td><code>"Wammen"</code></td>
+</tr>
+<tr>
+<td><code>gruppenavnkort</code></td>
+<td>String</td>
+<td>Short group name</td>
+<td><code>"S"</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="classification-fields">Classification Fields</h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>typeid</code></td>
+<td>Int32</td>
+<td>Actor type ID (foreign key to Aktørtype)</td>
+<td><code>5</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="temporal-fields">Temporal Fields</h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>opdateringsdato</code></td>
+<td>DateTime</td>
+<td>Last update timestamp</td>
+<td><code>"2025-09-09T17:29:09.407"</code></td>
+</tr>
+<tr>
+<td><code>startdato</code></td>
+<td>DateTime</td>
+<td>Start date</td>
+<td><code>"2019-06-05T00:00:00"</code></td>
+</tr>
+<tr>
+<td><code>slutdato</code></td>
+<td>DateTime</td>
+<td>End date</td>
+<td><code>"2023-06-05T00:00:00"</code></td>
+</tr>
+<tr>
+<td><code>periodeid</code></td>
+<td>Int32</td>
+<td>Parliamentary period ID</td>
+<td><code>32</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="biographical-information">Biographical Information</h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>biografi</code></td>
+<td>String</td>
+<td>Detailed biography (HTML format)</td>
+<td><code>"&lt;div&gt;Born 1971...&lt;/div&gt;"</code></td>
+</tr>
+</tbody>
+</table>
+<p>!!! warning "Personal Data"
+    The <code>biografi</code> field contains extensive personal information including birth dates, family details, contact information, and career history. Use responsibly and consider GDPR implications.</p>
+<h2 id="actor-types-reference">Actor Types Reference</h2>
+<p>The API includes 13 different actor types (<code>Aktørtype</code>):</p>
+<table>
+<thead>
+<tr>
+<th>Type ID</th>
+<th>Name</th>
+<th>Description</th>
+<th>Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Ministerområde</td>
+<td>Ministry Area</td>
+<td><code>"Finansministeriet"</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td>Ministertitel</td>
+<td>Ministry Title</td>
+<td><code>"finansminister finansministeren"</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>Udvalg</td>
+<td>Committee</td>
+<td><code>"FIU Finansudvalget"</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td>Folketingsgruppe</td>
+<td>Parliamentary Group/Party</td>
+<td><code>"Socialdemokratiet"</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>Person</td>
+<td>Person (Official)</td>
+<td><code>"Nicolai Wammen"</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>Gruppe</td>
+<td>Group</td>
+<td>Various working groups</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Anden gruppe</td>
+<td>Other Group</td>
+<td>Miscellaneous groups</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Ministerium</td>
+<td>Ministry</td>
+<td>Full ministry entities</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Kommission</td>
+<td>Commission</td>
+<td>Parliamentary commissions</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Organisation</td>
+<td>Organization</td>
+<td>External organizations</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Parlamentarisk forsamling</td>
+<td>Parliamentary Assembly</td>
+<td>International assemblies</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Privatperson</td>
+<td>Private Person</td>
+<td>Non-official individuals</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Tværpolitisk netværk</td>
+<td>Cross-Political Network</td>
+<td>Cross-party initiatives</td>
+</tr>
+</tbody>
+</table>
+<h2 id="common-query-examples">Common Query Examples</h2>
+<h3 id="basic-queries">Basic Queries</h3>
+<pre><code class="language-bash"># Get latest 5 actors
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r?%24top=5&amp;%24orderby=opdateringsdato%20desc&quot;
+
+# Get specific actor by ID
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r(12)&quot;
+
+# Count total actors
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r?%24inlinecount=allpages&amp;%24top=1&quot;
+</code></pre>
+<h3 id="filter-by-actor-type">Filter by Actor Type</h3>
+<pre><code class="language-bash"># Get all politicians (Person type)
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r?%24filter=typeid%20eq%205&amp;%24top=10&quot;
+
+# Get all committees (Udvalg type)
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r?%24filter=typeid%20eq%203&amp;%24top=10&quot;
+
+# Get all parliamentary groups/parties
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r?%24filter=typeid%20eq%204&amp;%24top=10&quot;
+
+# Get all ministries
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r?%24filter=typeid%20eq%208&amp;%24top=10&quot;
+</code></pre>
+<h3 id="search-by-name">Search by Name</h3>
+<pre><code class="language-bash"># Find specific politician
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r?%24filter=navn%20eq%20'Nicolai%20Wammen'&quot;
+
+# Search for names containing specific text
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r?%24filter=substringof('Wammen',navn)&amp;%24top=5&quot;
+
+# Search by first name
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r?%24filter=substringof('Nicolai',fornavn)&amp;%24top=5&quot;
+
+# Search for names with Danish characters
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r?%24filter=substringof('%C3%B8',navn)&amp;%24top=5&quot;
+</code></pre>
+<h3 id="time-based-queries">Time-Based Queries</h3>
+<pre><code class="language-bash"># Actors updated today
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r?%24filter=opdateringsdato%20gt%20datetime'2025-09-09T00:00:00'&quot;
+
+# Active actors (no end date)
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r?%24filter=slutdato%20eq%20null&amp;%24top=10&quot;
+
+# Actors from specific period
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r?%24filter=periodeid%20eq%2032&amp;%24top=10&quot;
+</code></pre>
+<h3 id="field-selection">Field Selection</h3>
+<pre><code class="language-bash"># Only essential fields
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r?%24select=id,navn,typeid,opdateringsdato&amp;%24top=10&quot;
+
+# Names only
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r?%24select=navn&amp;%24filter=typeid%20eq%205&amp;%24top=10&quot;
+</code></pre>
+<h2 id="relationship-expansion">Relationship Expansion</h2>
+<h3 id="core-relationships">Core Relationships</h3>
+<pre><code class="language-bash"># Actor with type information
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r?%24expand=Aktørtype&amp;%24top=3&quot;
+
+# Actor with period information
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r?%24expand=Periode&amp;%24top=3&quot;
+</code></pre>
+<h3 id="case-relationships">Case Relationships</h3>
+<pre><code class="language-bash"># Actors involved in cases (may be large response)
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r?%24expand=SagAktør/Sag&amp;%24top=1&quot;
+
+# Actor roles in cases
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r?%24expand=SagAktør/SagAktørRolle&amp;%24top=3&quot;
+</code></pre>
+<h3 id="voting-relationships">Voting Relationships</h3>
+<pre><code class="language-bash"># Actor voting records (use carefully - can be very large)
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r?%24expand=Stemme&amp;%24filter=typeid%20eq%205&amp;%24top=1&quot;
+</code></pre>
+<h3 id="document-relationships">Document Relationships</h3>
+<pre><code class="language-bash"># Actors involved in documents
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r?%24expand=DokumentAktør/Dokument&amp;%24top=3&quot;
+</code></pre>
+<h2 id="data-analysis-examples">Data Analysis Examples</h2>
+<h3 id="political-analysis">Political Analysis</h3>
+<pre><code class="language-bash"># Get all current politicians
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r?%24filter=typeid%20eq%205%20and%20slutdato%20eq%20null&amp;%24orderby=navn&amp;%24select=navn,gruppenavnkort&quot;
+
+# Politicians by party (group)
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r?%24filter=gruppenavnkort%20eq%20'S'&amp;%24select=navn,fornavn,efternavn&quot;
+
+# Committee membership analysis
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r?%24filter=typeid%20eq%203&amp;%24select=navn&amp;%24orderby=navn&quot;
+</code></pre>
+<h3 id="institutional-analysis">Institutional Analysis</h3>
+<pre><code class="language-bash"># All ministry entities
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r?%24filter=typeid%20eq%201%20or%20typeid%20eq%208&amp;%24select=navn,typeid&amp;%24orderby=navn&quot;
+
+# Parliamentary committees
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r?%24filter=typeid%20eq%203&amp;%24select=navn&amp;%24orderby=navn&quot;
+
+# Political parties/groups
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r?%24filter=typeid%20eq%204&amp;%24select=navn&amp;%24orderby=navn&quot;
+</code></pre>
+<h3 id="historical-analysis">Historical Analysis</h3>
+<pre><code class="language-bash"># Former actors (with end dates)
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r?%24filter=slutdato%20ne%20null&amp;%24select=navn,startdato,slutdato&amp;%24top=10&quot;
+
+# Actors by period
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r?%24expand=Periode&amp;%24filter=periodeid%20eq%2031&amp;%24select=navn,Periode/titel&amp;%24top=10&quot;
+</code></pre>
+<h2 id="performance-optimization">Performance Optimization</h2>
+<h3 id="use-field-selection">Use Field Selection</h3>
+<pre><code class="language-bash"># Good: Only request needed fields
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r?%24select=navn,typeid&amp;%24top=100&quot;
+
+# Avoid: Requesting biography field unnecessarily (very large HTML content)
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r?%24select=biografi&amp;%24top=10&quot;  # Can be 10KB+ per record
+</code></pre>
+<h3 id="efficient-actor-lookups">Efficient Actor Lookups</h3>
+<pre><code class="language-bash"># Fast politician lookup by exact name
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r?%24filter=navn%20eq%20'Nicolai%20Wammen'&amp;%24top=1&quot;
+
+# Efficient type-based filtering
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r?%24filter=typeid%20eq%205&amp;%24select=navn&amp;%24top=100&quot;
+</code></pre>
+<h3 id="pagination-for-large-sets">Pagination for Large Sets</h3>
+<pre><code class="language-bash"># Paginate through all politicians
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r?%24filter=typeid%20eq%205&amp;%24skip=0&amp;%24top=100&quot;
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r?%24filter=typeid%20eq%205&amp;%24skip=100&amp;%24top=100&quot;
+</code></pre>
+<h2 id="common-use-cases">Common Use Cases</h2>
+<h3 id="1-politician-directory">1. Politician Directory</h3>
+<pre><code class="language-python">def get_current_politicians():
+    &quot;&quot;&quot;Get all current politicians with party affiliation&quot;&quot;&quot;
+    filter_query = &quot;typeid eq 5 and slutdato eq null&quot;
+    fields = &quot;navn,fornavn,efternavn,gruppenavnkort&quot;
+    return get_actors(filter_query=filter_query, select=fields, orderby=&quot;efternavn&quot;)
+</code></pre>
+<h3 id="2-committee-analysis">2. Committee Analysis</h3>
+<pre><code class="language-python">def get_committees():
+    &quot;&quot;&quot;Get all parliamentary committees&quot;&quot;&quot;
+    filter_query = &quot;typeid eq 3&quot;
+    return get_actors(filter_query=filter_query, select=&quot;navn&quot;, orderby=&quot;navn&quot;)
+</code></pre>
+<h3 id="3-ministry-mapping">3. Ministry Mapping</h3>
+<pre><code class="language-python">def get_ministries():
+    &quot;&quot;&quot;Get all ministry entities&quot;&quot;&quot;
+    filter_query = &quot;(typeid eq 1 or typeid eq 8)&quot;
+    return get_actors(filter_query=filter_query, select=&quot;navn,typeid&quot;, orderby=&quot;navn&quot;)
+</code></pre>
+<h3 id="4-voting-record-analysis">4. Voting Record Analysis</h3>
+<pre><code class="language-python">def get_politician_votes(politician_name):
+    &quot;&quot;&quot;Get voting records for specific politician&quot;&quot;&quot;
+    # First get the actor ID
+    actor = get_actors(filter_query=f&quot;navn eq '{politician_name}'&quot;, top=1)
+    if actor['value']:
+        actor_id = actor['value'][0]['id']
+        # Then get their votes
+        return get_votes(filter_query=f&quot;aktørid eq {actor_id}&quot;, expand=&quot;Afstemning&quot;)
+</code></pre>
+<h2 id="important-notes">Important Notes</h2>
+<h3 id="data-freshness">Data Freshness</h3>
+<ul>
+<li><strong>Real-time Updates</strong>: Actor records updated within hours</li>
+<li><strong>Batch Updates</strong>: Multiple actors often updated simultaneously (same timestamp)</li>
+<li><strong>Latest Example</strong>: 2025-09-09T17:29:09.407 (multiple politicians updated together)</li>
+</ul>
+<h3 id="privacy-and-gdpr-considerations">Privacy and GDPR Considerations</h3>
+<p> <strong>Personal Data Warning</strong>: The <code>biografi</code> field contains extensive personal information:
+- Birth dates and places
+- Family information (spouse names, children)
+- Direct contact information (emails, phone numbers)
+- Home addresses in some cases
+- Complete career histories</p>
+<p><strong>Recommendations:</strong>
+- Use biographical data responsibly
+- Consider data minimization principles
+- Implement appropriate data retention policies
+- Be aware of data subject rights under GDPR</p>
+<h3 id="danish-character-support">Danish Character Support</h3>
+<p> <strong>Perfect UTF-8 Support</strong>: The API handles Danish characters (ø, å, æ) flawlessly:</p>
+<pre><code class="language-bash"># These work perfectly
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r?%24filter=substringof('ø',navn)&amp;%24top=3&quot;
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r?%24filter=substringof('å',navn)&amp;%24top=3&quot;
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r?%24filter=substringof('æ',navn)&amp;%24top=3&quot;
+</code></pre>
+<h3 id="data-volume-considerations">Data Volume Considerations</h3>
+<ul>
+<li><strong>Total Records</strong>: 18,139+ actors (growing)</li>
+<li><strong>Large Biographical Data</strong>: Biography fields can be 10KB+ per record</li>
+<li><strong>Pagination Limit</strong>: Maximum 100 records per request</li>
+<li><strong>Relationship Expansions</strong>: Can significantly increase response size</li>
+</ul>
+<h3 id="related-entities">Related Entities</h3>
+<p>The <code>Aktør</code> entity connects to many other entities:</p>
+<ul>
+<li><strong>Aktørtype</strong> - Actor type classifications</li>
+<li><strong>SagAktør</strong> - Actor roles in cases (23 different role types)</li>
+<li><strong>DokumentAktør</strong> - Actor roles in documents (25 different role types)</li>
+<li><strong>Stemme</strong> - Individual voting records</li>
+<li><strong>MødeAktør</strong> - Meeting participation</li>
+<li><strong>Periode</strong> - Parliamentary periods</li>
+</ul>
+<h3 id="example-actor-records">Example Actor Records</h3>
+<p><strong>Politician (typeid=5):</strong></p>
+<pre><code class="language-json">{
+  &quot;id&quot;: 12,
+  &quot;navn&quot;: &quot;Nicolai Wammen&quot;,
+  &quot;fornavn&quot;: &quot;Nicolai&quot;, 
+  &quot;efternavn&quot;: &quot;Wammen&quot;,
+  &quot;gruppenavnkort&quot;: &quot;S&quot;,
+  &quot;typeid&quot;: 5,
+  &quot;biografi&quot;: &quot;&lt;div&gt;Born 1971...&lt;/div&gt;&quot;,
+  &quot;opdateringsdato&quot;: &quot;2025-09-09T17:29:09.407&quot;
+}
+</code></pre>
+<p><strong>Committee (typeid=3):</strong></p>
+<pre><code class="language-json">{
+  &quot;id&quot;: 1,
+  &quot;navn&quot;: &quot;FIU Finansudvalget&quot;,
+  &quot;typeid&quot;: 3,
+  &quot;opdateringsdato&quot;: &quot;2014-09-30T14:56:24.673&quot;
+}
+</code></pre>
+<p><strong>Ministry (typeid=8):</strong></p>
+<pre><code class="language-json">{
+  &quot;id&quot;: 2,
+  &quot;navn&quot;: &quot;Finansministeriet&quot;,
+  &quot;typeid&quot;: 8,
+  &quot;opdateringsdato&quot;: &quot;2014-09-30T14:56:24.673&quot;
+}
+</code></pre>
+<p>This rich actor data enables comprehensive analysis of Danish parliamentary actors, their roles, relationships, and activities across the entire political system.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../../../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../../../js/base.js"></script>
+        <script src="../../../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

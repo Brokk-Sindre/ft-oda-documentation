@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../../img/favicon.ico">
+        <title>TypeScript Client Implementation - Test</title>
+        <link href="../../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../../css/brands.min.css" rel="stylesheet">
+        <link href="../../../css/solid.min.css" rel="stylesheet">
+        <link href="../../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../../..">Test</a>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#typescript-client-implementation" class="nav-link">TypeScript Client Implementation</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#complete-type-safe-client" class="nav-link">Complete Type-Safe Client</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#key-features" class="nav-link">Key Features</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#benefits" class="nav-link">Benefits</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="typescript-client-implementation">TypeScript Client Implementation</h1>
+<p>A fully type-safe TypeScript client for the Danish Parliament API with complete IntelliSense support, compile-time error checking, and runtime type validation.</p>
+<h2 id="complete-type-safe-client">Complete Type-Safe Client</h2>
+<pre><code class="language-typescript">import {
+  APIResponse,
+  BaseEntity,
+  QueryParams,
+  Sag,
+  Aktør,
+  Afstemning,
+  Stemme,
+  Dokument,
+  Møde,
+  Fil,
+  APIError,
+  NetworkError,
+  ValidationError,
+  AnyEntity,
+  SagWithCategory,
+  AktørWithType
+} from './types';
+
+/**
+ * Production-ready TypeScript client for Danish Parliament API
+ * 
+ * Features:
+ * - Complete type safety for all 50 entities
+ * - Runtime type validation
+ * - Comprehensive error handling with typed errors
+ * - Generic request methods with type inference
+ * - Async iterator support for pagination
+ * - Built-in rate limiting and retry logic
+ */
+class DanishParliamentAPIClient {
+  private readonly baseUrl = 'https://oda.ft.dk/api/';
+  private readonly timeout: number;
+  private readonly retryAttempts: number;
+  private readonly requestDelay: number;
+  private lastRequestTime = 0;
+
+  constructor(options: {
+    timeout?: number;
+    retryAttempts?: number;
+    requestDelay?: number;
+  } = {}) {
+    this.timeout = options.timeout ?? 30000;
+    this.retryAttempts = options.retryAttempts ?? 3;
+    this.requestDelay = options.requestDelay ?? 100;
+  }
+
+  /**
+   * Generic request method with complete type safety
+   */
+  async request&lt;T extends BaseEntity&gt;(
+    entity: string,
+    params: QueryParams&lt;T&gt; = {}
+  ): Promise&lt;APIResponse&lt;T&gt;&gt; {
+    const url = this.buildUrl(entity, params);
+    return this.makeRequest&lt;T&gt;(url);
+  }
+
+  /**
+   * Get parliamentary cases with type safety
+   */
+  async getCases(params: QueryParams&lt;Sag&gt; = {}): Promise&lt;APIResponse&lt;Sag&gt;&gt; {
+    return this.request&lt;Sag&gt;('Sag', params);
+  }
+
+  /**
+   * Get parliamentary actors with type safety
+   */
+  async getActors(params: QueryParams&lt;Aktør&gt; = {}): Promise&lt;APIResponse&lt;Aktør&gt;&gt; {
+    return this.request&lt;Aktør&gt;('Aktør', params);
+  }
+
+  /**
+   * Get voting sessions with type safety
+   */
+  async getVotingSessions(params: QueryParams&lt;Afstemning&gt; = {}): Promise&lt;APIResponse&lt;Afstemning&gt;&gt; {
+    return this.request&lt;Afstemning&gt;('Afstemning', params);
+  }
+
+  /**
+   * Get individual votes with type safety
+   */
+  async getVotes(params: QueryParams&lt;Stemme&gt; = {}): Promise&lt;APIResponse&lt;Stemme&gt;&gt; {
+    return this.request&lt;Stemme&gt;('Stemme', params);
+  }
+
+  /**
+   * Get documents with type safety
+   */
+  async getDocuments(params: QueryParams&lt;Dokument&gt; = {}): Promise&lt;APIResponse&lt;Dokument&gt;&gt; {
+    return this.request&lt;Dokument&gt;('Dokument', params);
+  }
+
+  /**
+   * Get meetings with type safety
+   */
+  async getMeetings(params: QueryParams&lt;Møde&gt; = {}): Promise&lt;APIResponse&lt;Møde&gt;&gt; {
+    return this.request&lt;Møde&gt;('Møde', params);
+  }
+
+  /**
+   * Type-safe async pagination generator
+   */
+  async* paginateAll&lt;T extends BaseEntity&gt;(
+    entity: string,
+    options: {
+      batchSize?: number;
+      maxRecords?: number;
+      params?: QueryParams&lt;T&gt;;
+    } = {}
+  ): AsyncGenerator&lt;T, void, unknown&gt; {
+    const { batchSize = 100, maxRecords = Infinity, params = {} } = options;
+
+    let skip = 0;
+    let totalYielded = 0;
+    const safeBatchSize = Math.min(batchSize, 100);
+
+    while (totalYielded &lt; maxRecords &amp;&amp; skip &lt; 100000) {
+      const requestParams: QueryParams&lt;T&gt; = {
+        ...params,
+        $top: safeBatchSize,
+        $skip: skip
+      };
+
+      try {
+        const response = await this.request&lt;T&gt;(entity, requestParams);
+
+        if (!response.value || response.value.length === 0) {
+          break;
+        }
+
+        for (const record of response.value) {
+          if (totalYielded &gt;= maxRecords) {
+            return;
+          }
+
+          // Runtime type validation
+          if (this.validateEntity(record)) {
+            yield record;
+            totalYielded++;
+          }
+        }
+
+        skip += safeBatchSize;
+
+      } catch (error) {
+        console.error(`Pagination error at skip=${skip}:`, error);
+        break;
+      }
+    }
+  }
+
+  /**
+   * Get entity count with type safety
+   */
+  async getEntityCount(entity: string): Promise&lt;number&gt; {
+    const response = await this.request(entity, {
+      $inlinecount: 'allpages',
+      $top: 1
+    });
+
+    const countStr = response['odata.count'] || '0';
+    return parseInt(countStr, 10);
+  }
+
+  /**
+   * Type-safe batch requests
+   */
+  async batchRequests&lt;T extends BaseEntity&gt;(
+    requests: Array&lt;{
+      entity: string;
+      params?: QueryParams&lt;T&gt;;
+    }&gt;,
+    maxConcurrent = 5
+  ): Promise&lt;APIResponse&lt;T&gt;[]&gt; {
+    const semaphore = new Semaphore(maxConcurrent);
+
+    const executeRequest = async (request: { entity: string; params?: QueryParams&lt;T&gt; }) =&gt; {
+      await semaphore.acquire();
+      try {
+        return await this.request&lt;T&gt;(request.entity, request.params || {});
+      } finally {
+        semaphore.release();
+      }
+    };
+
+    return Promise.all(requests.map(executeRequest));
+  }
+
+  // =============================================================================
+  // SPECIALIZED TYPE-SAFE METHODS
+  // =============================================================================
+
+  /**
+   * Get cases with categories (strongly typed result)
+   */
+  async getCasesWithCategories(
+    params: Omit&lt;QueryParams&lt;Sag&gt;, '$expand'&gt; = {}
+  ): Promise&lt;APIResponse&lt;SagWithCategory&gt;&gt; {
+    const response = await this.getCases({
+      ...params,
+      $expand: 'Sagskategori'
+    });
+
+    // Runtime validation that categories are present
+    const validatedValue = response.value.filter((sag): sag is SagWithCategory =&gt; 
+      sag.Sagskategori !== undefined
+    );
+
+    return {
+      ...response,
+      value: validatedValue
+    };
+  }
+
+  /**
+   * Get actors with types (strongly typed result)
+   */
+  async getActorsWithTypes(
+    params: Omit&lt;QueryParams&lt;Aktør&gt;, '$expand'&gt; = {}
+  ): Promise&lt;APIResponse&lt;AktørWithType&gt;&gt; {
+    const response = await this.getActors({
+      ...params,
+      $expand: 'Aktørtype'
+    });
+
+    const validatedValue = response.value.filter((actor): actor is AktørWithType =&gt; 
+      actor.Aktørtype !== undefined
+    );
+
+    return {
+      ...response,
+      value: validatedValue
+    };
+  }
+
+  /**
+   * Get voting records for a politician with full type safety
+   */
+  async getVotingRecords(
+    politicianName: string,
+    options: {
+      limit?: number;
+      includeVotingDetails?: boolean;
+    } = {}
+  ): Promise&lt;Stemme[]&gt; {
+    const { limit = 1000, includeVotingDetails = true } = options;
+
+    const expandParts = ['Aktør'];
+    if (includeVotingDetails) {
+      expandParts.push('Afstemning');
+    }
+
+    const allVotes: Stemme[] = [];
+    let skip = 0;
+    const batchSize = 100;
+
+    while (allVotes.length &lt; limit &amp;&amp; skip &lt; 10000) {
+      const params: QueryParams&lt;Stemme&gt; = {
+        $expand: expandParts.join(','),
+        $filter: `Aktør/navn eq '${politicianName}'`,
+        $top: batchSize,
+        $skip: skip
+      };
+
+      const response = await this.getVotes(params);
+
+      if (!response.value || response.value.length === 0) {
+        break;
+      }
+
+      allVotes.push(...response.value);
+      skip += batchSize;
+    }
+
+    return allVotes.slice(0, limit);
+  }
+
+  /**
+   * Search with type-safe filters
+   */
+  async searchCases(searchOptions: {
+    title?: string;
+    year?: number;
+    status?: number;
+    type?: number;
+    includeCategory?: boolean;
+    includeActors?: boolean;
+    limit?: number;
+  }): Promise&lt;APIResponse&lt;Sag&gt;&gt; {
+    const { 
+      title, 
+      year, 
+      status, 
+      type, 
+      includeCategory = false, 
+      includeActors = false,
+      limit = 100 
+    } = searchOptions;
+
+    // Build filter conditions
+    const filterConditions: string[] = [];
+
+    if (title) {
+      filterConditions.push(`substringof('${title}', titel)`);
+    }
+
+    if (year) {
+      filterConditions.push(`year(opdateringsdato) eq ${year}`);
+    }
+
+    if (status !== undefined) {
+      filterConditions.push(`statusid eq ${status}`);
+    }
+
+    if (type !== undefined) {
+      filterConditions.push(`typeid eq ${type}`);
+    }
+
+    // Build expand clause
+    const expandParts: string[] = [];
+    if (includeCategory) expandParts.push('Sagskategori');
+    if (includeActors) expandParts.push('SagAktør/Aktør');
+
+    const params: QueryParams&lt;Sag&gt; = {
+      $top: Math.min(limit, 100)
+    };
+
+    if (filterConditions.length &gt; 0) {
+      params.$filter = filterConditions.join(' and ');
+    }
+
+    if (expandParts.length &gt; 0) {
+      params.$expand = expandParts.join(',');
+    }
+
+    return this.getCases(params);
+  }
+
+  /**
+   * Get recent changes with type safety
+   */
+  async getRecentChanges&lt;T extends BaseEntity&gt;(
+    entity: string,
+    hoursBack = 24
+  ): Promise&lt;APIResponse&lt;T&gt;&gt; {
+    const cutoffTime = new Date();
+    cutoffTime.setHours(cutoffTime.getHours() - hoursBack);
+    const isoTime = cutoffTime.toISOString().slice(0, 19);
+
+    const params: QueryParams&lt;T&gt; = {
+      $filter: `opdateringsdato gt datetime'${isoTime}'`,
+      $orderby: 'opdateringsdato desc',
+      $top: 100
+    };
+
+    return this.request&lt;T&gt;(entity, params);
+  }
+
+  // =============================================================================
+  // PRIVATE HELPER METHODS
+  // =============================================================================
+
+  private async rateLimit(): Promise&lt;void&gt; {
+    const elapsed = Date.now() - this.lastRequestTime;
+    if (elapsed &lt; this.requestDelay) {
+      await this.sleep(this.requestDelay - elapsed);
+    }
+    this.lastRequestTime = Date.now();
+  }
+
+  private sleep(ms: number): Promise&lt;void&gt; {
+    return new Promise(resolve =&gt; setTimeout(resolve, ms));
+  }
+
+  private buildUrl&lt;T extends BaseEntity&gt;(entity: string, params: QueryParams&lt;T&gt;): string {
+    const url = `${this.baseUrl}${entity}`;
+
+    if (Object.keys(params).length === 0) {
+      return url;
+    }
+
+    const queryParts: string[] = [];
+
+    for (const [key, value] of Object.entries(params)) {
+      if (value !== null &amp;&amp; value !== undefined) {
+        const encodedKey = key.startsWith('$') ? 
+          encodeURIComponent(key) : key;
+
+        let encodedValue: string;
+        if (Array.isArray(value)) {
+          // Handle select arrays
+          encodedValue = encodeURIComponent(value.join(','));
+        } else {
+          encodedValue = encodeURIComponent(String(value));
+        }
+
+        queryParts.push(`${encodedKey}=${encodedValue}`);
+      }
+    }
+
+    return `${url}?${queryParts.join('&amp;')}`;
+  }
+
+  private async makeRequest&lt;T extends BaseEntity&gt;(url: string): Promise&lt;APIResponse&lt;T&gt;&gt; {
+    await this.rateLimit();
+
+    for (let attempt = 0; attempt &lt; this.retryAttempts; attempt++) {
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() =&gt; controller.abort(), this.timeout);
+
+        const response = await fetch(url, {
+          signal: controller.signal,
+          headers: {
+            'Accept': 'application/json',
+            'User-Agent': 'TypeScript-DanishParliamentAPI/1.0'
+          }
+        });
+
+        clearTimeout(timeoutId);
+
+        if (response.ok) {
+          const data = await response.json();
+          return this.validateResponse&lt;T&gt;(data);
+        }
+
+        // Handle HTTP errors with typed exceptions
+        switch (response.status) {
+          case 400:
+            throw new ValidationError(
+              `Invalid query parameters. Check $expand and $filter syntax. URL: ${url}`,
+              'INVALID_QUERY'
+            );
+
+          case 404:
+            if (url.includes('/api/') &amp;&amp; url.split('/').length === 5) {
+              throw new APIError(`Entity not found: ${url.split('/').pop()}`, 'ENTITY_NOT_FOUND');
+            } else {
+              throw new APIError(`Record not found: ${url}`, 'RECORD_NOT_FOUND');
+            }
+
+          case 501:
+            throw new APIError(
+              'Write operations are not supported by this API',
+              'UNSUPPORTED_OPERATION'
+            );
+
+          default:
+            throw new APIError(`HTTP ${response.status}: ${response.statusText}`, 'HTTP_ERROR');
+        }
+
+      } catch (error) {
+        if (error instanceof APIError) {
+          throw error;
+        }
+
+        if (error.name === 'AbortError') {
+          if (attempt &lt; this.retryAttempts - 1) {
+            const waitTime = Math.pow(2, attempt) * 1000;
+            await this.sleep(waitTime);
+            continue;
+          }
+          throw new NetworkError(`Request timed out after ${this.timeout}ms`, 'TIMEOUT');
+        }
+
+        if (error.name === 'TypeError' &amp;&amp; error.message.includes('fetch')) {
+          if (attempt &lt; this.retryAttempts - 1) {
+            const waitTime = Math.pow(2, attempt) * 1000;
+            await this.sleep(waitTime);
+            continue;
+          }
+          throw new NetworkError(`Network error: ${error.message}`, 'CONNECTION_ERROR');
+        }
+
+        throw new APIError(`Unexpected error: ${error.message}`, 'UNKNOWN_ERROR');
+      }
+    }
+
+    throw new NetworkError(`Request failed after ${this.retryAttempts} attempts`, 'MAX_RETRIES_EXCEEDED');
+  }
+
+  private validateResponse&lt;T extends BaseEntity&gt;(data: any): APIResponse&lt;T&gt; {
+    // Runtime validation of API response structure
+    if (!data || typeof data !== 'object') {
+      throw new ValidationError('Invalid response format', 'INVALID_RESPONSE_FORMAT');
+    }
+
+    if (!data['odata.metadata']) {
+      throw new ValidationError('Missing odata.metadata field', 'MISSING_METADATA');
+    }
+
+    if (!Array.isArray(data.value)) {
+      throw new ValidationError('Response value is not an array', 'INVALID_VALUE_FORMAT');
+    }
+
+    return data as APIResponse&lt;T&gt;;
+  }
+
+  private validateEntity(entity: any): entity is BaseEntity {
+    // Basic validation that entity has required fields
+    return entity &amp;&amp; 
+           typeof entity === 'object' &amp;&amp; 
+           typeof entity.id === 'number' &amp;&amp;
+           typeof entity.opdateringsdato === 'string';
+  }
+}
+
+// =============================================================================
+// SPECIALIZED TYPE-SAFE ERROR CLASSES
+// =============================================================================
+
+class APIError extends Error {
+  readonly name = 'APIError' as const;
+  readonly code: string;
+  readonly timestamp: string;
+
+  constructor(message: string, code: string) {
+    super(message);
+    this.code = code;
+    this.timestamp = new Date().toISOString();
+  }
+}
+
+class NetworkError extends APIError {
+  readonly name = 'NetworkError' as const;
+  readonly connectionType: 'timeout' | 'connection_failed' | 'dns_error' | 'unknown';
+
+  constructor(message: string, connectionType: NetworkError['connectionType']) {
+    super(message, 'NETWORK_ERROR');
+    this.connectionType = connectionType;
+  }
+}
+
+class ValidationError extends APIError {
+  readonly name = 'ValidationError' as const;
+  readonly field?: string;
+
+  constructor(message: string, code: string, field?: string) {
+    super(message, code);
+    this.field = field;
+  }
+}
+
+// =============================================================================
+// UTILITY CLASSES
+// =============================================================================
+
+class Semaphore {
+  private current = 0;
+  private queue: (() =&gt; void)[] = [];
+
+  constructor(private max: number) {}
+
+  async acquire(): Promise&lt;void&gt; {
+    return new Promise(resolve =&gt; {
+      if (this.current &lt; this.max) {
+        this.current++;
+        resolve();
+      } else {
+        this.queue.push(resolve);
+      }
+    });
+  }
+
+  release(): void {
+    this.current--;
+    if (this.queue.length &gt; 0) {
+      this.current++;
+      const resolve = this.queue.shift()!;
+      resolve();
+    }
+  }
+}
+
+// =============================================================================
+// USAGE EXAMPLES
+// =============================================================================
+
+/**
+ * Example usage with full type safety
+ */
+async function exampleUsage() {
+  const api = new DanishParliamentAPIClient({
+    timeout: 60000,
+    retryAttempts: 5,
+    requestDelay: 200
+  });
+
+  try {
+    // Type-safe case retrieval with IntelliSense
+    const cases = await api.getCases({
+      $filter: &quot;substringof('klima', titel)&quot;,
+      $expand: &quot;Sagskategori&quot;,
+      $orderby: &quot;opdateringsdato desc&quot;,
+      $top: 50
+    });
+
+    // Full type safety - TypeScript knows all properties
+    cases.value.forEach(case =&gt; {
+      console.log(`Case ${case.id}: ${case.titel}`);
+      console.log(`Status: ${case.statusid}`);
+      console.log(`Category: ${case.Sagskategori?.kategori ?? 'No category'}`);
+      console.log(`Updated: ${new Date(case.opdateringsdato).toLocaleDateString()}`);
+    });
+
+    // Type-safe pagination
+    console.log('Processing all climate cases...');
+    let count = 0;
+    for await (const case of api.paginateAll&lt;Sag&gt;('Sag', {
+      maxRecords: 500,
+      params: { $filter: &quot;substringof('klima', titel)&quot; }
+    })) {
+      count++;
+      console.log(`${count}: ${case.titel.substring(0, 50)}...`);
+    }
+
+    // Strongly typed specialized methods
+    const casesWithCategories = await api.getCasesWithCategories({
+      $filter: &quot;year(opdateringsdato) eq 2025&quot;,
+      $top: 20
+    });
+
+    // TypeScript ensures Sagskategori is always present
+    casesWithCategories.value.forEach(case =&gt; {
+      console.log(`${case.titel} - ${case.Sagskategori.kategori}`); // No optional chaining needed
+    });
+
+    // Type-safe voting analysis
+    const votes = await api.getVotingRecords('Frank Aaen', {
+      limit: 100,
+      includeVotingDetails: true
+    });
+
+    console.log(`Found ${votes.length} votes`);
+
+    // Group votes by type with type safety
+    const votesByType = votes.reduce((acc, vote) =&gt; {
+      const type = vote.typeid;
+      acc[type] = (acc[type] || 0) + 1;
+      return acc;
+    }, {} as Record&lt;number, number&gt;);
+
+    console.log('Vote breakdown:', votesByType);
+
+  } catch (error) {
+    // Strongly typed error handling
+    if (error instanceof ValidationError) {
+      console.error('Validation error:', error.message);
+      console.error('Field:', error.field);
+    } else if (error instanceof NetworkError) {
+      console.error('Network error:', error.message);
+      console.error('Connection type:', error.connectionType);
+    } else if (error instanceof APIError) {
+      console.error('API error:', error.message);
+      console.error('Code:', error.code);
+    } else {
+      console.error('Unexpected error:', error);
+    }
+  }
+}
+
+// =============================================================================
+// ADVANCED TYPE-SAFE PATTERNS
+// =============================================================================
+
+/**
+ * Type-safe query builder
+ */
+class QueryBuilder&lt;T extends BaseEntity&gt; {
+  private params: QueryParams&lt;T&gt; = {};
+
+  filter(condition: string): this {
+    this.params.$filter = this.params.$filter 
+      ? `(${this.params.$filter}) and (${condition})`
+      : condition;
+    return this;
+  }
+
+  expand(relationship: string): this {
+    this.params.$expand = this.params.$expand
+      ? `${this.params.$expand},${relationship}`
+      : relationship;
+    return this;
+  }
+
+  select(fields: (keyof T)[]): this {
+    this.params.$select = fields;
+    return this;
+  }
+
+  orderBy(field: keyof T, direction: 'asc' | 'desc' = 'asc'): this {
+    this.params.$orderby = `${String(field)} ${direction}`;
+    return this;
+  }
+
+  top(count: number): this {
+    this.params.$top = Math.min(count, 100);
+    return this;
+  }
+
+  skip(count: number): this {
+    this.params.$skip = count;
+    return this;
+  }
+
+  inlineCount(): this {
+    this.params.$inlinecount = 'allpages';
+    return this;
+  }
+
+  build(): QueryParams&lt;T&gt; {
+    return { ...this.params };
+  }
+}
+
+// Usage example
+const query = new QueryBuilder&lt;Sag&gt;()
+  .filter(&quot;substringof('klima', titel)&quot;)
+  .expand('Sagskategori')
+  .select(['id', 'titel', 'statusid'])
+  .orderBy('opdateringsdato', 'desc')
+  .top(50)
+  .inlineCount()
+  .build();
+
+// Export everything
+export {
+  DanishParliamentAPIClient,
+  APIError,
+  NetworkError,
+  ValidationError,
+  QueryBuilder,
+  Semaphore
+};
+
+export default DanishParliamentAPIClient;
+</code></pre>
+<h2 id="key-features">Key Features</h2>
+<h3 id="1-complete-type-safety">1. Complete Type Safety</h3>
+<ul>
+<li><strong>Compile-time validation</strong>: Catch errors before runtime</li>
+<li><strong>IntelliSense support</strong>: Full autocomplete for all properties</li>
+<li><strong>Type inference</strong>: Automatic type detection for returned data</li>
+<li><strong>Generic methods</strong>: Flexible, reusable code with type constraints</li>
+</ul>
+<h3 id="2-runtime-validation">2. Runtime Validation</h3>
+<ul>
+<li><strong>Response structure validation</strong>: Ensures API responses match expected format</li>
+<li><strong>Entity validation</strong>: Basic checks for required fields</li>
+<li><strong>Error type validation</strong>: Strongly typed error handling</li>
+</ul>
+<h3 id="3-advanced-error-handling">3. Advanced Error Handling</h3>
+<pre><code class="language-typescript">try {
+  const cases = await api.getCases({ $filter: &quot;invalid syntax&quot; });
+} catch (error) {
+  if (error instanceof ValidationError) {
+    // Handle validation errors specifically
+    console.log(`Validation failed: ${error.message}`);
+    console.log(`Field: ${error.field}`);
+  } else if (error instanceof NetworkError) {
+    // Handle network errors
+    console.log(`Network issue: ${error.connectionType}`);
+  }
+}
+</code></pre>
+<h3 id="4-type-safe-pagination">4. Type-Safe Pagination</h3>
+<pre><code class="language-typescript">// Process all records with full type safety
+for await (const actor of api.paginateAll&lt;Aktør&gt;('Aktør', {
+  maxRecords: 1000,
+  params: { $filter: &quot;aktørtypeid eq 5&quot; } // Politicians only
+})) {
+  // actor is strongly typed as Aktør
+  console.log(`${actor.navn}: ${actor.biografi?.substring(0, 100)}...`);
+}
+</code></pre>
+<h3 id="5-specialized-methods">5. Specialized Methods</h3>
+<pre><code class="language-typescript">// Get cases with guaranteed categories (no optional chaining needed)
+const casesWithCategories = await api.getCasesWithCategories({
+  $filter: &quot;year(opdateringsdato) eq 2025&quot;
+});
+
+casesWithCategories.value.forEach(case =&gt; {
+  // TypeScript knows Sagskategori is always present
+  console.log(`${case.titel} - ${case.Sagskategori.kategori}`);
+});
+</code></pre>
+<h2 id="benefits">Benefits</h2>
+<ol>
+<li><strong>Developer Experience</strong>: Full IntelliSense, compile-time error checking</li>
+<li><strong>Maintenance</strong>: Refactoring safety, clear interfaces</li>
+<li><strong>Reliability</strong>: Runtime validation, comprehensive error handling  </li>
+<li><strong>Performance</strong>: Efficient pagination, concurrent request handling</li>
+<li><strong>Documentation</strong>: Self-documenting code with TypeScript interfaces</li>
+</ol>
+<p>This type-safe client provides a robust foundation for building production applications with the Danish Parliament API while maintaining complete type safety throughout your codebase.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../../js/base.js"></script>
+        <script src="../../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

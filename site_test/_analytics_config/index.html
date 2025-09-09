@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Google Analytics Configuration for Danish Parliament API Documentation - Test</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">Test</a>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#google-analytics-configuration-for-danish-parliament-api-documentation" class="nav-link">Google Analytics Configuration for Danish Parliament API Documentation</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#analytics-setup-guide" class="nav-link">Analytics Setup Guide</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#implementation-notes" class="nav-link">Implementation Notes</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="google-analytics-configuration-for-danish-parliament-api-documentation">Google Analytics Configuration for Danish Parliament API Documentation</h1>
+<h2 id="analytics-setup-guide">Analytics Setup Guide</h2>
+<h3 id="1-google-analytics-4-property-setup">1. Google Analytics 4 Property Setup</h3>
+<ol>
+<li>Create a new GA4 property at <a href="https://analytics.google.com">analytics.google.com</a></li>
+<li>Set property name: "Danish Parliament API Documentation"</li>
+<li>Set industry category: "Technology &gt; Software"</li>
+<li>Set business objectives: </li>
+<li>"Examine user behavior"</li>
+<li>"Measure content and product performance"</li>
+</ol>
+<h3 id="2-measurement-id-configuration">2. Measurement ID Configuration</h3>
+<p>Replace the placeholder <code>G-XXXXXXXXXX</code> in <code>mkdocs.yml</code> with your actual Measurement ID.</p>
+<h3 id="3-event-tracking-categories">3. Event Tracking Categories</h3>
+<p>Our documentation tracks the following events automatically:</p>
+<h4 id="api-usage-events">API Usage Events</h4>
+<ul>
+<li><strong>Event Category</strong>: <code>API_Usage</code></li>
+<li><strong>Actions</strong>:</li>
+<li><code>query_built</code> - When users build API queries using interactive builder</li>
+<li><code>filter_used</code> - When users add filters to queries</li>
+<li><code>expand_used</code> - When users add expand parameters</li>
+</ul>
+<h4 id="documentation-events">Documentation Events</h4>
+<ul>
+<li><strong>Event Category</strong>: <code>Documentation</code></li>
+<li><strong>Actions</strong>:</li>
+<li><code>code_copied</code> - When users copy code examples</li>
+<li><strong>Labels</strong>: Programming language (python, javascript, bash, etc.)</li>
+</ul>
+<h4 id="external-links-events">External Links Events</h4>
+<ul>
+<li><strong>Event Category</strong>: <code>External_Links</code></li>
+<li><strong>Actions</strong>:</li>
+<li><code>click</code> - When users click external links</li>
+<li><strong>Labels</strong>: Destination URL</li>
+</ul>
+<h4 id="navigation-events">Navigation Events</h4>
+<ul>
+<li><strong>Event Category</strong>: <code>Navigation</code></li>
+<li><strong>Actions</strong>:</li>
+<li><code>anchor_click</code> - When users click internal anchor links</li>
+<li><strong>Labels</strong>: Anchor target (#section-name)</li>
+</ul>
+<h4 id="search-events">Search Events</h4>
+<ul>
+<li><strong>Event Category</strong>: <code>Search</code></li>
+<li><strong>Actions</strong>:</li>
+<li><code>query</code> - When users search documentation</li>
+<li><strong>Labels</strong>: <code>short_query</code> (&lt;=10 chars) or <code>long_query</code> (&gt;10 chars)</li>
+</ul>
+<h4 id="engagement-events">Engagement Events</h4>
+<ul>
+<li><strong>Event Category</strong>: <code>Engagement</code></li>
+<li><strong>Actions</strong>:</li>
+<li><code>scroll_depth</code> - Track scrolling in 25% increments</li>
+<li><code>time_on_page</code> - Track time spent (short/medium/long)</li>
+</ul>
+<h3 id="4-recommended-goals-setup">4. Recommended Goals Setup</h3>
+<h4 id="goal-1-api-query-builder-usage">Goal 1: API Query Builder Usage</h4>
+<ul>
+<li><strong>Type</strong>: Event</li>
+<li><strong>Event Conditions</strong>: </li>
+<li>Event name equals <code>query_built</code></li>
+<li><strong>Purpose</strong>: Track how many users interact with API examples</li>
+</ul>
+<h4 id="goal-2-code-copy-engagement">Goal 2: Code Copy Engagement</h4>
+<ul>
+<li><strong>Type</strong>: Event</li>
+<li><strong>Event Conditions</strong>:</li>
+<li>Event name equals <code>code_copied</code></li>
+<li><strong>Purpose</strong>: Measure code example utility</li>
+</ul>
+<h4 id="goal-3-deep-engagement">Goal 3: Deep Engagement</h4>
+<ul>
+<li><strong>Type</strong>: Event</li>
+<li><strong>Event Conditions</strong>:</li>
+<li>Event name equals <code>scroll_depth</code></li>
+<li>Event parameter <code>value</code> greater than 50</li>
+<li><strong>Purpose</strong>: Track users who read more than half the page</li>
+</ul>
+<h4 id="goal-4-external-api-access">Goal 4: External API Access</h4>
+<ul>
+<li><strong>Type</strong>: Event</li>
+<li><strong>Event Conditions</strong>:</li>
+<li>Event name equals <code>click</code></li>
+<li>Event parameter <code>event_label</code> contains <code>oda.ft.dk</code></li>
+<li><strong>Purpose</strong>: Track users who access the actual API</li>
+</ul>
+<h3 id="5-custom-dimensions">5. Custom Dimensions</h3>
+<p>Set up these custom dimensions for better insights:</p>
+<ol>
+<li><strong>Page Section</strong> - Track which documentation section users engage with most</li>
+<li><strong>User Type</strong> - Distinguish between new and returning developers</li>
+<li><strong>Device Category</strong> - Mobile vs Desktop usage patterns</li>
+<li><strong>Programming Language Interest</strong> - Based on code copy events</li>
+</ol>
+<h3 id="6-audience-segments">6. Audience Segments</h3>
+<p>Create these segments for targeted analysis:</p>
+<h4 id="active-api-users">Active API Users</h4>
+<ul>
+<li>Users who triggered <code>API_Usage</code> events</li>
+<li>Minimum session duration: 2 minutes</li>
+</ul>
+<h4 id="code-heavy-users">Code-Heavy Users</h4>
+<ul>
+<li>Users who copied 3+ code examples</li>
+<li>Multiple <code>Documentation</code> events</li>
+</ul>
+<h4 id="mobile-users">Mobile Users</h4>
+<ul>
+<li>Device category: Mobile</li>
+<li>Useful for mobile optimization insights</li>
+</ul>
+<h4 id="research-heavy-users">Research-Heavy Users</h4>
+<ul>
+<li>High scroll depth (&gt;75%)</li>
+<li>Long time on page (&gt;5 minutes)</li>
+<li>Multiple search queries</li>
+</ul>
+<h3 id="7-reports-to-monitor">7. Reports to Monitor</h3>
+<h4 id="engagement-reports">Engagement Reports</h4>
+<ul>
+<li><strong>Pages and screens</strong>: Most viewed documentation sections</li>
+<li><strong>Events</strong>: Top triggered events and their frequency</li>
+<li><strong>Conversions</strong>: Goal completion rates</li>
+</ul>
+<h4 id="technology-reports">Technology Reports</h4>
+<ul>
+<li><strong>Browser</strong>: Ensure compatibility across browsers</li>
+<li><strong>Operating System</strong>: Desktop vs mobile usage</li>
+<li><strong>Screen Resolution</strong>: Optimize for common resolutions</li>
+</ul>
+<h4 id="acquisition-reports">Acquisition Reports</h4>
+<ul>
+<li><strong>Traffic acquisition</strong>: How users find the documentation</li>
+<li><strong>User acquisition</strong>: New vs returning user patterns</li>
+</ul>
+<h3 id="8-dashboard-recommendations">8. Dashboard Recommendations</h3>
+<p>Create a custom dashboard with:</p>
+<ol>
+<li><strong>API Usage Tile</strong></li>
+<li>Total API queries built</li>
+<li>Most popular entities</li>
+<li>
+<p>Filter usage rate</p>
+</li>
+<li>
+<p><strong>Content Performance Tile</strong></p>
+</li>
+<li>Most copied code examples</li>
+<li>Page scroll depth averages</li>
+<li>
+<p>Search query trends</p>
+</li>
+<li>
+<p><strong>User Engagement Tile</strong></p>
+</li>
+<li>Average session duration</li>
+<li>Pages per session</li>
+<li>
+<p>Bounce rate by section</p>
+</li>
+<li>
+<p><strong>Technical Performance Tile</strong></p>
+</li>
+<li>Page load times</li>
+<li>Mobile vs desktop usage</li>
+<li>Browser compatibility issues</li>
+</ol>
+<h3 id="9-privacy-considerations">9. Privacy Considerations</h3>
+<p>The analytics configuration includes:</p>
+<ul>
+<li><strong>Cookie consent</strong> - Users can opt out via Material theme consent</li>
+<li><strong>IP anonymization</strong> - Enabled by default in GA4</li>
+<li><strong>Data retention</strong> - Set to 14 months (recommended for API docs)</li>
+<li><strong>No PII collection</strong> - Only anonymous usage patterns tracked</li>
+</ul>
+<h3 id="10-regular-review-schedule">10. Regular Review Schedule</h3>
+<h4 id="weekly">Weekly</h4>
+<ul>
+<li>Check for broken external links (via External_Links events)</li>
+<li>Monitor search queries for content gaps</li>
+<li>Review mobile usage patterns</li>
+</ul>
+<h4 id="monthly">Monthly</h4>
+<ul>
+<li>Analyze code copy patterns to improve examples</li>
+<li>Review scroll depth to optimize content length</li>
+<li>Check goal conversion rates</li>
+</ul>
+<h4 id="quarterly">Quarterly</h4>
+<ul>
+<li>Update audience segments based on usage patterns</li>
+<li>Review custom dimensions effectiveness</li>
+<li>Optimize based on top user flows</li>
+</ul>
+<h2 id="implementation-notes">Implementation Notes</h2>
+<p>All event tracking is implemented in <code>assets/js/interactive.js</code> and will automatically work once the GA4 Measurement ID is configured in <code>mkdocs.yml</code>.</p>
+<p>The tracking respects user privacy and follows GDPR guidelines with opt-in cookie consent.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

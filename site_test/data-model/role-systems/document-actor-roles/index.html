@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../../img/favicon.ico">
+        <title>Document-Actor Role System (DokumentAktørRolle) - Test</title>
+        <link href="../../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../../css/brands.min.css" rel="stylesheet">
+        <link href="../../../css/solid.min.css" rel="stylesheet">
+        <link href="../../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../../..">Test</a>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#document-actor-role-system-dokumentaktrrolle" class="nav-link">Document-Actor Role System (DokumentAktørRolle)</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#overview" class="nav-link">Overview</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#complete-dokumentaktrrolle-reference" class="nav-link">Complete DokumentAktørRolle Reference</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#role-categories" class="nav-link">Role Categories</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#document-workflow-patterns" class="nav-link">Document Workflow Patterns</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#usage-statistics-and-patterns" class="nav-link">Usage Statistics and Patterns</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#query-examples" class="nav-link">Query Examples</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#api-implementation-notes" class="nav-link">API Implementation Notes</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#historical-analysis-applications" class="nav-link">Historical Analysis Applications</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#data-quality-considerations" class="nav-link">Data Quality Considerations</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#conclusion" class="nav-link">Conclusion</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="document-actor-role-system-dokumentaktrrolle">Document-Actor Role System (DokumentAktørRolle)</h1>
+<p>The DokumentAktørRolle system defines the semantic relationships between documents (Dokument) and actors (Aktør) in the Danish Parliament. This comprehensive role system captures every aspect of document creation, distribution, and interaction within the parliamentary process.</p>
+<h2 id="overview">Overview</h2>
+<p>The DokumentAktør junction table connects documents to actors, with the specific nature of the relationship defined by the DokumentAktørRolle entity. This system models the complex communication patterns and document workflows that drive parliamentary democracy.</p>
+<p><strong>Key Statistics:</strong>
+- <strong>25 distinct role types</strong> covering all document-actor interactions
+- <strong>Comprehensive coverage</strong> of parliamentary communication workflows
+- <strong>Historical consistency</strong> across decades of parliamentary documentation</p>
+<h2 id="complete-dokumentaktrrolle-reference">Complete DokumentAktørRolle Reference</h2>
+<h3 id="1-afsender-sender">1. Afsender (Sender)</h3>
+<p><strong>Danish:</strong> Afsender<br />
+<strong>English:</strong> Sender<br />
+<strong>Context:</strong> Actor who sends or originates the document<br />
+<strong>Usage:</strong> Primary attribution for document creation and transmission<br />
+<strong>Note:</strong> Appears twice in API (IDs 1 and 14) - may indicate different sender contexts  </p>
+<h3 id="2-kopi-til-copy-to">2. Kopi til (Copy To)</h3>
+<p><strong>Danish:</strong> Kopi til<br />
+<strong>English:</strong> Copy to<br />
+<strong>Context:</strong> Actor receives a copy of the document for information<br />
+<strong>Usage:</strong> Tracks document distribution for transparency and information sharing<br />
+<strong>Note:</strong> Appears twice in API (IDs 2 and 15) - may indicate different copy contexts  </p>
+<h3 id="3-stillermfu">3. Stiller/MFU</h3>
+<p><strong>Danish:</strong> Stiller/MFU<br />
+<strong>English:</strong> Submitter/MFU (Miljø- og Fødevareudvalget)<br />
+<strong>Context:</strong> Specialized role for Environment and Food Committee submissions<br />
+<strong>Usage:</strong> Committee-specific document submission role  </p>
+<h3 id="4-besvaret-af-answered-by">4. Besvaret af (Answered By)</h3>
+<p><strong>Danish:</strong> Besvaret af<br />
+<strong>English:</strong> Answered by<br />
+<strong>Context:</strong> Actor who provides official response to document/inquiry<br />
+<strong>Usage:</strong> Links questions to their official answers - crucial for accountability tracking  </p>
+<h3 id="5-minister">5. Minister</h3>
+<p><strong>Danish:</strong> Minister<br />
+<strong>English:</strong> Minister<br />
+<strong>Context:</strong> Government minister associated with the document<br />
+<strong>Usage:</strong> Links documents to responsible government ministers for accountability  </p>
+<h3 id="6-sprger-questioner">6. Spørger (Questioner)</h3>
+<p><strong>Danish:</strong> Spørger<br />
+<strong>English:</strong> Questioner<br />
+<strong>Context:</strong> Actor who asks questions in the document<br />
+<strong>Usage:</strong> Essential for parliamentary question-answer tracking  </p>
+<h3 id="7-medsprger-co-questioner">7. Medspørger (Co-questioner)</h3>
+<p><strong>Danish:</strong> Medspørger<br />
+<strong>English:</strong> Co-questioner<br />
+<strong>Context:</strong> Additional questioner supporting the primary questioner<br />
+<strong>Usage:</strong> Tracks collaborative questioning in parliamentary inquiries  </p>
+<h3 id="8-til-to">8. Til (To)</h3>
+<p><strong>Danish:</strong> Til<br />
+<strong>English:</strong> To<br />
+<strong>Context:</strong> Primary recipient of the document<br />
+<strong>Usage:</strong> Direct addressing in parliamentary correspondence  </p>
+<h3 id="9-ministeromrade-ministry-area">9. Ministerområde (Ministry Area)</h3>
+<p><strong>Danish:</strong> Ministerområde<br />
+<strong>English:</strong> Ministry area<br />
+<strong>Context:</strong> Document relates to this ministry's area of responsibility<br />
+<strong>Usage:</strong> Links documents to government department jurisdiction  </p>
+<h3 id="10-adressat-addressee">10. Adressat (Addressee)</h3>
+<p><strong>Danish:</strong> Adressat<br />
+<strong>English:</strong> Addressee<br />
+<strong>Context:</strong> Formal addressee of official communications<br />
+<strong>Usage:</strong> Official recipient designation in formal parliamentary documents  </p>
+<h3 id="11-modtager-recipient">11. Modtager (Recipient)</h3>
+<p><strong>Danish:</strong> Modtager<br />
+<strong>English:</strong> Recipient<br />
+<strong>Context:</strong> Actor who receives the document<br />
+<strong>Usage:</strong> General recipient role for document distribution tracking  </p>
+<h3 id="12-stiller-submitter">12. Stiller (Submitter)</h3>
+<p><strong>Danish:</strong> Stiller<br />
+<strong>English:</strong> Submitter<br />
+<strong>Context:</strong> Actor who formally submits the document<br />
+<strong>Usage:</strong> Attribution for document submission in parliamentary procedures  </p>
+<h3 id="13-relevant-for-relevant-for">13. Relevant for (Relevant For)</h3>
+<p><strong>Danish:</strong> Relevant for<br />
+<strong>English:</strong> Relevant for<br />
+<strong>Context:</strong> Document is relevant to this actor's interests or responsibilities<br />
+<strong>Usage:</strong> Broad relevance tagging for interested parties  </p>
+<h3 id="16-afgivet-af-submitted-by">16. Afgivet af (Submitted By)</h3>
+<p><strong>Danish:</strong> Afgivet af<br />
+<strong>English:</strong> Submitted by<br />
+<strong>Context:</strong> Actor who formally submits or delivers the document<br />
+<strong>Usage:</strong> Formal submission attribution in parliamentary processes  </p>
+<h3 id="17-bcc-blind-carbon-copy">17. BCC (Blind Carbon Copy)</h3>
+<p><strong>Danish:</strong> BCC<br />
+<strong>English:</strong> Blind Carbon Copy<br />
+<strong>Context:</strong> Actor receives blind copy - other recipients unaware<br />
+<strong>Usage:</strong> Confidential document distribution tracking  </p>
+<h3 id="18-kontakt-contact">18. Kontakt (Contact)</h3>
+<p><strong>Danish:</strong> Kontakt<br />
+<strong>English:</strong> Contact<br />
+<strong>Context:</strong> Actor serves as contact person for the document<br />
+<strong>Usage:</strong> Designated contact for follow-up or inquiries about the document  </p>
+<h3 id="19-deltager-participant">19. Deltager (Participant)</h3>
+<p><strong>Danish:</strong> Deltager<br />
+<strong>English:</strong> Participant<br />
+<strong>Context:</strong> Actor participates in document creation or process<br />
+<strong>Usage:</strong> Collaborative document development and participation tracking  </p>
+<h3 id="20-behandles-i-processed-in">20. Behandles i (Processed In)</h3>
+<p><strong>Danish:</strong> Behandles i<br />
+<strong>English:</strong> Processed in<br />
+<strong>Context:</strong> Document is processed or considered by this committee/body<br />
+<strong>Usage:</strong> Committee workflow and document processing tracking  </p>
+<h3 id="21-forslagsstiller-proposer">21. Forslagsstiller (Proposer)</h3>
+<p><strong>Danish:</strong> Forslagsstiller<br />
+<strong>English:</strong> Proposer<br />
+<strong>Context:</strong> Actor who proposes or initiates the document/proposal<br />
+<strong>Usage:</strong> Primary attribution for legislative and policy proposals  </p>
+<h3 id="22-ordfrer-for-forslagsstillerne-spokesperson-for-proposers">22. Ordfører for forslagsstillerne (Spokesperson for Proposers)</h3>
+<p><strong>Danish:</strong> Ordfører for forslagsstillerne<br />
+<strong>English:</strong> Spokesperson for proposers<br />
+<strong>Context:</strong> Designated spokesperson representing all document proposers<br />
+<strong>Usage:</strong> Key communication role for multi-party proposals  </p>
+<h3 id="23-ordfrer-for-foresprgerne-spokesperson-for-inquirers">23. Ordfører for forespørgerne (Spokesperson for Inquirers)</h3>
+<p><strong>Danish:</strong> Ordfører for forespørgerne<br />
+<strong>English:</strong> Spokesperson for inquirers<br />
+<strong>Context:</strong> Representative voice for multiple inquiring parties<br />
+<strong>Usage:</strong> Coordinated inquiry representation in parliamentary questions  </p>
+<h3 id="24-ordfrer-spokesperson">24. Ordfører (Spokesperson)</h3>
+<p><strong>Danish:</strong> Ordfører<br />
+<strong>English:</strong> Spokesperson<br />
+<strong>Context:</strong> General spokesperson role for the document<br />
+<strong>Usage:</strong> Primary representative voice for document content or position  </p>
+<h3 id="25-taler-speaker">25. Taler (Speaker)</h3>
+<p><strong>Danish:</strong> Taler<br />
+<strong>English:</strong> Speaker<br />
+<strong>Context:</strong> Actor who speaks about or presents the document content<br />
+<strong>Usage:</strong> Links documents to their verbal presentation in parliamentary proceedings  </p>
+<h2 id="role-categories">Role Categories</h2>
+<h3 id="communication-roles">Communication Roles</h3>
+<ul>
+<li><strong>Afsender</strong> - Sender</li>
+<li><strong>Til</strong> - To</li>
+<li><strong>Adressat</strong> - Addressee</li>
+<li><strong>Modtager</strong> - Recipient</li>
+<li><strong>Kopi til</strong> - Copy to</li>
+<li><strong>BCC</strong> - Blind Carbon Copy</li>
+</ul>
+<h3 id="submission-roles">Submission Roles</h3>
+<ul>
+<li><strong>Stiller</strong> - Submitter</li>
+<li><strong>Stiller/MFU</strong> - Committee-specific submitter</li>
+<li><strong>Afgivet af</strong> - Submitted by</li>
+<li><strong>Forslagsstiller</strong> - Proposer</li>
+</ul>
+<h3 id="response-roles">Response Roles</h3>
+<ul>
+<li><strong>Spørger</strong> - Questioner</li>
+<li><strong>Medspørger</strong> - Co-questioner</li>
+<li><strong>Besvaret af</strong> - Answered by</li>
+</ul>
+<h3 id="representation-roles">Representation Roles</h3>
+<ul>
+<li><strong>Ordfører</strong> - Spokesperson</li>
+<li><strong>Ordfører for forslagsstillerne</strong> - Spokesperson for proposers</li>
+<li><strong>Ordfører for forespørgerne</strong> - Spokesperson for inquirers</li>
+<li><strong>Taler</strong> - Speaker</li>
+</ul>
+<h3 id="administrative-roles">Administrative Roles</h3>
+<ul>
+<li><strong>Minister</strong> - Minister</li>
+<li><strong>Ministerområde</strong> - Ministry area</li>
+<li><strong>Kontakt</strong> - Contact</li>
+<li><strong>Behandles i</strong> - Processed in</li>
+</ul>
+<h3 id="participation-roles">Participation Roles</h3>
+<ul>
+<li><strong>Deltager</strong> - Participant</li>
+<li><strong>Relevant for</strong> - Relevant for</li>
+</ul>
+<h2 id="document-workflow-patterns">Document Workflow Patterns</h2>
+<h3 id="question-answer-flow">Question-Answer Flow</h3>
+<pre><code class="language-mermaid">graph LR
+    A[Spørger creates question] --&gt; B[Document created]
+    B --&gt; C[Til Ministry/Minister]
+    C --&gt; D[Minister receives]
+    D --&gt; E[Besvaret af Minister]
+    E --&gt; F[Response document]
+    F --&gt; G[Kopi til original questioner]
+</code></pre>
+<h3 id="legislative-proposal-flow">Legislative Proposal Flow</h3>
+<pre><code class="language-mermaid">graph LR
+    A[Forslagsstiller proposes] --&gt; B[Document created]
+    B --&gt; C[Ordfører appointed]
+    C --&gt; D[Document distributed]
+    D --&gt; E[Kopi til stakeholders]
+    E --&gt; F[Behandles i committee]
+</code></pre>
+<h3 id="committee-communication-flow">Committee Communication Flow</h3>
+<pre><code class="language-mermaid">graph LR
+    A[Stiller submits to committee] --&gt; B[Document created]
+    B --&gt; C[Behandles i committee]
+    C --&gt; D[Committee processes]
+    D --&gt; E[Response/Report]
+    E --&gt; F[Afsender committee response]
+</code></pre>
+<h2 id="usage-statistics-and-patterns">Usage Statistics and Patterns</h2>
+<h3 id="most-common-roles">Most Common Roles</h3>
+<ol>
+<li><strong>Afsender</strong> - Most frequent role - appears in nearly all documents</li>
+<li><strong>Til</strong> - Very common - primary recipient designation</li>
+<li><strong>Minister</strong> - Frequent in government-related documents</li>
+<li><strong>Kopi til</strong> - Common for information distribution</li>
+<li><strong>Besvaret af</strong> - Regular in question-answer documentation</li>
+</ol>
+<h3 id="role-combinations">Role Combinations</h3>
+<p>Common multi-role patterns for single documents:
+- <strong>Spørger + Minister + Besvaret af</strong> (Question-answer cycle)
+- <strong>Forslagsstiller + Ordfører + Kopi til</strong> (Legislative proposal)
+- <strong>Afsender + Til + Kopi til</strong> (Standard communication)</p>
+<h2 id="query-examples">Query Examples</h2>
+<h3 id="find-all-actors-for-a-specific-document">Find All Actors for a Specific Document</h3>
+<pre><code class="language-bash"># Get all actor relationships for document ID 12345
+curl &quot;https://oda.ft.dk/api/DokumentAktør?%24filter=dokumentid%20eq%2012345&amp;%24expand=Aktør,DokumentAktørRolle&quot;
+</code></pre>
+<h3 id="find-documents-by-role-type">Find Documents by Role Type</h3>
+<pre><code class="language-bash"># Find all documents where someone is a &quot;Minister&quot;
+curl &quot;https://oda.ft.dk/api/DokumentAktør?%24filter=rolleid%20eq%205&amp;%24expand=Dokument,Aktør&quot;
+
+# Find all documents with specific questioner
+curl &quot;https://oda.ft.dk/api/DokumentAktør?%24filter=rolleid%20eq%206%20and%20aktørid%20eq%2012345&quot;
+</code></pre>
+<h3 id="communication-pattern-analysis">Communication Pattern Analysis</h3>
+<pre><code class="language-bash"># Find all documents sent to a specific ministry
+curl &quot;https://oda.ft.dk/api/DokumentAktør?%24filter=rolleid%20eq%208%20and%20aktørid%20eq%20[ministry_id]&quot;
+
+# Find all documents answered by a specific minister
+curl &quot;https://oda.ft.dk/api/DokumentAktør?%24filter=rolleid%20eq%204%20and%20aktørid%20eq%20[minister_id]&quot;
+</code></pre>
+<h2 id="api-implementation-notes">API Implementation Notes</h2>
+<h3 id="role-id-mapping">Role ID Mapping</h3>
+<p>The <code>rolleid</code> field in DokumentAktør maps to the <code>id</code> field in DokumentAktørRolle:</p>
+<pre><code class="language-json">{
+  &quot;id&quot;: 789012,
+  &quot;dokumentid&quot;: 54321,
+  &quot;aktørid&quot;: 12345,
+  &quot;rolleid&quot;: 5,  // Maps to Minister role
+  &quot;opdateringsdato&quot;: &quot;2025-09-09T15:30:00&quot;
+}
+</code></pre>
+<h3 id="duplicate-role-ids">Duplicate Role IDs</h3>
+<p>Note that roles 1/14 (Afsender) and 2/15 (Kopi til) appear to be duplicates in the API. This may represent:
+- Different contexts for the same semantic role
+- Historical legacy from system evolution
+- Functional distinction not apparent in role names</p>
+<h3 id="performance-optimization">Performance Optimization</h3>
+<pre><code class="language-bash"># Efficient queries using specific role filters
+curl &quot;https://oda.ft.dk/api/DokumentAktør?%24filter=rolleid%20in%20(1,14)&amp;%24select=dokumentid,aktørid&quot;
+
+# Avoid expansion on large result sets
+curl &quot;https://oda.ft.dk/api/DokumentAktør?%24top=100&amp;%24select=dokumentid,aktørid,rolleid&quot;
+</code></pre>
+<h2 id="historical-analysis-applications">Historical Analysis Applications</h2>
+<h3 id="communication-network-analysis">Communication Network Analysis</h3>
+<p>The role system enables sophisticated analysis:</p>
+<pre><code class="language-bash"># Map minister-parliament communication patterns
+curl &quot;https://oda.ft.dk/api/DokumentAktør?%24filter=rolleid%20eq%205&amp;%24expand=Aktør&quot;
+
+# Track parliamentary questioning patterns
+curl &quot;https://oda.ft.dk/api/DokumentAktør?%24filter=rolleid%20in%20(6,7)&amp;%24expand=Aktør,Dokument&quot;
+</code></pre>
+<h3 id="democratic-accountability-tracking">Democratic Accountability Tracking</h3>
+<pre><code class="language-bash"># Find all ministerial responses
+curl &quot;https://oda.ft.dk/api/DokumentAktør?%24filter=rolleid%20eq%204&amp;%24expand=Aktør,Dokument&quot;
+
+# Track government transparency via document distribution
+curl &quot;https://oda.ft.dk/api/DokumentAktør?%24filter=rolleid%20in%20(2,15)&amp;%24expand=Dokument&quot;
+</code></pre>
+<h2 id="data-quality-considerations">Data Quality Considerations</h2>
+<h3 id="relationship-completeness">Relationship Completeness</h3>
+<ul>
+<li><strong>High coverage</strong>: Most documents have multiple role relationships</li>
+<li><strong>Historical consistency</strong>: Role semantics maintained across time periods</li>
+<li><strong>Real-time updates</strong>: New relationships created as documents are processed</li>
+</ul>
+<h3 id="role-usage-patterns">Role Usage Patterns</h3>
+<ul>
+<li><strong>Mandatory roles</strong>: Afsender appears in virtually all documents</li>
+<li><strong>Conditional roles</strong>: Minister only for government-related documents</li>
+<li><strong>Collaborative roles</strong>: Medspørger only when multiple questioners present</li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<p>The DokumentAktørRolle system with its 25 distinct roles represents the most comprehensive document-actor relationship model in any parliamentary API. It captures the full spectrum of parliamentary communication, from formal legislative proposals to informal information sharing.</p>
+<p>This role system enables detailed analysis of:</p>
+<ul>
+<li><strong>Democratic communication patterns</strong></li>
+<li><strong>Government accountability mechanisms</strong></li>
+<li><strong>Parliamentary question-answer effectiveness</strong> </li>
+<li><strong>Information distribution transparency</strong></li>
+<li><strong>Collaborative legislative processes</strong></li>
+<li><strong>Committee workflow efficiency</strong></li>
+</ul>
+<p>The granular nature of these roles makes the Danish Parliament API invaluable for researchers studying democratic transparency, government responsiveness, and parliamentary communication effectiveness. The system provides unprecedented insight into how democratic institutions actually communicate and interact in practice.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../../js/base.js"></script>
+        <script src="../../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

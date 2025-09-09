@@ -15,7 +15,7 @@ The Danish Parliament API uses sophisticated junction table patterns that go bey
 ### Pattern 1: Simple Junction Tables
 Direct many-to-many relationships without additional semantic context.
 
-**Structure:** `Entity1Id` ï¿½ï¿½ `Junction Table` ï¿½ï¿½ `Entity2Id`
+**Structure:** `Entity1Id` øø `Junction Table` øø `Entity2Id`
 
 Examples:
 - **EmneordSag** - Keywords to Cases
@@ -26,15 +26,15 @@ Examples:
 ### Pattern 2: Role-Based Junction Tables
 Many-to-many relationships with semantic roles defining the nature of the relationship.
 
-**Structure:** `Entity1Id` ï¿½ï¿½ `Junction Table` ï¿½ï¿½ `Entity2Id`
-                                    ï¿½
+**Structure:** `Entity1Id` øø `Junction Table` øø `Entity2Id`
+                                    ø
                                `Role Table`
 
 Examples:
-- **SagAktï¿½r** ï¿½ **SagAktï¿½rRolle** (23 role types)
-- **DokumentAktï¿½r** ï¿½ **DokumentAktï¿½rRolle** (25 role types)
-- **SagstrinAktï¿½r** ï¿½ **SagstrinAktï¿½rRolle**
-- **Aktï¿½rAktï¿½r** ï¿½ **Aktï¿½rAktï¿½rRolle**
+- **SagAktør** ø **SagAktørRolle** (23 role types)
+- **DokumentAktør** ø **DokumentAktørRolle** (25 role types)
+- **SagstrinAktør** ø **SagstrinAktørRolle**
+- **AktørAktør** ø **AktørAktørRolle**
 
 ### Pattern 3: Multi-Dimensional Junction Tables
 Complex relationships with multiple classification dimensions.
@@ -42,7 +42,7 @@ Complex relationships with multiple classification dimensions.
 **Structure:** Multiple classification tables provide context for junction relationships.
 
 Examples:
-- **SagDokument** ï¿½ **SagDokumentRolle**
+- **SagDokument** ø **SagDokumentRolle**
 - **SagstrinDokument** (with case step context)
 
 ## Junction Table Pattern Visualizations
@@ -201,42 +201,42 @@ flowchart TD
 
 ## Key Junction Tables
 
-### 1. SagAktï¿½r (Case-Actor Relationships)
+### 1. SagAktør (Case-Actor Relationships)
 
 **Purpose:** Links cases to participating actors with semantic roles  
 **Scale:** Millions of relationships across parliamentary history  
-**Role System:** 23 distinct role types via SagAktï¿½rRolle
+**Role System:** 23 distinct role types via SagAktørRolle
 
 **Key Fields:**
 - `id` - Unique relationship identifier
 - `sagid` - References Sag entity
-- `aktï¿½rid` - References Aktï¿½r entity
-- `rolleid` - References SagAktï¿½rRolle entity
+- `aktørid` - References Aktør entity
+- `rolleid` - References SagAktørRolle entity
 - `opdateringsdato` - Last update timestamp
 
 **Common Roles:**
 - Minister (ID 14) - Government minister responsible
 - Forslagsstiller (ID 19) - Proposer of legislation
-- Spï¿½rger (ID 10) - Questioner in parliamentary inquiries
+- Spørger (ID 10) - Questioner in parliamentary inquiries
 - Henvist til (ID 11) - Committee or body referred to
 
 **Query Example:**
 ```bash
 # Find all actors involved in a specific case
-curl "https://oda.ft.dk/api/SagAktï¿½r?%24filter=sagid%20eq%20102903&%24expand=Aktï¿½r,SagAktï¿½rRolle"
+curl "https://oda.ft.dk/api/SagAktør?%24filter=sagid%20eq%20102903&%24expand=Aktør,SagAktørRolle"
 ```
 
-### 2. DokumentAktï¿½r (Document-Actor Relationships)
+### 2. DokumentAktør (Document-Actor Relationships)
 
 **Purpose:** Links documents to participating actors with communication roles  
 **Scale:** Extensive coverage of all parliamentary documents  
-**Role System:** 25 distinct role types via DokumentAktï¿½rRolle
+**Role System:** 25 distinct role types via DokumentAktørRolle
 
 **Key Fields:**
 - `id` - Unique relationship identifier
 - `dokumentid` - References Dokument entity
-- `aktï¿½rid` - References Aktï¿½r entity
-- `rolleid` - References DokumentAktï¿½rRolle entity
+- `aktørid` - References Aktør entity
+- `rolleid` - References DokumentAktørRolle entity
 - `opdateringsdato` - Last update timestamp
 
 **Common Roles:**
@@ -249,7 +249,7 @@ curl "https://oda.ft.dk/api/SagAktï¿½r?%24filter=sagid%20eq%20102903&%24expan
 **Query Example:**
 ```bash
 # Find all documents by a specific actor
-curl "https://oda.ft.dk/api/DokumentAktï¿½r?%24filter=aktï¿½rid%20eq%2012345&%24expand=Dokument,DokumentAktï¿½rRolle"
+curl "https://oda.ft.dk/api/DokumentAktør?%24filter=aktørid%20eq%2012345&%24expand=Dokument,DokumentAktørRolle"
 ```
 
 ### 3. SagDokument (Case-Document Relationships)

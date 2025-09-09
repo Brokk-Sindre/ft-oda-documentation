@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Getting Started with Danish Parliament API - Quick Setup Guide - Test</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../css/brands.min.css" rel="stylesheet">
+        <link href="../css/solid.min.css" rel="stylesheet">
+        <link href="../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">Test</a>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#getting-started" class="nav-link">Getting Started</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#prerequisites" class="nav-link">Prerequisites</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#key-concepts" class="nav-link">Key Concepts</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#your-first-query" class="nav-link">Your First Query</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#response-structure" class="nav-link">Response Structure</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#common-query-patterns" class="nav-link">Common Query Patterns</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#understanding-the-data" class="nav-link">Understanding the Data</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#try-it-yourself-interactive-query-builder" class="nav-link">Try It Yourself - Interactive Query Builder</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#next-steps" class="nav-link">Next Steps</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#quick-reference" class="nav-link">Quick Reference</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#performance-tips" class="nav-link">Performance Tips</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#need-help" class="nav-link">Need Help?</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="getting-started">Getting Started</h1>
+<p>The Danish Parliament API (oda.ft.dk) provides unprecedented access to Denmark's parliamentary data. This guide will get you up and running in minutes.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li>Basic understanding of REST APIs</li>
+<li>Familiarity with JSON</li>
+<li>HTTP client (curl, browser, or programming language)</li>
+</ul>
+<h2 id="key-concepts">Key Concepts</h2>
+<h3 id="no-authentication-required">No Authentication Required</h3>
+<p>The API is completely open - no API keys, tokens, or registration required. Simply start making requests!</p>
+<h3 id="odata-protocol">OData Protocol</h3>
+<p>The API uses OData 3.0, providing powerful querying capabilities:</p>
+<ul>
+<li><code>$top</code> - Limit number of records (max 100)</li>
+<li><code>$skip</code> - Skip records for pagination  </li>
+<li><code>$filter</code> - Filter records by conditions</li>
+<li><code>$expand</code> - Include related data</li>
+<li><code>$select</code> - Choose specific fields</li>
+<li><code>$orderby</code> - Sort results</li>
+<li><code>$inlinecount</code> - Get total counts</li>
+</ul>
+<h3 id="danish-language">Danish Language</h3>
+<p>All content is in Danish. Key terms:</p>
+<ul>
+<li><strong>Sag</strong> = Case/Bill</li>
+<li><strong>Aktï¿½r</strong> = Actor/Person  </li>
+<li><strong>Afstemning</strong> = Voting session</li>
+<li><strong>Stemme</strong> = Individual vote</li>
+<li><strong>Dokument</strong> = Document</li>
+<li><strong>Mï¿½de</strong> = Meeting</li>
+</ul>
+<h2 id="your-first-query">Your First Query</h2>
+<p>Let's start with a simple query to get 5 recent cases:</p>
+<pre><code class="language-bash">curl &quot;https://oda.ft.dk/api/Sag?%24top=5&quot;
+</code></pre>
+<p>!!! warning "URL Encoding Critical"
+    <strong>Always use <code>%24</code> instead of <code>$</code></strong> in URLs. This is the #1 mistake developers make.</p>
+<pre><code>L Wrong: `?$top=5`
+
+ Correct: `?%24top=5`
+</code></pre>
+<h2 id="response-structure">Response Structure</h2>
+<pre><code class="language-json">{
+  &quot;odata.metadata&quot;: &quot;https://oda.ft.dk/api/$metadata#Sag&quot;,
+  &quot;value&quot;: [
+    {
+      &quot;id&quot;: 102903,
+      &quot;titel&quot;: &quot;Kommissionsmeddelelse om...&quot;,
+      &quot;offentlighedskode&quot;: &quot;O&quot;,
+      &quot;opdateringsdato&quot;: &quot;2025-09-09T17:49:11.87&quot;,
+      &quot;periodeid&quot;: 32,
+      &quot;statsbudgetsag&quot;: true,
+      &quot;statusid&quot;: 11,
+      &quot;typeid&quot;: 5
+    }
+  ]
+}
+</code></pre>
+<h2 id="common-query-patterns">Common Query Patterns</h2>
+<h3 id="filter-by-date">Filter by Date</h3>
+<pre><code class="language-bash"># Cases updated today
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=year(opdateringsdato)%20eq%202025&amp;%24top=5&quot;
+</code></pre>
+<h3 id="search-by-text">Search by Text</h3>
+<pre><code class="language-bash"># Climate-related cases
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=substringof('klima',titel)&amp;%24top=5&quot;
+</code></pre>
+<h3 id="include-related-data">Include Related Data</h3>
+<pre><code class="language-bash"># Cases with category information
+curl &quot;https://oda.ft.dk/api/Sag?%24expand=Sagskategori&amp;%24top=3&quot;
+</code></pre>
+<h3 id="pagination">Pagination</h3>
+<pre><code class="language-bash"># Get next page of results
+curl &quot;https://oda.ft.dk/api/Sag?%24skip=100&amp;%24top=100&quot;
+</code></pre>
+<h3 id="field-selection-for-performance">Field Selection for Performance</h3>
+<pre><code class="language-bash"># Only get specific fields
+curl &quot;https://oda.ft.dk/api/Sag?%24select=id,titel,opdateringsdato&amp;%24top=5&quot;
+</code></pre>
+<h2 id="understanding-the-data">Understanding the Data</h2>
+<h3 id="entity-types">Entity Types</h3>
+<p>The API contains 50 different entity types organized into logical groups:</p>
+<ul>
+<li><strong>Core Entities</strong>: Sag (Cases), Aktï¿½r (Actors), Afstemning (Voting), Stemme (Votes)</li>
+<li><strong>Documents</strong>: Dokument, Fil (Files)</li>
+<li><strong>Meetings</strong>: Mï¿½de, Dagsordenspunkt</li>
+<li><strong>Relationships</strong>: Junction tables connecting entities</li>
+<li><strong>Classifications</strong>: Status, Type, and Category entities</li>
+</ul>
+<h3 id="data-freshness">Data Freshness</h3>
+<p>The API provides exceptionally fresh data:
+- Updates within hours of parliamentary activity
+- Latest example: 2025-09-09T17:49:11.87
+- 50+ daily updates across all entities</p>
+<h2 id="try-it-yourself-interactive-query-builder">Try It Yourself - Interactive Query Builder</h2>
+<div class="query-builder"></div>
+
+<h2 id="next-steps">Next Steps</h2>
+<ol>
+<li><strong><a href="first-query/">First Query</a></strong> - Step-by-step first API call</li>
+<li><strong><a href="url-encoding/">URL Encoding</a></strong> - Master the critical encoding rules  </li>
+<li><strong><a href="no-auth/">No Authentication</a></strong> - Understanding open access</li>
+<li><strong><a href="common-mistakes/">Common Mistakes</a></strong> - Avoid these pitfalls</li>
+</ol>
+<h2 id="quick-reference">Quick Reference</h2>
+<table>
+<thead>
+<tr>
+<th>Purpose</th>
+<th>Endpoint</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cases</td>
+<td><code>/api/Sag</code></td>
+<td>Legislative bills and proposals</td>
+</tr>
+<tr>
+<td>Actors</td>
+<td><code>/api/Aktï¿½r</code></td>
+<td>Politicians, committees, ministries</td>
+</tr>
+<tr>
+<td>Votes</td>
+<td><code>/api/Afstemning</code></td>
+<td>Voting sessions</td>
+</tr>
+<tr>
+<td>Individual Votes</td>
+<td><code>/api/Stemme</code></td>
+<td>How each politician voted</td>
+</tr>
+<tr>
+<td>Documents</td>
+<td><code>/api/Dokument</code></td>
+<td>Parliamentary documents</td>
+</tr>
+<tr>
+<td>Meetings</td>
+<td><code>/api/Mï¿½de</code></td>
+<td>Parliamentary meetings</td>
+</tr>
+</tbody>
+</table>
+<h2 id="performance-tips">Performance Tips</h2>
+<ol>
+<li><strong>Use <code>$select</code></strong> - Only request fields you need</li>
+<li><strong>Limit results</strong> - Maximum 100 records per request</li>
+<li><strong>Filter early</strong> - Apply filters before expansions</li>
+<li><strong>Cache wisely</strong> - Use <code>opdateringsdato</code> for change detection</li>
+</ol>
+<h2 id="need-help">Need Help?</h2>
+<ul>
+<li><strong><a href="../production/troubleshooting/">Troubleshooting</a></strong> - Common problems and solutions</li>
+<li><strong><a href="../code-examples/">Code Examples</a></strong> - Ready-to-use client libraries</li>
+<li><strong><a href="../api-reference/">API Reference</a></strong> - Complete technical documentation</li>
+<li><strong>Contact</strong>: folketinget@ft.dk (subject: "ï¿½bne Data")</li>
+</ul></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

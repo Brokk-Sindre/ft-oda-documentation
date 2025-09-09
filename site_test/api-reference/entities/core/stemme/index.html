@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../../../img/favicon.ico">
+        <title>Stemme (Individual Votes) Entity - Test</title>
+        <link href="../../../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../../../css/brands.min.css" rel="stylesheet">
+        <link href="../../../../css/solid.min.css" rel="stylesheet">
+        <link href="../../../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../../../..">Test</a>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#stemme-individual-votes-entity" class="nav-link">Stemme (Individual Votes) Entity</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#overview" class="nav-link">Overview</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#field-reference" class="nav-link">Field Reference</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#vote-types-reference" class="nav-link">Vote Types Reference</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#common-query-examples" class="nav-link">Common Query Examples</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#relationship-expansion" class="nav-link">Relationship Expansion</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#political-analysis-examples" class="nav-link">Political Analysis Examples</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#performance-optimization" class="nav-link">Performance Optimization</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#common-use-cases" class="nav-link">Common Use Cases</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#important-notes" class="nav-link">Important Notes</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="stemme-individual-votes-entity">Stemme (Individual Votes) Entity</h1>
+<p>The <code>Stemme</code> entity represents individual votes cast by politicians in the Danish Parliament. Each record captures exactly how one politician voted in one voting session, enabling detailed analysis of voting patterns and political behavior. With potentially <strong>hundreds of thousands of records</strong>, this is the most granular level of democratic transparency data.</p>
+<h2 id="overview">Overview</h2>
+<ul>
+<li><strong>Entity Name</strong>: <code>Stemme</code></li>
+<li><strong>Endpoint</strong>: <code>https://oda.ft.dk/api/Stemme</code></li>
+<li><strong>Total Records</strong>: Hundreds of thousands (one per politician per voting session)</li>
+<li><strong>Primary Key</strong>: <code>id</code> (Int32)</li>
+<li><strong>Vote Types</strong>: 4 different vote choices</li>
+</ul>
+<h2 id="field-reference">Field Reference</h2>
+<h3 id="core-identification-fields">Core Identification Fields</h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>Int32</td>
+<td>Primary key, unique vote record identifier</td>
+<td><code>53</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="vote-information">Vote Information</h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>typeid</code></td>
+<td>Int32</td>
+<td>Vote type ID (foreign key to Stemmetype)</td>
+<td><code>1</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="relationship-fields">Relationship Fields</h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>afstemningid</code></td>
+<td>Int32</td>
+<td>Voting session ID (foreign key to Afstemning)</td>
+<td><code>1</code></td>
+</tr>
+<tr>
+<td><code>aktørid</code></td>
+<td>Int32</td>
+<td>Politician ID (foreign key to Aktør)</td>
+<td><code>5</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="temporal-fields">Temporal Fields</h3>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>opdateringsdato</code></td>
+<td>DateTime</td>
+<td>Last update timestamp</td>
+<td><code>"2014-09-09T09:05:59.653"</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="vote-types-reference">Vote Types Reference</h2>
+<p>The API includes 4 different vote types (<code>Stemmetype</code>):</p>
+<table>
+<thead>
+<tr>
+<th>Type ID</th>
+<th>Name</th>
+<th>Description</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>For</td>
+<td>Yes/In favor</td>
+<td>Politician supports the proposal</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Imod</td>
+<td>No/Against</td>
+<td>Politician opposes the proposal</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Fravær</td>
+<td>Absent</td>
+<td>Politician was absent during voting</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Hverken for eller imod</td>
+<td>Neither for nor against/Abstain</td>
+<td>Politician abstained</td>
+</tr>
+</tbody>
+</table>
+<h2 id="common-query-examples">Common Query Examples</h2>
+<h3 id="basic-queries">Basic Queries</h3>
+<pre><code class="language-bash"># Get latest 5 individual votes
+curl &quot;https://oda.ft.dk/api/Stemme?%24top=5&amp;%24orderby=opdateringsdato%20desc&quot;
+
+# Get specific vote by ID
+curl &quot;https://oda.ft.dk/api/Stemme(53)&quot;
+
+# Count total individual votes
+curl &quot;https://oda.ft.dk/api/Stemme?%24inlinecount=allpages&amp;%24top=1&quot;
+</code></pre>
+<h3 id="filter-by-vote-type">Filter by Vote Type</h3>
+<pre><code class="language-bash"># All &quot;Yes&quot; votes
+curl &quot;https://oda.ft.dk/api/Stemme?%24filter=typeid%20eq%201&amp;%24top=10&quot;
+
+# All &quot;No&quot; votes  
+curl &quot;https://oda.ft.dk/api/Stemme?%24filter=typeid%20eq%202&amp;%24top=10&quot;
+
+# All abstentions
+curl &quot;https://oda.ft.dk/api/Stemme?%24filter=typeid%20eq%204&amp;%24top=10&quot;
+
+# All absences
+curl &quot;https://oda.ft.dk/api/Stemme?%24filter=typeid%20eq%203&amp;%24top=10&quot;
+</code></pre>
+<h3 id="politician-specific-queries">Politician-Specific Queries</h3>
+<pre><code class="language-bash"># All votes by specific politician (by ID)
+curl &quot;https://oda.ft.dk/api/Stemme?%24filter=aktørid%20eq%205&amp;%24top=100&quot;
+
+# Votes by politician name (requires expansion)
+curl &quot;https://oda.ft.dk/api/Stemme?%24expand=Aktør&amp;%24filter=Aktør/navn%20eq%20'Frank%20Aaen'&amp;%24top=50&quot;
+
+# Yes votes by specific politician
+curl &quot;https://oda.ft.dk/api/Stemme?%24expand=Aktør&amp;%24filter=Aktør/navn%20eq%20'Frank%20Aaen'%20and%20typeid%20eq%201&amp;%24top=50&quot;
+</code></pre>
+<h3 id="voting-session-analysis">Voting Session Analysis</h3>
+<pre><code class="language-bash"># All votes from specific voting session
+curl &quot;https://oda.ft.dk/api/Stemme?%24filter=afstemningid%20eq%201&amp;%24top=100&quot;
+
+# Votes from voting session with politician details
+curl &quot;https://oda.ft.dk/api/Stemme?%24expand=Aktør&amp;%24filter=afstemningid%20eq%201&amp;%24select=typeid,Aktör/navn&amp;%24top=100&quot;
+</code></pre>
+<h3 id="vote-distribution-analysis">Vote Distribution Analysis</h3>
+<pre><code class="language-bash"># Count votes by type for specific session
+curl &quot;https://oda.ft.dk/api/Stemme?%24filter=afstemningid%20eq%201%20and%20typeid%20eq%201&amp;%24inlinecount=allpages&amp;%24top=1&quot;  # Count Yes votes
+curl &quot;https://oda.ft.dk/api/Stemme?%24filter=afstemningid%20eq%201%20and%20typeid%20eq%202&amp;%24inlinecount=allpages&amp;%24top=1&quot;  # Count No votes
+</code></pre>
+<h2 id="relationship-expansion">Relationship Expansion</h2>
+<h3 id="core-relationships">Core Relationships</h3>
+<pre><code class="language-bash"># Vote with politician details
+curl &quot;https://oda.ft.dk/api/Stemme?%24expand=Aktør&amp;%24top=3&quot;
+
+# Vote with voting session details
+curl &quot;https://oda.ft.dk/api/Stemme?%24expand=Afstemning&amp;%24top=3&quot;
+
+# Vote with vote type information
+curl &quot;https://oda.ft.dk/api/Stemme?%24expand=Stemmetype&amp;%24top=3&quot;
+</code></pre>
+<h3 id="complete-vote-context">Complete Vote Context</h3>
+<pre><code class="language-bash"># Vote with full context (politician, voting session, and meeting)
+curl &quot;https://oda.ft.dk/api/Stemme?%24expand=Aktör,Afstemning/Møde&amp;%24top=1&quot;
+
+# Vote with voting session and detailed outcome
+curl &quot;https://oda.ft.dk/api/Stemme?%24expand=Afstemning&amp;%24filter=afstemningid%20eq%201&amp;%24select=typeid,Afstemning/konklusion&amp;%24top=10&quot;
+</code></pre>
+<p>!!! warning "Large Response Warning"
+    Expanding <code>Aktør</code> returns extensive biographical data. Use field selection (<code>$select</code>) to limit response size when analyzing large datasets.</p>
+<h2 id="political-analysis-examples">Political Analysis Examples</h2>
+<h3 id="individual-politician-analysis">Individual Politician Analysis</h3>
+<pre><code class="language-bash"># Get voting record for specific politician with context
+curl &quot;https://oda.ft.dk/api/Stemme?%24expand=Aktør,Afstemning&amp;%24filter=Aktör/navn%20eq%20'Nicolai%20Wammen'&amp;%24select=typeid,Afstemning/nummer,Aktör/gruppenavnkort&amp;%24top=20&quot;
+
+# Politician's Yes votes with voting session details
+curl &quot;https://oda.ft.dk/api/Stemme?%24expand=Afstemning&amp;%24filter=aktörid%20eq%205%20and%20typeid%20eq%201&amp;%24select=Afstemning/nummer,Afstemning/konklusion&amp;%24top=20&quot;
+</code></pre>
+<h3 id="voting-pattern-analysis">Voting Pattern Analysis</h3>
+<pre><code class="language-bash"># Find politicians who voted against the majority in specific session
+curl &quot;https://oda.ft.dk/api/Stemme?%24expand=Aktör,Afstemning&amp;%24filter=afstemningid%20eq%201%20and%20typeid%20eq%202&amp;%24select=Aktör/navn,Aktör/gruppenavnkort&quot;
+
+# Analyze abstention patterns
+curl &quot;https://oda.ft.dk/api/Stemme?%24expand=Aktör&amp;%24filter=typeid%20eq%204&amp;%24select=Aktör/navn,Aktör/gruppenavnkort&amp;%24top=20&quot;
+</code></pre>
+<h3 id="party-voting-analysis">Party Voting Analysis</h3>
+<pre><code class="language-bash"># All votes by Social Democrats (party analysis)
+curl &quot;https://oda.ft.dk/api/Stemme?%24expand=Aktör&amp;%24filter=Aktör/gruppenavnkort%20eq%20'S'&amp;%24select=typeid&amp;%24top=100&quot;
+
+# Compare party voting on specific session
+curl &quot;https://oda.ft.dk/api/Stemme?%24expand=Aktör&amp;%24filter=afstemningid%20eq%201&amp;%24select=typeid,Aktör/gruppenavnkort&amp;%24orderby=Aktör/gruppenavnkort&quot;
+</code></pre>
+<h3 id="cross-party-analysis">Cross-Party Analysis</h3>
+<pre><code class="language-bash"># Find votes where parties split (mixed voting within party)
+curl &quot;https://oda.ft.dk/api/Stemme?%24expand=Aktör&amp;%24filter=afstemningid%20eq%201&amp;%24select=typeid,Aktör/gruppenavnkort&amp;%24orderby=Aktör/gruppenavnkort,typeid&quot;
+</code></pre>
+<h2 id="performance-optimization">Performance Optimization</h2>
+<h3 id="use-field-selection">Use Field Selection</h3>
+<pre><code class="language-bash"># Good: Only request essential fields
+curl &quot;https://oda.ft.dk/api/Stemme?%24select=typeid,aktörid,afstemningid&amp;%24top=100&quot;
+
+# Avoid: Expanding full actor biographies for large datasets
+curl &quot;https://oda.ft.dk/api/Stemme?%24expand=Aktör&amp;%24top=1000&quot;  # Very large response
+</code></pre>
+<h3 id="efficient-politician-lookups">Efficient Politician Lookups</h3>
+<pre><code class="language-bash"># Better: Use aktörid when known
+curl &quot;https://oda.ft.dk/api/Stemme?%24filter=aktörid%20eq%205&amp;%24top=100&quot;
+
+# Less efficient: Filter by name (requires expansion)
+curl &quot;https://oda.ft.dk/api/Stemme?%24expand=Aktör&amp;%24filter=Aktör/navn%20eq%20'Name'&amp;%24top=100&quot;
+</code></pre>
+<h3 id="smart-pagination">Smart Pagination</h3>
+<pre><code class="language-bash"># Paginate through politician's voting record
+curl &quot;https://oda.ft.dk/api/Stemme?%24filter=aktörid%20eq%205&amp;%24skip=0&amp;%24top=100&amp;%24orderby=id&quot;
+curl &quot;https://oda.ft.dk/api/Stemme?%24filter=aktörid%20eq%205&amp;%24skip=100&amp;%24top=100&amp;%24orderby=id&quot;
+</code></pre>
+<h2 id="common-use-cases">Common Use Cases</h2>
+<h3 id="1-politician-voting-profile">1. Politician Voting Profile</h3>
+<pre><code class="language-python">def get_politician_voting_profile(politician_id):
+    &quot;&quot;&quot;Analyze politician's complete voting pattern&quot;&quot;&quot;
+
+    # Get all votes by this politician
+    all_votes = get_votes(filter_query=f&quot;aktörid eq {politician_id}&quot;, top=1000)
+
+    # Calculate voting statistics
+    vote_counts = {}
+    for vote in all_votes['value']:
+        vote_type = vote['typeid']
+        vote_counts[vote_type] = vote_counts.get(vote_type, 0) + 1
+
+    return {
+        'total_votes': len(all_votes['value']),
+        'yes_votes': vote_counts.get(1, 0),
+        'no_votes': vote_counts.get(2, 0), 
+        'absences': vote_counts.get(3, 0),
+        'abstentions': vote_counts.get(4, 0)
+    }
+</code></pre>
+<h3 id="2-voting-session-analysis">2. Voting Session Analysis</h3>
+<pre><code class="language-python">def analyze_voting_session(session_id):
+    &quot;&quot;&quot;Analyze how all politicians voted in a specific session&quot;&quot;&quot;
+
+    votes = get_votes(
+        filter_query=f&quot;afstemningid eq {session_id}&quot;,
+        expand=&quot;Aktör&quot;,
+        select=&quot;typeid,Aktör/navn,Aktör/gruppenavnkort&quot;
+    )
+
+    # Group by party and vote type
+    party_votes = {}
+    for vote in votes['value']:
+        party = vote['Aktör']['gruppenavnkort']
+        vote_type = vote['typeid']
+
+        if party not in party_votes:
+            party_votes[party] = {'for': 0, 'against': 0, 'absent': 0, 'abstain': 0}
+
+        if vote_type == 1:
+            party_votes[party]['for'] += 1
+        elif vote_type == 2:
+            party_votes[party]['against'] += 1
+        elif vote_type == 3:
+            party_votes[party]['absent'] += 1
+        elif vote_type == 4:
+            party_votes[party]['abstain'] += 1
+
+    return party_votes
+</code></pre>
+<h3 id="3-party-loyalty-analysis">3. Party Loyalty Analysis</h3>
+<pre><code class="language-python">def analyze_party_loyalty(party_code, num_sessions=50):
+    &quot;&quot;&quot;Analyze how unified a party votes&quot;&quot;&quot;
+
+    # Get recent voting sessions
+    recent_sessions = get_voting_sessions(top=num_sessions, orderby=&quot;opdateringsdato desc&quot;)
+
+    party_unity_scores = []
+
+    for session in recent_sessions['value']:
+        session_id = session['id']
+
+        # Get party votes for this session
+        party_votes = get_votes(
+            filter_query=f&quot;afstemningid eq {session_id} and Aktör/gruppenavnkort eq '{party_code}'&quot;,
+            expand=&quot;Aktör&quot;
+        )
+
+        # Calculate unity (most common vote / total votes)
+        if party_votes['value']:
+            vote_types = [v['typeid'] for v in party_votes['value']]
+            most_common_count = max(vote_types.count(vt) for vt in set(vote_types))
+            unity_score = most_common_count / len(vote_types)
+            party_unity_scores.append(unity_score)
+
+    return {
+        'average_unity': sum(party_unity_scores) / len(party_unity_scores) if party_unity_scores else 0,
+        'sessions_analyzed': len(party_unity_scores)
+    }
+</code></pre>
+<h3 id="4-cross-party-coalition-analysis">4. Cross-Party Coalition Analysis</h3>
+<pre><code class="language-python">def find_cross_party_coalitions(session_id):
+    &quot;&quot;&quot;Find which parties voted together in a specific session&quot;&quot;&quot;
+
+    votes = get_votes(
+        filter_query=f&quot;afstemningid eq {session_id}&quot;,
+        expand=&quot;Aktör&quot;,
+        select=&quot;typeid,Aktör/gruppenavnkort&quot;
+    )
+
+    # Group parties by how they voted
+    coalitions = {'for': [], 'against': [], 'mixed': []}
+    party_vote_distribution = {}
+
+    # First, count votes by party
+    for vote in votes['value']:
+        party = vote['Aktör']['gruppenavnkort']
+        vote_type = vote['typeid']
+
+        if party not in party_vote_distribution:
+            party_vote_distribution[party] = {'for': 0, 'against': 0, 'other': 0}
+
+        if vote_type == 1:
+            party_vote_distribution[party]['for'] += 1
+        elif vote_type == 2:
+            party_vote_distribution[party]['against'] += 1
+        else:
+            party_vote_distribution[party]['other'] += 1
+
+    # Categorize parties by their majority vote
+    for party, votes_count in party_vote_distribution.items():
+        total = sum(votes_count.values())
+        for_pct = votes_count['for'] / total
+        against_pct = votes_count['against'] / total
+
+        if for_pct &gt; 0.8:  # 80% voted for
+            coalitions['for'].append(party)
+        elif against_pct &gt; 0.8:  # 80% voted against
+            coalitions['against'].append(party)
+        else:
+            coalitions['mixed'].append(party)
+
+    return coalitions
+</code></pre>
+<h2 id="important-notes">Important Notes</h2>
+<h3 id="data-volume-and-scale">Data Volume and Scale</h3>
+<ul>
+<li><strong>Massive Dataset</strong>: Each voting session can have 100+ individual vote records</li>
+<li><strong>Historical Depth</strong>: Records going back many years</li>
+<li><strong>Growth Pattern</strong>: New records created with each parliamentary vote</li>
+<li><strong>Typical Session</strong>: 100-179 politicians voting = 100-179 <code>Stemme</code> records per <code>Afstemning</code></li>
+</ul>
+<h3 id="performance-considerations">Performance Considerations</h3>
+<p> <strong>Large Dataset Warning</strong>: This entity contains potentially hundreds of thousands of records. Always use appropriate filtering:</p>
+<pre><code class="language-bash"># L Dangerous: Could return massive dataset
+curl &quot;https://oda.ft.dk/api/Stemme?%24top=10000&quot;
+
+#  Safe: Always filter by politician or voting session
+curl &quot;https://oda.ft.dk/api/Stemme?%24filter=aktörid%20eq%205&amp;%24top=100&quot;
+curl &quot;https://oda.ft.dk/api/Stemme?%24filter=afstemningid%20eq%201&quot;
+</code></pre>
+<h3 id="data-quality-and-completeness">Data Quality and Completeness</h3>
+<ul>
+<li><strong>Complete Vote Records</strong>: Every politician's vote in every session is recorded</li>
+<li><strong>No Partial Data</strong>: If a politician was absent, it's recorded as <code>typeid=3</code> (Fravær)</li>
+<li><strong>Referential Integrity</strong>: All <code>aktörid</code> values correspond to valid <code>Aktör</code> records</li>
+<li><strong>Consistent Timestamps</strong>: All votes from same session have identical <code>opdateringsdato</code></li>
+</ul>
+<h3 id="privacy-and-transparency">Privacy and Transparency</h3>
+<p> <strong>Public Information</strong>: All voting records are public information in Danish democracy
+ <strong>Democratic Transparency</strong>: Citizens have the right to know how their representatives voted
+ <strong>Historical Record</strong>: Complete voting history preserved for accountability</p>
+<h3 id="related-entities">Related Entities</h3>
+<p>The <code>Stemme</code> entity is central to the parliamentary voting system:</p>
+<ul>
+<li><strong>Aktör</strong> - The politician who cast the vote</li>
+<li><strong>Afstemning</strong> - The voting session where the vote was cast</li>
+<li><strong>Stemmetype</strong> - The type of vote (For/Against/Absent/Abstain)</li>
+<li><strong>Møde</strong> - Through <code>Afstemning</code>, connects to the meeting where voting occurred</li>
+</ul>
+<h3 id="example-records">Example Records</h3>
+<p><strong>"Yes" Vote:</strong></p>
+<pre><code class="language-json">{
+  &quot;id&quot;: 53,
+  &quot;typeid&quot;: 1,
+  &quot;afstemningid&quot;: 1,
+  &quot;aktörid&quot;: 5,
+  &quot;opdateringsdato&quot;: &quot;2014-09-09T09:05:59.653&quot;
+}
+</code></pre>
+<p><strong>"No" Vote:</strong></p>
+<pre><code class="language-json">{
+  &quot;id&quot;: 54,
+  &quot;typeid&quot;: 2,
+  &quot;afstemningid&quot;: 1,
+  &quot;aktörid&quot;: 6,
+  &quot;opdateringsdato&quot;: &quot;2014-09-09T09:05:59.653&quot;
+}
+</code></pre>
+<p><strong>Abstention:</strong></p>
+<pre><code class="language-json">{
+  &quot;id&quot;: 55,
+  &quot;typeid&quot;: 4,
+  &quot;afstemningid&quot;: 1,
+  &quot;aktörid&quot;: 7,
+  &quot;opdateringsdato&quot;: &quot;2014-09-09T09:05:59.653&quot;
+}
+</code></pre>
+<p>The <code>Stemme</code> entity provides the atomic unit of democratic decision-making in the Danish Parliament, enabling unprecedented analysis of how individual politicians vote and how democratic decisions are actually made at the most granular level.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../../../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../../../js/base.js"></script>
+        <script src="../../../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

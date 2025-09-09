@@ -8,8 +8,8 @@ The API implements a robust subset of OData 3.0 with excellent performance and r
 
 - ** Full OData 3.0 Support**: Complete implementation of core OData operations
 - **L No OData 4.0 Features**: Advanced OData 4.0 functions not available
-- **ï¿½ High Performance**: Response times from 85ms to 2 seconds
-- **=ï¿½ Large Scale**: Handles 96,538+ cases, 18,139+ actors seamlessly
+- **ø High Performance**: Response times from 85ms to 2 seconds
+- **=ø Large Scale**: Handles 96,538+ cases, 18,139+ actors seamlessly
 
 ## Supported OData Parameters
 
@@ -131,7 +131,7 @@ curl "https://oda.ft.dk/api/Sag?%24expand=Sagskategori&%24top=3"
 
 - **Small queries** (`$top=5`): ~85ms average
 - **Medium queries** (`$top=100`): ~90ms average  
-- **Complex expansion** (`$expand=Stemme/Aktï¿½r`): ~1.8s
+- **Complex expansion** (`$expand=Stemme/Aktør`): ~1.8s
 - **Large datasets** (`$top=10000`): ~2s (capped at 100 records)
 
 ### Pagination Performance
@@ -190,13 +190,13 @@ if len(data['value']) == 100 and '$top=100' not in url:
 
 ### Large Entities (Require Pagination)
 - **Sag** (Cases): 96,538+ records
-- **Aktï¿½r** (Actors): 18,139+ records  
+- **Aktør** (Actors): 18,139+ records  
 - **Stemme** (Votes): Millions of records
 - **Dokument** (Documents): Large dataset
 
 ### Junction Tables (Relationship-Heavy)
-- **SagAktï¿½r**: Case-Actor relationships (23 role types)
-- **DokumentAktï¿½r**: Document-Actor relationships (25 role types)
+- **SagAktør**: Case-Actor relationships (23 role types)
+- **DokumentAktør**: Document-Actor relationships (25 role types)
 - **SagDokument**: Case-Document relationships
 
 ## OData Metadata
@@ -224,7 +224,7 @@ The metadata document provides:
 
 ### Essential URL Encoding
 ```
-$ ï¿½ %24    (space) ï¿½ %20    ' ï¿½ %27    ( ï¿½ %28    ) ï¿½ %29
+$ ø %24    (space) ø %20    ' ø %27    ( ø %28    ) ø %29
 ```
 
 ### Common Query Patterns

@@ -1,0 +1,42 @@
+# SEO Configuration for Danish Parliament API Documentation
+# This file contains reusable SEO metadata and structured data
+
+site_meta:
+  default_author: "Danish Parliament API Documentation Project"
+  site_name: "Danish Parliament API Documentation"
+  base_keywords: "danish parliament api, oda.ft.dk, odata api, government transparency, parliamentary data, folketing api, open data denmark"
+  
+page_templates:
+  entity_page:
+    title_suffix: " - Danish Parliament API Entity Reference"
+    description_template: "Complete reference for the {entity_name} entity in the Danish Parliament API. {additional_info}"
+    keywords_base: "danish parliament, oda.ft.dk, entity reference, api documentation"
+    
+  guide_page:
+    title_suffix: " - Danish Parliament API Guide"
+    description_template: "Learn how to {action} with the Danish Parliament API. {additional_info}"
+    keywords_base: "danish parliament api tutorial, oda.ft.dk guide, parliamentary data"
+    
+  code_example:
+    title_suffix: " - Code Examples - Danish Parliament API"
+    description_template: "{language} code examples for the Danish Parliament API. {additional_info}"
+    keywords_base: "code examples, programming, api client, {language}"
+
+structured_data:
+  organization:
+    "@type": "Organization"
+    name: "Danish Parliament"
+    url: "https://www.ft.dk/"
+    logo: "https://www.ft.dk/favicon.ico"
+    
+  software_application:
+    "@type": "SoftwareApplication"
+    name: "Danish Parliament Open Data API"
+    applicationCategory: "GovernmentApplication"
+    operatingSystem: "Web-based"
+    url: "https://oda.ft.dk/"
+    offers:
+      "@type": "Offer"
+      price: "0"
+      priceCurrency: "DKK"
+      availability: "https://schema.org/InStock"

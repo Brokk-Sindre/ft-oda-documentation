@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>OData Overview &amp; Capabilities - Test</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Test</a>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#odata-overview-capabilities" class="nav-link">OData Overview &amp; Capabilities</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#odata-30-compliance" class="nav-link">OData 3.0 Compliance</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#supported-odata-parameters" class="nav-link">Supported OData Parameters</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#unsupported-odata-features" class="nav-link">Unsupported OData Features</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#critical-url-encoding-requirement" class="nav-link">Critical URL Encoding Requirement</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#basic-query-examples" class="nav-link">Basic Query Examples</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#error-handling-patterns" class="nav-link">Error Handling Patterns</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#performance-characteristics" class="nav-link">Performance Characteristics</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#interactive-query-builder" class="nav-link">Interactive Query Builder</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#best-practices" class="nav-link">Best Practices</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#entity-specific-considerations" class="nav-link">Entity-Specific Considerations</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#odata-metadata" class="nav-link">OData Metadata</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#next-steps" class="nav-link">Next Steps</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#quick-reference" class="nav-link">Quick Reference</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="odata-overview-capabilities">OData Overview &amp; Capabilities</h1>
+<p>The Danish Parliament API uses <strong>OData 3.0</strong> (Open Data Protocol) to provide powerful querying capabilities over parliamentary data. This comprehensive guide covers all supported operations, limitations, and best practices.</p>
+<h2 id="odata-30-compliance">OData 3.0 Compliance</h2>
+<p>The API implements a robust subset of OData 3.0 with excellent performance and reliability:</p>
+<ul>
+<li><strong> Full OData 3.0 Support</strong>: Complete implementation of core OData operations</li>
+<li><strong>L No OData 4.0 Features</strong>: Advanced OData 4.0 functions not available</li>
+<li><strong>ï¿½ High Performance</strong>: Response times from 85ms to 2 seconds</li>
+<li><strong>=ï¿½ Large Scale</strong>: Handles 96,538+ cases, 18,139+ actors seamlessly</li>
+</ul>
+<h2 id="supported-odata-parameters">Supported OData Parameters</h2>
+<h3 id="core-query-parameters">Core Query Parameters</h3>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Purpose</th>
+<th>Support Level</th>
+<th>Max Limit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>$top</code></td>
+<td>Limit number of records</td>
+<td> Full</td>
+<td>100 records</td>
+</tr>
+<tr>
+<td><code>$skip</code></td>
+<td>Skip records for pagination</td>
+<td> Full</td>
+<td>No limit</td>
+</tr>
+<tr>
+<td><code>$filter</code></td>
+<td>Filter records by conditions</td>
+<td> Full</td>
+<td>Complex expressions</td>
+</tr>
+<tr>
+<td><code>$expand</code></td>
+<td>Include related data</td>
+<td> Full</td>
+<td>2-3 levels deep</td>
+</tr>
+<tr>
+<td><code>$select</code></td>
+<td>Choose specific fields</td>
+<td> Full</td>
+<td>All fields</td>
+</tr>
+<tr>
+<td><code>$orderby</code></td>
+<td>Sort results</td>
+<td> Full</td>
+<td>Multiple fields</td>
+</tr>
+<tr>
+<td><code>$inlinecount</code></td>
+<td>Include total count</td>
+<td> Full</td>
+<td>Allpages only</td>
+</tr>
+<tr>
+<td><code>$format</code></td>
+<td>Response format</td>
+<td> Full</td>
+<td>JSON/XML</td>
+</tr>
+</tbody>
+</table>
+<h3 id="advanced-filter-functions">Advanced Filter Functions</h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Purpose</th>
+<th>Example</th>
+<th>Support</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>substringof()</code></td>
+<td>Text search</td>
+<td><code>substringof('klima', titel)</code></td>
+<td> Full</td>
+</tr>
+<tr>
+<td><code>startswith()</code></td>
+<td>Text prefix</td>
+<td><code>startswith(titel, 'Forslag')</code></td>
+<td> Full</td>
+</tr>
+<tr>
+<td><code>endswith()</code></td>
+<td>Text suffix</td>
+<td><code>endswith(titel, 'lov')</code></td>
+<td> Full</td>
+</tr>
+<tr>
+<td><code>year()</code></td>
+<td>Extract year</td>
+<td><code>year(opdateringsdato) eq 2025</code></td>
+<td> Full</td>
+</tr>
+<tr>
+<td><code>month()</code></td>
+<td>Extract month</td>
+<td><code>month(opdateringsdato) eq 9</code></td>
+<td> Full</td>
+</tr>
+<tr>
+<td><code>day()</code></td>
+<td>Extract day</td>
+<td><code>day(opdateringsdato) eq 9</code></td>
+<td> Full</td>
+</tr>
+</tbody>
+</table>
+<h2 id="unsupported-odata-features">Unsupported OData Features</h2>
+<p>The following OData 4.0+ features are <strong>not supported</strong>:</p>
+<ul>
+<li><strong>L <code>$search</code></strong> - Use <code>$filter</code> with <code>substringof()</code> instead</li>
+<li><strong>L <code>$batch</code></strong> - No batch operations (returns HTTP 501)</li>
+<li><strong>L <code>$compute</code></strong> - No computed fields</li>
+<li><strong>L <code>$apply</code></strong> - No aggregation operations</li>
+<li><strong>L <code>$count</code></strong> - Use <code>$inlinecount=allpages</code> instead</li>
+<li><strong>L Lambda operators</strong> - No <code>$any</code> or <code>$all</code> operations</li>
+</ul>
+<h2 id="critical-url-encoding-requirement">Critical URL Encoding Requirement</h2>
+<p>!!! danger "Most Common Developer Mistake"
+    <strong>Always use <code>%24</code> instead of <code>$</code> in OData parameters</strong>. This is the #1 error developers make.</p>
+<pre><code>**L Wrong:**
+```
+https://oda.ft.dk/api/Sag?$top=5
+```
+
+** Correct:**
+```
+https://oda.ft.dk/api/Sag?%24top=5
+```
+</code></pre>
+<h3 id="why-url-encoding-is-required">Why URL Encoding is Required</h3>
+<p>The API server requires proper URL encoding of special characters:</p>
+<ul>
+<li><code>$</code> must become <code>%24</code></li>
+<li>Spaces must become <code>%20</code></li>
+<li>Single quotes must become <code>%27</code></li>
+<li>Parentheses need encoding in complex expressions</li>
+</ul>
+<h2 id="basic-query-examples">Basic Query Examples</h2>
+<h3 id="simple-record-retrieval">Simple Record Retrieval</h3>
+<pre><code class="language-bash"># Get 5 recent parliamentary cases
+curl &quot;https://oda.ft.dk/api/Sag?%24top=5&quot;
+</code></pre>
+<h3 id="filtering-by-status">Filtering by Status</h3>
+<pre><code class="language-bash"># Get public cases only
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=offentlighedskode%20eq%20'O'&amp;%24top=10&quot;
+</code></pre>
+<h3 id="text-search">Text Search</h3>
+<pre><code class="language-bash"># Find climate-related legislation
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=substringof('klima',titel)&quot;
+</code></pre>
+<h3 id="date-filtering">Date Filtering</h3>
+<pre><code class="language-bash"># Cases updated in 2025
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=year(opdateringsdato)%20eq%202025&amp;%24top=10&quot;
+</code></pre>
+<h3 id="including-related-data">Including Related Data</h3>
+<pre><code class="language-bash"># Cases with category information
+curl &quot;https://oda.ft.dk/api/Sag?%24expand=Sagskategori&amp;%24top=3&quot;
+</code></pre>
+<h2 id="error-handling-patterns">Error Handling Patterns</h2>
+<h3 id="http-response-codes">HTTP Response Codes</h3>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Meaning</th>
+<th>Cause</th>
+<th>Response Body</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>200</td>
+<td>Success</td>
+<td>Valid request</td>
+<td>JSON data</td>
+</tr>
+<tr>
+<td>400</td>
+<td>Bad Request</td>
+<td>Invalid OData syntax</td>
+<td>Empty (0 bytes)</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Not Found</td>
+<td>Invalid entity name</td>
+<td>HTML error page</td>
+</tr>
+<tr>
+<td>501</td>
+<td>Not Implemented</td>
+<td>Write operations</td>
+<td>JSON error message</td>
+</tr>
+</tbody>
+</table>
+<h3 id="silent-filter-failures">Silent Filter Failures</h3>
+<p>!!! warning "Critical Behavior"
+    <strong>Invalid filter field names are silently ignored</strong> - they return the complete unfiltered dataset instead of an error.</p>
+<pre><code>```bash
+# This returns ALL records (not an error!)
+curl "https://oda.ft.dk/api/Sag?%24filter=invalid_field%20eq%20'test'"
+```
+</code></pre>
+<h2 id="performance-characteristics">Performance Characteristics</h2>
+<h3 id="response-times-tested">Response Times (Tested)</h3>
+<ul>
+<li><strong>Small queries</strong> (<code>$top=5</code>): ~85ms average</li>
+<li><strong>Medium queries</strong> (<code>$top=100</code>): ~90ms average  </li>
+<li><strong>Complex expansion</strong> (<code>$expand=Stemme/Aktï¿½r</code>): ~1.8s</li>
+<li><strong>Large datasets</strong> (<code>$top=10000</code>): ~2s (capped at 100 records)</li>
+</ul>
+<h3 id="pagination-performance">Pagination Performance</h3>
+<pre><code class="language-bash"># Efficient large dataset access
+curl &quot;https://oda.ft.dk/api/Sag?%24skip=10000&amp;%24top=100&quot;  # ~90ms
+</code></pre>
+<p>No significant performance penalty for large <code>$skip</code> values - pagination is highly efficient.</p>
+<h2 id="interactive-query-builder">Interactive Query Builder</h2>
+<p>Try building OData queries interactively:</p>
+<div class="query-builder"></div>
+
+<h2 id="best-practices">Best Practices</h2>
+<h3 id="1-always-use-url-encoding">1. Always Use URL Encoding</h3>
+<pre><code class="language-bash"># Correct approach
+curl &quot;https://oda.ft.dk/api/Sag?%24top=100&amp;%24skip=200&quot;
+</code></pre>
+<h3 id="2-validate-filter-fields">2. Validate Filter Fields</h3>
+<pre><code class="language-bash"># Test with small $top first to catch silent failures
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=your_filter_here&amp;%24top=1&quot;
+</code></pre>
+<h3 id="3-use-pagination-for-large-datasets">3. Use Pagination for Large Datasets</h3>
+<pre><code class="language-bash"># Efficient pattern for accessing all data
+for skip in 0 100 200 300; do
+    curl &quot;https://oda.ft.dk/api/Sag?%24skip=$skip&amp;%24top=100&quot;
+done
+</code></pre>
+<h3 id="4-strategic-relationship-expansion">4. Strategic Relationship Expansion</h3>
+<pre><code class="language-bash"># Minimize API calls with targeted expansion
+curl &quot;https://oda.ft.dk/api/Sag?%24expand=Sagskategori,Sagstrin&amp;%24top=50&quot;
+</code></pre>
+<h3 id="5-monitor-result-sizes">5. Monitor Result Sizes</h3>
+<pre><code class="language-python"># Python: Detect silent filter failures
+response = requests.get(url)
+data = response.json()
+if len(data['value']) == 100 and '$top=100' not in url:
+    print(&quot;Warning: Filter may have been ignored&quot;)
+</code></pre>
+<h2 id="entity-specific-considerations">Entity-Specific Considerations</h2>
+<h3 id="large-entities-require-pagination">Large Entities (Require Pagination)</h3>
+<ul>
+<li><strong>Sag</strong> (Cases): 96,538+ records</li>
+<li><strong>Aktï¿½r</strong> (Actors): 18,139+ records  </li>
+<li><strong>Stemme</strong> (Votes): Millions of records</li>
+<li><strong>Dokument</strong> (Documents): Large dataset</li>
+</ul>
+<h3 id="junction-tables-relationship-heavy">Junction Tables (Relationship-Heavy)</h3>
+<ul>
+<li><strong>SagAktï¿½r</strong>: Case-Actor relationships (23 role types)</li>
+<li><strong>DokumentAktï¿½r</strong>: Document-Actor relationships (25 role types)</li>
+<li><strong>SagDokument</strong>: Case-Document relationships</li>
+</ul>
+<h2 id="odata-metadata">OData Metadata</h2>
+<p>Access complete schema information:</p>
+<pre><code class="language-bash"># Get full OData metadata
+curl &quot;https://oda.ft.dk/api/\$metadata&quot;
+</code></pre>
+<p>The metadata document provides:
+- Complete entity definitions
+- Relationship mappings<br />
+- Field types and constraints
+- Navigation properties</p>
+<h2 id="next-steps">Next Steps</h2>
+<ol>
+<li><strong><a href="filters/">Filters</a></strong> - Master filtering with Danish text examples</li>
+<li><strong><a href="pagination/">Pagination</a></strong> - Handle the 100 record limit effectively  </li>
+<li><strong><a href="expansion/">Expansion</a></strong> - Use relationship expansion strategically</li>
+<li><strong><a href="../performance/">Performance</a></strong> - Optimize queries for production use</li>
+</ol>
+<h2 id="quick-reference">Quick Reference</h2>
+<h3 id="essential-url-encoding">Essential URL Encoding</h3>
+<pre><code>$ ï¿½ %24    (space) ï¿½ %20    ' ï¿½ %27    ( ï¿½ %28    ) ï¿½ %29
+</code></pre>
+<h3 id="common-query-patterns">Common Query Patterns</h3>
+<pre><code class="language-bash"># Pagination
+?%24skip=200&amp;%24top=100
+
+# Filter + Expand
+?%24filter=offentlighedskode%20eq%20'O'&amp;%24expand=Sagskategori
+
+# Date range
+?%24filter=opdateringsdato%20gt%20datetime'2025-01-01T00:00:00'
+
+# Text search
+?%24filter=substringof('klima',titel)
+</code></pre>
+<p>The Danish Parliament API's OData implementation provides powerful, reliable access to comprehensive parliamentary data when used correctly. Master these fundamentals and you'll have efficient access to 74+ years of Danish democratic transparency.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

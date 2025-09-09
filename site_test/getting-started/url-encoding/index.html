@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>URL Encoding - Critical Knowledge - Test</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">Test</a>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#url-encoding-critical-knowledge" class="nav-link">URL Encoding - Critical Knowledge</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#the-golden-rule" class="nav-link">The Golden Rule</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#why-this-matters" class="nav-link">Why This Matters</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#complete-encoding-reference" class="nav-link">Complete Encoding Reference</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#real-examples" class="nav-link">Real Examples</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#programming-language-examples" class="nav-link">Programming Language Examples</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#common-encoding-mistakes" class="nav-link">Common Encoding Mistakes</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#testing-your-encoding" class="nav-link">Testing Your Encoding</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#error-symptoms" class="nav-link">Error Symptoms</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#quick-reference-table" class="nav-link">Quick Reference Table</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#tools-for-url-encoding" class="nav-link">Tools for URL Encoding</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="url-encoding-critical-knowledge">URL Encoding - Critical Knowledge</h1>
+<p>!!! danger "Most Common Mistake"
+    URL encoding is the <strong>#1 source of errors</strong> when using the Danish Parliament API. Failure to properly encode URLs will result in HTTP 400 errors or unexpected results.</p>
+<h2 id="the-golden-rule">The Golden Rule</h2>
+<p><strong>Always use <code>%24</code> instead of <code>$</code> in OData query parameters.</strong></p>
+<table>
+<thead>
+<tr>
+<th>L Wrong</th>
+<th> Correct</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>?$top=5</code></td>
+<td><code>?%24top=5</code></td>
+<td>Works</td>
+</tr>
+<tr>
+<td><code>?$filter=id eq 1</code></td>
+<td><code>?%24filter=id%20eq%201</code></td>
+<td>Works</td>
+</tr>
+<tr>
+<td><code>?$expand=Aktør</code></td>
+<td><code>?%24expand=Akt%C3%B8r</code></td>
+<td>Works</td>
+</tr>
+</tbody>
+</table>
+<h2 id="why-this-matters">Why This Matters</h2>
+<p>OData uses the <code>$</code> character for system query options like <code>$top</code>, <code>$filter</code>, etc. However, <code>$</code> has special meaning in URLs and shells, so it must be URL encoded as <code>%24</code>.</p>
+<h2 id="complete-encoding-reference">Complete Encoding Reference</h2>
+<h3 id="basic-characters">Basic Characters</h3>
+<pre><code>Space         %20
+$             %24
+&amp;             %26
+=             %3D (usually handled automatically)
+'             %27
+(             %28
+)             %29
+</code></pre>
+<h3 id="danish-characters">Danish Characters</h3>
+<pre><code>ø             %C3%B8
+å             %C3%A5
+æ             %C3%A6
+Ø             %C3%98
+Å             %C3%85
+Æ             %C3%86
+</code></pre>
+<h2 id="real-examples">Real Examples</h2>
+<h3 id="basic-queries">Basic Queries</h3>
+<p>=== "Wrong"
+    <code>bash
+    # This will fail
+    curl "https://oda.ft.dk/api/Sag?$top=5"</code></p>
+<p>=== "Correct"
+    <code>bash
+    # This works
+    curl "https://oda.ft.dk/api/Sag?%24top=5"</code></p>
+<h3 id="text-filtering">Text Filtering</h3>
+<p>=== "Wrong"
+    <code>bash
+    # This will fail
+    curl "https://oda.ft.dk/api/Sag?$filter=substringof('minister', titel)"</code></p>
+<p>=== "Correct"
+    <code>bash
+    # This works
+    curl "https://oda.ft.dk/api/Sag?%24filter=substringof('minister',titel)"</code></p>
+<h3 id="complex-queries">Complex Queries</h3>
+<p>=== "Wrong"
+    <code>bash
+    # Multiple issues
+    curl "https://oda.ft.dk/api/Sag?$filter=year(opdateringsdato) eq 2025&amp;$top=10&amp;$orderby=titel"</code></p>
+<p>=== "Correct"
+    <code>bash
+    # Properly encoded
+    curl "https://oda.ft.dk/api/Sag?%24filter=year(opdateringsdato)%20eq%202025&amp;%24top=10&amp;%24orderby=titel"</code></p>
+<h3 id="danish-text-searches">Danish Text Searches</h3>
+<p>=== "Wrong"
+    <code>bash
+    # Danish characters not encoded
+    curl "https://oda.ft.dk/api/Aktør?$filter=substringof('ø', navn)"</code></p>
+<p>=== "Correct"
+    <code>bash
+    # Danish characters properly encoded
+    curl "https://oda.ft.dk/api/Akt%C3%B8r?%24filter=substringof('%C3%B8',navn)"</code></p>
+<h2 id="programming-language-examples">Programming Language Examples</h2>
+<h3 id="python">Python</h3>
+<pre><code class="language-python">import urllib.parse
+
+# Proper URL encoding
+query = &quot;$filter=substringof('klima', titel)&amp;$top=5&quot;
+encoded_query = urllib.parse.quote(query, safe='&amp;=')
+url = f&quot;https://oda.ft.dk/api/Sag?{encoded_query}&quot;
+
+# Or use requests which handles encoding
+import requests
+params = {
+    '$filter': &quot;substringof('klima', titel)&quot;,
+    '$top': 5
+}
+response = requests.get('https://oda.ft.dk/api/Sag', params=params)
+</code></pre>
+<h3 id="javascript">JavaScript</h3>
+<pre><code class="language-javascript">// Proper URL encoding
+const params = new URLSearchParams({
+    '$filter': &quot;substringof('klima', titel)&quot;,
+    '$top': 5
+});
+const url = `https://oda.ft.dk/api/Sag?${params}`;
+
+// Or use encodeURIComponent for manual encoding
+const filter = encodeURIComponent(&quot;substringof('klima', titel)&quot;);
+const url2 = `https://oda.ft.dk/api/Sag?%24filter=${filter}&amp;%24top=5`;
+</code></pre>
+<h3 id="curl-in-shell-scripts">curl in Shell Scripts</h3>
+<pre><code class="language-bash">#!/bin/bash
+# Proper escaping in shell scripts
+FILTER=&quot;year(opdateringsdato) eq 2025&quot;
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=${FILTER// /%20}&amp;%24top=10&quot;
+</code></pre>
+<h2 id="common-encoding-mistakes">Common Encoding Mistakes</h2>
+<h3 id="1-missing-dollar-sign-encoding">1. Missing Dollar Sign Encoding</h3>
+<pre><code class="language-bash"># L Will cause HTTP 400
+curl &quot;https://oda.ft.dk/api/Sag?$top=5&quot;
+
+#  Correct
+curl &quot;https://oda.ft.dk/api/Sag?%24top=5&quot;
+</code></pre>
+<h3 id="2-missing-space-encoding">2. Missing Space Encoding</h3>
+<pre><code class="language-bash"># L Malformed query
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=id eq 1&quot;
+
+#  Spaces encoded
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=id%20eq%201&quot;
+</code></pre>
+<h3 id="3-danish-characters">3. Danish Characters</h3>
+<pre><code class="language-bash"># L May cause issues
+curl &quot;https://oda.ft.dk/api/Aktør?%24filter=substringof('ø',navn)&quot;
+
+#  Properly encoded
+curl &quot;https://oda.ft.dk/api/Akt%C3%B8r?%24filter=substringof('%C3%B8',navn)&quot;
+</code></pre>
+<h3 id="4-complex-boolean-logic">4. Complex Boolean Logic</h3>
+<pre><code class="language-bash"># L Parentheses not encoded
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=(typeid eq 3) and (year(opdateringsdato) gt 2020)&quot;
+
+#  Complete encoding
+curl &quot;https://oda.ft.dk/api/Sag?%24filter=%28typeid%20eq%203%29%20and%20%28year%28opdateringsdato%29%20gt%202020%29&quot;
+</code></pre>
+<h2 id="testing-your-encoding">Testing Your Encoding</h2>
+<p>Use these test queries to verify your encoding works:</p>
+<h3 id="test-1-basic-query">Test 1: Basic Query</h3>
+<pre><code class="language-bash">curl &quot;https://oda.ft.dk/api/Sag?%24top=1&quot; | jq '.value | length'
+# Expected: 1
+</code></pre>
+<h3 id="test-2-text-filter">Test 2: Text Filter</h3>
+<pre><code class="language-bash">curl &quot;https://oda.ft.dk/api/Sag?%24filter=substringof('forslag',titel)&amp;%24top=1&quot; | jq '.value | length'
+# Expected: 1 (if results exist)
+</code></pre>
+<h3 id="test-3-date-filter">Test 3: Date Filter</h3>
+<pre><code class="language-bash">curl &quot;https://oda.ft.dk/api/Sag?%24filter=year%28opdateringsdato%29%20eq%202025&amp;%24top=1&quot; | jq '.value | length'
+# Expected: 1 (if results exist)
+</code></pre>
+<h2 id="error-symptoms">Error Symptoms</h2>
+<p>If your URLs aren't properly encoded, you'll see:</p>
+<h3 id="http-400-bad-request">HTTP 400 Bad Request</h3>
+<pre><code class="language-json">{
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;400&quot;,
+    &quot;message&quot;: &quot;Bad Request&quot;
+  }
+}
+</code></pre>
+<h3 id="empty-html-response">Empty HTML Response</h3>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;400 Bad Request&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;400 Bad Request&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h3 id="shell-errors">Shell Errors</h3>
+<pre><code class="language-bash">bash: $top: command not found
+</code></pre>
+<h2 id="quick-reference-table">Quick Reference Table</h2>
+<table>
+<thead>
+<tr>
+<th>Character/Sequence</th>
+<th>Encoding</th>
+<th>Example Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>$top=5</code></td>
+<td><code>%24top=5</code></td>
+<td>Pagination</td>
+</tr>
+<tr>
+<td><code>$filter=</code></td>
+<td><code>%24filter=</code></td>
+<td>Filtering</td>
+</tr>
+<tr>
+<td><code>id eq 1</code></td>
+<td><code>id%20eq%201</code></td>
+<td>Filter condition</td>
+</tr>
+<tr>
+<td><code>substringof('text', field)</code></td>
+<td><code>substringof('text',field)</code></td>
+<td>Text search</td>
+</tr>
+<tr>
+<td><code>year(date) eq 2025</code></td>
+<td><code>year%28date%29%20eq%202025</code></td>
+<td>Date functions</td>
+</tr>
+<tr>
+<td><code>(condition1) and (condition2)</code></td>
+<td><code>%28condition1%29%20and%20%28condition2%29</code></td>
+<td>Boolean logic</td>
+</tr>
+</tbody>
+</table>
+<h2 id="tools-for-url-encoding">Tools for URL Encoding</h2>
+<h3 id="online-tools">Online Tools</h3>
+<ul>
+<li><a href="https://www.urlencoder.org/">URL Encoder/Decoder</a></li>
+<li><a href="https://www.w3schools.com/tags/ref_urlencode.asp">W3Schools URL Encoder</a></li>
+</ul>
+<h3 id="command-line-tools">Command Line Tools</h3>
+<pre><code class="language-bash"># Python one-liner
+python3 -c &quot;import urllib.parse; print(urllib.parse.quote(input()))&quot;
+
+# Node.js one-liner
+node -e &quot;console.log(encodeURIComponent(process.argv[1]))&quot; &quot;your text here&quot;
+</code></pre>
+<p>Remember: <strong>When in doubt, encode everything!</strong> It's better to over-encode than under-encode with this API.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

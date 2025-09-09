@@ -34,11 +34,11 @@ The API uses OData 3.0, providing powerful querying capabilities:
 All content is in Danish. Key terms:
 
 - **Sag** = Case/Bill
-- **Aktï¿½r** = Actor/Person  
+- **Aktør** = Actor/Person  
 - **Afstemning** = Voting session
 - **Stemme** = Individual vote
 - **Dokument** = Document
-- **Mï¿½de** = Meeting
+- **Møde** = Meeting
 
 ## Your First Query
 
@@ -112,9 +112,9 @@ curl "https://oda.ft.dk/api/Sag?%24select=id,titel,opdateringsdato&%24top=5"
 ### Entity Types
 The API contains 50 different entity types organized into logical groups:
 
-- **Core Entities**: Sag (Cases), Aktï¿½r (Actors), Afstemning (Voting), Stemme (Votes)
+- **Core Entities**: Sag (Cases), Aktør (Actors), Afstemning (Voting), Stemme (Votes)
 - **Documents**: Dokument, Fil (Files)
-- **Meetings**: Mï¿½de, Dagsordenspunkt
+- **Meetings**: Møde, Dagsordenspunkt
 - **Relationships**: Junction tables connecting entities
 - **Classifications**: Status, Type, and Category entities
 
@@ -140,11 +140,11 @@ The API provides exceptionally fresh data:
 | Purpose | Endpoint | Example |
 |---------|----------|---------|
 | Cases | `/api/Sag` | Legislative bills and proposals |
-| Actors | `/api/Aktï¿½r` | Politicians, committees, ministries |
+| Actors | `/api/Aktør` | Politicians, committees, ministries |
 | Votes | `/api/Afstemning` | Voting sessions |
 | Individual Votes | `/api/Stemme` | How each politician voted |
 | Documents | `/api/Dokument` | Parliamentary documents |
-| Meetings | `/api/Mï¿½de` | Parliamentary meetings |
+| Meetings | `/api/Møde` | Parliamentary meetings |
 
 ## Performance Tips
 
@@ -158,4 +158,4 @@ The API provides exceptionally fresh data:
 - **[Troubleshooting](../production/troubleshooting/)** - Common problems and solutions
 - **[Code Examples](../code-examples/)** - Ready-to-use client libraries
 - **[API Reference](../api-reference/)** - Complete technical documentation
-- **Contact**: folketinget@ft.dk (subject: "ï¿½bne Data")
+- **Contact**: folketinget@ft.dk (subject: "øbne Data")

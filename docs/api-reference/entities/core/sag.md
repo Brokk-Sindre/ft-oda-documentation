@@ -23,8 +23,8 @@ The `Sag` entity is the core of the Danish Parliament API, representing legislat
 | Field | Type | Description | Example |
 |-------|------|-------------|---------|
 | `id` | Int32 | Primary key, unique case identifier | `102903` |
-| `titel` | String | Case title | `"Kommissionsmeddelelse om den europï¿½iske grï¿½nne pagt"` |
-| `titelkort` | String | Short title | `"Grï¿½nne pagt"` |
+| `titel` | String | Case title | `"Kommissionsmeddelelse om den europøiske grønne pagt"` |
+| `titelkort` | String | Short title | `"Grønne pagt"` |
 | `nummer` | String | Case number | `"L 123"` |
 
 ### Classification Fields
@@ -42,27 +42,27 @@ The `Sag` entity is the core of the Danish Parliament API, representing legislat
 |-------|------|-------------|---------|
 | `opdateringsdato` | DateTime | Last update timestamp | `"2025-09-09T17:49:11.87"` |
 | `periodeid` | Int32 | Parliamentary period ID | `32` |
-| `afgï¿½relsesdato` | DateTime | Decision date | `"2025-09-09T10:30:00"` |
+| `afgørelsesdato` | DateTime | Decision date | `"2025-09-09T10:30:00"` |
 | `lovnummerdato` | DateTime | Law number date | `"2025-09-09T10:30:00"` |
-| `rï¿½dsmï¿½dedato` | DateTime | Council meeting date | `"2025-09-09T14:00:00"` |
+| `rådsmødedato` | DateTime | Council meeting date | `"2025-09-09T14:00:00"` |
 
 ### Content Fields
 
 | Field | Type | Description | Example |
 |-------|------|-------------|---------|
 | `resume` | String | Case summary | `"Forslag til..."` |
-| `afgï¿½relse` | String | Decision text | `"Vedtaget"` |
-| `afgï¿½relsesresultatkode` | String | Decision result code | `"V"` |
+| `afgørelse` | String | Decision text | `"Vedtaget"` |
+| `afgørelsesresultatkode` | String | Decision result code | `"V"` |
 | `afstemningskonklusion` | String | Voting conclusion | `"Forslaget vedtages"` |
 | `baggrundsmateriale` | String | Background material | `"Se bilag"` |
-| `begrundelse` | String | Justification | `"Jï¿½vnfï¿½r..."` |
+| `begrundelse` | String | Justification | `"Jøvnfør..."` |
 
 ### Legal References
 
 | Field | Type | Description | Example |
 |-------|------|-------------|---------|
 | `lovnummer` | String | Law number if enacted | `"LOV nr 123"` |
-| `paragraf` | String | Paragraph reference | `"ï¿½ 15, stk. 2"` |
+| `paragraf` | String | Paragraph reference | `"ø 15, stk. 2"` |
 | `paragrafnummer` | Int32 | Paragraph number | `15` |
 | `retsinformationsurl` | String | Legal information URL | `"https://retsinformation.dk/..."` |
 
@@ -122,13 +122,13 @@ curl "https://oda.ft.dk/api/Sag?%24filter=substringof('klima',titel)&%24top=10"
 
 ```bash
 # Complex boolean logic
-curl "https://oda.ft.dk/api/Sag?%24filter=%28substringof('klima',titel)%20or%20substringof('miljï¿½',titel)%29%20and%20year(opdateringsdato)%20gt%202020&%24top=10"
+curl "https://oda.ft.dk/api/Sag?%24filter=%28substringof('klima',titel)%20or%20substringof('miljø',titel)%29%20and%20year(opdateringsdato)%20gt%202020&%24top=10"
 
 # Cases from specific period
 curl "https://oda.ft.dk/api/Sag?%24filter=periodeid%20eq%2032&%24top=10"
 
 # Recent decisions
-curl "https://oda.ft.dk/api/Sag?%24filter=afgï¿½relsesdato%20gt%20datetime'2025-09-01T00:00:00'&%24top=10"
+curl "https://oda.ft.dk/api/Sag?%24filter=afgørelsesdato%20gt%20datetime'2025-09-01T00:00:00'&%24top=10"
 ```
 
 ### Field Selection
@@ -160,10 +160,10 @@ curl "https://oda.ft.dk/api/Sag?%24expand=Periode&%24top=3"
 
 ```bash
 # Cases with involved actors
-curl "https://oda.ft.dk/api/Sag?%24expand=SagAktï¿½r/Aktï¿½r&%24top=3"
+curl "https://oda.ft.dk/api/Sag?%24expand=SagAktør/Aktør&%24top=3"
 
 # Cases with actor roles
-curl "https://oda.ft.dk/api/Sag?%24expand=SagAktï¿½r/Aktï¿½r,SagAktï¿½r/SagAktï¿½rRolle&%24top=3"
+curl "https://oda.ft.dk/api/Sag?%24expand=SagAktør/Aktør,SagAktør/SagAktørRolle&%24top=3"
 ```
 
 ### Document Relationships
@@ -202,7 +202,7 @@ curl "https://oda.ft.dk/api/Sag?%24filter=fremsatundersagid%20eq%20102900"
 
 ```bash
 # Cases by year
-curl "https://oda.ft.dk/api/Sag?%24filter=year(afgï¿½relsesdato)%20eq%202024&%24inlinecount=allpages&%24top=1"
+curl "https://oda.ft.dk/api/Sag?%24filter=year(afgørelsesdato)%20eq%202024&%24inlinecount=allpages&%24top=1"
 
 # Long-running cases (updated multiple times)
 curl "https://oda.ft.dk/api/Sag?%24filter=year(opdateringsdato)%20eq%202025&%24orderby=opdateringsdato%20desc&%24top=20"
@@ -233,7 +233,7 @@ curl "https://oda.ft.dk/api/Sag?%24skip=200&%24top=100"
 
 ```bash
 # Filter before expanding to reduce data
-curl "https://oda.ft.dk/api/Sag?%24filter=offentlighedskode%20eq%20'O'&%24expand=SagAktï¿½r&%24top=10"
+curl "https://oda.ft.dk/api/Sag?%24filter=offentlighedskode%20eq%20'O'&%24expand=SagAktør&%24top=10"
 ```
 
 ## Common Use Cases
@@ -253,7 +253,7 @@ def get_recent_legislation():
 ```python
 def track_climate_policy():
     """Track all climate-related legislation"""
-    filter_query = "(substringof('klima',titel) or substringof('miljï¿½',titel) or substringof('grï¿½n',titel))"
+    filter_query = "(substringof('klima',titel) or substringof('miljø',titel) or substringof('grøn',titel))"
     return get_cases(filter_query=filter_query, expand="Sagsstatus,Sagstype", top=50)
 ```
 
@@ -279,7 +279,7 @@ def analyze_budget_cases():
 - **Total Records**: Use `$inlinecount=allpages` to get total count
 
 ### Silent Filter Failures
-ï¿½ **Critical Warning**: Invalid filter field names return ALL data instead of errors!
+ø **Critical Warning**: Invalid filter field names return ALL data instead of errors!
 
 ```bash
 # L Dangerous: Typo returns all 96,538+ records
@@ -296,7 +296,7 @@ The `Sag` entity connects to many other entities:
 - **Sagskategori** - Case categories
 - **Sagstype** - Case types (13 different types)
 - **Sagsstatus** - Case statuses (68 different statuses)
-- **SagAktï¿½r** - Case-actor relationships (23 role types)
+- **SagAktør** - Case-actor relationships (23 role types)
 - **SagDokument** - Case-document relationships
 - **Sagstrin** - Case steps/stages
 - **Periode** - Parliamentary periods

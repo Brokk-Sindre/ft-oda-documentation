@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../../img/favicon.ico">
+        <title>Lawful Basis for Processing - Test</title>
+        <link href="../../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../../css/brands.min.css" rel="stylesheet">
+        <link href="../../../css/solid.min.css" rel="stylesheet">
+        <link href="../../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../../..">Test</a>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#lawful-basis-for-processing" class="nav-link">Lawful Basis for Processing</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#gdpr-article-6-analysis-for-parliamentary-data" class="nav-link">GDPR Article 6 Analysis for Parliamentary Data</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#lawful-basis-implementation-framework" class="nav-link">Lawful Basis Implementation Framework</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#special-considerations-for-parliamentary-data" class="nav-link">Special Considerations for Parliamentary Data</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#practical-implementation-examples" class="nav-link">Practical Implementation Examples</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ongoing-compliance-management" class="nav-link">Ongoing Compliance Management</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#best-practices-summary" class="nav-link">Best Practices Summary</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="lawful-basis-for-processing">Lawful Basis for Processing</h1>
+<p>This document provides comprehensive guidance on establishing and maintaining lawful basis for processing personal data from the Danish Parliament API under GDPR Article 6. It includes practical frameworks for assessing different lawful bases and implementing appropriate safeguards.</p>
+<h2 id="gdpr-article-6-analysis-for-parliamentary-data">GDPR Article 6 Analysis for Parliamentary Data</h2>
+<h3 id="primary-lawful-basis-public-task-article-61e">Primary Lawful Basis: Public Task (Article 6(1)(e))</h3>
+<p>The most robust lawful basis for processing Danish Parliament API data is <strong>Article 6(1)(e) - Public task</strong>:</p>
+<blockquote>
+<p>Processing is necessary for the performance of a task carried out in the public interest or in the exercise of official authority vested in the data controller.</p>
+</blockquote>
+<pre><code class="language-python">class PublicTaskAssessment:
+    def __init__(self):
+        self.legal_framework = {
+            'danish_constitution': 'Grundloven § 57 - Parliamentary transparency',
+            'freedom_of_information': 'Offentlighedsloven - Right to public information',
+            'eu_transparency': 'Article 15 TFEU - Transparency principle',
+            'democratic_principles': 'UN ICCPR Article 25 - Democratic participation'
+        }
+
+    def assess_public_task_basis(self, processing_purpose, data_subject_role):
+        &quot;&quot;&quot;Assess whether public task basis applies&quot;&quot;&quot;
+
+        if data_subject_role == 'elected_official':
+            public_interest_factors = {
+                'democratic_accountability': 'VERY_HIGH',
+                'transparency_obligation': 'VERY_HIGH', 
+                'voter_information_right': 'VERY_HIGH',
+                'historical_record': 'HIGH',
+                'academic_research': 'HIGH'
+            }
+        elif data_subject_role == 'civil_servant':
+            public_interest_factors = {
+                'democratic_accountability': 'HIGH',
+                'transparency_obligation': 'MEDIUM',
+                'administrative_oversight': 'HIGH'
+            }
+        else:
+            public_interest_factors = {
+                'general_transparency': 'MEDIUM'
+            }
+
+        # Assess processing purpose alignment
+        purpose_alignment = self._assess_purpose_alignment(processing_purpose)
+
+        return {
+            'lawful_basis': 'Article 6(1)(e)',
+            'confidence_level': 'HIGH' if purpose_alignment &gt;= 3 else 'MEDIUM',
+            'public_interest_factors': public_interest_factors,
+            'legal_foundation': self.legal_framework,
+            'recommendation': 'PROCEED' if purpose_alignment &gt;= 2 else 'REVIEW_REQUIRED'
+        }
+
+    def _assess_purpose_alignment(self, purpose):
+        &quot;&quot;&quot;Score purpose alignment with public task (0-5 scale)&quot;&quot;&quot;
+        purpose_scores = {
+            'democratic_transparency': 5,
+            'journalistic_investigation': 5,
+            'academic_research': 4,
+            'civic_engagement': 4,
+            'government_oversight': 5,
+            'historical_documentation': 4,
+            'political_analysis': 3,
+            'commercial_research': 1,
+            'marketing': 0,
+            'entertainment': 1
+        }
+
+        return purpose_scores.get(purpose, 2)
+</code></pre>
+<h3 id="alternative-lawful-basis-legitimate-interests-article-61f">Alternative Lawful Basis: Legitimate Interests (Article 6(1)(f))</h3>
+<p>When public task basis may be insufficient:</p>
+<pre><code class="language-python">class LegitimateInterestsAssessment:
+    def __init__(self):
+        self.balancing_factors = {
+            'controller_interests': [
+                'press_freedom',
+                'academic_freedom', 
+                'business_intelligence',
+                'public_information'
+            ],
+            'data_subject_interests': [
+                'privacy_expectation',
+                'reputation_protection',
+                'family_privacy',
+                'professional_impact'
+            ],
+            'fundamental_rights': [
+                'freedom_of_expression',
+                'right_to_privacy',
+                'family_life_protection',
+                'democratic_participation'
+            ]
+        }
+
+    def conduct_balancing_test(self, controller_interest, data_type, data_subject_role):
+        &quot;&quot;&quot;Conduct three-part balancing test for legitimate interests&quot;&quot;&quot;
+
+        # Part 1: Legitimate interest test
+        interest_assessment = self._assess_legitimate_interest(controller_interest)
+
+        # Part 2: Necessity test  
+        necessity_assessment = self._assess_necessity(controller_interest, data_type)
+
+        # Part 3: Balancing test
+        balancing_result = self._conduct_balancing(
+            controller_interest, data_type, data_subject_role
+        )
+
+        overall_result = (
+            interest_assessment['valid'] and 
+            necessity_assessment['necessary'] and
+            balancing_result['controller_interests_prevail']
+        )
+
+        return {
+            'lawful_basis_valid': overall_result,
+            'legitimate_interest': interest_assessment,
+            'necessity': necessity_assessment,
+            'balancing_test': balancing_result,
+            'recommendation': 'PROCEED' if overall_result else 'USE_ALTERNATIVE_BASIS'
+        }
+
+    def _assess_legitimate_interest(self, interest):
+        &quot;&quot;&quot;Assess if interest is legitimate&quot;&quot;&quot;
+        legitimate_interests = {
+            'journalism': {
+                'valid': True,
+                'strength': 'VERY_HIGH',
+                'legal_basis': 'Freedom of press, public interest'
+            },
+            'academic_research': {
+                'valid': True,
+                'strength': 'HIGH',
+                'legal_basis': 'Academic freedom, scientific research'
+            },
+            'transparency_advocacy': {
+                'valid': True,
+                'strength': 'HIGH',
+                'legal_basis': 'Democratic participation, public oversight'
+            },
+            'commercial_analysis': {
+                'valid': True,
+                'strength': 'MEDIUM',
+                'legal_basis': 'Business intelligence, market research'
+            },
+            'political_opposition': {
+                'valid': True,
+                'strength': 'HIGH',
+                'legal_basis': 'Democratic accountability, political debate'
+            }
+        }
+
+        return legitimate_interests.get(interest, {
+            'valid': False,
+            'strength': 'NONE',
+            'legal_basis': 'No recognized legitimate interest'
+        })
+
+    def _conduct_balancing(self, controller_interest, data_type, data_subject_role):
+        &quot;&quot;&quot;Conduct balancing test between competing interests&quot;&quot;&quot;
+
+        # Weight factors for different data subjects
+        privacy_expectations = {
+            'elected_official': 0.3,  # Lower privacy expectation
+            'candidate': 0.5,
+            'civil_servant': 0.7,
+            'private_person': 1.0
+        }
+
+        # Weight factors for different data types
+        data_sensitivity = {
+            'voting_records': 0.2,     # Low privacy impact, high public interest
+            'basic_contact': 0.4,
+            'biographical_basic': 0.6,
+            'biographical_detailed': 0.8,
+            'family_information': 1.0  # High privacy impact
+        }
+
+        privacy_weight = privacy_expectations.get(data_subject_role, 0.8)
+        sensitivity_weight = data_sensitivity.get(data_type, 0.6)
+
+        # Controller interest strength
+        interest_strength = {
+            'journalism': 0.9,
+            'academic_research': 0.8,
+            'transparency_advocacy': 0.8,
+            'commercial_analysis': 0.4
+        }
+
+        controller_weight = interest_strength.get(controller_interest, 0.3)
+
+        # Simple balancing calculation
+        privacy_score = privacy_weight * sensitivity_weight
+        controller_score = controller_weight
+
+        return {
+            'controller_interests_prevail': controller_score &gt; privacy_score,
+            'privacy_score': privacy_score,
+            'controller_score': controller_score,
+            'margin': abs(controller_score - privacy_score),
+            'confidence': 'HIGH' if abs(controller_score - privacy_score) &gt; 0.3 else 'LOW'
+        }
+</code></pre>
+<h2 id="lawful-basis-implementation-framework">Lawful Basis Implementation Framework</h2>
+<h3 id="documentation-requirements">Documentation Requirements</h3>
+<pre><code class="language-python">class LawfulBasisDocumentation:
+    def __init__(self):
+        self.required_elements = [
+            'lawful_basis_identified',
+            'purpose_specification', 
+            'necessity_assessment',
+            'proportionality_analysis',
+            'safeguards_implemented',
+            'review_schedule'
+        ]
+
+    def generate_lawful_basis_record(self, processing_activity):
+        &quot;&quot;&quot;Generate comprehensive lawful basis documentation&quot;&quot;&quot;
+
+        return {
+            'processing_activity': {
+                'name': processing_activity.get('name'),
+                'description': processing_activity.get('description'),
+                'data_controller': processing_activity.get('controller'),
+                'start_date': processing_activity.get('start_date')
+            },
+
+            'personal_data': {
+                'categories': processing_activity.get('data_categories'),
+                'sensitivity_level': processing_activity.get('sensitivity'),
+                'data_subjects': processing_activity.get('subject_categories'),
+                'volume': processing_activity.get('estimated_volume')
+            },
+
+            'lawful_basis': {
+                'article_6_basis': processing_activity.get('lawful_basis'),
+                'justification': processing_activity.get('basis_justification'),
+                'legal_framework': processing_activity.get('supporting_law'),
+                'assessment_date': processing_activity.get('assessment_date'),
+                'assessed_by': processing_activity.get('assessor')
+            },
+
+            'safeguards': {
+                'technical_measures': processing_activity.get('technical_safeguards'),
+                'organizational_measures': processing_activity.get('org_safeguards'),
+                'data_minimization': processing_activity.get('minimization_measures'),
+                'retention_policy': processing_activity.get('retention_schedule')
+            },
+
+            'review': {
+                'next_review_date': processing_activity.get('next_review'),
+                'review_frequency': processing_activity.get('review_frequency'),
+                'review_triggers': processing_activity.get('review_triggers')
+            }
+        }
+</code></pre>
+<h3 id="purpose-specification-framework">Purpose Specification Framework</h3>
+<pre><code class="language-python">class PurposeSpecification:
+    def __init__(self):
+        self.purpose_categories = {
+            'democratic_accountability': {
+                'description': 'Tracking elected officials\' performance and decisions',
+                'compatible_purposes': [
+                    'voting_analysis', 'performance_monitoring', 
+                    'electoral_accountability', 'policy_tracking'
+                ],
+                'incompatible_purposes': [
+                    'commercial_marketing', 'personal_harassment',
+                    'entertainment', 'unrelated_research'
+                ]
+            },
+            'journalistic_investigation': {
+                'description': 'News reporting and investigative journalism',
+                'compatible_purposes': [
+                    'fact_checking', 'story_development',
+                    'background_research', 'source_verification'
+                ],
+                'incompatible_purposes': [
+                    'commercial_purposes', 'entertainment_gossip',
+                    'personal_vendetta', 'harassment'
+                ]
+            },
+            'academic_research': {
+                'description': 'Scholarly research and educational purposes',
+                'compatible_purposes': [
+                    'political_science_research', 'historical_analysis',
+                    'behavioral_studies', 'institutional_analysis'
+                ],
+                'incompatible_purposes': [
+                    'commercial_application', 'political_campaigning',
+                    'marketing_research', 'non_academic_use'
+                ]
+            }
+        }
+
+    def assess_purpose_compatibility(self, declared_purpose, actual_use):
+        &quot;&quot;&quot;Assess if actual use is compatible with declared purpose&quot;&quot;&quot;
+
+        if declared_purpose not in self.purpose_categories:
+            return {
+                'compatible': False,
+                'reason': 'Declared purpose not recognized'
+            }
+
+        purpose_spec = self.purpose_categories[declared_purpose]
+
+        if actual_use in purpose_spec['compatible_purposes']:
+            return {
+                'compatible': True,
+                'confidence': 'HIGH',
+                'basis': 'Explicitly compatible purpose'
+            }
+        elif actual_use in purpose_spec['incompatible_purposes']:
+            return {
+                'compatible': False,
+                'confidence': 'HIGH',
+                'reason': 'Explicitly incompatible purpose'
+            }
+        else:
+            return {
+                'compatible': None,
+                'confidence': 'LOW',
+                'reason': 'Purpose compatibility requires individual assessment'
+            }
+</code></pre>
+<h2 id="special-considerations-for-parliamentary-data">Special Considerations for Parliamentary Data</h2>
+<h3 id="public-officials-reduced-privacy-expectations">Public Officials' Reduced Privacy Expectations</h3>
+<pre><code class="language-python">class PublicOfficialPrivacyAnalysis:
+    def __init__(self):
+        self.privacy_tiers = {
+            'head_of_government': {
+                'privacy_expectation': 'VERY_LOW',
+                'public_interest': 'MAXIMUM',
+                'data_categories_acceptable': 'MOST',
+                'special_considerations': [
+                    'National security implications',
+                    'Diplomatic considerations'
+                ]
+            },
+            'minister': {
+                'privacy_expectation': 'LOW',
+                'public_interest': 'VERY_HIGH',
+                'data_categories_acceptable': 'EXTENSIVE',
+                'special_considerations': [
+                    'Portfolio-related activities',
+                    'Decision-making transparency'
+                ]
+            },
+            'member_of_parliament': {
+                'privacy_expectation': 'LOW',
+                'public_interest': 'HIGH',
+                'data_categories_acceptable': 'BROAD',
+                'special_considerations': [
+                    'Voting record transparency',
+                    'Committee participation'
+                ]
+            },
+            'local_official': {
+                'privacy_expectation': 'MEDIUM',
+                'public_interest': 'MEDIUM',
+                'data_categories_acceptable': 'LIMITED',
+                'special_considerations': [
+                    'Proportionate to role',
+                    'Local relevance'
+                ]
+            }
+        }
+
+    def assess_processing_legitimacy(self, official_level, data_category, processing_purpose):
+        &quot;&quot;&quot;Assess legitimacy of processing for public officials&quot;&quot;&quot;
+
+        official_profile = self.privacy_tiers.get(official_level)
+        if not official_profile:
+            return {'assessment': 'UNKNOWN', 'reason': 'Official level not recognized'}
+
+        # High public interest + low privacy expectation = strong lawful basis
+        if (official_profile['public_interest'] in ['MAXIMUM', 'VERY_HIGH'] and
+            processing_purpose in ['democratic_accountability', 'transparency']):
+            return {
+                'assessment': 'STRONG_BASIS',
+                'confidence': 'HIGH',
+                'lawful_basis': 'Article 6(1)(e) - Public task',
+                'additional_safeguards_required': False
+            }
+
+        # Medium scenarios require balancing
+        elif official_profile['privacy_expectation'] == 'MEDIUM':
+            return {
+                'assessment': 'BALANCING_REQUIRED',
+                'confidence': 'MEDIUM',
+                'lawful_basis': 'Article 6(1)(f) - Legitimate interests',
+                'additional_safeguards_required': True,
+                'balancing_test_required': True
+            }
+
+        else:
+            return {
+                'assessment': 'WEAK_BASIS',
+                'confidence': 'LOW',
+                'recommendation': 'SEEK_ALTERNATIVE_BASIS_OR_AVOID'
+            }
+</code></pre>
+<h3 id="historical-vs-current-data-considerations">Historical vs. Current Data Considerations</h3>
+<pre><code class="language-python">class TemporalProcessingAnalysis:
+    def __init__(self):
+        self.temporal_factors = {
+            'current_officials': {
+                'public_interest': 'MAXIMUM',
+                'privacy_expectation': 'MINIMUM',
+                'processing_justification': 'Active democratic accountability',
+                'recommended_basis': 'Article 6(1)(e)'
+            },
+            'recent_former_officials': {  # Last 5 years
+                'public_interest': 'HIGH',
+                'privacy_expectation': 'LOW',
+                'processing_justification': 'Ongoing public interest, recent decisions',
+                'recommended_basis': 'Article 6(1)(e) or 6(1)(f)'
+            },
+            'historical_officials': {  # 5+ years ago
+                'public_interest': 'MEDIUM',
+                'privacy_expectation': 'MEDIUM',
+                'processing_justification': 'Historical record, research purposes',
+                'recommended_basis': 'Article 6(1)(f) with safeguards'
+            },
+            'deceased_officials': {
+                'public_interest': 'MEDIUM',
+                'privacy_expectation': 'LOW',  # GDPR doesn't apply to deceased
+                'processing_justification': 'Historical record, family privacy considerations',
+                'recommended_basis': 'No GDPR restriction, ethical considerations apply'
+            }
+        }
+
+    def assess_temporal_lawfulness(self, official_status, processing_purpose):
+        &quot;&quot;&quot;Assess lawfulness considering temporal factors&quot;&quot;&quot;
+
+        temporal_profile = self.temporal_factors.get(official_status)
+        if not temporal_profile:
+            return {'assessment': 'REQUIRES_INDIVIDUAL_ANALYSIS'}
+
+        return {
+            'temporal_classification': official_status,
+            'public_interest_level': temporal_profile['public_interest'],
+            'privacy_expectation': temporal_profile['privacy_expectation'],
+            'recommended_lawful_basis': temporal_profile['recommended_basis'],
+            'justification': temporal_profile['processing_justification']
+        }
+</code></pre>
+<h2 id="practical-implementation-examples">Practical Implementation Examples</h2>
+<h3 id="lawful-basis-assessment-tool">Lawful Basis Assessment Tool</h3>
+<pre><code class="language-python">class LawfulBasisAssessmentTool:
+    def __init__(self):
+        self.assessment_framework = {
+            'data_categories': [
+                'basic_identification', 'contact_information', 'voting_records',
+                'biographical_summary', 'biographical_detailed', 'family_information'
+            ],
+            'processing_purposes': [
+                'democratic_accountability', 'journalistic_investigation', 'academic_research',
+                'transparency_advocacy', 'historical_documentation', 'commercial_analysis'
+            ],
+            'data_subject_roles': [
+                'current_mp', 'former_mp', 'minister', 'candidate', 'civil_servant'
+            ]
+        }
+
+    def conduct_assessment(self, processing_scenario):
+        &quot;&quot;&quot;Conduct comprehensive lawful basis assessment&quot;&quot;&quot;
+
+        # Extract scenario components
+        data_category = processing_scenario.get('data_category')
+        purpose = processing_scenario.get('purpose')
+        subject_role = processing_scenario.get('subject_role')
+        controller_type = processing_scenario.get('controller_type')
+
+        # Run assessments
+        public_task_result = self._assess_public_task(purpose, subject_role)
+        legitimate_interest_result = self._assess_legitimate_interests(
+            purpose, data_category, subject_role, controller_type
+        )
+
+        # Determine strongest basis
+        recommended_basis = self._select_strongest_basis([
+            public_task_result, legitimate_interest_result
+        ])
+
+        return {
+            'scenario': processing_scenario,
+            'assessments': {
+                'public_task': public_task_result,
+                'legitimate_interests': legitimate_interest_result
+            },
+            'recommended_approach': recommended_basis,
+            'implementation_guidance': self._generate_implementation_guidance(recommended_basis)
+        }
+
+    def _select_strongest_basis(self, assessment_results):
+        &quot;&quot;&quot;Select the strongest available lawful basis&quot;&quot;&quot;
+
+        # Prioritize public task if available
+        for result in assessment_results:
+            if (result.get('lawful_basis') == 'Article 6(1)(e)' and 
+                result.get('confidence_level') == 'HIGH'):
+                return result
+
+        # Fall back to legitimate interests if strong
+        for result in assessment_results:
+            if (result.get('lawful_basis') == 'Article 6(1)(f)' and
+                result.get('balancing_test', {}).get('controller_interests_prevail')):
+                return result
+
+        # No strong basis found
+        return {
+            'lawful_basis': 'NONE_IDENTIFIED',
+            'recommendation': 'SEEK_LEGAL_ADVICE',
+            'alternative_approaches': [
+                'Narrow processing scope',
+                'Seek explicit consent',
+                'Use anonymized data only'
+            ]
+        }
+</code></pre>
+<h3 id="consent-alternative-analysis">Consent Alternative Analysis</h3>
+<pre><code class="language-python">class ConsentAnalysis:
+    &quot;&quot;&quot;Analysis of consent as alternative lawful basis&quot;&quot;&quot;
+
+    def __init__(self):
+        self.consent_feasibility = {
+            'current_officials': {
+                'feasible': False,
+                'reason': 'Conflicts with democratic transparency requirements',
+                'alternative': 'Public task basis more appropriate'
+            },
+            'former_officials': {
+                'feasible': True,
+                'conditions': [
+                    'Clear consent mechanism',
+                    'Easy withdrawal process', 
+                    'No adverse consequences for refusal'
+                ],
+                'considerations': 'May limit transparency objectives'
+            },
+            'candidates': {
+                'feasible': True,
+                'conditions': [
+                    'Voluntary participation',
+                    'Clear information about use',
+                    'Withdrawal rights respected'
+                ],
+                'considerations': 'Democratic participation may constitute legitimate interest'
+            }
+        }
+
+    def assess_consent_viability(self, subject_category, processing_context):
+        &quot;&quot;&quot;Assess whether consent is viable alternative&quot;&quot;&quot;
+
+        feasibility = self.consent_feasibility.get(subject_category)
+        if not feasibility:
+            return {
+                'viable': False,
+                'reason': 'Subject category not analyzed'
+            }
+
+        if not feasibility['feasible']:
+            return {
+                'viable': False,
+                'reason': feasibility['reason'],
+                'alternative_recommendation': feasibility.get('alternative')
+            }
+
+        # Assess GDPR consent requirements
+        consent_requirements_met = self._assess_consent_requirements(processing_context)
+
+        return {
+            'viable': feasibility['feasible'] and consent_requirements_met['compliant'],
+            'conditions': feasibility.get('conditions', []),
+            'gdpr_compliance': consent_requirements_met,
+            'practical_considerations': feasibility.get('considerations')
+        }
+
+    def _assess_consent_requirements(self, context):
+        &quot;&quot;&quot;Assess if consent would meet GDPR requirements&quot;&quot;&quot;
+
+        # GDPR Article 7 requirements
+        requirements = {
+            'freely_given': context.get('no_adverse_consequences', False),
+            'specific': context.get('specific_purposes_defined', False),
+            'informed': context.get('clear_information_provided', False),
+            'unambiguous': context.get('clear_consent_mechanism', False),
+            'withdrawable': context.get('withdrawal_mechanism_available', False)
+        }
+
+        return {
+            'compliant': all(requirements.values()),
+            'requirements_analysis': requirements,
+            'missing_requirements': [
+                req for req, met in requirements.items() if not met
+            ]
+        }
+</code></pre>
+<h2 id="ongoing-compliance-management">Ongoing Compliance Management</h2>
+<h3 id="regular-basis-review">Regular Basis Review</h3>
+<pre><code class="language-python">class LawfulBasisReviewManager:
+    def __init__(self):
+        self.review_triggers = [
+            'purpose_change',
+            'data_category_expansion', 
+            'legal_framework_change',
+            'subject_role_change',
+            'time_based_review',
+            'complaint_received',
+            'supervisory_guidance'
+        ]
+
+    def schedule_review(self, processing_activity, trigger_type):
+        &quot;&quot;&quot;Schedule lawful basis review&quot;&quot;&quot;
+
+        urgency_levels = {
+            'purpose_change': 'IMMEDIATE',
+            'legal_framework_change': 'IMMEDIATE',
+            'complaint_received': 'URGENT',  # 7 days
+            'supervisory_guidance': 'URGENT',
+            'data_category_expansion': 'STANDARD',  # 30 days
+            'time_based_review': 'ROUTINE',  # Scheduled
+            'subject_role_change': 'STANDARD'
+        }
+
+        urgency = urgency_levels.get(trigger_type, 'STANDARD')
+
+        return {
+            'processing_activity': processing_activity,
+            'review_trigger': trigger_type,
+            'urgency_level': urgency,
+            'review_deadline': self._calculate_deadline(urgency),
+            'review_scope': self._determine_review_scope(trigger_type),
+            'reviewer_required': self._determine_reviewer_level(urgency)
+        }
+
+    def _calculate_deadline(self, urgency):
+        &quot;&quot;&quot;Calculate review deadline based on urgency&quot;&quot;&quot;
+        from datetime import datetime, timedelta
+
+        deadlines = {
+            'IMMEDIATE': timedelta(days=1),
+            'URGENT': timedelta(days=7),
+            'STANDARD': timedelta(days=30),
+            'ROUTINE': timedelta(days=90)
+        }
+
+        return (datetime.now() + deadlines.get(urgency, timedelta(days=30))).isoformat()
+</code></pre>
+<h2 id="best-practices-summary">Best Practices Summary</h2>
+<h3 id="lawful-basis-selection-hierarchy">Lawful Basis Selection Hierarchy</h3>
+<ol>
+<li><strong>Primary Option</strong>: Article 6(1)(e) - Public task</li>
+<li>For democratic accountability purposes</li>
+<li>When processing official parliamentary activities</li>
+<li>
+<p>For transparency and oversight functions</p>
+</li>
+<li>
+<p><strong>Secondary Option</strong>: Article 6(1)(f) - Legitimate interests</p>
+</li>
+<li>For journalistic purposes</li>
+<li>For academic research</li>
+<li>
+<p>For commercial applications (with strong safeguards)</p>
+</li>
+<li>
+<p><strong>Fallback Option</strong>: Article 6(1)(a) - Consent</p>
+</li>
+<li>When other bases are insufficient</li>
+<li>For former officials (limited scenarios)</li>
+<li>For non-essential data processing</li>
+</ol>
+<h3 id="implementation-checklist">Implementation Checklist</h3>
+<ul>
+<li>[ ] <strong>Lawful Basis Identified</strong>: Clear identification of Article 6 basis</li>
+<li>[ ] <strong>Documentation Complete</strong>: Comprehensive basis documentation</li>
+<li>[ ] <strong>Purpose Specified</strong>: Clear, specific purpose definition</li>
+<li>[ ] <strong>Proportionality Assessed</strong>: Processing proportionate to purpose</li>
+<li>[ ] <strong>Safeguards Implemented</strong>: Appropriate technical/organizational measures</li>
+<li>[ ] <strong>Review Scheduled</strong>: Regular basis review scheduled</li>
+<li>[ ] <strong>Staff Trained</strong>: Staff understand lawful basis requirements</li>
+<li>[ ] <strong>Records Maintained</strong>: Comprehensive processing records kept</li>
+</ul>
+<p>The selection and maintenance of appropriate lawful basis is fundamental to GDPR compliance when processing Danish Parliament API data. The unique nature of parliamentary transparency creates strong public task justifications, but organizations must still implement appropriate safeguards and conduct regular reviews to ensure ongoing compliance.</p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../../js/base.js"></script>
+        <script src="../../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
