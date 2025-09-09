@@ -31,7 +31,7 @@ curl -s "https://oda.ft.dk/api/Sag?%24inlinecount=allpages&%24top=1" | jq '."oda
 # L WRONG - This will not work
 curl "https://oda.ft.dk/api/Sag?$top=5"
 
-#  CORRECT - Always encode $ as %24
+# ✅ CORRECT - Always encode $ as %24
 curl "https://oda.ft.dk/api/Sag?%24top=5"
 
 # Or use proper shell escaping (bash/zsh)
@@ -273,7 +273,7 @@ curl --http2 "https://oda.ft.dk/api/Sag?%24top=10"
 
 ```bash
 # Always use HTTPS (the API enforces this)
-curl "https://oda.ft.dk/api/Sag?%24top=1"  #  Secure
+curl "https://oda.ft.dk/api/Sag?%24top=1"  # ✅ Secure
 
 # Verify SSL certificate
 curl --cacert /etc/ssl/certs/ca-certificates.crt "https://oda.ft.dk/api/Sag?%24top=1"

@@ -4,20 +4,20 @@ One of the most remarkable aspects of the Danish Parliament API is that it requi
 
 ## What This Means
 
-###  No Setup Required
+### ✅ No Setup Required
 - No API key registration
 - No OAuth flows
 - No tokens to manage
 - No authentication headers
 - No rate limiting by user
 
-###  Immediate Access
+### ✅ Immediate Access
 ```bash
 # This works immediately, no setup needed
 curl "https://oda.ft.dk/api/Sag?%24top=5"
 ```
 
-###  Universal Access
+### ✅ Universal Access
 - Available to anyone, anywhere
 - No geographic restrictions
 - No account requirements
@@ -54,7 +54,7 @@ The Danish Access to Public Administration Files Act (Offentlighedsloven) establ
 
 Since there's no authentication, all data is considered public:
 
-###  Included (Public Information)
+### ✅ Included (Public Information)
 - Parliamentary cases and their status
 - Voting records and results
 - Committee meetings and agendas

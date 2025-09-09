@@ -149,10 +149,10 @@ This will return a number like "96538", showing the massive size of the dataset.
 
 ### Success Indicators
 
- **HTTP 200 status code**
- **JSON response with "odata.metadata" field**
- **"value" array containing data**
- **Recent "opdateringsdato" timestamps**
+✅ **HTTP 200 status code**
+✅ **JSON response with "odata.metadata" field**
+✅ **"value" array containing data**
+✅ **Recent "opdateringsdato" timestamps**
 
 ## Next Steps
 

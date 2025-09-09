@@ -4,7 +4,7 @@ Practical guides for real-world applications of the Danish Parliament API. These
 
 ## Available Guides
 
-### =Ê [Voting Analysis](voting-analysis/)
+### ðŸ“œ [Voting Analysis](voting-analysis/)
 Track and analyze parliamentary voting patterns, party alignments, and individual politician voting records.
 
 - Track how politicians vote on specific issues
@@ -12,7 +12,7 @@ Track and analyze parliamentary voting patterns, party alignments, and individua
 - Compare voting records across periods
 - Export voting data for statistical analysis
 
-### =Ü [Legislative Tracking](legislative-tracking/)
+### ðŸ“œ [Legislative Tracking](legislative-tracking/)
 Monitor the progress of bills and proposals through the legislative process.
 
 - Follow bills from proposal to law
@@ -20,7 +20,7 @@ Monitor the progress of bills and proposals through the legislative process.
 - Monitor document flows and updates
 - Set up alerts for case progress
 
-### ¡ [Real-Time Monitoring](real-time-monitoring/)
+### Ã¸ [Real-Time Monitoring](real-time-monitoring/)
 Build systems that react to parliamentary activity as it happens.
 
 - Detect changes using polling strategies

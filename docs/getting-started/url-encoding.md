@@ -7,7 +7,7 @@
 
 **Always use `%24` instead of `$` in OData query parameters.**
 
-| L Wrong |  Correct | Result |
+| L Wrong | ✅ Correct | Result |
 |----------|------------|--------|
 | `?$top=5` | `?%24top=5` | Works |
 | `?$filter=id eq 1` | `?%24filter=id%20eq%201` | Works |
@@ -106,7 +106,7 @@ import urllib.parse
 
 # Proper URL encoding
 query = "$filter=substringof('klima', titel)&$top=5"
-encoded_query = urllib.parse.quote(query, safe='&=')
+encoded_query = urllib.parse.quote(query, safe🔧&🔧)
 url = f"https://oda.ft.dk/api/Sag?{encoded_query}"
 
 # Or use requests which handles encoding
@@ -147,7 +147,7 @@ curl "https://oda.ft.dk/api/Sag?%24filter=${FILTER// /%20}&%24top=10"
 # L Will cause HTTP 400
 curl "https://oda.ft.dk/api/Sag?$top=5"
 
-#  Correct
+# ✅ Correct
 curl "https://oda.ft.dk/api/Sag?%24top=5"
 ```
 
@@ -156,7 +156,7 @@ curl "https://oda.ft.dk/api/Sag?%24top=5"
 # L Malformed query
 curl "https://oda.ft.dk/api/Sag?%24filter=id eq 1"
 
-#  Spaces encoded
+# ✅ Spaces encoded
 curl "https://oda.ft.dk/api/Sag?%24filter=id%20eq%201"
 ```
 
@@ -165,7 +165,7 @@ curl "https://oda.ft.dk/api/Sag?%24filter=id%20eq%201"
 # L May cause issues
 curl "https://oda.ft.dk/api/Aktør?%24filter=substringof('ø',navn)"
 
-#  Properly encoded
+# ✅ Properly encoded
 curl "https://oda.ft.dk/api/Akt%C3%B8r?%24filter=substringof('%C3%B8',navn)"
 ```
 
@@ -174,7 +174,7 @@ curl "https://oda.ft.dk/api/Akt%C3%B8r?%24filter=substringof('%C3%B8',navn)"
 # L Parentheses not encoded
 curl "https://oda.ft.dk/api/Sag?%24filter=(typeid eq 3) and (year(opdateringsdato) gt 2020)"
 
-#  Complete encoding
+# ✅ Complete encoding
 curl "https://oda.ft.dk/api/Sag?%24filter=%28typeid%20eq%203%29%20and%20%28year%28opdateringsdato%29%20gt%202020%29"
 ```
 

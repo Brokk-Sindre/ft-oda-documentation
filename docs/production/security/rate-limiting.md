@@ -8,11 +8,11 @@ The Danish Parliament API has no server-side rate limiting, making it essential 
 
 Based on comprehensive testing (Phase 16 investigation), the API shows no evidence of:
 
--  No request per minute limits
--  No concurrent connection limits  
--  No IP-based throttling
--  No user agent restrictions
--  No geographic rate limiting
+- ✅ No request per minute limits
+- ✅ No concurrent connection limits  
+- ✅ No IP-based throttling
+- ✅ No user agent restrictions
+- ✅ No geographic rate limiting
 
 ```bash
 # Testing confirmed no rate limits
@@ -473,7 +473,7 @@ class RateLimitingMetrics:
     
     def export_metrics(self, filename: str):
         """Export metrics to CSV"""
-        with open(filename, 'w', newline='') as csvfile:
+        with open(filename, 'w', newline🔧') as csvfile:
             fieldnames = ['timestamp', 'response_time', 'status_code', 'response_size']
             writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
             

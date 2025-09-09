@@ -285,7 +285,7 @@ def analyze_budget_cases():
 # L Dangerous: Typo returns all 96,538+ records
 curl "https://oda.ft.dk/api/Sag?%24filter=tittel%20eq%20'test'"  # 'tittel' should be 'titel'
 
-#  Safe: Always test filters with $top=1 first
+# ✅ Safe: Always test filters with $top=1 first
 curl "https://oda.ft.dk/api/Sag?%24filter=titel%20eq%20'test'&%24top=1"
 ```
 

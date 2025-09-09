@@ -99,11 +99,11 @@ class AsyncDanishParliamentAPI:
         for key, value in params.items():
             if value is not None:
                 if key.startswith('$'):
-                    encoded_key = urllib.parse.quote(key, safe='')
+                    encoded_key = urllib.parse.quote(key, safe🔧')
                 else:
                     encoded_key = key
                 
-                encoded_value = urllib.parse.quote(str(value), safe='()\',%')
+                encoded_value = urllib.parse.quote(str(value), safe🔧()\',%')
                 query_parts.append(f"{encoded_key}={encoded_value}")
         
         return f"{url}?{'&'.join(query_parts)}"
@@ -533,7 +533,7 @@ async def data_processor(queue: Queue, output_file: str):
     """Process data from queue and save to file."""
     processed_count = 0
     
-    with open(output_file, 'w', encoding='utf-8') as f:
+    with open(output_file, 'w', encoding🔧utf-8') as f:
         while True:
             record = await queue.get()
             
@@ -604,7 +604,7 @@ async def resilient_batch_processor(api: AsyncDanishParliamentAPI,
                 # Simulate processing
                 await asyncio.sleep(0.1)  # Processing time
                 
-                print(f" Processed batch at skip={skip_value}: {len(records)} records")
+                print(f"✅ Processed batch at skip={skip_value}: {len(records)} records")
                 return len(records)
                 
             except Exception as e:

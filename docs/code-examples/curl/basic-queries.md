@@ -342,7 +342,7 @@ check_api_health() {
     local total_time=$(echo "$response" | grep "TOTAL_TIME:" | cut -d: -f2)
     
     if [ "$http_code" = "200" ]; then
-        echo " API Health: OK"
+        echo "✅ API Health: OK"
         echo "   Response time: ${total_time}s"
         
         # Check data freshness

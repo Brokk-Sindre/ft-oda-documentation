@@ -6,14 +6,14 @@ Comprehensive overview of the Danish Parliament API data structure, relationship
 
 The Danish Parliament API represents the complete parliamentary ecosystem through interconnected entities:
 
-### <Û Parliamentary Entities
+### ðŸ“‹ Parliamentary Entities
 - **Sag** (Cases) - Legislative bills, proposals, and matters
-- **Aktør** (Actors) - Politicians, committees, ministries
+- **AktÃ¸r** (Actors) - Politicians, committees, ministries
 - **Afstemning** (Voting) - Parliamentary voting sessions
-- **Møde** (Meetings) - Parliamentary and committee meetings
+- **MÃ¸de** (Meetings) - Parliamentary and committee meetings
 - **Dokument** (Documents) - Official parliamentary documents
 
-### = Relationships
+### ðŸ”— Relationships
 - Junction tables connect entities with semantic roles
 - Role-based relationships define participation types
 - Temporal relationships track changes over time
@@ -21,30 +21,30 @@ The Danish Parliament API represents the complete parliamentary ecosystem throug
 
 ## Data Model Components
 
-### =Ê [Entity Relationships](entity-relationships.md)
+### ðŸ“œ [Entity Relationships](entity-relationships.md)
 Visual diagrams and detailed explanations of how entities connect:
 - Core entity relationships
 - Junction table patterns
 - Hierarchical structures
 - Temporal relationships
 
-### <÷ [Classification Systems](classification-systems/)
+### ðŸ“‹ [Classification Systems](classification-systems/)
 Standardized categorization used throughout the API:
 
 - **[Actor Types](classification-systems/actor-types.md)** - 17 types including Person, Udvalg, Ministerium
 - **[Case Types](classification-systems/case-types.md)** - 13 types from Lovforslag to Alm. del
 - **[Case Status](classification-systems/case-status.md)** - 68 different status codes
-- **[Vote Types](classification-systems/vote-types.md)** - For, Imod, Hverken for eller imod, Fraværende
+- **[Vote Types](classification-systems/vote-types.md)** - For, Imod, Hverken for eller imod, FravÃ¸rende
 - **[Document Types](classification-systems/document-types.md)** - Various document classifications
 
-### =e [Role Systems](role-systems/)
+### ðŸ“ [Role Systems](role-systems/)
 Semantic roles defining relationships between entities:
 
 - **[Case-Actor Roles](role-systems/case-actor-roles.md)** - 23 roles including Forslagsstiller, Minister
 - **[Document-Actor Roles](role-systems/document-actor-roles.md)** - 25 roles including Afsender, Modtager
 - **[Other Roles](role-systems/other-roles.md)** - Additional role types across the system
 
-### <Û [Parliamentary Process](parliamentary-process/)
+### ðŸ“‹ [Parliamentary Process](parliamentary-process/)
 How the data model represents Danish parliamentary procedures:
 
 - **[Legislative Flow](parliamentary-process/legislative-flow.md)** - From proposal to law
@@ -66,9 +66,9 @@ Every entity includes `opdateringsdato` for tracking changes:
 ### 2. Semantic Relationships
 Relationships carry meaning through role systems:
 ```
-Sag --[Forslagsstiller]--> Aktør
-     --[Minister]--> Aktør
-     --[Udvalg]--> Aktør
+Sag --[Forslagsstiller]--> AktÃ¸r
+     --[Minister]--> AktÃ¸r
+     --[Udvalg]--> AktÃ¸r
 ```
 
 ### 3. Classification Consistency
@@ -99,14 +99,14 @@ Entity1 <--> JunctionTable <--> Entity2
                   |
                 Role
 ```
-Example: `SagAktør` connects cases to actors with specific roles
+Example: `SagAktÃ¸r` connects cases to actors with specific roles
 
 ## Data Volume and Scale
 
 | Entity | Record Count | Update Frequency |
 |--------|--------------|------------------|
 | Sag | 96,538+ | Daily |
-| Aktør | 18,139+ | Weekly |
+| AktÃ¸r | 18,139+ | Weekly |
 | Dokument | Large | Daily |
 | Afstemning | Thousands | During sessions |
 | Stemme | Millions | During sessions |
@@ -125,13 +125,13 @@ Example: `SagAktør` connects cases to actors with specific roles
 1. **Find all relationships for an entity**:
 ```bash
 # All actors involved in a case
-curl "https://oda.ft.dk/api/SagAktør?$filter=sagid eq 102903&$expand=Aktør,SagAktørRolle"
+curl "https://oda.ft.dk/api/SagAktÃ¸r?$filter=sagid eq 102903&$expand=AktÃ¸r,SagAktÃ¸rRolle"
 ```
 
 2. **Navigate hierarchies**:
 ```bash
 # Committee members
-curl "https://oda.ft.dk/api/Aktør?$filter=typeid eq 4&$expand=AktørAktør"
+curl "https://oda.ft.dk/api/AktÃ¸r?$filter=typeid eq 4&$expand=AktÃ¸rAktÃ¸r"
 ```
 
 3. **Track temporal changes**:

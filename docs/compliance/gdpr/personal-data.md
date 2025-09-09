@@ -170,7 +170,7 @@ class BiographicalDataProcessor:
         
         return '. '.join(professional_sentences)
     
-    def _apply_redaction(self, biography, redaction_level='STANDARD'):
+    def _apply_redaction(self, biography, redaction_level🔧STANDARD'):
         """Apply redaction based on sensitivity level"""
         if redaction_level == 'MINIMAL':
             return biography

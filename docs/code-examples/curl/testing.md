@@ -61,7 +61,7 @@ for entity in "${ENTITIES[@]}"; do
     HTTP_CODE=$(curl -s -w "%{http_code}" -o /dev/null "https://oda.ft.dk/api/${entity}?%24top=1")
     
     if [ "$HTTP_CODE" = "200" ]; then
-        echo " $entity: OK"
+        echo "✅ $entity: OK"
     else
         echo "L $entity: HTTP $HTTP_CODE"
     fi
@@ -311,7 +311,7 @@ echo "Relationship integrity tests:"
 FK_TEST=$(curl -s "https://oda.ft.dk/api/SagAktør?%24expand=Sag,Aktør&%24top=5" | jq -r '
     .value[] | 
     select(.Sag and .Aktør) | 
-    " SagAktør \(.id): Links Sag \(.sagid) to Aktør \(.aktørid)"
+    "✅ SagAktør \(.id): Links Sag \(.sagid) to Aktør \(.aktørid)"
 ')
 echo "$FK_TEST" | head -3
 
@@ -337,7 +337,7 @@ echo
 echo "1. Basic Connectivity:"
 HTTP_STATUS=$(curl -s -w "%{http_code}" -o /dev/null --max-time 10 "https://oda.ft.dk/api/Sag?%24top=1")
 if [ "$HTTP_STATUS" = "200" ]; then
-    echo "   API is accessible (HTTP $HTTP_STATUS)"
+    echo "  ✅ API is accessible (HTTP $HTTP_STATUS)"
 else
     echo "  L API connection failed (HTTP $HTTP_STATUS)"
     exit 1
@@ -364,8 +364,8 @@ echo "  Total actors: $ACTOR_COUNT"
 echo "5. OData Features:"
 FILTER_TEST=$(curl -s "https://oda.ft.dk/api/Sag?%24filter=id%20eq%201" | jq '.value | length')
 EXPAND_TEST=$(curl -s "https://oda.ft.dk/api/Sag?%24expand=Sagskategori&%24top=1" | jq -r '.value[0] | has("Sagskategori")')
-echo "  Filtering: $([ "$FILTER_TEST" -ge 0 ] && echo " Working" || echo "L Failed")"
-echo "  Expansion: $([ "$EXPAND_TEST" = "true" ] && echo " Working" || echo "L Failed")"
+echo "  Filtering: $([ "$FILTER_TEST" -ge 0 ] && echo "✅ Working" || echo "L Failed")"
+echo "  Expansion: $([ "$EXPAND_TEST" = "true" ] && echo "✅ Working" || echo "L Failed")"
 
 # Recent activity
 echo "6. Recent Activity:"
@@ -378,7 +378,7 @@ echo "Health check complete!"
 
 # Summary
 if [ "$HTTP_STATUS" = "200" ] && [ $(echo "$RESPONSE_TIME < 5.0" | bc) -eq 1 ]; then
-    echo " API Status: HEALTHY"
+    echo "✅ API Status: HEALTHY"
     exit 0
 else
     echo "   API Status: DEGRADED"

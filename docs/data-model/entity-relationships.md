@@ -6,8 +6,8 @@ This document provides a comprehensive overview of all entity relationships in t
 
 The Danish Parliament API models one of the world's most complex parliamentary systems through a rich relational structure. The data model captures:
 
-- **Core Parliamentary Process**: Cases (Sag), Documents (Dokument), Meetings (M�de)
-- **Democratic Participation**: Actors (Akt�r), Voting Sessions (Afstemning), Individual Votes (Stemme)
+- **Core Parliamentary Process**: Cases (Sag), Documents (Dokument), Meetings (Møde)
+- **Democratic Participation**: Actors (Aktør), Voting Sessions (Afstemning), Individual Votes (Stemme)
 - **Complex Relationships**: Junction tables modeling many-to-many relationships with semantic roles
 - **Process Tracking**: Step-by-step progression through parliamentary procedures
 
@@ -20,9 +20,9 @@ These entities represent the primary objects in the parliamentary system:
 | Entity | Count | Description |
 |--------|-------|-------------|
 | **Sag** | 96,538+ | Cases - legislative bills, proposals, and parliamentary matters |
-| **Akt�r** | 18,139+ | Actors - politicians, committees, ministries, organizations |
+| **Aktør** | 18,139+ | Actors - politicians, committees, ministries, organizations |
 | **Dokument** | Thousands | Documents - proposals, reports, statements, correspondence |
-| **M�de** | Thousands | Meetings - parliamentary sessions and committee meetings |
+| **Møde** | Thousands | Meetings - parliamentary sessions and committee meetings |
 | **Afstemning** | Thousands | Voting sessions - formal votes on cases and amendments |
 | **Stemme** | Millions | Individual votes - how each politician voted |
 
@@ -32,11 +32,11 @@ These entities model complex many-to-many relationships with semantic meaning:
 
 | Junction Entity | Purpose | Role Types |
 |-----------------|---------|-----------|
-| **SagAkt�r** | Case-Actor relationships | 23 role types |
-| **DokumentAkt�r** | Document-Actor relationships | 25 role types |
+| **SagAktør** | Case-Actor relationships | 23 role types |
+| **DokumentAktør** | Document-Actor relationships | 25 role types |
 | **SagDokument** | Case-Document relationships | Multiple roles |
-| **SagstrinAkt�r** | Case Step-Actor relationships | Process roles |
-| **M�deAkt�r** | Meeting-Actor relationships | Participation roles |
+| **SagstrinAktør** | Case Step-Actor relationships | Process roles |
+| **MødeAktør** | Meeting-Actor relationships | Participation roles |
 
 ### Classification Entities
 
@@ -45,7 +45,7 @@ These entities provide type and status classifications:
 | Classification Entity | Count | Purpose |
 |----------------------|-------|----------|
 | **Sagsstatus** | 68 | Case lifecycle status tracking |
-| **Akt�rtype** | 13 | Actor classification (Person, Committee, Ministry, etc.) |
+| **Aktørtype** | 13 | Actor classification (Person, Committee, Ministry, etc.) |
 | **Sagstype** | 13 | Case type classification |
 | **Dokumenttype** | 28 | Document type classification |
 | **Stemmetype** | 4 | Vote type (For, Against, Absent, Abstain) |
@@ -76,9 +76,9 @@ graph TD
     
     A --> F[Afstemning<br/>Voting Session]
     F --> G[Stemme<br/>Individual Vote]
-    G --> H[Akt�r<br/>Actor/Person]
+    G --> H[Aktør<br/>Actor/Person]
     
-    A --> I[SagAkt�r<br/>Case-Actor]
+    A --> I[SagAktør<br/>Case-Actor]
     I --> H
 ```
 
@@ -86,15 +86,15 @@ graph TD
 
 ```mermaid
 graph LR
-    A[Akt�r<br/>Actor] --> B[SagAkt�r<br/>Case Participation]
-    A --> C[DokumentAkt�r<br/>Document Participation]
-    A --> D[M�deAkt�r<br/>Meeting Participation]
-    A --> E[SagstrinAkt�r<br/>Process Participation]
+    A[Aktør<br/>Actor] --> B[SagAktør<br/>Case Participation]
+    A --> C[DokumentAktør<br/>Document Participation]
+    A --> D[MødeAktør<br/>Meeting Participation]
+    A --> E[SagstrinAktør<br/>Process Participation]
     A --> F[Stemme<br/>Voting Record]
     
     B --> G[Sag<br/>Case]
     C --> H[Dokument<br/>Document]
-    D --> I[M�de<br/>Meeting]
+    D --> I[Møde<br/>Meeting]
     E --> J[Sagstrin<br/>Case Step]
     F --> K[Afstemning<br/>Voting Session]
 ```
@@ -103,14 +103,14 @@ graph LR
 
 ```mermaid
 graph TB
-    A[Dokument<br/>Document] --> B[DokumentAkt�r<br/>Document-Actor<br/>25 Role Types]
+    A[Dokument<br/>Document] --> B[DokumentAktør<br/>Document-Actor<br/>25 Role Types]
     A --> C[SagDokument<br/>Case-Document]
     A --> D[SagstrinDokument<br/>Step-Document]
     A --> E[DagsordenspunktDokument<br/>Agenda-Document]
     A --> F[EmneordDokument<br/>Keyword-Document]
     A --> G[Fil<br/>File Attachment]
     
-    B --> H[Akt�r<br/>Actor]
+    B --> H[Aktør<br/>Actor]
     C --> I[Sag<br/>Case]
     D --> J[Sagstrin<br/>Case Step]
     E --> K[Dagsordenspunkt<br/>Agenda Item]
@@ -214,18 +214,18 @@ graph TB
 1. **Afstemning** - Voting sessions
 2. **Afstemningstype** - Voting session types
 3. **Aktstykke** - Act pieces (special administrative cases)
-4. **Akt�r** - Actors (people, organizations, committees)
-5. **Akt�rAkt�r** - Actor-to-actor relationships
-6. **Akt�rAkt�rRolle** - Actor-to-actor relationship roles
-7. **Akt�rtype** - Actor classification types
+4. **Aktør** - Actors (people, organizations, committees)
+5. **AktørAktør** - Actor-to-actor relationships
+6. **AktørAktørRolle** - Actor-to-actor relationship roles
+7. **Aktørtype** - Actor classification types
 8. **Almdel** - General affairs cases
 9. **Dagsordenspunkt** - Meeting agenda items
 10. **DagsordenspunktDokument** - Agenda item to document mapping
 11. **DagsordenspunktSag** - Agenda item to case mapping
 12. **Debat** - Parliamentary debates
 13. **Dokument** - Documents of all types
-14. **DokumentAkt�r** - Document to actor relationships
-15. **DokumentAkt�rRolle** - Document-actor relationship roles
+14. **DokumentAktør** - Document to actor relationships
+15. **DokumentAktørRolle** - Document-actor relationship roles
 16. **Dokumentkategori** - Document categories
 17. **Dokumentstatus** - Document status lifecycle
 18. **Dokumenttype** - Document type classification
@@ -238,22 +238,22 @@ graph TB
 25. **Fil** - File attachments
 26. **Forslag** - Formal proposals
 27. **KolloneBeskrivelse** - Column descriptions (metadata)
-28. **M�de** - Parliamentary and committee meetings
-29. **M�deAkt�r** - Meeting participation
-30. **M�destatus** - Meeting status
-31. **M�detype** - Meeting type classification
+28. **Møde** - Parliamentary and committee meetings
+29. **MødeAktør** - Meeting participation
+30. **Mødestatus** - Meeting status
+31. **Mødetype** - Meeting type classification
 32. **Omtryk** - Reprints and corrections
 33. **Periode** - Parliamentary periods/sessions
 34. **Sag** - Cases (bills, proposals, matters)
-35. **SagAkt�r** - Case to actor relationships
-36. **SagAkt�rRolle** - Case-actor relationship roles
+35. **SagAktør** - Case to actor relationships
+36. **SagAktørRolle** - Case-actor relationship roles
 37. **SagDokument** - Case to document relationships
 38. **SagDokumentRolle** - Case-document relationship roles
 39. **Sagskategori** - Case categories
 40. **Sagsstatus** - Case status (68 detailed statuses)
 41. **Sagstrin** - Case steps in the legislative process
-42. **SagstrinAkt�r** - Case step actor participation
-43. **SagstrinAkt�rRolle** - Case step actor roles
+42. **SagstrinAktør** - Case step actor participation
+43. **SagstrinAktørRolle** - Case step actor roles
 44. **SagstrinDokument** - Case step documents
 45. **Sagstrinsstatus** - Case step status
 46. **Sagstrinstype** - Case step types
@@ -266,12 +266,12 @@ graph TB
 
 ### 1. Participation Relationships
 
-**SagAkt�r (Case-Actor Relationships)**
+**SagAktør (Case-Actor Relationships)**
 - Links cases to participating actors
 - 23 different role types define the nature of participation
-- Examples: Minister (Minister), Sp�rger (Questioner), Forslagsstiller (Proposer)
+- Examples: Minister (Minister), Spørger (Questioner), Forslagsstiller (Proposer)
 
-**DokumentAkt�r (Document-Actor Relationships)**  
+**DokumentAktør (Document-Actor Relationships)**  
 - Links documents to participating actors
 - 25 different role types define the relationship
 - Examples: Afsender (Sender), Modtager (Recipient), Stiller (Submitter)
@@ -286,43 +286,43 @@ graph TB
 **Sagstrin (Case Steps)**
 - Represents stages in the parliamentary process
 - Links to SagstrinDokument for step-specific documents
-- Links to SagstrinAkt�r for step-specific actor participation
+- Links to SagstrinAktør for step-specific actor participation
 
 ### 3. Meeting and Voting Relationships
 
-**Afstemning � Stemme**
+**Afstemning ø Stemme**
 - One voting session contains multiple individual votes
 - Each Stemme record shows how one actor voted
 
-**M�de � Dagsordenspunkt � Cases/Documents**
+**Møde ø Dagsordenspunkt ø Cases/Documents**
 - Meetings have agenda items
 - Agenda items link to specific cases and documents
 
 ## Junction Table Patterns
 
 ### Pattern 1: Simple Junction
-**Entity1** �� **JunctionTable** �� **Entity2**
+**Entity1** øø **JunctionTable** øø **Entity2**
 
 Example: EmneordSag (Keyword-Case)
 - Simple many-to-many relationship
 - No additional semantic roles
 
 ### Pattern 2: Role-Based Junction  
-**Entity1** �� **JunctionTable** �� **Entity2**
-                     �
+**Entity1** øø **JunctionTable** øø **Entity2**
+                     ø
                **RoleTable**
 
-Example: SagAkt�r � SagAkt�rRolle
+Example: SagAktør ø SagAktørRolle
 - Junction table has `rolleid` field
 - Role table provides semantic meaning
 - Enables complex relationship modeling
 
 ### Pattern 3: Multi-Dimensional Junction
-**Entity1** �� **JunctionTable** �� **Entity2**
-                     �              �
+**Entity1** øø **JunctionTable** øø **Entity2**
+                     ø              ø
                **RoleTable**   **StatusTable**
 
-Example: SagstrinAkt�r � SagstrinAkt�rRolle
+Example: SagstrinAktør ø SagstrinAktørRolle
 - Multiple classification dimensions
 - Rich semantic context for relationships
 
@@ -354,17 +354,17 @@ curl "https://oda.ft.dk/api/Sag?%24expand=Sagskategori&%24top=5"
 curl "https://oda.ft.dk/api/Afstemning?%24expand=Stemme&%24top=1"
 
 # Two-level expansion: votes with actor information  
-curl "https://oda.ft.dk/api/Afstemning?%24expand=Stemme/Akt�r&%24top=1"
+curl "https://oda.ft.dk/api/Afstemning?%24expand=Stemme/Aktør&%24top=1"
 ```
 
 ### Junction Table Queries
 
 ```bash
 # Find all actors involved in a specific case
-curl "https://oda.ft.dk/api/SagAkt�r?%24filter=sagid%20eq%20102903&%24expand=Akt�r,SagAkt�rRolle"
+curl "https://oda.ft.dk/api/SagAktør?%24filter=sagid%20eq%20102903&%24expand=Aktør,SagAktørRolle"
 
 # Find all documents by a specific actor
-curl "https://oda.ft.dk/api/DokumentAkt�r?%24filter=akt�rid%20eq%2012345&%24expand=Dokument,DokumentAkt�rRolle"
+curl "https://oda.ft.dk/api/DokumentAktør?%24filter=aktørid%20eq%2012345&%24expand=Dokument,DokumentAktørRolle"
 ```
 
 ## Architecture Insights

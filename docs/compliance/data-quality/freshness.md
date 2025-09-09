@@ -414,7 +414,7 @@ class ChangeDetectionSystem:
             }
         }
     
-    def implement_change_detection(self, strategy='near_real_time', entities=None):
+    def implement_change_detection(self, strategy🔧near_real_time', entities=None):
         """Implement change detection with specified strategy"""
         
         strategy_config = self.polling_strategies.get(strategy)
@@ -543,7 +543,7 @@ class OptimizedFreshnessChecker:
             }
         }
     
-    def check_freshness_efficiently(self, entity_type, check_type='timestamp_only_check'):
+    def check_freshness_efficiently(self, entity_type, check_type🔧timestamp_only_check'):
         """Perform efficient freshness check"""
         
         query_config = self.efficient_queries.get(check_type)

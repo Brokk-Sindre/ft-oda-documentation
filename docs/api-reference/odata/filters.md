@@ -66,10 +66,10 @@ Useful for finding documents by their conclusion type:
 
 ```bash
 # Find laws (ends with 'lov')
-curl "https://oda.ft.dk/api/Sag?%24filter=endswith(titel,'lov')&%24top=5"
+curl "https://oda.ft.dk/api/Sag?%24filter📁ndswith(titel,'lov')&%24top=5"
 
 # Find questions (ends with '?')
-curl "https://oda.ft.dk/api/Sag?%24filter=endswith(titel,'%3F')&%24top=5"
+curl "https://oda.ft.dk/api/Sag?%24filter📁ndswith(titel,'%3F')&%24top=5"
 ```
 
 ## Date and Time Functions
@@ -302,12 +302,12 @@ curl "https://oda.ft.dk/api/Sag?%24filter=not%20substringof('eu',titel)&%24top=1
 
 | Function | Syntax | Purpose | Example |
 |----------|--------|---------|---------|
-| `substringof(needle, haystack)` | Text contains | `substringof('klima', titel)` |  |
-| `startswith(text, prefix)` | Text starts with | `startswith(titel, 'Forslag')` |  |
-| `endswith(text, suffix)` | Text ends with | `endswith(titel, 'lov')` |  |
-| `year(date)` | Extract year | `year(opdateringsdato) eq 2025` |  |
-| `month(date)` | Extract month | `month(opdateringsdato) eq 9` |  |
-| `day(date)` | Extract day | `day(opdateringsdato) eq 9` |  |
+| `substringof(needle, haystack)` | Text contains | `substringof('klima', titel)` | ✅ |
+| `startswith(text, prefix)` | Text starts with | `startswith(titel, 'Forslag')` | ✅ |
+| `endswith(text, suffix)` | Text ends with | `endswith(titel, 'lov')` | ✅ |
+| `year(date)` | Extract year | `year(opdateringsdato) eq 2025` | ✅ |
+| `month(date)` | Extract month | `month(opdateringsdato) eq 9` | ✅ |
+| `day(date)` | Extract day | `day(opdateringsdato) eq 9` | ✅ |
 
 ### Unsupported Functions (OData 4.0+)
 

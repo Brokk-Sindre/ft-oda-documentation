@@ -107,13 +107,13 @@ Each case (Sag) in the Danish Parliament has a current status that precisely des
 
 ### Committee Process
 
-#### 19. Bet�nkning afgivet (Report Submitted)
+#### 19. Betønkning afgivet (Report Submitted)
 **ID:** 19  
 **English:** Report Submitted  
 **Context:** Committee has completed its consideration and submitted its report  
 **Usage:** Key milestone in committee process
 
-#### 31. Till�gsbet�nkning afgivet (Supplementary Report Submitted)
+#### 31. Tilløgsbetønkning afgivet (Supplementary Report Submitted)
 **ID:** 31  
 **English:** Supplementary Report Submitted  
 **Context:** Committee provides additional report beyond initial consideration  
@@ -189,7 +189,7 @@ Each case (Sag) in the Danish Parliament has a current status that precisely des
 **Context:** Case adopted in single reading procedure  
 **Usage:** Adoption in simplified process
 
-#### 11. Stadf�stet (Confirmed/Ratified)
+#### 11. Stadføstet (Confirmed/Ratified)
 **ID:** 11  
 **English:** Confirmed/Ratified  
 **Context:** Case has been officially confirmed or ratified  
@@ -197,7 +197,7 @@ Each case (Sag) in the Danish Parliament has a current status that precisely des
 
 ### Process States
 
-#### 8. Igangv�rende (Ongoing/In Progress)
+#### 8. Igangvørende (Ongoing/In Progress)
 **ID:** 8, 54  
 **English:** Ongoing/In Progress  
 **Context:** Case is currently being processed  
@@ -228,7 +228,7 @@ Each case (Sag) in the Danish Parliament has a current status that precisely des
 **Context:** Case scheduled for negotiation  
 **Usage:** Planned negotiation status
 
-#### 30. Henst�ende (Pending)
+#### 30. Henstøende (Pending)
 **ID:** 30  
 **English:** Pending  
 **Context:** Case is waiting for further action  
@@ -260,7 +260,7 @@ Each case (Sag) in the Danish Parliament has a current status that precisely des
 **Context:** Case lapsed during second reading process  
 **Usage:** Specific stage lapse
 
-#### 9. Udg�et (Expired)
+#### 9. Udgøet (Expired)
 **ID:** 9  
 **English:** Expired  
 **Context:** Case has expired according to parliamentary rules  
@@ -286,13 +286,13 @@ Each case (Sag) in the Danish Parliament has a current status that precisely des
 **Context:** Question has received final answer  
 **Usage:** Terminal status for parliamentary questions
 
-#### 50. Besvaret, forel�bigt (Answered, Preliminarily)
+#### 50. Besvaret, foreløbigt (Answered, Preliminarily)
 **ID:** 50  
 **English:** Answered, Preliminarily  
 **Context:** Question has received preliminary answer  
 **Usage:** Interim status for parliamentary questions
 
-#### 62. Sp�rgsm�l afvist (Question Rejected)
+#### 62. Spørgsmøl afvist (Question Rejected)
 **ID:** 62  
 **English:** Question Rejected  
 **Context:** Parliamentary question has been rejected  
@@ -320,7 +320,7 @@ Each case (Sag) in the Danish Parliament has a current status that precisely des
 
 ### Special Procedures
 
-#### 21. Tiltr�dt (Endorsed/Joined)
+#### 21. Tiltrødt (Endorsed/Joined)
 **ID:** 21  
 **English:** Endorsed/Joined  
 **Context:** Case has been endorsed or joined by additional parties  
@@ -332,7 +332,7 @@ Each case (Sag) in the Danish Parliament has a current status that precisely des
 **Context:** Case has been formally noted or acknowledged  
 **Usage:** Administrative acknowledgment
 
-#### 44. Stedfortr�der godkendt (Deputy Approved)
+#### 44. Stedfortrøder godkendt (Deputy Approved)
 **ID:** 44  
 **English:** Deputy Approved  
 **Context:** Deputy appointment has been approved  
@@ -344,13 +344,13 @@ Each case (Sag) in the Danish Parliament has a current status that precisely des
 **Context:** Leave request has been approved  
 **Usage:** Specific to leave application procedures
 
-#### 46. Oph�r anmeldt (Termination Announced)
+#### 46. Ophør anmeldt (Termination Announced)
 **ID:** 46  
 **English:** Termination Announced  
 **Context:** Termination or end has been announced  
 **Usage:** Administrative termination notice
 
-#### 45. Afventer opf�lgning (Awaiting Follow-up)
+#### 45. Afventer opfølgning (Awaiting Follow-up)
 **ID:** 45  
 **English:** Awaiting Follow-up  
 **Context:** Case is awaiting follow-up action  
@@ -376,7 +376,7 @@ Each case (Sag) in the Danish Parliament has a current status that precisely des
 **Context:** Action has been undertaken  
 **Usage:** Administrative action completion
 
-#### 15. Forel�big (Preliminary)
+#### 15. Foreløbig (Preliminary)
 **ID:** 15, 63  
 **English:** Preliminary  
 **Context:** Preliminary status or action  
@@ -394,14 +394,14 @@ Each case (Sag) in the Danish Parliament has a current status that precisely des
 - **Vedtaget** (Adopted) - IDs 10, 17, 34, 39, 41, 57, 59
 - **Forkastet** (Rejected) - IDs 3, 16, 35, 37, 38, 64
 - **Afsluttet** (Completed) - IDs 1, 47
-- **Stadf�stet** (Confirmed) - ID 11
+- **Stadføstet** (Confirmed) - ID 11
 - **Besvaret, endeligt** (Answered Finally) - ID 20
 - **Tilbagetaget** (Withdrawn) - ID 4
 - **Bortfaldet** (Lapsed) - IDs 13, 48
-- **Udg�et** (Expired) - ID 9
+- **Udgøet** (Expired) - ID 9
 
 ### Active Process Statuses
-- **Igangv�rende** (Ongoing) - IDs 8, 54
+- **Igangvørende** (Ongoing) - IDs 8, 54
 - **Fremsat** (Proposed) - IDs 24, 25, 26
 - **Henvist til udvalg** (Referred to Committee) - Multiple IDs
 - **Behandles** (Being Processed) - Multiple reading stages
@@ -414,7 +414,7 @@ Each case (Sag) in the Danish Parliament has a current status that precisely des
 
 ### Question-Specific Statuses
 - **Besvaret** (Answered) - IDs 20, 50
-- **Sp�rgsm�l afvist** (Question Rejected) - ID 62
+- **Spørgsmøl afvist** (Question Rejected) - ID 62
 
 ## Parliamentary Process Flow
 

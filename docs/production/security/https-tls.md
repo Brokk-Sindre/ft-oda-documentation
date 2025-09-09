@@ -32,11 +32,11 @@ curl -I -v "https://oda.ft.dk/api/Sag" 2>&1 | grep -E "(SSL|TLS|Certificate)"
 ### Security Strength Assessment
 
 **Strengths:**
--  Strong cipher suite (AES-256, SHA-384)
--  Forward secrecy (ECDHE key exchange)
--  Valid certificate chain
--  Wildcard certificate properly configured
--  Certificate from trusted CA (GlobalSign)
+- ✅ Strong cipher suite (AES-256, SHA-384)
+- ✅ Forward secrecy (ECDHE key exchange)
+- ✅ Valid certificate chain
+- ✅ Wildcard certificate properly configured
+- ✅ Certificate from trusted CA (GlobalSign)
 
 **Limitations:**
 -   No HTTP/2 support (uses HTTP/1.1)
@@ -339,7 +339,7 @@ import ssl
 import socket
 from datetime import datetime
 
-def check_certificate_expiry(hostname='oda.ft.dk', port=443):
+def check_certificate_expiry(hostname🔧oda.ft.dk', port=443):
     """Monitor certificate expiry"""
     context = ssl.create_default_context()
     
@@ -378,7 +378,7 @@ EXPECTED_CERT_FINGERPRINTS = [
     'sha256:expected_fingerprint_here'  # Update with actual fingerprint
 ]
 
-def verify_certificate_pin(hostname='oda.ft.dk', port=443):
+def verify_certificate_pin(hostname🔧oda.ft.dk', port=443):
     """Verify certificate against known fingerprints"""
     context = ssl.create_default_context()
     

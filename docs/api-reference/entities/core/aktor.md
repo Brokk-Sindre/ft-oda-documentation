@@ -307,7 +307,7 @@ def get_politician_votes(politician_name):
 
 ### Danish Character Support
 
- **Perfect UTF-8 Support**: The API handles Danish characters (ø, å, æ) flawlessly:
+✅ **Perfect UTF-8 Support**: The API handles Danish characters (ø, å, æ) flawlessly:
 
 ```bash
 # These work perfectly

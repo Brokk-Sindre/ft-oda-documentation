@@ -125,11 +125,11 @@ class DanishParliamentAPI:
             if value is not None:
                 # Ensure $ parameters are properly encoded
                 if key.startswith('$'):
-                    encoded_key = urllib.parse.quote(key, safe='')
+                    encoded_key = urllib.parse.quote(key, safe🔧')
                 else:
                     encoded_key = key
                 
-                encoded_value = urllib.parse.quote(str(value), safe='()\',%')
+                encoded_value = urllib.parse.quote(str(value), safe🔧()\',%')
                 query_parts.append(f"{encoded_key}={encoded_value}")
         
         return f"{url}?{'&'.join(query_parts)}"

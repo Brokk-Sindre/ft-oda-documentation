@@ -4,20 +4,20 @@ Legal, regulatory, and quality compliance information for using the Danish Parli
 
 ## Compliance Areas
 
-### = [GDPR Compliance](gdpr/)
+### 🔒 [GDPR Compliance](gdpr/)
 Personal data handling under European data protection regulations.
 
 - **[Personal Data](gdpr/personal-data.md)** - What personal information is exposed
 - **[Data Subject Rights](gdpr/data-subject-rights.md)** - Rights of individuals in the data
 - **[Lawful Basis](gdpr/lawful-basis.md)** - Legal grounds for data processing
 
-### =� [Licensing](licensing/)
+### 📜 [Licensing](licensing/)
 Terms of use and attribution requirements.
 
 - **[Terms of Service](licensing/terms-of-service.md)** - API usage terms
 - **[Attribution](licensing/attribution.md)** - How to properly credit data sources
 
-###  [Data Quality](data-quality/)
+### ✅ [Data Quality](data-quality/)
 API data quality guarantees and limitations.
 
 - **[Freshness](data-quality/freshness.md)** - How current is the data
@@ -40,7 +40,7 @@ The API contains extensive personal information about public officials:
 ```json
 {
   "navn": "Anders Fogh Rasmussen",
-  "biografi": "F�dt 26-01-1953. Cand.polit...",
+  "biografi": "Født 26-01-1953. Cand.polit...",
   "email": "example@ft.dk",
   "telefon": "+45 33 37 55 00"
 }

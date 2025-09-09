@@ -363,7 +363,7 @@ def find_cross_party_coalitions(session_id):
 # L Dangerous: Could return massive dataset
 curl "https://oda.ft.dk/api/Stemme?%24top=10000"
 
-#  Safe: Always filter by politician or voting session
+# ✅ Safe: Always filter by politician or voting session
 curl "https://oda.ft.dk/api/Stemme?%24filter=aktörid%20eq%205&%24top=100"
 curl "https://oda.ft.dk/api/Stemme?%24filter=afstemningid%20eq%201"
 ```
@@ -377,9 +377,9 @@ curl "https://oda.ft.dk/api/Stemme?%24filter=afstemningid%20eq%201"
 
 ### Privacy and Transparency
 
- **Public Information**: All voting records are public information in Danish democracy
- **Democratic Transparency**: Citizens have the right to know how their representatives voted
- **Historical Record**: Complete voting history preserved for accountability
+✅ **Public Information**: All voting records are public information in Danish democracy
+✅ **Democratic Transparency**: Citizens have the right to know how their representatives voted
+✅ **Historical Record**: Complete voting history preserved for accountability
 
 ### Related Entities
 

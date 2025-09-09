@@ -22,7 +22,7 @@ flowchart TD
     E --> F
     
     F --> G[=Ä Initial Document<br/>Dokument Created]
-    G --> H[= SagDokument<br/>Case-Document Link]
+    G --> H[🔗 SagDokument<br/>Case-Document Link]
     
     %% Parliamentary Processing
     H --> I[=Å First Reading Scheduled<br/>Dagsordenspunkt]
@@ -46,9 +46,9 @@ flowchart TD
     S -->|No| U[=Ä Further Committee Work]
     
     %% Voting Process
-    T --> V[ Individual Votes<br/>Stemme Records]
+    T --> V[✅ Individual Votes<br/>Stemme Records]
     V --> W{Vote Result?}
-    W -->|Passed| X[ Second Reading Passed]
+    W -->|Passed| X[✅ Second Reading Passed]
     W -->|Failed| Y[L Bill Failed]
     W -->|Amendments| Z[=Ý Amendments Proposed]
     
@@ -56,11 +56,11 @@ flowchart TD
     X --> AA[=Å Third Reading<br/>Final Debate]
     Z --> AA
     AA --> BB[=ó Final Voting<br/>Afstemning]
-    BB --> CC[ Final Votes<br/>Stemme Records]
+    BB --> CC[✅ Final Votes<br/>Stemme Records]
     
     %% Final Outcomes
     CC --> DD{Final Result?}
-    DD -->|Passed| EE[ Law Adopted<br/>lovnummer assigned]
+    DD -->|Passed| EE[✅ Law Adopted<br/>lovnummer assigned]
     DD -->|Failed| FF[L Bill Rejected]
     
     %% Status Updates
@@ -90,7 +90,7 @@ flowchart TD
 sequenceDiagram
     participant Initiator as =Ý Proposal Initiator
     participant Parliament as <Û Parliament
-    participant Committee as =e Committee
+    participant Committee as 📁 Committee
     participant Members as =d MPs
     participant System as =¾ API System
     
@@ -181,7 +181,7 @@ stateDiagram-v2
 ```mermaid
 flowchart LR
     subgraph "Initial Stage"
-        A[=Ä Original Proposal<br/>Dokument] --> B[= SagDokument<br/>Link to Case]
+        A[=Ä Original Proposal<br/>Dokument] --> B[🔗 SagDokument<br/>Link to Case]
     end
     
     subgraph "Committee Stage"
@@ -203,7 +203,7 @@ flowchart LR
     
     %% Actor Relationships
     A -.-> K[=T Minister<br/>DokumentAktør]
-    C -.-> L[=e Committee<br/>DokumentAktør]
+    C -.-> L[📁 Committee<br/>DokumentAktør]
     D -.-> M[=h< Experts<br/>DokumentAktør]
     F -.-> N[=d MPs<br/>DokumentAktør]
     I -.-> O[=Q Royal Assent<br/>DokumentAktør]
@@ -229,7 +229,7 @@ flowchart TD
     F --> G
     
     G --> H{Vote Options}
-    H --> I[ For<br/>Stemmetype: For]
+    H --> I[✅ For<br/>Stemmetype: For]
     H --> J[L Imod<br/>Stemmetype: Imod]
     H --> K[=« Fravær<br/>Stemmetype: Fravær]
     H --> L[U Hverken for eller imod<br/>Stemmetype: Hverken]
@@ -241,7 +241,7 @@ flowchart TD
     
     M --> N[=È Final Tally<br/>Result Calculation]
     N --> O{Result}
-    O -->|Majority For| P[ Motion Passed]
+    O -->|Majority For| P[✅ Motion Passed]
     O -->|Majority Against| Q[L Motion Failed]
     O -->|Tie| R[ Tie - Speaker Decides]
     
@@ -265,14 +265,14 @@ graph TD
     end
     
     subgraph "Committee Work Process"
-        D[=å Case Received<br/>SagAktør Link] --> E[=e Committee Members<br/>MødeAktør]
+        D[=å Case Received<br/>SagAktør Link] --> E[📁 Committee Members<br/>MødeAktør]
         E --> F[=Å Committee Meetings<br/>Møde]
         F --> G[=Ë Hearing Sessions<br/>Expert Testimony]
         G --> H[=Ý Committee Report<br/>Betænkning]
     end
     
     subgraph "Committee Outputs"
-        H --> I[ Recommendation<br/>Indstilling til vedtagelse]
+        H --> I[✅ Recommendation<br/>Indstilling til vedtagelse]
         H --> J[L Against Recommendation<br/>Indstilling til forkastelse]
         H --> K[=Ý Minority Opinion<br/>Mindretalsudtalelse]
     end

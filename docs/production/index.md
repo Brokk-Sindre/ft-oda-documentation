@@ -4,7 +4,7 @@ Essential guidance for deploying applications that consume the Danish Parliament
 
 ## Production Considerations
 
-### <× [Architecture](architecture/)
+### ðŸ“‹ [Architecture](architecture/)
 Design patterns and infrastructure considerations for production deployments.
 
 - **[Scaling](architecture/scaling.md)** - Handle high traffic and large datasets
@@ -18,14 +18,14 @@ Security best practices for production systems using the API.
 - **[No Authentication](security/no-auth.md)** - Working with open APIs securely
 - **[Rate Limiting](security/rate-limiting.md)** - Implement client-side throttling
 
-### ¡ [Performance](performance/)
+### âš¡ [Performance](performance/)
 Optimize your application for production workloads.
 
 - **[Query Optimization](performance/query-optimization.md)** - Write efficient OData queries
 - **[Pagination Strategies](performance/pagination-strategies.md)** - Handle large datasets
 - **[Concurrent Requests](performance/concurrent-requests.md)** - Parallel processing patterns
 
-### =' [Troubleshooting](troubleshooting/)
+### ðŸ”§ [Troubleshooting](troubleshooting/)
 Diagnose and resolve common production issues.
 
 - **[Common Errors](troubleshooting/common-errors.md)** - Error patterns and solutions

@@ -466,7 +466,7 @@ def example_error_handling():
         ('Invalid OData', lambda: api._make_request_robust('https://oda.ft.dk/api/Sag?$expand=Invalid')),
         
         # Very large query (might timeout)
-        ('Large query', lambda: api.get_cases(top=100, expand='SagAktør/Aktør')),
+        ('Large query', lambda: api.get_cases(top=100, expand🔧SagAktør/Aktør')),
     ]
     
     for test_name, test_func in error_tests:
@@ -474,9 +474,9 @@ def example_error_handling():
         try:
             result = test_func()
             if isinstance(result, dict) and 'value' in result:
-                print(f" Success: {len(result['value'])} records")
+                print(f"✅ Success: {len(result['value'])} records")
             else:
-                print(f" Success: {result}")
+                print(f"✅ Success: {result}")
         except EntityNotFoundError as e:
             print(f"L Entity Error: {e}")
         except RecordNotFoundError as e:
@@ -563,7 +563,7 @@ from datetime import datetime
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    format🔧%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
         logging.FileHandler('danish_parliament_api.log'),
         logging.StreamHandler()

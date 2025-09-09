@@ -226,7 +226,7 @@ class ConcurrentPaginator {
         if (select) params['$select'] = select;
         
         const response = await this.api.request(entity, params);
-        console.log(` Batch at skip=${batch.skip}: ${response.value?.length || 0} records`);
+        console.log(`✅ Batch at skip=${batch.skip}: ${response.value?.length || 0} records`);
         
         return {
           skip: batch.skip,
@@ -628,7 +628,7 @@ class ETLPipeline {
     const elapsed = (this.stats.endTime - this.stats.startTime) / 1000;
     const rate = this.stats.processed / elapsed;
     
-    console.log('\n=== ETL Pipeline Complete ===');
+    console.log('\n=== ETL Pipeline Complete ==🔧);
     console.log(`Total processed: ${this.stats.processed.toLocaleString()}`);
     console.log(`Total errors: ${this.stats.errors}`);
     console.log(`Time elapsed: ${elapsed.toFixed(1)} seconds`);
@@ -794,7 +794,7 @@ class AnalyticsPaginator {
   }
   
   logAnalytics() {
-    console.log('\n=== Pagination Analytics ===');
+    console.log('\n=== Pagination Analytics ==🔧);
     console.log(`Total requests: ${this.analytics.totalRequests}`);
     console.log(`Total records: ${this.analytics.totalRecords.toLocaleString()}`);
     console.log(`Total time: ${(this.analytics.totalTime / 1000).toFixed(1)}s`);

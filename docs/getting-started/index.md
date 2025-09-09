@@ -53,7 +53,7 @@ curl "https://oda.ft.dk/api/Sag?%24top=5"
     
     L Wrong: `?$top=5`
     
-     Correct: `?%24top=5`
+    ✅ Correct: `?%24top=5`
 
 ## Response Structure
 

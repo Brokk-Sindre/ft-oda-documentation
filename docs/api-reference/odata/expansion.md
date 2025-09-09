@@ -18,7 +18,7 @@ The `$expand` parameter follows **OData 3.0 expansion syntax**:
 !!! warning "URL Encoding Required"
     Always use `%24expand` instead of `$expand` in URLs:
     ```
-     Correct: ?%24expand=Sagskategori
+    ✅ Correct: ?%24expand=Sagskategori
     L Wrong: ?$expand=Sagskategori
     ```
 
@@ -95,7 +95,7 @@ curl "https://oda.ft.dk/api/Stemme?%24expand=Afstemning,Aktør,Stemmetype&%24top
 
 | Expansion Count | Response Time | Recommendation |
 |-----------------|---------------|----------------|
-| 1-2 expansions | ~90-150ms |  Optimal |
+| 1-2 expansions | ~90-150ms | ✅ Optimal |
 | 3-4 expansions | ~200-400ms |   Monitor performance |
 | 5+ expansions | ~500ms+ | L Consider multiple requests |
 
@@ -246,9 +246,9 @@ curl "https://oda.ft.dk/api/Stemme?%24filter=afstemningid%20eq%2012345&%24expand
 #### Valid Expansions (HTTP 200)
 ```bash
 # These work correctly
-curl "https://oda.ft.dk/api/Sag?%24expand=Sagskategori&%24top=1"         # 
-curl "https://oda.ft.dk/api/Sag?%24expand=SagAktør/Aktør&%24top=1"       #   
-curl "https://oda.ft.dk/api/Stemme?%24expand=Afstemning,Aktør&%24top=1"  # 
+curl "https://oda.ft.dk/api/Sag?%24expand=Sagskategori&%24top=1"         # ✅
+curl "https://oda.ft.dk/api/Sag?%24expand=SagAktør/Aktør&%24top=1"       # ✅  
+curl "https://oda.ft.dk/api/Stemme?%24expand=Afstemning,Aktør&%24top=1"  # ✅
 ```
 
 #### Invalid Expansions (HTTP 400)
@@ -443,7 +443,7 @@ url = f"https://oda.ft.dk/api/Sag?$expand={expansion}&$top={batch_size}"
 ```
 
 ### Performance Guidelines  
-- **1-2 expansions**: ~90-150ms ( Optimal)
+- **1-2 expansions**: ~90-150ms (✅ Optimal)
 - **3+ expansions**: ~200ms+ (  Monitor)  
 - **Nested expansions**: ~500ms+ (L Use carefully)
 - **Voting with actors**: ~2s+ (L Paginate aggressively)

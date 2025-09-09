@@ -6,7 +6,7 @@ The Danish Parliament API uses **OData 3.0** (Open Data Protocol) to provide pow
 
 The API implements a robust subset of OData 3.0 with excellent performance and reliability:
 
-- ** Full OData 3.0 Support**: Complete implementation of core OData operations
+- **✅ Full OData 3.0 Support**: Complete implementation of core OData operations
 - **L No OData 4.0 Features**: Advanced OData 4.0 functions not available
 - **ø High Performance**: Response times from 85ms to 2 seconds
 - **=ø Large Scale**: Handles 96,538+ cases, 18,139+ actors seamlessly
@@ -17,25 +17,25 @@ The API implements a robust subset of OData 3.0 with excellent performance and r
 
 | Parameter | Purpose | Support Level | Max Limit |
 |-----------|---------|---------------|-----------|
-| `$top` | Limit number of records |  Full | 100 records |
-| `$skip` | Skip records for pagination |  Full | No limit |
-| `$filter` | Filter records by conditions |  Full | Complex expressions |
-| `$expand` | Include related data |  Full | 2-3 levels deep |
-| `$select` | Choose specific fields |  Full | All fields |
-| `$orderby` | Sort results |  Full | Multiple fields |
-| `$inlinecount` | Include total count |  Full | Allpages only |
-| `$format` | Response format |  Full | JSON/XML |
+| `$top` | Limit number of records | ✅ Full | 100 records |
+| `$skip` | Skip records for pagination | ✅ Full | No limit |
+| `$filter` | Filter records by conditions | ✅ Full | Complex expressions |
+| `$expand` | Include related data | ✅ Full | 2-3 levels deep |
+| `$select` | Choose specific fields | ✅ Full | All fields |
+| `$orderby` | Sort results | ✅ Full | Multiple fields |
+| `$inlinecount` | Include total count | ✅ Full | Allpages only |
+| `$format` | Response format | ✅ Full | JSON/XML |
 
 ### Advanced Filter Functions
 
 | Function | Purpose | Example | Support |
 |----------|---------|---------|---------|
-| `substringof()` | Text search | `substringof('klima', titel)` |  Full |
-| `startswith()` | Text prefix | `startswith(titel, 'Forslag')` |  Full |
-| `endswith()` | Text suffix | `endswith(titel, 'lov')` |  Full |
-| `year()` | Extract year | `year(opdateringsdato) eq 2025` |  Full |
-| `month()` | Extract month | `month(opdateringsdato) eq 9` |  Full |
-| `day()` | Extract day | `day(opdateringsdato) eq 9` |  Full |
+| `substringof()` | Text search | `substringof('klima', titel)` | ✅ Full |
+| `startswith()` | Text prefix | `startswith(titel, 'Forslag')` | ✅ Full |
+| `endswith()` | Text suffix | `endswith(titel, 'lov')` | ✅ Full |
+| `year()` | Extract year | `year(opdateringsdato) eq 2025` | ✅ Full |
+| `month()` | Extract month | `month(opdateringsdato) eq 9` | ✅ Full |
+| `day()` | Extract day | `day(opdateringsdato) eq 9` | ✅ Full |
 
 ## Unsupported OData Features
 
@@ -58,7 +58,7 @@ The following OData 4.0+ features are **not supported**:
     https://oda.ft.dk/api/Sag?$top=5
     ```
     
-    ** Correct:**
+    **✅ Correct:**
     ```
     https://oda.ft.dk/api/Sag?%24top=5
     ```
