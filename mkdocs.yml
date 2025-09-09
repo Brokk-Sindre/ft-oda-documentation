@@ -6,7 +6,7 @@ repo_name: Brokk-Sindre/ft-oda-documentation
 
 theme:
   name: material
-  custom_dir: docs/overrides
+  # custom_dir: docs/overrides  # Temporarily disabled - empty templates causing issues
   palette:
     # Light mode (Danish flag colors)
     - media: "(prefers-color-scheme: light)"
@@ -65,10 +65,10 @@ plugins:
       type: datetime
   # - social:  # Disabled until logo is added
   #     cards: true
-  - minify:
-      minify_html: true
-      minify_js: true
-      minify_css: true
+  # - minify:  # Temporarily disabled - causing empty output
+  #     minify_html: true
+  #     minify_js: true
+  #     minify_css: true
   # - sitemap:  # Built into MkDocs core now
   #     map_filename: sitemap.xml
   #     pretty: true
