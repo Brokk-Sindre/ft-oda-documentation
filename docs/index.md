@@ -7,6 +7,9 @@ author: Danish Parliament API Documentation Project
 
 # Danish Parliament API Documentation
 
+![Logo](assets/images/logo.png)
+
+
 Welcome to the comprehensive documentation for Denmark's Parliamentary Open Data API (oda.ft.dk) - the world's gold standard for government transparency APIs.
 
 ## 🏛️ API Highlights
