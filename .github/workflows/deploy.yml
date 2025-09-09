@@ -49,6 +49,10 @@ jobs:
         pip install --upgrade pip
         pip install -r requirements.txt
 
+    - name: Setup Pages
+      id: pages
+      uses: actions/configure-pages@v3
+
     - name: Validate MkDocs configuration
       run: |
         mkdocs --version
@@ -57,6 +61,9 @@ jobs:
     - name: Build MkDocs site
       run: |
         mkdocs build --strict --verbose
+      env:
+        # Configure site URL for proper asset links
+        SITE_URL: ${{ steps.pages.outputs.base_url }}
         
     - name: Verify build output
       run: |
