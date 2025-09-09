@@ -298,7 +298,7 @@ This security framework integrates with:
 
 ## Security Resources
 
-- **API Investigation Report**: See [scratchpad.md](../../../scratchpad.md) Phase 15-16
+- **API Investigation Report**: See [Investigation Findings](../../appendix/investigation/findings.md) for detailed technical analysis
 - **TLS Testing Results**: Certificate analysis and configuration validation
 - **Error Patterns**: Security implications of API error responses
 - **Contact**: folketinget@ft.dk for security-related concerns
