@@ -53,7 +53,7 @@ theme:
     code: Roboto Mono
   
   favicon: assets/images/favicon.png
-  logo: assets/images/logo.png
+  logo: assets/images/logo.svg
 
 plugins:
   - search:
