@@ -23,11 +23,11 @@ The API organizes temporal data through several key timestamp fields:
 # Key temporal fields across entities
 temporal_fields = {
     'opdateringsdato': 'Last system update (all entities)',
-    'dato': 'Event/meeting date (Møde, Dokument)',
-    'afgørelsesdato': 'Decision date (Sag)',
-    'startdato/slutdato': 'Period boundaries (Periode, Aktør)',
+    'dato': 'Event/meeting date (MÃ¸de, Dokument)',
+    'afgÃ¸relsesdato': 'Decision date (Sag)',
+    'startdato/slutdato': 'Period boundaries (Periode, AktÃ¸r)',
     'lovnummerdato': 'Law publication date (Sag)',
-    'rådsmødedato': 'Council meeting date (specialized meetings)'
+    'rÃ¥dsmÃ¸dedato': 'Council meeting date (specialized meetings)'
 }
 ```
 
@@ -58,7 +58,7 @@ def monitor_recent_activity(hours_back=24):
     cutoff_str = cutoff.strftime('%Y-%m-%dT%H:%M:%S')
     
     # Check recent updates across key entities
-    entities = ['Sag', 'Afstemning', 'Møde', 'Dokument']
+    entities = ['Sag', 'Afstemning', 'MÃ¸de', 'Dokument']
     activity_data = []
     
     for entity in entities:
@@ -107,9 +107,9 @@ def analyze_case_duration_patterns():
     # Fetch completed cases with decision dates
     url = "https://oda.ft.dk/api/Sag"
     params = {
-        '$filter': "afgørelsesdato ne null and afgørelsesdato gt datetime'2020-01-01'",
+        '$filter': "afgÃ¸relsesdato ne null and afgÃ¸relsesdato gt datetime'2020-01-01'",
         '$expand': 'Sagskategori',
-        '$select': 'id,titel,afgørelsesdato,opdateringsdato,kategoriid,periodeid',
+        '$select': 'id,titel,afgÃ¸relsesdato,opdateringsdato,kategoriid,periodeid',
         '$top': 1000
     }
     
@@ -118,9 +118,9 @@ def analyze_case_duration_patterns():
     
     case_durations = []
     for case in data['value']:
-        if case.get('afgørelsesdato'):
+        if case.get('afgÃ¸relsesdato'):
             # Calculate duration from creation to decision
-            decision_date = datetime.fromisoformat(case['afgørelsesdato'].replace('Z', '+00:00'))
+            decision_date = datetime.fromisoformat(case['afgÃ¸relsesdato'].replace('Z', '+00:00'))
             update_date = datetime.fromisoformat(case['opdateringsdato'].replace('Z', '+00:00'))
             
             # Note: Using opdateringsdato as proxy for creation (limitation)
@@ -188,12 +188,12 @@ Track how cases progress through different stages of the parliamentary process:
 def analyze_legislative_flow_timing():
     """Analyze timing patterns in legislative flow"""
     
-    # Get cases with their steps (sagsforløb)
+    # Get cases with their steps (sagsforlÃ¸b)
     url = "https://oda.ft.dk/api/Sag"
     params = {
         '$expand': 'Sagstrin',
         '$filter': "periodeid gt 140",  # Recent periods
-        '$select': 'id,titel,periodeid,afgørelsesdato',
+        '$select': 'id,titel,periodeid,afgÃ¸relsesdato',
         '$top': 500
     }
     
@@ -254,7 +254,7 @@ def analyze_party_voting_evolution():
     # Get voting data with party information
     url = "https://oda.ft.dk/api/Afstemning"
     params = {
-        '$expand': 'Stemme/Aktør',
+        '$expand': 'Stemme/AktÃ¸r',
         '$filter': "year(opdateringsdato) ge 2020",
         '$orderby': 'opdateringsdato desc',
         '$top': 200
@@ -269,8 +269,8 @@ def analyze_party_voting_evolution():
             session_date = vote_session.get('opdateringsdato')
             
             for vote in vote_session['Stemme']:
-                if 'Aktør' in vote and vote['Aktør']:
-                    actor = vote['Aktør']
+                if 'AktÃ¸r' in vote and vote['AktÃ¸r']:
+                    actor = vote['AktÃ¸r']
                     voting_patterns.append({
                         'session_id': vote_session['id'],
                         'session_date': session_date,
@@ -322,15 +322,15 @@ def analyze_politician_voting_timeline(actor_id=None, party_group=None):
     """Analyze individual politician voting patterns over time"""
     
     if actor_id:
-        filter_clause = f"Stemme/any(s: s/aktørid eq {actor_id})"
+        filter_clause = f"Stemme/any(s: s/aktÃ¸rid eq {actor_id})"
     elif party_group:
-        filter_clause = f"Stemme/any(s: s/Aktør/gruppenavnkort eq '{party_group}')"
+        filter_clause = f"Stemme/any(s: s/AktÃ¸r/gruppenavnkort eq '{party_group}')"
     else:
         filter_clause = "year(opdateringsdato) ge 2020"
     
     url = "https://oda.ft.dk/api/Afstemning"
     params = {
-        '$expand': 'Stemme/Aktør,Sag',
+        '$expand': 'Stemme/AktÃ¸r,Sag',
         '$filter': filter_clause,
         '$orderby': 'opdateringsdato asc',
         '$top': 500
@@ -350,8 +350,8 @@ def analyze_politician_voting_timeline(actor_id=None, party_group=None):
         
         if 'Stemme' in vote_session:
             for vote in vote_session['Stemme']:
-                if 'Aktør' in vote and vote['Aktør']:
-                    actor = vote['Aktør']
+                if 'AktÃ¸r' in vote and vote['AktÃ¸r']:
+                    actor = vote['AktÃ¸r']
                     politician_votes.append({
                         **session_info,
                         'actor_id': actor['id'],
@@ -415,7 +415,7 @@ Analyze how politicians' roles and activity levels change throughout their caree
 def analyze_career_progression():
     """Analyze politician career progression and activity patterns"""
     
-    url = "https://oda.ft.dk/api/Aktør"
+    url = "https://oda.ft.dk/api/AktÃ¸r"
     params = {
         '$filter': "startdato ne null and slutdato ne null",
         '$select': 'id,navn,gruppenavnkort,startdato,slutdato,typeid,periodeid,biografi',
@@ -503,9 +503,9 @@ def measure_actor_activity_levels():
     # Get voting activity
     voting_url = "https://oda.ft.dk/api/Stemme"
     voting_params = {
-        '$expand': 'Aktør',
+        '$expand': 'AktÃ¸r',
         '$filter': "year(opdateringsdato) ge 2020",
-        '$select': 'aktørid,opdateringsdato',
+        '$select': 'aktÃ¸rid,opdateringsdato',
         '$top': 2000
     }
     
@@ -513,11 +513,11 @@ def measure_actor_activity_levels():
     voting_data = voting_response.json()
     
     # Get case involvement
-    case_url = "https://oda.ft.dk/api/SagAktør"
+    case_url = "https://oda.ft.dk/api/SagAktÃ¸r"
     case_params = {
-        '$expand': 'Aktør',
+        '$expand': 'AktÃ¸r',
         '$filter': "year(opdateringsdato) ge 2020",
-        '$select': 'aktørid,rolleid,opdateringsdato',
+        '$select': 'aktÃ¸rid,rolleid,opdateringsdato',
         '$top': 2000
     }
     
@@ -529,7 +529,7 @@ def measure_actor_activity_levels():
     
     # Voting activity
     for vote in voting_data.get('value', []):
-        actor_id = vote.get('aktørid')
+        actor_id = vote.get('aktÃ¸rid')
         if actor_id:
             if actor_id not in activity_metrics:
                 activity_metrics[actor_id] = {
@@ -541,7 +541,7 @@ def measure_actor_activity_levels():
     
     # Case involvement
     for involvement in case_data.get('value', []):
-        actor_id = involvement.get('aktørid')
+        actor_id = involvement.get('aktÃ¸rid')
         if actor_id:
             if actor_id not in activity_metrics:
                 activity_metrics[actor_id] = {
@@ -552,8 +552,8 @@ def measure_actor_activity_levels():
             activity_metrics[actor_id]['case_involvement'] += 1
             
             # Get actor name if available
-            if 'Aktør' in involvement and involvement['Aktør']:
-                activity_metrics[actor_id]['actor_name'] = involvement['Aktør'].get('navn', 'Unknown')
+            if 'AktÃ¸r' in involvement and involvement['AktÃ¸r']:
+                activity_metrics[actor_id]['actor_name'] = involvement['AktÃ¸r'].get('navn', 'Unknown')
     
     # Convert to DataFrame for analysis
     activity_df = pd.DataFrame.from_dict(activity_metrics, orient='index')
@@ -620,7 +620,7 @@ def analyze_seasonal_patterns():
     """Analyze seasonal and periodic patterns in parliamentary activity"""
     
     # Get meeting data with dates
-    url = "https://oda.ft.dk/api/Møde"
+    url = "https://oda.ft.dk/api/MÃ¸de"
     params = {
         '$filter': "dato ge datetime'2018-01-01'",
         '$select': 'id,titel,dato,statusid,nummer',
@@ -763,7 +763,7 @@ def analyze_legislative_cycles():
     cases_url = "https://oda.ft.dk/api/Sag"
     cases_params = {
         '$filter': "periodeid ge 140",  # Recent periods
-        '$select': 'id,titel,periodeid,afgørelsesdato,opdateringsdato,kategoriid',
+        '$select': 'id,titel,periodeid,afgÃ¸relsesdato,opdateringsdato,kategoriid',
         '$top': 2000
     }
     cases_response = requests.get(cases_url, params=cases_params)
@@ -777,7 +777,7 @@ def analyze_legislative_cycles():
     
     # Process case information
     cases_df = pd.DataFrame(cases_data['value'])
-    cases_df['afgørelsesdato'] = pd.to_datetime(cases_df['afgørelsesdato'])
+    cases_df['afgÃ¸relsesdato'] = pd.to_datetime(cases_df['afgÃ¸relsesdato'])
     cases_df['opdateringsdato'] = pd.to_datetime(cases_df['opdateringsdato'])
     
     # Merge with period data
@@ -787,12 +787,12 @@ def analyze_legislative_cycles():
     # Calculate activity metrics per period
     period_metrics = legislative_activity.groupby('periodeid').agg({
         'id_case': 'count',
-        'afgørelsesdato': 'count',
+        'afgÃ¸relsesdato': 'count',
         'duration_days': 'first',
         'startdato': 'first',
         'slutdato': 'first',
         'titel_period': 'first'
-    }).rename(columns={'id_case': 'total_cases', 'afgørelsesdato': 'decided_cases'})
+    }).rename(columns={'id_case': 'total_cases', 'afgÃ¸relsesdato': 'decided_cases'})
     
     period_metrics['decision_rate'] = period_metrics['decided_cases'] / period_metrics['total_cases']
     period_metrics['cases_per_day'] = period_metrics['total_cases'] / period_metrics['duration_days']
@@ -882,7 +882,7 @@ def analyze_historical_political_evolution():
     periods_data = periods_response.json()
     
     # Get actor data across all periods
-    actors_url = "https://oda.ft.dk/api/Aktør"
+    actors_url = "https://oda.ft.dk/api/AktÃ¸r"
     actors_params = {
         '$filter': "startdato ne null",
         '$select': 'id,navn,gruppenavnkort,startdato,slutdato,typeid,periodeid',
@@ -1024,7 +1024,7 @@ def comparative_decade_analysis():
     cases_url = "https://oda.ft.dk/api/Sag"
     cases_params = {
         '$expand': 'Periode',
-        '$select': 'id,titel,periodeid,afgørelsesdato,kategoriid',
+        '$select': 'id,titel,periodeid,afgÃ¸relsesdato,kategoriid',
         '$top': 2000
     }
     cases_response = requests.get(cases_url, params=cases_params)
@@ -1051,9 +1051,9 @@ def comparative_decade_analysis():
             
             decade_comparison[decade] = {
                 'total_cases': len(decade_cases),
-                'decided_cases': len(decade_cases[decade_cases['afgørelsesdato'].notna()]),
+                'decided_cases': len(decade_cases[decade_cases['afgÃ¸relsesdato'].notna()]),
                 'categories': decade_cases['kategoriid'].nunique(),
-                'decision_rate': len(decade_cases[decade_cases['afgørelsesdato'].notna()]) / len(decade_cases)
+                'decision_rate': len(decade_cases[decade_cases['afgÃ¸relsesdato'].notna()]) / len(decade_cases)
             }
         
         comparison_df = pd.DataFrame.from_dict(decade_comparison, orient='index')
@@ -1119,7 +1119,7 @@ def detect_parliamentary_anomalies():
     """Detect anomalous patterns in parliamentary activity"""
     
     # Get comprehensive activity data
-    url = "https://oda.ft.dk/api/Møde"
+    url = "https://oda.ft.dk/api/MÃ¸de"
     params = {
         '$filter': "dato ge datetime'2015-01-01'",
         '$select': 'id,dato,titel,statusid',
@@ -1187,7 +1187,7 @@ def detect_parliamentary_anomalies():
     # Z-score distribution
     plt.subplot(3, 2, 2)
     plt.hist(z_scores, bins=30, alpha=0.7, edgecolor='black')
-    plt.axvline(x=anomaly_threshold, color='red', linestyle='--', label=f'Threshold ({anomaly_threshold}Ã)')
+    plt.axvline(x=anomaly_threshold, color='red', linestyle='--', label=f'Threshold ({anomaly_threshold}Ãƒ)')
     plt.title('Z-Score Distribution of Weekly Activity')
     plt.xlabel('Z-Score')
     plt.ylabel('Frequency')
@@ -1219,7 +1219,7 @@ def detect_parliamentary_anomalies():
                 color='red', s=30, label='Significant Changes')
     plt.title('Activity Change Detection')
     plt.xlabel('Date')
-    plt.ylabel('Change Magnitude (Ã)')
+    plt.ylabel('Change Magnitude (Ãƒ)')
     plt.legend()
     plt.xticks(rotation=45)
     
@@ -1265,7 +1265,7 @@ def detect_voting_pattern_changes():
     # Get voting data with party information
     url = "https://oda.ft.dk/api/Afstemning"
     params = {
-        '$expand': 'Stemme/Aktør',
+        '$expand': 'Stemme/AktÃ¸r',
         '$filter': "year(opdateringsdato) ge 2018",
         '$orderby': 'opdateringsdato asc',
         '$top': 1000
@@ -1283,8 +1283,8 @@ def detect_voting_pattern_changes():
         if 'Stemme' in vote_session and vote_session['Stemme']:
             party_votes = {}
             for vote in vote_session['Stemme']:
-                if 'Aktør' in vote and vote['Aktør']:
-                    party = vote['Aktör'].get('gruppenavnkort', 'Unknown')
+                if 'AktÃ¸r' in vote and vote['AktÃ¸r']:
+                    party = vote['AktÃ¶r'].get('gruppenavnkort', 'Unknown')
                     if party not in party_votes:
                         party_votes[party] = {'for': 0, 'against': 0, 'abstain': 0}
                     
@@ -1363,7 +1363,7 @@ def detect_voting_pattern_changes():
                     yerr=party_cohesion['std'], fmt='o', capsize=5)
         plt.xticks(range(len(party_cohesion)), party_cohesion.index, rotation=45)
         plt.title('Party Voting Cohesion')
-        plt.ylabel('Mean Agreement Rate ± Std Dev')
+        plt.ylabel('Mean Agreement Rate Â± Std Dev')
         
         # Temporal agreement heatmap
         plt.subplot(2, 3, 4)
@@ -1426,7 +1426,7 @@ def forecast_parliamentary_activity():
     """Forecast future parliamentary activity using time series analysis"""
     
     # Get historical meeting data
-    url = "https://oda.ft.dk/api/Møde"
+    url = "https://oda.ft.dk/api/MÃ¸de"
     params = {
         '$filter': "dato ge datetime'2016-01-01'",
         '$select': 'id,dato,titel',
@@ -1609,9 +1609,9 @@ def predict_legislative_throughput():
     # Get case data with decision dates
     url = "https://oda.ft.dk/api/Sag"
     params = {
-        '$filter': "afgørelsesdato ge datetime'2017-01-01'",
-        '$select': 'id,titel,afgørelsesdato,opdateringsdato,periodeid,kategoriid',
-        '$orderby': 'afgørelsesdato asc',
+        '$filter': "afgÃ¸relsesdato ge datetime'2017-01-01'",
+        '$select': 'id,titel,afgÃ¸relsesdato,opdateringsdato,periodeid,kategoriid',
+        '$orderby': 'afgÃ¸relsesdato asc',
         '$top': 2000
     }
     
@@ -1621,8 +1621,8 @@ def predict_legislative_throughput():
     # Process legislative throughput data
     decisions = []
     for case in data['value']:
-        if case.get('afgørelsesdato'):
-            decision_date = datetime.fromisoformat(case['afgørelsesdato'].replace('Z', '+00:00'))
+        if case.get('afgÃ¸relsesdato'):
+            decision_date = datetime.fromisoformat(case['afgÃ¸relsesdato'].replace('Z', '+00:00'))
             decisions.append({
                 'date': decision_date,
                 'case_id': case['id'],
@@ -1769,7 +1769,7 @@ def analyze_temporal_correlations():
     entities_data = {}
     
     # Meeting activity
-    meetings_url = "https://oda.ft.dk/api/Møde"
+    meetings_url = "https://oda.ft.dk/api/MÃ¸de"
     meetings_params = {
         '$filter': "dato ge datetime'2018-01-01'",
         '$select': 'id,dato',
@@ -1785,15 +1785,15 @@ def analyze_temporal_correlations():
     # Case decisions
     cases_url = "https://oda.ft.dk/api/Sag"
     cases_params = {
-        '$filter': "afgørelsesdato ge datetime'2018-01-01'",
-        '$select': 'id,afgørelsesdato',
+        '$filter': "afgÃ¸relsesdato ge datetime'2018-01-01'",
+        '$select': 'id,afgÃ¸relsesdato',
         '$top': 2000
     }
     cases_response = requests.get(cases_url, params=cases_params)
     if cases_response.status_code == 200:
         cases_data = cases_response.json()
-        cases_dates = [datetime.fromisoformat(c['afgørelsesdato'].replace('Z', '+00:00')) 
-                      for c in cases_data['value'] if c.get('afgörelsesdato')]
+        cases_dates = [datetime.fromisoformat(c['afgÃ¸relsesdato'].replace('Z', '+00:00')) 
+                      for c in cases_data['value'] if c.get('afgÃ¶relsesdato')]
         entities_data['decisions'] = cases_dates
     
     # Document publication
@@ -2050,7 +2050,7 @@ def optimized_timeline_queries():
 
 # Usage examples
 cached_data = cached_timeline_query('Sag', efficient_params)
-paginated_data = paginated_timeline_data('Aktør', 2018)
+paginated_data = paginated_timeline_data('AktÃ¸r', 2018)
 ```
 
 ### 2. Error Handling and Data Quality
@@ -2133,7 +2133,7 @@ def robust_timeline_analysis():
         # Reset index
         cleaned_df = cleaned_df.reset_index(drop=True)
         
-        print(f"Data cleaning completed: {len(df)} ’ {len(cleaned_df)} rows")
+        print(f"Data cleaning completed: {len(df)} Â’ {len(cleaned_df)} rows")
         return cleaned_df
 
 # Example usage

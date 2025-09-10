@@ -42,7 +42,7 @@ curl -w "%{time_total}" "https://oda.ft.dk/api/Sag?%24top=10000"
 # Result: ~2.1s (excellent scaling for maximum dataset size)
 
 # Complex relationship queries
-curl -w "%{time_total}" "https://oda.ft.dk/api/Afstemning?%24expand=Stemme/Aktör&%24top=100"
+curl -w "%{time_total}" "https://oda.ft.dk/api/Afstemning?%24expand=Stemme/AktÃ¶r&%24top=100"
 # Result: ~1.8s (includes deep relationship joins)
 ```
 
@@ -80,9 +80,9 @@ curl "https://oda.ft.dk/api/Sag?%24top=1000"  # Returns all fields
 **3. Smart Relationship Expansion**
 ```bash
 #  STRATEGIC: Expand relationships to minimize API calls
-curl "https://oda.ft.dk/api/Afstemning?%24expand=Stemme/Aktör&%24top=50"
+curl "https://oda.ft.dk/api/Afstemning?%24expand=Stemme/AktÃ¶r&%24top=50"
 
-#   CONSIDER TRADE-OFFS: Deep expansions increase response time but reduce total requests
+# Â  CONSIDER TRADE-OFFS: Deep expansions increase response time but reduce total requests
 ```
 
 ### Filter Performance Patterns
@@ -90,14 +90,14 @@ curl "https://oda.ft.dk/api/Afstemning?%24expand=Stemme/Aktör&%24top=50"
 **Early Filtering Strategy**:
 ```bash
 #  OPTIMAL: Apply filters before expansions
-curl "https://oda.ft.dk/api/Sag?%24filter=year(opdateringsdato)%20ge%202024&%24expand=SagAktör"
+curl "https://oda.ft.dk/api/Sag?%24filter=year(opdateringsdato)%20ge%202024&%24expand=SagAktÃ¶r"
 
 # L INEFFICIENT: Large dataset then client-side filtering
 ```
 
 **Performance-Critical Filter Validation**:
 ```bash
-#   CRITICAL: Invalid field names cause silent failures
+# Â  CRITICAL: Invalid field names cause silent failures
 curl "https://oda.ft.dk/api/Sag?%24filter=invalid_field%20eq%20'test'"
 # Returns ALL records instead of filtered results - major performance impact
 ```

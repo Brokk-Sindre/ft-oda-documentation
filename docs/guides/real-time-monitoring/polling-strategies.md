@@ -558,7 +558,7 @@ class EntityOptimizedPoller:
             },
             'Stemme': {
                 'interval': 120,  # 2 minutes - individual votes change rapidly
-                'fields': 'id,typeid,afstemningid,aktørid,opdateringsdato',
+                'fields': 'id,typeid,afstemningid,aktÃ¸rid,opdateringsdato',
                 'top': 200,
                 'priority': 'high'
             },
@@ -568,7 +568,7 @@ class EntityOptimizedPoller:
                 'top': 50,
                 'priority': 'low'
             },
-            'Aktør': {
+            'AktÃ¸r': {
                 'interval': 3600,  # 1 hour - actor info changes rarely
                 'fields': 'id,typeid,navn,opdateringsdato',
                 'top': 100,
@@ -1281,7 +1281,7 @@ class PollingMonitor:
                 report.append(f"{entity}: No data available")
                 continue
                 
-            status = "=â" if stats['success_rate_pct'] >= 95 else "=á" if stats['success_rate_pct'] >= 80 else "=4"
+            status = "=Ã¢" if stats['success_rate_pct'] >= 95 else "=Ã¡" if stats['success_rate_pct'] >= 80 else "=4"
             
             report.append(f"{status} {entity}:")
             report.append(f"  Success Rate: {stats['success_rate_pct']}% ({stats['success_count']}/{stats['total_requests']})")
@@ -1528,7 +1528,7 @@ class CachedPoller:
             return True
             
         # For stable entities, longer cache times
-        if entity in ['Aktør', 'Dokument'] and cache_age < 900:  # 15 minutes
+        if entity in ['AktÃ¸r', 'Dokument'] and cache_age < 900:  # 15 minutes
             return False
         
         return True
@@ -1547,7 +1547,7 @@ class CachedPoller:
         if not self.should_poll(entity, params, cache_max_age):
             cached_data = self.get_cached_data(entity, params, cache_max_age)
             if cached_data:
-                print(f"=Â  {entity}: Using cached data ({cached_data['record_count']} records)")
+                print(f"=Ã‚  {entity}: Using cached data ({cached_data['record_count']} records)")
                 return cached_data
         
         # Perform actual poll
@@ -1584,7 +1584,7 @@ class CachedPoller:
             # Try to return stale cache data on error
             stale_data = self.get_cached_data(entity, params, max_age_seconds=3600)  # 1 hour
             if stale_data:
-                print(f"   {entity}: API error, using stale cache - {str(e)}")
+                print(f"Â   {entity}: API error, using stale cache - {str(e)}")
                 stale_data['stale_cache'] = True
                 return stale_data
             
@@ -1645,7 +1645,7 @@ class CachedPoller:
 cached_poller = CachedPoller()
 
 def intelligent_polling_demo():
-    entities = ["Sag", "Afstemning", "Dokument", "Aktør"]
+    entities = ["Sag", "Afstemning", "Dokument", "AktÃ¸r"]
     
     for cycle in range(20):  # 20 polling cycles
         print(f"\n=== Intelligent Polling Cycle {cycle + 1} ===")

@@ -34,13 +34,13 @@ class ParliamentaryTextProcessor:
     def __init__(self):
         # Danish stopwords (extend with parliamentary-specific terms)
         self.danish_stopwords = set([
-            'og', 'i', 'at', 'det', 'en', 'den', 'til', 'er', 'som', 'på',
+            'og', 'i', 'at', 'det', 'en', 'den', 'til', 'er', 'som', 'pÃ¥',
             'de', 'med', 'han', 'af', 'for', 'ikke', 'der', 'var', 'mig',
             'sig', 'men', 'et', 'har', 'om', 'vi', 'min', 'havde', 'ham',
             'hun', 'nu', 'over', 'da', 'fra', 'du', 'ud', 'sin', 'dem',
             # Parliamentary-specific stopwords
             'folketinget', 'folketingsmedlem', 'minister', 'regering',
-            'lovforslag', 'forslag', 'udvalg', 'møde', 'sag', 'punkt'
+            'lovforslag', 'forslag', 'udvalg', 'mÃ¸de', 'sag', 'punkt'
         ])
     
     def clean_text(self, text):
@@ -50,7 +50,7 @@ class ParliamentaryTextProcessor:
         
         # Remove HTML tags and special characters
         text = re.sub(r'<[^>]+>', '', str(text))
-        text = re.sub(r'[^\w\sæøåÆØÅ]', ' ', text)
+        text = re.sub(r'[^\w\sÃ¦Ã¸Ã¥Ã†Ã˜Ã…]', ' ', text)
         
         # Convert to lowercase and tokenize
         tokens = text.lower().split()
@@ -83,8 +83,8 @@ def analyze_document_topics():
     # Fetch documents with text content
     url = "https://oda.ft.dk/api/Dokument"
     params = {
-        '$filter': "resumé ne null and length(resumé) gt 50",
-        '$select': 'id,titel,resumé,typeid,dato',
+        '$filter': "resumÃ© ne null and length(resumÃ©) gt 50",
+        '$select': 'id,titel,resumÃ©,typeid,dato',
         '$top': 1000
     }
     
@@ -95,7 +95,7 @@ def analyze_document_topics():
     processor = ParliamentaryTextProcessor()
     
     # Extract document summaries
-    texts = [doc.get('resumé', '') for doc in documents]
+    texts = [doc.get('resumÃ©', '') for doc in documents]
     titles = [doc.get('titel', '') for doc in documents]
     
     # Perform TF-IDF analysis
@@ -201,7 +201,7 @@ class PoliticalEntityExtractor:
         
         # Fetch case documents
         url = f"https://oda.ft.dk/api/Sag({case_id})/Dokument"
-        params = {'$select': 'id,titel,resumé,dokumenthtml'}
+        params = {'$select': 'id,titel,resumÃ©,dokumenthtml'}
         
         response = requests.get(url, params=params)
         documents = response.json()['value']
@@ -215,7 +215,7 @@ class PoliticalEntityExtractor:
         
         for doc in documents:
             # Extract text content
-            text = doc.get('resumé', '') + ' ' + doc.get('dokumenthtml', '')
+            text = doc.get('resumÃ©', '') + ' ' + doc.get('dokumenthtml', '')
             
             if text.strip():
                 entities = self.extract_entities(text)
@@ -261,8 +261,8 @@ class LegislativePatternAnalyzer:
         
         url = "https://oda.ft.dk/api/Sag"
         params = {
-            '$select': 'id,titel,typeid,statusid,periode,afgørelsesdato,fremsatdato',
-            '$expand': 'Sagstrin($select=titel,dato,typeid),SagAktør($select=aktørid,rolleid)',
+            '$select': 'id,titel,typeid,statusid,periode,afgÃ¸relsesdato,fremsatdato',
+            '$expand': 'Sagstrin($select=titel,dato,typeid),SagAktÃ¸r($select=aktÃ¸rid,rolleid)',
             '$filter': 'statusid ne null and fremsatdato ne null',
             '$top': limit
         }
@@ -285,10 +285,10 @@ class LegislativePatternAnalyzer:
             }
             
             # Time-based features
-            if case.get('fremsatdato') and case.get('afgørelsesdato'):
+            if case.get('fremsatdato') and case.get('afgÃ¸relsesdato'):
                 from datetime import datetime
                 start_date = datetime.fromisoformat(case['fremsatdato'].replace('Z', '+00:00'))
-                end_date = datetime.fromisoformat(case['afgørelsesdato'].replace('Z', '+00:00'))
+                end_date = datetime.fromisoformat(case['afgÃ¸relsesdato'].replace('Z', '+00:00'))
                 features['processing_days'] = (end_date - start_date).days
                 features['start_month'] = start_date.month
                 features['start_year'] = start_date.year
@@ -304,7 +304,7 @@ class LegislativePatternAnalyzer:
             features['num_unique_steps'] = len(features['step_types'])
             
             # Actor analysis
-            actors = case.get('SagAktør', [])
+            actors = case.get('SagAktÃ¸r', [])
             features['num_actors'] = len(actors)
             features['actor_roles'] = list(set([a.get('rolleid') for a in actors if a.get('rolleid')]))
             features['num_roles'] = len(features['actor_roles'])
@@ -418,8 +418,8 @@ class VotingBehaviorAnalyzer:
         
         url = "https://oda.ft.dk/api/Stemme"
         params = {
-            '$select': 'id,aktørid,afstemningid,typeid',
-            '$expand': 'Aktør($select=id,navn,typeid),Afstemning($select=id,sagid,titel)',
+            '$select': 'id,aktÃ¸rid,afstemningid,typeid',
+            '$expand': 'AktÃ¸r($select=id,navn,typeid),Afstemning($select=id,sagid,titel)',
             '$top': limit
         }
         
@@ -432,10 +432,10 @@ class VotingBehaviorAnalyzer:
         # Extract voting data
         voting_records = []
         for vote in votes:
-            if vote.get('Aktør') and vote.get('Afstemning'):
+            if vote.get('AktÃ¸r') and vote.get('Afstemning'):
                 voting_records.append({
-                    'politiker_id': vote['aktørid'],
-                    'politiker_navn': vote['Aktør']['navn'],
+                    'politiker_id': vote['aktÃ¸rid'],
+                    'politiker_navn': vote['AktÃ¸r']['navn'],
                     'afstemning_id': vote['afstemningid'],
                     'vote_type': vote['typeid'],
                     'sag_id': vote['Afstemning'].get('sagid')
@@ -612,8 +612,8 @@ class DocumentClassifier:
         
         url = "https://oda.ft.dk/api/Dokument"
         params = {
-            '$select': 'id,titel,resumé,typeid',
-            '$filter': 'typeid ne null and resumé ne null and length(resumé) gt 50',
+            '$select': 'id,titel,resumÃ©,typeid',
+            '$filter': 'typeid ne null and resumÃ© ne null and length(resumÃ©) gt 50',
             '$top': limit
         }
         
@@ -626,7 +626,7 @@ class DocumentClassifier:
         
         for doc in documents:
             # Combine title and summary for classification
-            text = (doc.get('titel', '') + ' ' + doc.get('resumé', '')).strip()
+            text = (doc.get('titel', '') + ' ' + doc.get('resumÃ©', '')).strip()
             if text and doc.get('typeid'):
                 texts.append(text)
                 labels.append(doc['typeid'])
@@ -775,7 +775,7 @@ class TemporalPatternMiner:
         for year in range(start_year, end_year + 1):
             url = "https://oda.ft.dk/api/Sag"
             params = {
-                '$select': 'id,titel,typeid,statusid,periode,fremsatdato,afgørelsesdato',
+                '$select': 'id,titel,typeid,statusid,periode,fremsatdato,afgÃ¸relsesdato',
                 '$filter': f"year(fremsatdato) eq {year}",
                 '$top': 5000
             }
@@ -907,18 +907,18 @@ class TemporalPatternMiner:
         # Filter cases with both start and end dates
         complete_cases = df[
             (df['fremsatdato'].notna()) & 
-            (df['afgørelsesdato'].notna())
+            (df['afgÃ¸relsesdato'].notna())
         ].copy()
         
         if complete_cases.empty:
             return None
         
         complete_cases['fremsatdato'] = pd.to_datetime(complete_cases['fremsatdato'])
-        complete_cases['afgørelsesdato'] = pd.to_datetime(complete_cases['afgørelsesdato'])
+        complete_cases['afgÃ¸relsesdato'] = pd.to_datetime(complete_cases['afgÃ¸relsesdato'])
         
         # Calculate processing time in days
         complete_cases['processing_days'] = (
-            complete_cases['afgørelsesdato'] - complete_cases['fremsatdato']
+            complete_cases['afgÃ¸relsesdato'] - complete_cases['fremsatdato']
         ).dt.days
         
         # Filter out negative processing times (data errors)
@@ -1006,8 +1006,8 @@ class PoliticalNetworkAnalyzer:
         url = "https://oda.ft.dk/api/Sag"
         params = {
             '$select': 'id,titel,typeid,periode',
-            '$expand': 'SagAktør($select=aktørid,rolleid;$expand=Aktør($select=id,navn,typeid))',
-            '$filter': 'SagAktør/$count gt 1',  # Cases with multiple actors
+            '$expand': 'SagAktÃ¸r($select=aktÃ¸rid,rolleid;$expand=AktÃ¸r($select=id,navn,typeid))',
+            '$filter': 'SagAktÃ¸r/$count gt 1',  # Cases with multiple actors
             '$top': limit
         }
         
@@ -1019,12 +1019,12 @@ class PoliticalNetworkAnalyzer:
         
         for case in cases:
             actors_in_case = []
-            for sag_aktor in case.get('SagAktør', []):
-                if sag_aktor.get('Aktør'):
+            for sag_aktor in case.get('SagAktÃ¸r', []):
+                if sag_aktor.get('AktÃ¸r'):
                     actor_info = {
-                        'id': sag_aktor['aktørid'],
-                        'name': sag_aktor['Aktør']['navn'],
-                        'type': sag_aktor['Aktør']['typeid'],
+                        'id': sag_aktor['aktÃ¸rid'],
+                        'name': sag_aktor['AktÃ¸r']['navn'],
+                        'type': sag_aktor['AktÃ¸r']['typeid'],
                         'role': sag_aktor['rolleid']
                     }
                     actors_in_case.append(actor_info)
@@ -1311,11 +1311,11 @@ class ParliamentaryMLPredictor:
         
         url = "https://oda.ft.dk/api/Sag"
         params = {
-            '$select': 'id,titel,typeid,statusid,periode,fremsatdato,afgørelsesdato',
+            '$select': 'id,titel,typeid,statusid,periode,fremsatdato,afgÃ¸relsesdato',
             '$expand': '''
                 Sagstrin($select=titel,dato,typeid),
-                SagAktør($select=aktørid,rolleid;$expand=Aktør($select=id,navn,typeid)),
-                Dokument($select=id,titel,typeid,dato,resumé),
+                SagAktÃ¸r($select=aktÃ¸rid,rolleid;$expand=AktÃ¸r($select=id,navn,typeid)),
+                Dokument($select=id,titel,typeid,dato,resumÃ©),
                 Afstemning($select=id,titel,vedtaget)
             ''',
             '$top': limit
@@ -1349,8 +1349,8 @@ class ParliamentaryMLPredictor:
                     'start_weekday': start_date.weekday()
                 })
                 
-                if case.get('afgørelsesdato'):
-                    end_date = datetime.fromisoformat(case['afgørelsesdato'].replace('Z', '+00:00'))
+                if case.get('afgÃ¸relsesdato'):
+                    end_date = datetime.fromisoformat(case['afgÃ¸relsesdato'].replace('Z', '+00:00'))
                     features['processing_days'] = (end_date - start_date).days
                     features['processing_months'] = features['processing_days'] / 30.44
                 else:
@@ -1390,9 +1390,9 @@ class ParliamentaryMLPredictor:
                 })
             
             # Actor features
-            actors = case.get('SagAktör', [])
+            actors = case.get('SagAktÃ¶r', [])
             if actors:
-                actor_types = [a.get('Aktør', {}).get('typeid') for a in actors if a.get('Aktør')]
+                actor_types = [a.get('AktÃ¸r', {}).get('typeid') for a in actors if a.get('AktÃ¸r')]
                 actor_roles = [a.get('rolleid') for a in actors if a.get('rolleid')]
                 
                 features.update({
@@ -1412,7 +1412,7 @@ class ParliamentaryMLPredictor:
             documents = case.get('Dokument', [])
             if documents:
                 doc_types = [d.get('typeid') for d in documents if d.get('typeid')]
-                doc_lengths = [len(d.get('resumé', '')) for d in documents if d.get('resumé')]
+                doc_lengths = [len(d.get('resumÃ©', '')) for d in documents if d.get('resumÃ©')]
                 
                 features.update({
                     'num_documents': len(documents),
@@ -1741,15 +1741,15 @@ python -m spacy download da_core_news_sm
 ```python
 danish_stopwords = {
     # Common words
-    'og', 'i', 'at', 'det', 'en', 'den', 'til', 'er', 'som', 'på',
+    'og', 'i', 'at', 'det', 'en', 'den', 'til', 'er', 'som', 'pÃ¥',
     'de', 'med', 'han', 'af', 'for', 'ikke', 'der', 'var', 'mig',
     'sig', 'men', 'et', 'har', 'om', 'vi', 'min', 'havde', 'ham',
     'hun', 'nu', 'over', 'da', 'fra', 'du', 'ud', 'sin', 'dem',
     
     # Parliamentary specific
     'folketinget', 'folketingsmedlem', 'minister', 'regering',
-    'lovforslag', 'forslag', 'udvalg', 'møde', 'sag', 'punkt',
-    'beslutningsforslag', 'redegørelse', 'beretning', 'samråd'
+    'lovforslag', 'forslag', 'udvalg', 'mÃ¸de', 'sag', 'punkt',
+    'beslutningsforslag', 'redegÃ¸relse', 'beretning', 'samrÃ¥d'
 }
 ```
 
@@ -1760,7 +1760,7 @@ def preprocess_danish_text(text):
     text = text.lower()
     
     # Remove special characters but keep Danish letters
-    text = re.sub(r'[^\\w\\s\\æøåÆØÅ]', ' ', text)
+    text = re.sub(r'[^\\w\\s\\Ã¦Ã¸Ã¥Ã†Ã˜Ã…]', ' ', text)
     
     # Normalize whitespace
     text = ' '.join(text.split())
@@ -2192,7 +2192,7 @@ for case_id in case_ids:
 case_ids_str = ','.join(map(str, case_ids[:50]))  # Batch of 50
 response = requests.get(f"api/Sag", params={
     '$filter': f"id in ({case_ids_str})",
-    '$expand': 'SagAktør,Dokument,Afstemning'
+    '$expand': 'SagAktÃ¸r,Dokument,Afstemning'
 })
 ```
 """

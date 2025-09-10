@@ -50,13 +50,13 @@ curl "https://oda.ft.dk/api/Sag?%24filter=Sagstype/type%20eq%20'Lovforslag'&%24e
 - **Process**: Finance Committee review followed by parliamentary approval
 - **Legal Requirement**: Constitutional mandate for parliamentary financial oversight
 
-**5. Redegørelse (Report/Statement)**
+**5. RedegÃ¸relse (Report/Statement)**
 - **Purpose**: Government reports to parliament on specific issues
 - **Content**: Policy updates, administrative reports, crisis responses
 - **Parliamentary Response**: Debate and questioning, not formal votes
 - **Accountability Function**: Government transparency and oversight
 
-**6. § 20-spørgsmål (Section 20 Question)**
+**6. Â§ 20-spÃ¸rgsmÃ¥l (Section 20 Question)**
 - **Legal Basis**: Constitutional Article 20 questioning procedure
 - **Purpose**: Individual MP questions to government ministers
 - **Response Time**: Ministers must respond within specified timeframe
@@ -64,7 +64,7 @@ curl "https://oda.ft.dk/api/Sag?%24filter=Sagstype/type%20eq%20'Lovforslag'&%24e
 
 #### Specialized Case Types
 
-**7. Forespørgsel (Inquiry)**
+**7. ForespÃ¸rgsel (Inquiry)**
 - **Purpose**: Formal parliamentary inquiries on government actions
 - **Scope**: Major policy issues, administrative concerns, crisis investigation
 - **Process**: Committee investigation followed by parliamentary debate
@@ -90,13 +90,13 @@ curl "https://oda.ft.dk/api/Sag?%24filter=Sagstype/type%20eq%20'Lovforslag'&%24e
 - **Timeline**: Coordinated with EU legislative calendar
 - **Democratic Oversight**: National parliament input on EU legislation
 
-**11. Rådsmøde (Council Meeting)**
+**11. RÃ¥dsmÃ¸de (Council Meeting)**
 - **Purpose**: Council of Ministers meeting preparation and follow-up
 - **EU Coordination**: Danish position development for EU council meetings
 - **Process**: Government briefing and parliamentary consultation
 - **Democratic Control**: Parliament oversight of EU policy positions
 
-**12. Indkaldelse af stedfortræder (Deputy Call-up)**
+**12. Indkaldelse af stedfortrÃ¦der (Deputy Call-up)**
 - **Administrative Nature**: Parliamentary substitute arrangements
 - **Legal Requirement**: Formal notification of member substitutions
 - **Record Keeping**: Official documentation of representation changes
@@ -118,28 +118,28 @@ The Danish Parliament employs **68 detailed status classifications** - the world
 - **Fremsat (Proposed)**: Initial introduction of case
 - **Anmeldt (Announced)**: Formal announcement in parliamentary calendar
 - **Modtaget (Received)**: Official receipt and registration
-- **Første behandling (First Reading)**: Initial parliamentary consideration
+- **FÃ¸rste behandling (First Reading)**: Initial parliamentary consideration
 
 #### Committee Process Statuses
 - **Henvist til udvalg (Referred to committee)**: Committee assignment
 - **Udvalgsbehandling (Committee review)**: Active committee consideration
-- **Betænkning afgivet (Report submitted)**: Committee report completion
-- **Udvalgsbetænkning omdelt (Committee report distributed)**: Parliamentary distribution
+- **BetÃ¦nkning afgivet (Report submitted)**: Committee report completion
+- **UdvalgsbetÃ¦nkning omdelt (Committee report distributed)**: Parliamentary distribution
 
 #### Parliamentary Reading Statuses
 - **1. behandling (First reading)**: Initial parliamentary debate
 - **2. behandling (Second reading)**: Detailed consideration and amendments
 - **3. behandling (Third reading)**: Final parliamentary consideration
-- **Ændringsforslag (Amendments)**: Amendment process tracking
+- **Ã†ndringsforslag (Amendments)**: Amendment process tracking
 
 #### Final Outcome Statuses
 - **Vedtaget (Adopted)**: Parliamentary approval achieved
 - **Forkastet (Rejected)**: Parliamentary rejection
-- **Stadfæstet (Confirmed)**: Royal assent or constitutional confirmation
+- **StadfÃ¦stet (Confirmed)**: Royal assent or constitutional confirmation
 - **Bortfaldet (Lapsed)**: Case discontinued or expired
 
 #### Process Management Statuses
-- **Igangværende (Ongoing)**: Active case processing
+- **IgangvÃ¦rende (Ongoing)**: Active case processing
 - **Afsluttet (Completed)**: Case processing finished
 - **Udsat (Postponed)**: Temporary suspension
 - **Tilbagekaldt (Withdrawn)**: Proponent withdrawal
@@ -155,7 +155,7 @@ curl "https://oda.ft.dk/api/Sag?%24filter=Sagsstatus/status%20eq%20'Vedtaget'%20
 curl "https://oda.ft.dk/api/Sag?%24filter=contains(Sagsstatus/status,'udvalg')&%24expand=Sagsstatus"
 
 # Find ongoing legislative processes
-curl "https://oda.ft.dk/api/Sag?%24filter=Sagsstatus/status%20eq%20'Igangværende'&%24expand=Sagstype,Sagsstatus"
+curl "https://oda.ft.dk/api/Sag?%24filter=Sagsstatus/status%20eq%20'IgangvÃ¦rende'&%24expand=Sagstype,Sagsstatus"
 ```
 
 ## Case Category Classifications
@@ -228,7 +228,7 @@ for category, count in distribution:
    - Public hearings and consultation
    - Amendment development
 
-4. **Committee Report (`Betænkning afgivet`)**
+4. **Committee Report (`BetÃ¦nkning afgivet`)**
    - Committee recommendations
    - Amendment proposals
    - Minority opinions
@@ -243,7 +243,7 @@ for category, count in distribution:
    - Overall adoption or rejection
    - Implementation timeline
 
-7. **Royal Assent (`Stadfæstet`)**
+7. **Royal Assent (`StadfÃ¦stet`)**
    - Constitutional confirmation
    - Legal force commencement
    - Publication requirements
@@ -329,11 +329,11 @@ Based on API data from 96,538+ total cases:
 
 **Case Type Volume (Estimated Distribution):**
 - **Alm. del**: ~35-40% (Routine administrative matters)
-- **§ 20-spørgsmål**: ~25-30% (Individual questions)
+- **Â§ 20-spÃ¸rgsmÃ¥l**: ~25-30% (Individual questions)
 - **Lovforslag**: ~8-12% (Legislative bills)
 - **Beslutningsforslag**: ~5-8% (Resolutions)
 - **Aktstykke**: ~3-5% (Financial approvals)
-- **Redegørelse**: ~2-4% (Government reports)
+- **RedegÃ¸relse**: ~2-4% (Government reports)
 - **Other types**: ~5-10% (Specialized procedures)
 
 ### Success Rate Analysis
@@ -363,8 +363,8 @@ def analyze_success_rates():
         'Lovforslag': 0.75,      # 75% of bills become law
         'Beslutningsforslag': 0.65,  # 65% of resolutions adopted
         'Aktstykke': 0.95,       # 95% of financial requests approved
-        '§ 20-spørgsmål': 1.0,   # Questions always get responses
-        'Redegørelse': 1.0       # Reports are informational
+        'Â§ 20-spÃ¸rgsmÃ¥l': 1.0,   # Questions always get responses
+        'RedegÃ¸relse': 1.0       # Reports are informational
     }
     
     return success_rates
@@ -376,8 +376,8 @@ def analyze_case_duration():
         'Lovforslag': {'avg_days': 180, 'range': '90-365'},
         'Beslutningsforslag': {'avg_days': 120, 'range': '60-240'},
         'Aktstykke': {'avg_days': 45, 'range': '14-90'},
-        '§ 20-spørgsmål': {'avg_days': 30, 'range': '7-60'},
-        'Forespørgsel': {'avg_days': 150, 'range': '90-300'}
+        'Â§ 20-spÃ¸rgsmÃ¥l': {'avg_days': 30, 'range': '7-60'},
+        'ForespÃ¸rgsel': {'avg_days': 150, 'range': '90-300'}
     }
     
     return durations
@@ -419,10 +419,10 @@ The evolution toward granular classification enables:
 **Multi-dimensional Filtering:**
 ```bash
 # Find climate bills currently in committee
-curl "https://oda.ft.dk/api/Sag?%24filter=(substringof('klima',titel)%20or%20substringof('miljø',titel))%20and%20Sagstype/type%20eq%20'Lovforslag'%20and%20contains(Sagsstatus/status,'udvalg')&%24expand=Sagstype,Sagsstatus"
+curl "https://oda.ft.dk/api/Sag?%24filter=(substringof('klima',titel)%20or%20substringof('miljÃ¸',titel))%20and%20Sagstype/type%20eq%20'Lovforslag'%20and%20contains(Sagsstatus/status,'udvalg')&%24expand=Sagstype,Sagsstatus"
 
 # Analyze government vs MP initiatives
-curl "https://oda.ft.dk/api/Sag?%24expand=SagAktør/Aktør,Sagstype&%24filter=Sagstype/type%20eq%20'Lovforslag'&%24select=id,titel,SagAktør"
+curl "https://oda.ft.dk/api/Sag?%24expand=SagAktÃ¸r/AktÃ¸r,Sagstype&%24filter=Sagstype/type%20eq%20'Lovforslag'&%24select=id,titel,SagAktÃ¸r"
 
 # Track urgent legislation (fast-track process)
 curl "https://oda.ft.dk/api/Sag?%24filter=contains(titel,'hastebehandling')%20or%20contains(titel,'hastesag')&%24expand=Sagstrin"
@@ -449,7 +449,7 @@ curl "https://oda.ft.dk/api/Sag?%24filter=contains(Sagsstatus/status,'udvalg')&%
 def analyze_case_actors(case_type="Lovforslag"):
     """Analyze who is involved in specific case types"""
     query_params = {
-        '$expand': 'SagAktør/Aktør,SagAktør/SagAktørRolle,Sagstype',
+        '$expand': 'SagAktÃ¸r/AktÃ¸r,SagAktÃ¸r/SagAktÃ¸rRolle,Sagstype',
         '$filter': f"Sagstype/type eq '{case_type}'",
         '$top': 100
     }
@@ -471,7 +471,7 @@ def analyze_case_actors(case_type="Lovforslag"):
 curl "https://oda.ft.dk/api/Dokument?%24expand=SagDokument/Sag/Sagstype&%24filter=SagDokument/Sag/Sagstype/type%20eq%20'Lovforslag'"
 
 # Find committee reports for specific case type
-curl "https://oda.ft.dk/api/Dokument?%24filter=contains(titel,'betænkning')%20and%20SagDokument/Sag/Sagstype/type%20eq%20'Beslutningsforslag'&%24expand=SagDokument/Sag"
+curl "https://oda.ft.dk/api/Dokument?%24filter=contains(titel,'betÃ¦nkning')%20and%20SagDokument/Sag/Sagstype/type%20eq%20'Beslutningsforslag'&%24expand=SagDokument/Sag"
 ```
 
 ### Voting Integration
@@ -479,7 +479,7 @@ curl "https://oda.ft.dk/api/Dokument?%24filter=contains(titel,'betænkning')%20an
 **Case-Voting Analysis:**
 ```bash
 # Analyze voting patterns by case type
-curl "https://oda.ft.dk/api/Afstemning?%24expand=Stemme/Aktør,Sagstrin/Sag/Sagstype&%24filter=Sagstrin/Sag/Sagstype/type%20eq%20'Lovforslag'"
+curl "https://oda.ft.dk/api/Afstemning?%24expand=Stemme/AktÃ¸r,Sagstrin/Sag/Sagstype&%24filter=Sagstrin/Sag/Sagstype/type%20eq%20'Lovforslag'"
 
 # Success rates by case type and voting
 curl "https://oda.ft.dk/api/Afstemning?%24expand=Sagstrin/Sag/Sagstype&%24filter=vedtaget%20eq%20true"
@@ -599,7 +599,7 @@ def robust_case_query(case_type, max_retries=3):
 ### Data Quality Notes
 
 1. **Empty String Handling**: API returns empty strings ("") rather than null values
-2. **UTF-8 Support**: Perfect support for Danish characters (ø, å, æ)
+2. **UTF-8 Support**: Perfect support for Danish characters (Ã¸, Ã¥, Ã¦)
 3. **HTML Content**: Some text fields contain HTML formatting
 4. **Update Timestamps**: Check opdateringsdato for data freshness
 

@@ -12,7 +12,7 @@ The API demonstrates exceptional data integrity across all 50+ entities, with pe
 Every entity in the parliamentary database maintains unique identification through primary keys:
 
 - **Sag** (Cases): Unique ID per parliamentary case
-- **Aktør** (Actors): Unique ID per political actor
+- **AktÃ¸r** (Actors): Unique ID per political actor
 - **Afstemning** (Votes): Unique ID per voting session
 - **Dokument** (Documents): Unique ID per document
 
@@ -55,7 +55,7 @@ class ParliamentaryIntegrityValidator:
         test_cases = [
             {
                 'entity': 'Sag',
-                'expansion': 'SagAktør/Aktør',
+                'expansion': 'SagAktÃ¸r/AktÃ¸r',
                 'description': 'Case to Actor relationships'
             },
             {
@@ -65,7 +65,7 @@ class ParliamentaryIntegrityValidator:
             },
             {
                 'entity': 'Dokument',
-                'expansion': 'DokumentAktør/Aktør',
+                'expansion': 'DokumentAktÃ¸r/AktÃ¸r',
                 'description': 'Document to Actor relationships'
             }
         ]
@@ -86,7 +86,7 @@ class ParliamentaryIntegrityValidator:
                         print(f" {test['description']}: {len(entity[expanded_field])} related records found")
                         self.validation_stats['tested_relationships'] += 1
                     else:
-                        print(f"   {test['description']}: No related records")
+                        print(f"Â   {test['description']}: No related records")
                 
             except requests.exceptions.RequestException as e:
                 self.integrity_issues.append(f"Forward relationship test failed: {test['description']} - {e}")
@@ -121,7 +121,7 @@ class ParliamentaryIntegrityValidator:
         invalid_fk_tests = [
             {
                 'entity': 'Stemme',
-                'foreign_key': 'aktørid',
+                'foreign_key': 'aktÃ¸rid',
                 'invalid_value': 999999999,
                 'description': 'Votes with invalid actor IDs'
             },
@@ -206,18 +206,18 @@ def validate_junction_tables(self):
     
     junction_tables = [
         {
-            'table': 'SagAktør',
+            'table': 'SagAktÃ¸r',
             'left_entity': 'Sag',
-            'right_entity': 'Aktør',
+            'right_entity': 'AktÃ¸r',
             'left_key': 'sagid',
-            'right_key': 'aktørid'
+            'right_key': 'aktÃ¸rid'
         },
         {
-            'table': 'DokumentAktør', 
+            'table': 'DokumentAktÃ¸r', 
             'left_entity': 'Dokument',
-            'right_entity': 'Aktør',
+            'right_entity': 'AktÃ¸r',
             'left_key': 'dokumentid',
-            'right_key': 'aktørid'
+            'right_key': 'aktÃ¸rid'
         },
         {
             'table': 'SagDokument',
@@ -271,8 +271,8 @@ Parliamentary relationships include semantic roles that must be validated:
 def validate_parliamentary_roles(self):
     """Validate role-based relationships in parliamentary context"""
     
-    # Check SagAktør roles
-    sag_roles_url = f"{self.base_url}/SagAktør?$select=rolle&$top=1000"
+    # Check SagAktÃ¸r roles
+    sag_roles_url = f"{self.base_url}/SagAktÃ¸r?$select=rolle&$top=1000"
     sag_roles_response = requests.get(sag_roles_url).json()
     
     role_counts = {}
@@ -286,13 +286,13 @@ def validate_parliamentary_roles(self):
     
     # Validate role semantics
     expected_roles = [
-        'Ordfører', 'Ordførende minister', 'Taler', 
-        'Spørger', 'Minister', 'Fremsætter'
+        'OrdfÃ¸rer', 'OrdfÃ¸rende minister', 'Taler', 
+        'SpÃ¸rger', 'Minister', 'FremsÃ¦tter'
     ]
     
     missing_roles = set(expected_roles) - set(role_counts.keys())
     if missing_roles:
-        print(f"   Missing expected roles: {missing_roles}")
+        print(f"Â   Missing expected roles: {missing_roles}")
     
     # Check for invalid/unexpected roles
     unexpected_roles = set(role_counts.keys()) - set(expected_roles) - {'Unknown', ''}
@@ -316,7 +316,7 @@ def validate_data_types(self):
             'validation': lambda x: self._is_valid_datetime(x)
         },
         {
-            'entity': 'Aktør',
+            'entity': 'AktÃ¸r',
             'field': 'navn',
             'expected_type': 'string',
             'validation': lambda x: isinstance(x, str) and len(x) > 0
@@ -386,7 +386,7 @@ def validate_business_rules(self):
     print(f" Valid vote-session relationships: {100 - invalid_vote_sessions}/100")
     
     # Rule 2: Case actors must have valid roles
-    case_actors_url = f"{self.base_url}/SagAktør?$select=rolle&$filter=rolle ne null&$top=100"
+    case_actors_url = f"{self.base_url}/SagAktÃ¸r?$select=rolle&$filter=rolle ne null&$top=100"
     case_actors_response = requests.get(case_actors_url).json()
     
     empty_roles = sum(1 for record in case_actors_response['value'] 
@@ -443,7 +443,7 @@ def analyze_statistical_consistency(self):
     """Analyze data for statistical anomalies that might indicate integrity issues"""
     
     # Check for unusual ID gaps
-    entities_to_check = ['Sag', 'Aktør', 'Dokument']
+    entities_to_check = ['Sag', 'AktÃ¸r', 'Dokument']
     
     for entity in entities_to_check:
         print(f"\n--- {entity} ID Consistency Analysis ---")
@@ -473,7 +473,7 @@ def analyze_statistical_consistency(self):
             print(f"Gap Percentage: {gap_percentage:.1f}%")
             
             if gap_percentage > 50:
-                print("   High gap percentage may indicate data quality issues")
+                print("Â   High gap percentage may indicate data quality issues")
             else:
                 print(" Acceptable ID distribution")
 ```
@@ -566,18 +566,18 @@ def comprehensive_relationship_audit(self):
     
     relationship_map = {
         'Sag': [
-            {'related': 'SagAktør', 'fk': 'sagid', 'description': 'Case-Actor relationships'},
+            {'related': 'SagAktÃ¸r', 'fk': 'sagid', 'description': 'Case-Actor relationships'},
             {'related': 'SagDokument', 'fk': 'sagid', 'description': 'Case-Document relationships'},
             {'related': 'Afstemning', 'fk': 'sagid', 'description': 'Case-Voting relationships'}
         ],
-        'Aktør': [
-            {'related': 'SagAktør', 'fk': 'aktørid', 'description': 'Actor-Case relationships'},
-            {'related': 'DokumentAktør', 'fk': 'aktørid', 'description': 'Actor-Document relationships'},
-            {'related': 'Stemme', 'fk': 'aktørid', 'description': 'Actor-Vote relationships'}
+        'AktÃ¸r': [
+            {'related': 'SagAktÃ¸r', 'fk': 'aktÃ¸rid', 'description': 'Actor-Case relationships'},
+            {'related': 'DokumentAktÃ¸r', 'fk': 'aktÃ¸rid', 'description': 'Actor-Document relationships'},
+            {'related': 'Stemme', 'fk': 'aktÃ¸rid', 'description': 'Actor-Vote relationships'}
         ],
         'Dokument': [
             {'related': 'SagDokument', 'fk': 'dokumentid', 'description': 'Document-Case relationships'},
-            {'related': 'DokumentAktør', 'fk': 'aktørid', 'description': 'Document-Actor relationships'}
+            {'related': 'DokumentAktÃ¸r', 'fk': 'aktÃ¸rid', 'description': 'Document-Actor relationships'}
         ]
     }
     
@@ -689,7 +689,7 @@ class IntegrityMonitor:
         """Generate alert for integrity issues"""
         
         alert_message = f"""
-        =¨ DATA INTEGRITY ALERT =¨
+        =Â¨ DATA INTEGRITY ALERT =Â¨
         
         Overall Integrity Score: {score:.2%}
         Threshold: {self.alert_threshold:.2%}
@@ -759,7 +759,7 @@ def generate_quality_dashboard():
     
     for metric, score in quality_metrics.items():
         score_display = f"{score:.1%}"
-        status = "=â" if score >= 0.95 else "=á" if score >= 0.85 else "=4"
+        status = "=Ã¢" if score >= 0.95 else "=Ã¡" if score >= 0.85 else "=4"
         print(f"{status} {metric.replace('_', ' ').title()}: {score_display}")
     
     print("\n" + "=" * 60)
@@ -785,7 +785,7 @@ def calculate_completeness_score():
     
     critical_fields = [
         {'entity': 'Sag', 'field': 'titel', 'required': True},
-        {'entity': 'Aktør', 'field': 'navn', 'required': True},
+        {'entity': 'AktÃ¸r', 'field': 'navn', 'required': True},
         {'entity': 'Dokument', 'field': 'titel', 'required': True}
     ]
     
@@ -854,12 +854,12 @@ class IntegrityRecoverySystem:
                 print(f"\n=' Handling {issue_type}...")
                 self.recovery_procedures[issue_type](issue_details)
             else:
-                print(f"   Unknown issue type: {issue_type}")
+                print(f"Â   Unknown issue type: {issue_type}")
     
     def handle_orphaned_records(self, details):
         """Handle orphaned records (records with invalid foreign keys)"""
         
-        print("=Ë Orphaned Records Recovery Procedure:")
+        print("=Ã‹ Orphaned Records Recovery Procedure:")
         print("1. Document all orphaned records for audit trail")
         print("2. Verify that parent records were legitimately deleted")
         print("3. For Read-Only API: Report to data stewards")
@@ -901,7 +901,7 @@ class IntegrityRecoverySystem:
     def handle_temporal_issues(self, details):
         """Handle temporal consistency issues"""
         
-        print("ð Temporal Consistency Recovery Procedure:")
+        print("Ã° Temporal Consistency Recovery Procedure:")
         print("1. Validate system clock synchronization")
         print("2. Check for data import/migration issues")
         print("3. Verify datetime parsing and timezone handling")
@@ -921,7 +921,7 @@ class IntegrityRecoverySystem:
     def handle_constraint_violations(self, details):
         """Handle constraint violations"""
         
-        print("–  Constraint Violation Recovery Procedure:")
+        print("Â–  Constraint Violation Recovery Procedure:")
         print("1. Identify violated business rules")
         print("2. Check for data model changes")
         print("3. Validate constraint enforcement logic")
@@ -942,7 +942,7 @@ class IntegrityRecoverySystem:
         """Generate comprehensive recovery action report"""
         
         report = f"""
-        =Ê INTEGRITY RECOVERY REPORT
+        =ÃŠ INTEGRITY RECOVERY REPORT
         Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
         
         Actions Taken:
@@ -955,7 +955,7 @@ class IntegrityRecoverySystem:
         
          Recovery procedures completed
         = Continuous monitoring resumed
-        =Ë Full audit trail maintained
+        =Ã‹ Full audit trail maintained
         
         Next Review: {(datetime.now() + timedelta(days=1)).strftime('%Y-%m-%d')}
         """
@@ -969,7 +969,7 @@ recovery_system = IntegrityRecoverySystem()
 # Simulate integrity issues
 sample_issues = {
     'orphaned_records': ['Stemme records with invalid afstemningid'],
-    'referential_violations': ['SagAktør links to non-existent Sag'],
+    'referential_violations': ['SagAktÃ¸r links to non-existent Sag'],
     'temporal_inconsistencies': ['Future update dates found'],
     'constraint_violations': ['Null values in required fields']
 }

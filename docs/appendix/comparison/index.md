@@ -90,17 +90,17 @@ The Danish API's **strict OData 3.0 compliance** distinguishes it from peers usi
 -  **Consistent URL Patterns**: Standard entity navigation
 -  **Proper HTTP Semantics**: Correct status codes and headers  
 -  **Metadata Exposure**: Full schema documentation via $metadata
--   **Modern Features Limited**: No OData 4.0+ capabilities ($compute, $apply)
+- Â  **Modern Features Limited**: No OData 4.0+ capabilities ($compute, $apply)
 
 #### Query Capability Matrix
 
 | Feature | Danish API | Industry Average | Notes |
 |---------|------------|------------------|-------|
 | Basic Filtering |  Full |  Full | Standard $filter support |
-| Complex Boolean Logic |  Full |   Partial | AND/OR combinations work perfectly |
-| Entity Expansion |  2-level |   1-level | $expand with relationship traversal |
-| Pagination |  Unlimited |   Limited | No practical $skip/$top limits |
-| Aggregation | L None |   Partial | OData 3.0 limitation |
+| Complex Boolean Logic |  Full | Â  Partial | AND/OR combinations work perfectly |
+| Entity Expansion |  2-level | Â  1-level | $expand with relationship traversal |
+| Pagination |  Unlimited | Â  Limited | No practical $skip/$top limits |
+| Aggregation | L None | Â  Partial | OData 3.0 limitation |
 | Full-Text Search |  substringof() |  Varies | Function-based text search |
 
 ## Key Differentiators

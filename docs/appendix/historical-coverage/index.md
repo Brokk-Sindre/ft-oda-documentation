@@ -92,7 +92,7 @@ The API demonstrates evolving data quality patterns across historical periods:
 - **1980-2000**: Comprehensive scanning initiatives
 - **2000-Present**: Born-digital document workflows
 
-#### **Parliamentary Actors (Aktør)**
+#### **Parliamentary Actors (AktÃ¸r)**
 - **1952-Present**: Complete biographical and role data
 - **Quality**: Consistent across all eras due to administrative importance
 - **Integration**: Full relationship mapping with cases and votes
@@ -118,13 +118,13 @@ GET /api/Afstemning?$expand=stemme&$filter=year(Sag/periodeid) ge 1960
 #### Historical Comparison
 ```http
 # Compare party positions across eras  
-GET /api/Aktør?$filter=startswith(navn,'Socialdemokratiet') and periodeid le 100
+GET /api/AktÃ¸r?$filter=startswith(navn,'Socialdemokratiet') and periodeid le 100
 ```
 
 #### Longitudinal Studies
 ```http
 # Track individual politicians across multiple periods
-GET /api/Aktør?$expand=stemme&$filter=substringof('Hansen',navn)
+GET /api/AktÃ¸r?$expand=stemme&$filter=substringof('Hansen',navn)
 ```
 
 ## Digital Preservation Standards
@@ -162,7 +162,7 @@ GET /api/Dokument?$filter=dato ge datetime'1960-01-01' and dato le datetime'1970
 #### 3. Cross-Reference Validation
 ```http
 # Verify data completeness across related entities
-GET /api/Sag?$expand=dokumenter,aktører&$filter=periodeid eq 94
+GET /api/Sag?$expand=dokumenter,aktÃ¸rer&$filter=periodeid eq 94
 ```
 
 ### Research Methodology Considerations

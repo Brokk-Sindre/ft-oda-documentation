@@ -355,10 +355,10 @@ Implement client-side validation:
 const VALID_SAG_FIELDS = [
     'id', 'titel', 'titelkort', 'offentlighedskode', 'nummer', 
     'nummerprefix', 'nummernumerisk', 'nummerpostfix', 'resume',
-    'afstemningskonklusion', 'periodeid', 'afgørelsesresultatkode',
+    'afstemningskonklusion', 'periodeid', 'afgÃ¸relsesresultatkode',
     'baggrundsmateriale', 'opdateringsdato', 'statsbudgetsag',
-    'begrundelse', 'paragrafnummer', 'paragraf', 'spørgsmålsordlyd',
-    'spørgsmålstitel', 'spørgsmålsid', 'procedurenummer', 'deltundersag'
+    'begrundelse', 'paragrafnummer', 'paragraf', 'spÃ¸rgsmÃ¥lsordlyd',
+    'spÃ¸rgsmÃ¥lstitel', 'spÃ¸rgsmÃ¥lsid', 'procedurenummer', 'deltundersag'
 ];
 
 function validateFilter(filterString, validFields) {
@@ -435,12 +435,12 @@ Currently, no features are officially deprecated. The API maintains full backwar
 - Require immediate code updates
 - Examples: Pagination limit reduction, parameter removal
 
-#### Important (=á)
+#### Important (=Ã¡)
 - Changes that affect performance or behavior
 - Recommend code updates
 - Examples: Error message improvements, performance optimizations
 
-#### Minor (=â)
+#### Minor (=Ã¢)
 - Changes that improve experience without breaking functionality
 - Optional code updates
 - Examples: Documentation improvements, additional features

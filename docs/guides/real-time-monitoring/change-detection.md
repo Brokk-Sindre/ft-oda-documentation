@@ -22,14 +22,14 @@ All major entities include standardized timestamp fields for change detection:
 | `opdateringsdato` | DateTime | Last modification timestamp | All entities |
 | `dato` | DateTime | Creation/event date | Most entities |
 | `frigivelsesdato` | DateTime | Release/publication date | Documents |
-| `afg¯relsesdato` | DateTime | Decision date | Cases |
+| `afg√∏relsesdato` | DateTime | Decision date | Cases |
 
 ### Entity Coverage
 
 Change detection is available across all major entity types:
 
 - **Sag** (Cases) - 96,538+ legislative matters
-- **Akt¯r** (Actors) - 18,139+ political actors
+- **Akt√∏r** (Actors) - 18,139+ political actors
 - **Dokument** (Documents) - Hundreds of thousands of documents
 - **Afstemning** (Voting) - Voting sessions and results
 - **Stemme** (Votes) - Individual vote records
@@ -75,7 +75,7 @@ class ParliamentChangeDetector:
         Get all changes to an entity since a specific timestamp
         
         Args:
-            entity: Entity name (Sag, Akt¯r, Dokument, etc.)
+            entity: Entity name (Sag, Akt√∏r, Dokument, etc.)
             since: Datetime to check changes since
             fields: Optional comma-separated list of fields to select
             expand: Optional related entities to expand
@@ -356,11 +356,11 @@ class ActorChangeDetector(ParliamentChangeDetector):
         params = {
             "$filter": f"typeid eq 5 and opdateringsdato gt datetime'{since_iso}'",
             "$select": "id,navn,fornavn,efternavn,gruppenavnkort,opdateringsdato,startdato,slutdato",
-            "$expand": "Akt¯rtype",
+            "$expand": "Akt√∏rtype",
             "$orderby": "opdateringsdato desc"
         }
         
-        url = f"{self.base_url}/Akt¯r"
+        url = f"{self.base_url}/Akt√∏r"
         response = requests.get(url, params=params)
         
         if response.status_code == 200:
@@ -637,7 +637,7 @@ storage = DatabaseStorageHandler()
 sync_manager = IncrementalSyncManager(storage)
 
 # Sync critical entities
-entities_to_sync = ['Sag', 'Akt¯r', 'Dokument', 'Afstemning']
+entities_to_sync = ['Sag', 'Akt√∏r', 'Dokument', 'Afstemning']
 results = sync_manager.full_incremental_sync(entities_to_sync)
 ```
 
@@ -687,7 +687,7 @@ class ChangeClassifier:
             'case_decisions': {
                 'entity': 'Sag',
                 'priority': ChangePriority.HIGH,
-                'conditions': ['afg¯relsesdato', 'afg¯relse']
+                'conditions': ['afg√∏relsesdato', 'afg√∏relse']
             },
             'new_legislation': {
                 'entity': 'Sag',
@@ -749,7 +749,7 @@ class ChangeClassifier:
                 return ChangeType.STATUS_CHANGE
         
         # Check for content changes
-        content_fields = ['titel', 'resume', 'afg¯relse', 'begrundelse']
+        content_fields = ['titel', 'resume', 'afg√∏relse', 'begrundelse']
         for field in content_fields:
             if (field in old_record and field in new_record and 
                 old_record[field] != new_record[field]):
@@ -772,7 +772,7 @@ class ChangeClassifier:
             'Afstemning': ChangePriority.HIGH,
             'Sag': ChangePriority.MEDIUM,
             'Dokument': ChangePriority.MEDIUM,
-            'Akt¯r': ChangePriority.LOW
+            'Akt√∏r': ChangePriority.LOW
         }
         
         return entity_priorities.get(entity_type, ChangePriority.LOW)
@@ -910,14 +910,14 @@ class PriorityChangeProcessor:
 # Example handlers
 def handle_critical_changes(event: ChangeEvent):
     """Handle critical priority changes - immediate alerts"""
-    print(f"=® CRITICAL: {event.entity_type} {event.entity_id}")
+    print(f"=¬® CRITICAL: {event.entity_type} {event.entity_id}")
     print(f"   Change: {event.change_type}")
     print(f"   Time: {event.timestamp}")
     # Send immediate notifications, alerts, etc.
 
 def handle_high_priority_changes(event: ChangeEvent):
     """Handle high priority changes - fast processing"""
-    print(f"† HIGH: {event.entity_type} {event.entity_id}")
+    print(f"¬† HIGH: {event.entity_type} {event.entity_id}")
     # Update caches, trigger workflows, etc.
 
 def handle_medium_priority_changes(event: ChangeEvent):
@@ -927,7 +927,7 @@ def handle_medium_priority_changes(event: ChangeEvent):
 
 def handle_low_priority_changes(event: ChangeEvent):
     """Handle low priority changes - batch processing"""
-    print(f"=› LOW: {event.entity_type} {event.entity_id}")
+    print(f"=√ù LOW: {event.entity_type} {event.entity_id}")
     # Bulk processing, analytics, etc.
 
 # Setup processor
@@ -1104,7 +1104,7 @@ class HybridChangeDetector:
         self.critical_entities = ['Afstemning']  # Voting sessions
         
         # Regular entities for batch processing
-        self.batch_entities = ['Akt¯r', 'Dokument']
+        self.batch_entities = ['Akt√∏r', 'Dokument']
         
         # Medium priority entities (moderate frequency)
         self.medium_entities = ['Sag']  # Cases - 10 minute intervals
@@ -1130,7 +1130,7 @@ class HybridChangeDetector:
     
     def _critical_change_handler(self, entity: str, change: Dict):
         """Handle critical real-time changes"""
-        print(f"=® CRITICAL CHANGE DETECTED: {entity} {change['id']}")
+        print(f"=¬® CRITICAL CHANGE DETECTED: {entity} {change['id']}")
         # Send immediate alerts, webhooks, notifications
 ```
 
@@ -1455,10 +1455,10 @@ class OptimizedChangeDetector:
         """Get essential fields for each entity type"""
         essential_fields = {
             'Sag': 'id,titel,opdateringsdato,statusid,typeid,offentlighedskode',
-            'Akt¯r': 'id,navn,opdateringsdato,typeid,gruppenavnkort',
+            'Akt√∏r': 'id,navn,opdateringsdato,typeid,gruppenavnkort',
             'Dokument': 'id,titel,opdateringsdato,typeid,dato,offentlighedskode',
             'Afstemning': 'id,nummer,opdateringsdato,vedtaget,sagid',
-            'Stemme': 'id,typeid,opdateringsdato,akt¯rid,afstemningid'
+            'Stemme': 'id,typeid,opdateringsdato,akt√∏rid,afstemningid'
         }
         
         return essential_fields.get(entity, 'id,opdateringsdato')
@@ -1563,7 +1563,7 @@ def batch_update_processor(chunk: List[Dict]):
 optimizer = OptimizedChangeDetector()
 
 # Bulk detection across entities
-entities = ['Sag', 'Akt¯r', 'Dokument']
+entities = ['Sag', 'Akt√∏r', 'Dokument']
 since = datetime.now() - timedelta(hours=6)
 
 all_changes = optimizer.bulk_change_detection(entities, since, max_workers=3)
@@ -2033,7 +2033,7 @@ class DataIntegrityValidator:
                     self._validate_case_data,
                 ]
             },
-            'Akt¯r': {
+            'Akt√∏r': {
                 'required_fields': ['id', 'navn', 'opdateringsdato'],
                 'id_field': 'id',
                 'timestamp_field': 'opdateringsdato',
@@ -2449,7 +2449,7 @@ class EmailAlertSystem:
         """Setup email templates for different change types"""
         return {
             'critical': {
-                'subject': '=® CRITICAL: Parliamentary Change Alert - {entity_type} {entity_id}',
+                'subject': '=¬® CRITICAL: Parliamentary Change Alert - {entity_type} {entity_id}',
                 'template': '''
                 <h2 style="color: red;">Critical Parliamentary Change Detected</h2>
                 <p><strong>Entity:</strong> {entity_type} ID {entity_id}</p>
@@ -2461,7 +2461,7 @@ class EmailAlertSystem:
                 '''
             },
             'high': {
-                'subject': '† HIGH: Parliamentary Change - {entity_type} {entity_id}',
+                'subject': '¬† HIGH: Parliamentary Change - {entity_type} {entity_id}',
                 'template': '''
                 <h2 style="color: orange;">High Priority Parliamentary Change</h2>
                 <p><strong>Entity:</strong> {entity_type} ID {entity_id}</p>
@@ -2633,7 +2633,7 @@ class EmailAlertSystem:
             else:
                 return "Document updated"
         
-        elif entity_type == 'Akt¯r':
+        elif entity_type == 'Akt√∏r':
             if change_type == 'create':
                 return "New political actor added"
             else:

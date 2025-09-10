@@ -343,22 +343,22 @@ async function debugApiCall(url, expectedResults = null) {
         
         // Check for potential issues
         if (expectedResults && recordCount !== expectedResults) {
-            console.warn('  Unexpected record count');
+            console.warn('Â  Unexpected record count');
             console.warn('Expected:', expectedResults, 'Got:', recordCount);
         }
         
         if (recordCount === 100 && !url.includes('%24top=100')) {
-            console.warn('  Possible silent filter failure');
+            console.warn('Â  Possible silent filter failure');
             console.warn('Got default 100 records - check field names in filters');
         }
         
         // Performance warnings
         if (responseTime > 1000) {
-            console.warn('  Slow response time:', responseTime.toFixed(0) + 'ms');
+            console.warn('Â  Slow response time:', responseTime.toFixed(0) + 'ms');
         }
         
         if (dataSize > 500 * 1024) {
-            console.warn('  Large response size:', (dataSize / 1024).toFixed(1) + ' KB');
+            console.warn('Â  Large response size:', (dataSize / 1024).toFixed(1) + ' KB');
         }
         
         console.groupEnd();
@@ -586,9 +586,9 @@ fi
 # Test 2: Performance baseline
 echo "2. Testing performance..."
 RESPONSE_TIME=$(curl -s -w "%{time_total}" "${API_BASE}/Sag?%24top=5" -o /dev/null)
-echo "   ñ Response time: ${RESPONSE_TIME}s"
+echo "   Ã± Response time: ${RESPONSE_TIME}s"
 if (( $(echo "$RESPONSE_TIME > 1.0" | bc -l) )); then
-    echo "     Slower than expected (>1s)"
+    echo "   Â  Slower than expected (>1s)"
 fi
 
 # Test 3: URL encoding
@@ -604,7 +604,7 @@ fi
 echo "4. Testing for silent filter failures..."
 COUNT=$(curl -s "${API_BASE}/Sag?%24filter=invalid_field_name%20eq%20'test'&%24top=5" | jq -r '.value | length')
 if [ "$COUNT" = "5" ]; then
-    echo "     Silent filter failure detected - invalid filters ignored"
+    echo "   Â  Silent filter failure detected - invalid filters ignored"
 else
     echo "    Filter validation working"
 fi
@@ -683,7 +683,7 @@ class ODADebugger {
         const endTime = performance.now();
         
         const responseTime = endTime - startTime;
-        console.log(`ñ Response time: ${responseTime.toFixed(0)}ms`);
+        console.log(`Ã± Response time: ${responseTime.toFixed(0)}ms`);
         
         if (!response.ok) {
             console.error(`L HTTP ${response.status}: ${response.statusText}`);
@@ -698,15 +698,15 @@ class ODADebugger {
         const recordCount = data.value?.length || 0;
         const dataSize = JSON.stringify(data).length;
         
-        console.log(`=Ê Results: ${recordCount} records, ${(dataSize/1024).toFixed(1)}KB`);
+        console.log(`=ÃŠ Results: ${recordCount} records, ${(dataSize/1024).toFixed(1)}KB`);
         
         // Check for issues
         if (recordCount === 100 && !url.includes('%24top=100')) {
-            console.warn('  Possible silent filter failure - got default 100 records');
+            console.warn('Â  Possible silent filter failure - got default 100 records');
         }
         
         if (responseTime > 1000) {
-            console.warn('  Slow response time');
+            console.warn('Â  Slow response time');
         }
         
         return data;

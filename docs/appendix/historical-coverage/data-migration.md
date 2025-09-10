@@ -103,7 +103,7 @@ The migration process addressed significant character encoding issues:
 # Example encoding migration logic
 def migrate_danish_text(legacy_text, source_encoding='cp1252'):
     """
-    Migrate Danish text with proper æ, ø, å character handling
+    Migrate Danish text with proper Ã¦, Ã¸, Ã¥ character handling
     """
     try:
         # Detect and convert legacy encoding
@@ -168,15 +168,15 @@ The migration established consistent relationship patterns:
     <Fields>
       <politician_id>5432</politician_id>
       <case_reference>L001-1952</case_reference>
-      <role_description>Ordfører</role_description>
+      <role_description>OrdfÃ¸rer</role_description>
     </Fields>
   </SourceRelationship>
   
   <StandardizedRelationship>
-    <Entity>SagAktør</Entity>
+    <Entity>SagAktÃ¸r</Entity>
     <Fields>
       <sagid>1</sagid>
-      <aktørid>5432</aktørid>
+      <aktÃ¸rid>5432</aktÃ¸rid>
       <rolleid>23</rolleid> <!-- Standardized role ID -->
       <opdateringsdato>2014-08-15T09:00:00</opdateringsdato>
     </Fields>
@@ -246,7 +246,7 @@ WHERE startdato >= slutdato;
 
 -- Check for missing required fields
 SELECT COUNT(*) as incomplete_actors
-FROM Aktør 
+FROM AktÃ¸r 
 WHERE navn = '' OR navn IS NULL;
 ```
 
@@ -274,17 +274,17 @@ def validate_actor_references():
     """
     orphaned_references = []
     
-    # Check SagAktør relationships
+    # Check SagAktÃ¸r relationships
     orphaned_sag_actors = query_database("""
-        SELECT sa.id FROM SagAktør sa 
-        LEFT JOIN Aktør a ON sa.aktørid = a.id
+        SELECT sa.id FROM SagAktÃ¸r sa 
+        LEFT JOIN AktÃ¸r a ON sa.aktÃ¸rid = a.id
         WHERE a.id IS NULL
     """)
     
     # Check voting records
     orphaned_votes = query_database("""
         SELECT s.id FROM Stemme s
-        LEFT JOIN Aktør a ON s.aktørid = a.id  
+        LEFT JOIN AktÃ¸r a ON s.aktÃ¸rid = a.id  
         WHERE a.id IS NULL
     """)
     
@@ -395,8 +395,8 @@ migration_system:
 **July-August 2014**: Voting Records and Relationships
 - Individual voting records (Stemme entity)
 - Voting session metadata (Afstemning entity)
-- Actor-case relationship mapping (SagAktør)
-- Document-actor relationships (DokumentAktør)
+- Actor-case relationship mapping (SagAktÃ¸r)
+- Document-actor relationships (DokumentAktÃ¸r)
 
 ### Phase 4: Validation and Go-Live (August-September 2014)
 
@@ -522,12 +522,12 @@ ON Sag (periodeid, opdateringsdato DESC);
 
 -- Actor historical analysis  
 CREATE INDEX IX_SagAktor_AktorId_PeriodeId
-ON SagAktør (aktørid, sagid) 
+ON SagAktÃ¸r (aktÃ¸rid, sagid) 
 INCLUDE (rolleid, opdateringsdato);
 
 -- Temporal voting analysis
 CREATE INDEX IX_Stemme_AfstemningId_AktorId
-ON Stemme (afstemningid, aktørid, typeid);
+ON Stemme (afstemningid, aktÃ¸rid, typeid);
 
 -- Document timeline queries
 CREATE INDEX IX_Dokument_DokumentTypeId_Dato
@@ -548,14 +548,14 @@ WITH PeriodCases AS (
   WHERE s.periodeid = @PeriodId
 ), 
 CaseActors AS (
-  SELECT sa.sagid, sa.aktørid, sa.rolleid
-  FROM SagAktør sa WITH (INDEX(IX_SagAktor_AktorId_PeriodeId))
+  SELECT sa.sagid, sa.aktÃ¸rid, sa.rolleid
+  FROM SagAktÃ¸r sa WITH (INDEX(IX_SagAktor_AktorId_PeriodeId))
   WHERE sa.sagid IN (SELECT id FROM PeriodCases)
 )
 SELECT 
   pc.titel,
   pc.resume,
-  COUNT(ca.aktørid) as actor_count
+  COUNT(ca.aktÃ¸rid) as actor_count
 FROM PeriodCases pc
 LEFT JOIN CaseActors ca ON pc.id = ca.sagid
 GROUP BY pc.id, pc.titel, pc.resume
@@ -694,7 +694,7 @@ class ParliamentaryDocumentProcessor:
         self.case_patterns = [
             r'L\s*\d+',      # Lovforslag (Bill)
             r'B\s*\d+',      # Beslutningsforslag (Resolution)
-            r'F\s*\d+',      # Forespørgsel (Inquiry)
+            r'F\s*\d+',      # ForespÃ¸rgsel (Inquiry)
             r'V\s*\d+'       # Valg (Election)
         ]
     
@@ -721,9 +721,9 @@ class ParliamentaryDocumentProcessor:
         """
         type_indicators = {
             'lovforslag': ['lovforslag', 'fremsat den', 'til folketinget'],
-            'betaenkning': ['betænkning', 'udvalget', 'indstiller'],
+            'betaenkning': ['betÃ¦nkning', 'udvalget', 'indstiller'],
             'afstemning': ['afstemning', 'vedtaget', 'forkastet'],
-            'referat': ['referat', 'møde', 'dagsorden'],
+            'referat': ['referat', 'mÃ¸de', 'dagsorden'],
             'brev': ['brev', 'henvendelse', 'ministeren']
         }
         
@@ -935,11 +935,11 @@ Best practices for efficient historical data queries:
 SELECT 
   p.titel as period_name,
   COUNT(s.id) as case_count,
-  COUNT(DISTINCT sa.aktørid) as unique_actors,
+  COUNT(DISTINCT sa.aktÃ¸rid) as unique_actors,
   AVG(CASE WHEN s.resume != '' THEN LEN(s.resume) END) as avg_summary_length
 FROM Periode p
 LEFT JOIN Sag s ON p.id = s.periodeid  
-LEFT JOIN SagAktör sa ON s.id = sa.sagid
+LEFT JOIN SagAktÃ¶r sa ON s.id = sa.sagid
 WHERE p.startdato BETWEEN '1990-01-01' AND '2000-12-31'  -- Decade analysis
 GROUP BY p.id, p.titel, p.startdato
 ORDER BY p.startdato;
@@ -955,7 +955,7 @@ WITH VotingTrends AS (
   JOIN Afstemning af ON s.afstemningid = af.id
   JOIN Sag sg ON af.sagid = sg.id
   JOIN Periode p ON sg.periodeid = p.id
-  JOIN Aktør a ON s.aktørid = a.id
+  JOIN AktÃ¸r a ON s.aktÃ¸rid = a.id
   JOIN Stemmetype st ON s.typeid = st.id
   WHERE p.startdato >= '2000-01-01'  -- Modern era analysis
   GROUP BY p.titel, a.navn, st.typeid

@@ -2,23 +2,23 @@
 
 Welcome to the interactive tools and examples for the Danish Parliamentary Open Data API! This section provides hands-on, browser-based tools that let you explore the API without writing code.
 
-## <¯ Overview of Interactive Features
+## <Â¯ Overview of Interactive Features
 
 The Danish Parliament API documentation includes several live interactive components that make learning and testing the API effortless:
 
-### =Ê API Status Dashboard
+### =ÃŠ API Status Dashboard
 Real-time monitoring of the Danish Parliament API with comprehensive health metrics and performance indicators.
 
 ### = Advanced Query Builder
 Visual interface for constructing complex OData queries with form-based controls and live preview.
 
-### =Ë Response Viewer
+### =Ã‹ Response Viewer
 Interactive viewer for exploring API responses with formatted JSON/XML display and data visualization.
 
-### >ê Real-Time Testing Tools
+### >Ãª Real-Time Testing Tools
 Browser-based testing utilities for immediate API query execution and result analysis.
 
-## =€ Quick Start with Interactive Tools
+## =Â€ Quick Start with Interactive Tools
 
 ### 1. Check API Status
 Visit the [homepage](../../index.md) to see the live API status dashboard showing:
@@ -46,7 +46,7 @@ Interactive response viewers help you:
 - **Understand relationships** between entities
 - **Copy specific values** with one-click selection
 
-## =à Available Interactive Tools
+## =Ã  Available Interactive Tools
 
 ### API Status Dashboard
 
@@ -87,14 +87,14 @@ Interactive form for constructing OData queries:
 - **Format Options**: Toggle between JSON and XML output
 
 **Supported Entities:**
-- =Ä **Sag** (Cases) - 96,538+ parliamentary cases
-- =d **Aktør** (Actors) - 18,139+ political actors  
-- =ó **Afstemning** (Voting Sessions) - Parliamentary votes
+- =Ã„ **Sag** (Cases) - 96,538+ parliamentary cases
+- =d **AktÃ¸r** (Actors) - 18,139+ political actors  
+- =Ã³ **Afstemning** (Voting Sessions) - Parliamentary votes
 -  **Stemme** (Individual Votes) - Individual politician votes
-- =Ë **Dokument** (Documents) - Parliamentary documents
-- <Û **Møde** (Meetings) - Parliamentary meetings
-- = **SagAktør** (Case-Actor Relations) - Who worked on what
-- = **DokumentAktør** (Document-Actor Relations) - Document authorship
+- =Ã‹ **Dokument** (Documents) - Parliamentary documents
+- <Ã› **MÃ¸de** (Meetings) - Parliamentary meetings
+- = **SagAktÃ¸r** (Case-Actor Relations) - Who worked on what
+- = **DokumentAktÃ¸r** (Document-Actor Relations) - Document authorship
 
 ### Response Viewer
 
@@ -114,7 +114,7 @@ Interactive JSON/XML response exploration:
 - **Format Toggle**: Switch between JSON and XML views
 - **Download Options**: Export responses as files
 
-## =» Browser Requirements
+## =Â» Browser Requirements
 
 ### Supported Browsers
 - **Chrome** 88+ (recommended)
@@ -133,7 +133,7 @@ Interactive JSON/XML response exploration:
 - **Web Share API**: For sharing query URLs on mobile
 - **Local Storage**: For saving query history (coming soon)
 
-## =ñ Mobile Experience
+## =Ã± Mobile Experience
 
 All interactive tools are fully responsive and work on mobile devices:
 
@@ -142,7 +142,7 @@ All interactive tools are fully responsive and work on mobile devices:
 - **Responsive Layout**: Adapts to screen size automatically
 - **Offline Caching**: Core functionality available offline
 
-## <¯ Interactive Widget Integration
+## <Â¯ Interactive Widget Integration
 
 ### Adding Widgets to Pages
 
@@ -210,7 +210,7 @@ All interactive tools follow WCAG 2.1 guidelines:
 - **High Contrast**: Respects system preferences
 - **Focus Management**: Proper focus handling for dynamic content
 
-## =ú Navigation to Specific Tools
+## =Ãº Navigation to Specific Tools
 
 ### Query Builder
 - **Location**: Available on most documentation pages
@@ -227,7 +227,7 @@ All interactive tools follow WCAG 2.1 guidelines:
 - **Simple Version**: Most pages - basic status indicator
 - **Use Case**: Real-time API health monitoring
 
-## =€ Getting Started Workflow
+## =Â€ Getting Started Workflow
 
 1. **Check API Status** - Visit the homepage to ensure the API is operational
 2. **Explore Examples** - Browse the [Code Examples](../index.md) section
@@ -250,7 +250,7 @@ All interactive tools follow WCAG 2.1 guidelines:
 - **Field Descriptions**: Understand what each parameter does
 - **Relationship Mapping**: Visual guides to entity relationships
 
-## =¡ Interactive Examples in Action
+## =Â¡ Interactive Examples in Action
 
 ### Try the Query Builder
 
@@ -271,7 +271,7 @@ All interactive tools follow WCAG 2.1 guidelines:
   </div>
 </div>
 
-## <® Interactive Features Summary
+## <Â® Interactive Features Summary
 
 | Feature | Purpose | Location | Mobile Support |
 |---------|---------|----------|----------------|
@@ -296,20 +296,20 @@ Top: 10
 ### Climate-Related Legislation
 ```
 Entity: Sag  
-Filter: substringof('klima', titel) or substringof('miljø', titel)
+Filter: substringof('klima', titel) or substringof('miljÃ¸', titel)
 Expand: Sagsstatus,Sagstype
 Top: 20
 ```
 
 ### Active Politicians from Specific Party
 ```
-Entity: Aktør
+Entity: AktÃ¸r
 Filter: typeid eq 5 and slutdato eq null
-Expand: Aktørtype,Periode
+Expand: AktÃ¸rtype,Periode
 Top: 50
 ```
 
-## <ÃB Performance Tips
+## <ÃƒB Performance Tips
 
 ### Optimizing Interactive Queries
 - **Use Top Parameter**: Limit results to avoid large responses

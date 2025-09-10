@@ -24,8 +24,8 @@ graph TD
     D --> DS[Dokumentstatus<br/>Status Lifecycle]
     D --> DK[Dokumentkategori<br/>Categories]
     
-    D <--> DA[DokumentAktør<br/>25 Role Types]
-    DA <--> A[Aktør<br/>Politicians/Committees]
+    D <--> DA[DokumentAktÃ¸r<br/>25 Role Types]
+    DA <--> A[AktÃ¸r<br/>Politicians/Committees]
     
     D <--> SD[SagDokument<br/>Case Relationships]
     SD <--> S[Sag<br/>Legislative Cases]
@@ -58,12 +58,12 @@ The Danish Parliament uses 28 document types, each following specific workflow p
 
 | Type ID | Type Name | Danish | Typical Flow |
 |---------|-----------|--------|--------------|
-| 1 | Report | Redegørelse | Committee ’ Publication |
-| 3 | Ministerial Statement | Ministerredegørelse | Ministry ’ Parliament ’ Publication |
-| 4 | Act Document | Aktstykke | Ministry ’ Committee ’ Voting ’ Publication |
-| 5 | Inquiry | Forespørgsel | MP ’ Ministry ’ Response ’ Publication |
-| 13 | Parliamentary Question | Spørgsmål | MP ’ Ministry ’ Answer ’ Publication |
-| 15 | Proposal | Forslag | MP/Committee ’ Review ’ Voting ’ Publication |
+| 1 | Report | RedegÃ¸relse | Committee Â’ Publication |
+| 3 | Ministerial Statement | MinisterredegÃ¸relse | Ministry Â’ Parliament Â’ Publication |
+| 4 | Act Document | Aktstykke | Ministry Â’ Committee Â’ Voting Â’ Publication |
+| 5 | Inquiry | ForespÃ¸rgsel | MP Â’ Ministry Â’ Response Â’ Publication |
+| 13 | Parliamentary Question | SpÃ¸rgsmÃ¥l | MP Â’ Ministry Â’ Answer Â’ Publication |
+| 15 | Proposal | Forslag | MP/Committee Â’ Review Â’ Voting Â’ Publication |
 
 ### Document Type Flow Tracking
 
@@ -74,7 +74,7 @@ def track_document_type_flow(document_type_id, days_back=30):
     
     # Get documents with full relationship context
     filter_query = f"typeid eq {document_type_id} and opdateringsdato gt datetime'{since_date}'"
-    expand_query = "Dokumenttype,Dokumentstatus,DokumentAktør/Aktør,SagDokument/Sag"
+    expand_query = "Dokumenttype,Dokumentstatus,DokumentAktÃ¸r/AktÃ¸r,SagDokument/Sag"
     
     url = f"https://oda.ft.dk/api/Dokument?%24filter={filter_query}&%24expand={expand_query}&%24orderby=opdateringsdato desc&%24top=100"
     
@@ -92,10 +92,10 @@ def track_document_type_flow(document_type_id, days_back=30):
             'status': doc.get('Dokumentstatus', {}).get('status', 'Unknown'),
             'actors': [
                 {
-                    'name': rel['Aktør']['navn'],
-                    'role': rel.get('DokumentAktørRolle', {}).get('rolle', 'Unknown')
+                    'name': rel['AktÃ¸r']['navn'],
+                    'role': rel.get('DokumentAktÃ¸rRolle', {}).get('rolle', 'Unknown')
                 }
-                for rel in doc.get('DokumentAktør', [])
+                for rel in doc.get('DokumentAktÃ¸r', [])
             ],
             'cases': [case['Sag']['titel'] for case in doc.get('SagDokument', [])]
         }
@@ -111,7 +111,7 @@ questions_flow = track_document_type_flow(13, days_back=7)
 
 ### Understanding Document Roles
 
-The `DokumentAktør` junction table captures 25 different role types that define how actors interact with documents:
+The `DokumentAktÃ¸r` junction table captures 25 different role types that define how actors interact with documents:
 
 #### Communication Flow Roles
 - **Afsender** (Sender) - Document originator
@@ -122,7 +122,7 @@ The `DokumentAktør` junction table captures 25 different role types that define 
 #### Parliamentary Process Roles
 - **Forslagsstiller** (Proposer) - Legislative proposal author
 - **Stiller** (Submitter) - Document submitter
-- **Spørger** (Questioner) - Parliamentary question author
+- **SpÃ¸rger** (Questioner) - Parliamentary question author
 - **Besvaret af** (Answered by) - Question responder
 - **Minister** - Ministerial association
 
@@ -134,9 +134,9 @@ def track_document_role_changes(document_id):
     
     # Get all document-actor relationships with timestamps
     filter_query = f"dokumentid eq {document_id}"
-    expand_query = "Aktør,DokumentAktørRolle"
+    expand_query = "AktÃ¸r,DokumentAktÃ¸rRolle"
     
-    url = f"https://oda.ft.dk/api/DokumentAktør?%24filter={filter_query}&%24expand={expand_query}&%24orderby=opdateringsdato"
+    url = f"https://oda.ft.dk/api/DokumentAktÃ¸r?%24filter={filter_query}&%24expand={expand_query}&%24orderby=opdateringsdato"
     
     response = requests.get(url)
     relationships = response.json()['value']
@@ -145,8 +145,8 @@ def track_document_role_changes(document_id):
     for rel in relationships:
         role_timeline.append({
             'timestamp': rel['opdateringsdato'],
-            'actor': rel['Aktør']['navn'],
-            'role': rel['DokumentAktørRolle']['rolle'],
+            'actor': rel['AktÃ¸r']['navn'],
+            'role': rel['DokumentAktÃ¸rRolle']['rolle'],
             'role_id': rel['rolleid']
         })
     
@@ -167,10 +167,10 @@ async function analyzeActorDocumentRoles(actorId, monthsBack = 6) {
     const isoDate = sinceDate.toISOString();
     
     // Get all document relationships for this actor
-    const filter = `aktørid eq ${actorId} and opdateringsdato gt datetime'${isoDate}'`;
-    const expand = 'Dokument($select=titel,dato,typeid),DokumentAktørRolle($select=rolle)';
+    const filter = `aktÃ¸rid eq ${actorId} and opdateringsdato gt datetime'${isoDate}'`;
+    const expand = 'Dokument($select=titel,dato,typeid),DokumentAktÃ¸rRolle($select=rolle)';
     
-    const url = `https://oda.ft.dk/api/DokumentAktør?%24filter=${filter}&%24expand=${expand}&%24orderby=opdateringsdato desc&%24top=1000`;
+    const url = `https://oda.ft.dk/api/DokumentAktÃ¸r?%24filter=${filter}&%24expand=${expand}&%24orderby=opdateringsdato desc&%24top=1000`;
     
     const response = await fetch(url);
     const data = await response.json();
@@ -178,7 +178,7 @@ async function analyzeActorDocumentRoles(actorId, monthsBack = 6) {
     // Analyze role patterns
     const roleAnalysis = {};
     data.value.forEach(rel => {
-        const role = rel.DokumentAktørRolle?.rolle || 'Unknown';
+        const role = rel.DokumentAktÃ¸rRolle?.rolle || 'Unknown';
         if (!roleAnalysis[role]) {
             roleAnalysis[role] = {
                 count: 0,
@@ -315,7 +315,7 @@ def detect_publication_patterns(document_type_id, months_back=12):
     return patterns
 
 # Example: Analyze ministerial statement patterns
-patterns = detect_publication_patterns(3)  # Ministerredegørelse
+patterns = detect_publication_patterns(3)  # MinisterredegÃ¸relse
 print(f"Average processing time: {patterns['avg_processing_hours']:.1f} hours")
 print(f"Most common publication day: {max(patterns['by_weekday'], key=patterns['by_weekday'].get)}")
 ```
@@ -498,10 +498,10 @@ def track_committee_document_workflow(committee_actor_id, days_back=30):
     since_date = (datetime.now() - timedelta(days=days_back)).isoformat()
     
     # Find committee involvement in documents
-    filter_query = f"aktørid eq {committee_actor_id} and opdateringsdato gt datetime'{since_date}'"
-    expand_query = "Dokument($select=titel,dato,typeid;$expand=Dokumenttype),DokumentAktørRolle"
+    filter_query = f"aktÃ¸rid eq {committee_actor_id} and opdateringsdato gt datetime'{since_date}'"
+    expand_query = "Dokument($select=titel,dato,typeid;$expand=Dokumenttype),DokumentAktÃ¸rRolle"
     
-    url = f"https://oda.ft.dk/api/DokumentAktør?%24filter={filter_query}&%24expand={expand_query}&%24orderby=opdateringsdato desc&%24top=200"
+    url = f"https://oda.ft.dk/api/DokumentAktÃ¸r?%24filter={filter_query}&%24expand={expand_query}&%24orderby=opdateringsdato desc&%24top=200"
     
     response = requests.get(url)
     relationships = response.json()['value']
@@ -516,7 +516,7 @@ def track_committee_document_workflow(committee_actor_id, days_back=30):
     
     for rel in relationships:
         doc = rel['Dokument']
-        role = rel['DokumentAktørRolle']['rolle']
+        role = rel['DokumentAktÃ¸rRolle']['rolle']
         doc_type = doc.get('Dokumenttype', {}).get('type', 'Unknown')
         
         workflow_entry = {
@@ -548,7 +548,7 @@ def analyze_multi_committee_documents():
     """Find documents involving multiple committees"""
     
     # Get committee actor IDs (assuming committee actors have specific type)
-    committees_url = "https://oda.ft.dk/api/Aktør?%24filter=typeid eq 6&%24select=id,navn&%24top=100"  # Assuming type 6 is committees
+    committees_url = "https://oda.ft.dk/api/AktÃ¸r?%24filter=typeid eq 6&%24select=id,navn&%24top=100"  # Assuming type 6 is committees
     committees_response = requests.get(committees_url)
     committees = committees_response.json()['value']
     
@@ -558,8 +558,8 @@ def analyze_multi_committee_documents():
     multi_committee_docs = {}
     
     for committee_id in committee_ids:
-        filter_query = f"aktørid eq {committee_id}"
-        url = f"https://oda.ft.dk/api/DokumentAktør?%24filter={filter_query}&%24select=dokumentid,rolleid&%24top=1000"
+        filter_query = f"aktÃ¸rid eq {committee_id}"
+        url = f"https://oda.ft.dk/api/DokumentAktÃ¸r?%24filter={filter_query}&%24select=dokumentid,rolleid&%24top=1000"
         
         response = requests.get(url)
         relationships = response.json()['value']
@@ -661,7 +661,7 @@ def analyze_document_citations(document_ids, search_terms=None):
     
     # Get documents with full text and relationships
     doc_filter = " or ".join([f"id eq {doc_id}" for doc_id in document_ids])
-    expand_query = "DokumentAktør/Aktør,SagDokument/Sag"
+    expand_query = "DokumentAktÃ¸r/AktÃ¸r,SagDokument/Sag"
     
     url = f"https://oda.ft.dk/api/Dokument?%24filter={doc_filter}&%24expand={expand_query}&%24top=1000"
     
@@ -673,7 +673,7 @@ def analyze_document_citations(document_ids, search_terms=None):
         doc_analysis = {
             'id': doc['id'],
             'title': doc['titel'],
-            'actors': [rel['Aktør']['navn'] for rel in doc.get('DokumentAktør', [])],
+            'actors': [rel['AktÃ¸r']['navn'] for rel in doc.get('DokumentAktÃ¸r', [])],
             'cases': [rel['Sag']['titel'] for rel in doc.get('SagDokument', [])],
             'date': doc['dato']
         }
@@ -684,7 +684,7 @@ def analyze_document_citations(document_ids, search_terms=None):
             if other_doc['id'] != doc['id']:
                 other_id_str = str(other_doc['id'])
                 if other_id_str in title_text or any(
-                    keyword in title_text for keyword in ['svar på', 'besvarelse', 'opfølgning']
+                    keyword in title_text for keyword in ['svar pÃ¥', 'besvarelse', 'opfÃ¸lgning']
                 ):
                     citation_patterns['explicit_citations'].append({
                         'citing_doc': doc['id'],
@@ -708,7 +708,7 @@ def analyze_document_citations(document_ids, search_terms=None):
 climate_docs = get_documents_by_keyword('klima', limit=50)
 climate_citations = analyze_document_citations(
     [doc['id'] for doc in climate_docs],
-    search_terms=['klima', 'miljø', 'CO2', 'bæredygtig']
+    search_terms=['klima', 'miljÃ¸', 'CO2', 'bÃ¦redygtig']
 )
 ```
 
@@ -744,7 +744,7 @@ class DocumentFlowMonitor:
         filter_query = f"({doc_filter}) and opdateringsdato gt datetime'{since_last_check}'"
         
         # Get updated documents with relationships
-        expand_query = "Dokumentstatus,DokumentAktør/Aktør,DokumentAktør/DokumentAktørRolle"
+        expand_query = "Dokumentstatus,DokumentAktÃ¸r/AktÃ¸r,DokumentAktÃ¸r/DokumentAktÃ¸rRolle"
         url = f"https://oda.ft.dk/api/Dokument?%24filter={filter_query}&%24expand={expand_query}&%24top=1000"
         
         response = requests.get(url)
@@ -774,10 +774,10 @@ class DocumentFlowMonitor:
             
             # Actor role alerts
             if alert_conditions.get('role_changes'):
-                for role_rel in doc.get('DokumentAktør', []):
-                    role = role_rel.get('DokumentAktørRolle', {}).get('rolle')
+                for role_rel in doc.get('DokumentAktÃ¸r', []):
+                    role = role_rel.get('DokumentAktÃ¸rRolle', {}).get('rolle')
                     if role in alert_conditions['role_changes']:
-                        actor_name = role_rel.get('Aktør', {}).get('navn', 'Unknown')
+                        actor_name = role_rel.get('AktÃ¸r', {}).get('navn', 'Unknown')
                         update_info['changes_detected'].append(f"New role: {actor_name} as {role}")
             
             alerts.append(update_info)
@@ -849,7 +849,7 @@ class DocumentFlowPipeline {
     async processBatch(documentIds) {
         // Fetch document data for batch
         const idsFilter = documentIds.map(id => `id eq ${id}`).join(' or ');
-        const url = `https://oda.ft.dk/api/Dokument?%24filter=${idsFilter}&%24expand=Dokumenttype,Dokumentstatus,DokumentAktør/Aktør,SagDokument/Sag&%24top=${documentIds.length}`;
+        const url = `https://oda.ft.dk/api/Dokument?%24filter=${idsFilter}&%24expand=Dokumenttype,Dokumentstatus,DokumentAktÃ¸r/AktÃ¸r,SagDokument/Sag&%24top=${documentIds.length}`;
         
         const response = await fetch(url);
         const data = await response.json();
@@ -887,7 +887,7 @@ pipeline.addProcessor('classification', (document) => {
     return {
         type: document.Dokumenttype?.type || 'Unknown',
         status: document.Dokumentstatus?.status || 'Unknown',
-        hasActors: document.DokumentAktør?.length > 0,
+        hasActors: document.DokumentAktÃ¸r?.length > 0,
         hasCases: document.SagDokument?.length > 0
     };
 });
@@ -907,12 +907,12 @@ pipeline.addProcessor('timeline', (document) => {
 
 // Add actor network processor
 pipeline.addProcessor('actorNetwork', (document) => {
-    const actors = document.DokumentAktør || [];
+    const actors = document.DokumentAktÃ¸r || [];
     const roles = {};
     
     actors.forEach(rel => {
-        const actorName = rel.Aktør?.navn || 'Unknown';
-        const roleName = rel.DokumentAktørRolle?.rolle || 'Unknown';
+        const actorName = rel.AktÃ¸r?.navn || 'Unknown';
+        const roleName = rel.DokumentAktÃ¸rRolle?.rolle || 'Unknown';
         
         if (!roles[roleName]) roles[roleName] = [];
         roles[roleName].push(actorName);
@@ -922,7 +922,7 @@ pipeline.addProcessor('actorNetwork', (document) => {
         totalActors: actors.length,
         roles: roles,
         hasMinister: actors.some(rel => rel.rolleid === 5),
-        hasCommittee: actors.some(rel => rel.Aktør?.typeid === 6)
+        hasCommittee: actors.some(rel => rel.AktÃ¸r?.typeid === 6)
     };
 });
 
@@ -1010,15 +1010,15 @@ class DocumentStatusMonitor:
 
 # Example: Set up status monitoring with alerts
 def alert_on_publication(document, old_status, new_status):
-    print(f"=â Document {document['id']} published: {document['titel'][:100]}")
-    print(f"   Status: {old_status} ’ {new_status}")
+    print(f"=Ã¢ Document {document['id']} published: {document['titel'][:100]}")
+    print(f"   Status: {old_status} Â’ {new_status}")
 
 def alert_on_withdrawal(document, old_status, new_status):
     print(f"=4 Document {document['id']} withdrawn: {document['titel'][:100]}")
-    print(f"   Status: {old_status} ’ {new_status}")
+    print(f"   Status: {old_status} Â’ {new_status}")
 
 def alert_any_change(document, old_status, new_status):
-    print(f"=Ý Status change for document {document['id']}: {old_status} ’ {new_status}")
+    print(f"=Ã Status change for document {document['id']}: {old_status} Â’ {new_status}")
 
 monitor = DocumentStatusMonitor()
 monitor.add_transition_rule("Draft", "Published", alert_on_publication)
@@ -1109,7 +1109,7 @@ class DocumentAlertSystem {
         const idsFilter = documentIds.map(id => `id eq ${id}`).join(' or ');
         const filter = `(${idsFilter}) and opdateringsdato gt datetime'${sinceISO}'`;
         
-        const url = `https://oda.ft.dk/api/Dokument?%24filter=${filter}&%24expand=Dokumentstatus,DokumentAktør/Aktør,DokumentAktør/DokumentAktørRolle,SagDokument/Sag&%24orderby=opdateringsdato desc&%24top=1000`;
+        const url = `https://oda.ft.dk/api/Dokument?%24filter=${filter}&%24expand=Dokumentstatus,DokumentAktÃ¸r/AktÃ¸r,DokumentAktÃ¸r/DokumentAktÃ¸rRolle,SagDokument/Sag&%24orderby=opdateringsdato desc&%24top=1000`;
         
         const response = await fetch(url);
         const data = await response.json();
@@ -1123,9 +1123,9 @@ class DocumentAlertSystem {
             title: document.titel,
             status: document.Dokumentstatus?.status || 'Unknown',
             lastUpdated: document.opdateringsdato,
-            actors: document.DokumentAktør?.map(rel => ({
-                name: rel.Aktør?.navn,
-                role: rel.DokumentAktørRolle?.rolle
+            actors: document.DokumentAktÃ¸r?.map(rel => ({
+                name: rel.AktÃ¸r?.navn,
+                role: rel.DokumentAktÃ¸rRolle?.rolle
             })) || [],
             cases: document.SagDokument?.map(rel => rel.Sag?.titel) || []
         };
@@ -1196,7 +1196,7 @@ const alertSystem = new DocumentAlertSystem();
 
 // Subscribe to different alert types
 alertSystem.subscribe('status_change', async (alert) => {
-    console.log(`=Ê Status Alert: ${alert.data.message}`);
+    console.log(`=ÃŠ Status Alert: ${alert.data.message}`);
     console.log(`   Document: ${alert.data.document.title.substring(0, 100)}`);
 });
 
@@ -1278,9 +1278,9 @@ class BulkDocumentTracker:
         if options.get('include_status'):
             expansions.append("Dokumentstatus")
         if options.get('include_actors'):
-            expansions.append("DokumentAktør/Aktør")
+            expansions.append("DokumentAktÃ¸r/AktÃ¸r")
             if options.get('include_actor_roles'):
-                expansions.append("DokumentAktør/DokumentAktørRolle")
+                expansions.append("DokumentAktÃ¸r/DokumentAktÃ¸rRolle")
         if options.get('include_cases'):
             expansions.append("SagDokument/Sag")
         
@@ -1291,7 +1291,7 @@ class BulkDocumentTracker:
         if options.get('include_release_date'):
             select_fields.append("frigivelsesdato")
         if options.get('include_content_fields'):
-            select_fields.extend(["spørgsmålstitel", "procedurenummer"])
+            select_fields.extend(["spÃ¸rgsmÃ¥lstitel", "procedurenummer"])
         
         select_query = ",".join(select_fields)
         
@@ -1345,14 +1345,14 @@ class BulkDocumentTracker:
             if options.get('include_status') and 'Dokumentstatus' in doc:
                 processed_doc['status'] = doc['Dokumentstatus'].get('status')
             
-            if options.get('include_actors') and 'DokumentAktør' in doc:
+            if options.get('include_actors') and 'DokumentAktÃ¸r' in doc:
                 processed_doc['actors'] = [
                     {
-                        'name': rel.get('Aktør', {}).get('navn'),
-                        'role': rel.get('DokumentAktørRolle', {}).get('rolle') if options.get('include_actor_roles') else None,
+                        'name': rel.get('AktÃ¸r', {}).get('navn'),
+                        'role': rel.get('DokumentAktÃ¸rRolle', {}).get('rolle') if options.get('include_actor_roles') else None,
                         'role_id': rel.get('rolleid')
                     }
-                    for rel in doc['DokumentAktør']
+                    for rel in doc['DokumentAktÃ¸r']
                 ]
             
             if options.get('include_cases') and 'SagDokument' in doc:
@@ -1460,7 +1460,7 @@ def analyze_document_metrics(document):
         'age_days': (datetime.now(timezone.utc) - created).days,
         'last_update_days': (datetime.now(timezone.utc) - updated).days,
         'title_length': len(document.get('titel', '')),
-        'has_question': bool(document.get('spørgsmålstitel')),
+        'has_question': bool(document.get('spÃ¸rgsmÃ¥lstitel')),
         'type_id': document.get('typeid')
     }
 
@@ -1603,22 +1603,22 @@ class OptimizedMultiEntityTracker {
         
         switch (entityType) {
             case 'Dokument':
-                if (options.includeActors) expansions.push('DokumentAktør/Aktør');
-                if (options.includeActorRoles) expansions.push('DokumentAktør/DokumentAktørRolle');
+                if (options.includeActors) expansions.push('DokumentAktÃ¸r/AktÃ¸r');
+                if (options.includeActorRoles) expansions.push('DokumentAktÃ¸r/DokumentAktÃ¸rRolle');
                 if (options.includeStatus) expansions.push('Dokumentstatus');
                 if (options.includeCases) expansions.push('SagDokument/Sag');
                 if (options.includeFiles) expansions.push('Fil');
                 break;
                 
             case 'Sag':
-                if (options.includeActors) expansions.push('SagAktør/Aktør');
+                if (options.includeActors) expansions.push('SagAktÃ¸r/AktÃ¸r');
                 if (options.includeDocuments) expansions.push('SagDokument/Dokument');
                 if (options.includeSteps) expansions.push('Sagstrin');
                 break;
                 
-            case 'Aktør':
-                if (options.includeDocuments) expansions.push('DokumentAktør/Dokument');
-                if (options.includeCases) expansions.push('SagAktør/Sag');
+            case 'AktÃ¸r':
+                if (options.includeDocuments) expansions.push('DokumentAktÃ¸r/Dokument');
+                if (options.includeCases) expansions.push('SagAktÃ¸r/Sag');
                 break;
         }
         
@@ -1633,7 +1633,7 @@ class OptimizedMultiEntityTracker {
                 return [
                     ...commonFields,
                     'titel', 'dato', 'typeid',
-                    ...(options.includeContent ? ['spørgsmålstitel', 'procedurenummer'] : []),
+                    ...(options.includeContent ? ['spÃ¸rgsmÃ¥lstitel', 'procedurenummer'] : []),
                     ...(options.includeReleaseDate ? ['frigivelsesdato'] : [])
                 ];
                 
@@ -1643,7 +1643,7 @@ class OptimizedMultiEntityTracker {
                     'titel', 'oprettelsdato', 'typeid'
                 ];
                 
-            case 'Aktør':
+            case 'AktÃ¸r':
                 return [
                     ...commonFields,
                     'navn', 'typeid'
@@ -1678,8 +1678,8 @@ const documentProcessor = (entityType, entities) => {
     console.log(`Processed ${entities.length} documents`);
     entities.forEach(doc => {
         // Process document data
-        if (doc.DokumentAktør && doc.DokumentAktør.length > 0) {
-            console.log(`Document ${doc.id} has ${doc.DokumentAktør.length} actor relationships`);
+        if (doc.DokumentAktÃ¸r && doc.DokumentAktÃ¸r.length > 0) {
+            console.log(`Document ${doc.id} has ${doc.DokumentAktÃ¸r.length} actor relationships`);
         }
     });
 };

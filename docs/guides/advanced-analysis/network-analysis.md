@@ -10,11 +10,11 @@ The OData API offers several network analysis opportunities through its comprehe
 
 ### Available Network Types
 
-1. **Actor-to-Actor Networks** - Direct relationships via `AktørAktør` entity
-2. **Co-sponsorship Networks** - Shared case participation via `SagAktør`
+1. **Actor-to-Actor Networks** - Direct relationships via `AktÃ¸rAktÃ¸r` entity
+2. **Co-sponsorship Networks** - Shared case participation via `SagAktÃ¸r`
 3. **Voting Alignment Networks** - Shared voting patterns via `Afstemning` and `Stemme`
-4. **Committee Collaboration Networks** - Shared committee work via `MødeAktør`
-5. **Document Authorship Networks** - Co-authorship via `DokumentAktør`
+4. **Committee Collaboration Networks** - Shared committee work via `MÃ¸deAktÃ¸r`
+5. **Document Authorship Networks** - Co-authorship via `DokumentAktÃ¸r`
 6. **Case Participation Networks** - Multi-actor case involvement
 7. **Temporal Evolution Networks** - Network changes across parliamentary periods
 
@@ -22,11 +22,11 @@ The OData API offers several network analysis opportunities through its comprehe
 
 | Junction Table | Purpose | Network Type |
 |---------------|---------|--------------|
-| `SagAktør` | Case-Actor relationships | Co-sponsorship, case participation |
-| `DokumentAktør` | Document-Actor relationships | Authorship, communication |
-| `MødeAktør` | Meeting-Actor relationships | Committee collaboration |
-| `SagstrinAktør` | Case Step-Actor relationships | Legislative process participation |
-| `AktørAktør` | Direct Actor-Actor relationships | Direct connections |
+| `SagAktÃ¸r` | Case-Actor relationships | Co-sponsorship, case participation |
+| `DokumentAktÃ¸r` | Document-Actor relationships | Authorship, communication |
+| `MÃ¸deAktÃ¸r` | Meeting-Actor relationships | Committee collaboration |
+| `SagstrinAktÃ¸r` | Case Step-Actor relationships | Legislative process participation |
+| `AktÃ¸rAktÃ¸r` | Direct Actor-Actor relationships | Direct connections |
 | `Afstemning/Stemme` | Voting records | Voting alignment networks |
 
 ## Setting Up the Environment
@@ -148,8 +148,8 @@ def build_actor_actor_network():
     # Fetch actor-actor relationships with role information
     print("Fetching actor-actor relationships...")
     relationships = api.fetch_all_pages(
-        'AktørAktør',
-        expand='Aktør1,Aktør2,AktørAktørRolle',
+        'AktÃ¸rAktÃ¸r',
+        expand='AktÃ¸r1,AktÃ¸r2,AktÃ¸rAktÃ¸rRolle',
         max_records=10000
     )
     
@@ -157,10 +157,10 @@ def build_actor_actor_network():
     G = nx.DiGraph()
     
     for rel in relationships:
-        if rel.get('Aktør1') and rel.get('Aktør2'):
-            actor1 = rel['Aktør1']
-            actor2 = rel['Aktør2']
-            role = rel.get('AktørAktørRolle', {}).get('rolle', 'Unknown')
+        if rel.get('AktÃ¸r1') and rel.get('AktÃ¸r2'):
+            actor1 = rel['AktÃ¸r1']
+            actor2 = rel['AktÃ¸r2']
+            role = rel.get('AktÃ¸rAktÃ¸rRolle', {}).get('rolle', 'Unknown')
             
             # Add nodes with attributes
             G.add_node(actor1['id'], 
@@ -250,8 +250,8 @@ def build_cosponsorship_network(min_shared_cases=2):
     
     # Fetch case-actor relationships with roles
     case_actors = api.fetch_all_pages(
-        'SagAktør',
-        expand='Sag,Aktør,SagAktørRolle',
+        'SagAktÃ¸r',
+        expand='Sag,AktÃ¸r,SagAktÃ¸rRolle',
         max_records=50000  # Large dataset for comprehensive analysis
     )
     
@@ -260,10 +260,10 @@ def build_cosponsorship_network(min_shared_cases=2):
     actor_info = {}
     
     for ca in case_actors:
-        if ca.get('Sag') and ca.get('Aktør'):
+        if ca.get('Sag') and ca.get('AktÃ¸r'):
             case_id = ca['Sag']['id']
-            actor = ca['Aktør']
-            role = ca.get('SagAktørRolle', {}).get('rolle', 'Unknown')
+            actor = ca['AktÃ¸r']
+            role = ca.get('SagAktÃ¸rRolle', {}).get('rolle', 'Unknown')
             
             cases_to_actors[case_id].append({
                 'id': actor['id'],
@@ -365,7 +365,7 @@ def analyze_cosponsorship_patterns(G):
         party2 = G.nodes[actor2].get('party', '')
         weight = data['weight']
         
-        print(f"{name1} ({party1}) ” {name2} ({party2}): {weight} shared cases")
+        print(f"{name1} ({party1}) Â” {name2} ({party2}): {weight} shared cases")
     
     return party_collaboration
 
@@ -386,7 +386,7 @@ def build_voting_alignment_network(min_shared_votes=10):
     # Fetch voting records with actor information
     votes = api.fetch_all_pages(
         'Stemme',
-        expand='Aktør,Afstemning',
+        expand='AktÃ¸r,Afstemning',
         params={'$filter': 'typeid ne null'},  # Filter out null vote types
         max_records=100000  # Large sample for statistical significance
     )
@@ -396,9 +396,9 @@ def build_voting_alignment_network(min_shared_votes=10):
     actor_info = {}
     
     for vote in votes:
-        if vote.get('Aktør') and vote.get('Afstemning'):
+        if vote.get('AktÃ¸r') and vote.get('Afstemning'):
             afstemning_id = vote['Afstemning']['id']
-            actor = vote['Aktør']
+            actor = vote['AktÃ¸r']
             vote_type = vote.get('typeid', 0)
             
             voting_sessions[afstemning_id].append({
@@ -567,8 +567,8 @@ def build_committee_network():
     
     # Fetch meeting participation data
     meeting_actors = api.fetch_all_pages(
-        'MødeAktør',
-        expand='Møde,Aktør',
+        'MÃ¸deAktÃ¸r',
+        expand='MÃ¸de,AktÃ¸r',
         max_records=50000
     )
     
@@ -578,10 +578,10 @@ def build_committee_network():
     meeting_info = {}
     
     for ma in meeting_actors:
-        if ma.get('Møde') and ma.get('Aktør'):
-            meeting_id = ma['Møde']['id']
-            actor = ma['Aktør']
-            meeting = ma['Møde']
+        if ma.get('MÃ¸de') and ma.get('AktÃ¸r'):
+            meeting_id = ma['MÃ¸de']['id']
+            actor = ma['AktÃ¸r']
+            meeting = ma['MÃ¸de']
             
             meetings_to_actors[meeting_id].append({
                 'id': actor['id'],
@@ -658,14 +658,14 @@ def build_document_authorship_network():
         'Forslagsstiller',
         'Afsender',
         'Stiller',
-        'Ordfører',
-        'Medspørger'
+        'OrdfÃ¸rer',
+        'MedspÃ¸rger'
     ]
     
     # Fetch document-actor relationships
     doc_actors = api.fetch_all_pages(
-        'DokumentAktør',
-        expand='Dokument,Aktør,DokumentAktørRolle',
+        'DokumentAktÃ¸r',
+        expand='Dokument,AktÃ¸r,DokumentAktÃ¸rRolle',
         max_records=50000
     )
     
@@ -674,14 +674,14 @@ def build_document_authorship_network():
     actor_info = {}
     
     for da in doc_actors:
-        if (da.get('Dokument') and da.get('Aktør') and 
-            da.get('DokumentAktørRolle')):
+        if (da.get('Dokument') and da.get('AktÃ¸r') and 
+            da.get('DokumentAktÃ¸rRolle')):
             
-            role = da['DokumentAktørRolle'].get('rolle', '')
+            role = da['DokumentAktÃ¸rRolle'].get('rolle', '')
             
             if role in authorship_roles:
                 doc_id = da['Dokument']['id']
-                actor = da['Aktør']
+                actor = da['AktÃ¸r']
                 
                 docs_to_authors[doc_id].append({
                     'id': actor['id'],
@@ -754,12 +754,12 @@ def build_temporal_networks(network_type='cosponsorship', time_window_months=12)
     
     # Fetch data with timestamps
     if network_type == 'cosponsorship':
-        entity = 'SagAktør'
-        expand = 'Sag,Aktør,SagAktørRolle'
+        entity = 'SagAktÃ¸r'
+        expand = 'Sag,AktÃ¸r,SagAktÃ¸rRolle'
         date_field = 'opdateringsdato'
     elif network_type == 'voting':
         entity = 'Stemme'
-        expand = 'Afstemning/Møde,Aktør'
+        expand = 'Afstemning/MÃ¸de,AktÃ¸r'
         date_field = 'opdateringsdato'
     
     # Fetch all data with timestamps
@@ -1229,7 +1229,7 @@ def create_interactive_network_visualization(G, communities=None, layout='spring
         node1_name = G.nodes[edge[0]].get('name', f'Actor {edge[0]}')
         node2_name = G.nodes[edge[1]].get('name', f'Actor {edge[1]}')
         weight = edge[2].get(edge_width_attr, 1)
-        edge_info.append(f"{node1_name} ” {node2_name}<br>Weight: {weight}")
+        edge_info.append(f"{node1_name} Â” {node2_name}<br>Weight: {weight}")
     
     edge_trace = go.Scatter(x=edge_x, y=edge_y,
                            line=dict(width=0.5, color='#888'),
@@ -1573,7 +1573,7 @@ for phase, steps in workflow.items():
 
 ## Conclusion
 
-This guide provides a comprehensive framework for conducting network analysis using the Danish Parliamentary Open Data API. The rich relationship data available through junction tables like `SagAktør`, `DokumentAktør`, and `MødeAktør` enables sophisticated analysis of:
+This guide provides a comprehensive framework for conducting network analysis using the Danish Parliamentary Open Data API. The rich relationship data available through junction tables like `SagAktÃ¸r`, `DokumentAktÃ¸r`, and `MÃ¸deAktÃ¸r` enables sophisticated analysis of:
 
 - **Political collaboration patterns** through co-sponsorship networks
 - **Voting alignment and opposition** through voting networks  

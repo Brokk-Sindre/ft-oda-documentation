@@ -13,7 +13,7 @@ Based on extensive performance testing, the API exhibits predictable response ti
 - **Examples**:
   ```bash
   # Single actor lookup - ~85ms
-  https://oda.ft.dk/api/Aktør?%24top=5
+  https://oda.ft.dk/api/AktÃ¸r?%24top=5
   
   # Basic case search - ~108ms  
   https://oda.ft.dk/api/Sag?%24top=50
@@ -32,7 +32,7 @@ Based on extensive performance testing, the API exhibits predictable response ti
 - **Examples**:
   ```bash
   # Complex voting analysis - ~1.8s
-  https://oda.ft.dk/api/Afstemning?%24expand=Stemme/Aktør&%24top=100
+  https://oda.ft.dk/api/Afstemning?%24expand=Stemme/AktÃ¸r&%24top=100
   
   # Multi-level document relationships - ~2.1s
   https://oda.ft.dk/api/Sag?%24expand=SagDokument/Dokument&%24top=100
@@ -68,10 +68,10 @@ The API implements intelligent pagination that affects performance:
 
 ```bash
 # Performance scaling examples
-$top=5    ’ ~85ms   (optimal)
-$top=50   ’ ~90ms   (minimal overhead)
-$top=100  ’ ~108ms  (standard limit)
-$top=1000 ’ ~108ms  (capped at 100 records)
+$top=5    Â’ ~85ms   (optimal)
+$top=50   Â’ ~90ms   (minimal overhead)
+$top=100  Â’ ~108ms  (standard limit)
+$top=1000 Â’ ~108ms  (capped at 100 records)
 ```
 
 **Key Finding**: Due to the 100-record limit, response times remain consistent regardless of requested size.
@@ -106,7 +106,7 @@ Establish performance baselines with these reference queries:
 
 ```bash
 # Quick health check - expect ~85ms
-time curl -s "https://oda.ft.dk/api/Aktør?%24top=1" > /dev/null
+time curl -s "https://oda.ft.dk/api/AktÃ¸r?%24top=1" > /dev/null
 
 # Standard query - expect ~108ms  
 time curl -s "https://oda.ft.dk/api/Sag?%24top=50" > /dev/null
@@ -152,7 +152,7 @@ class FTAPIMonitor {
     
     async runBenchmarks() {
         const tests = [
-            ['https://oda.ft.dk/api/Aktør?%24top=1', 'Single record'],
+            ['https://oda.ft.dk/api/AktÃ¸r?%24top=1', 'Single record'],
             ['https://oda.ft.dk/api/Sag?%24top=100', 'Full page'],
             ['https://oda.ft.dk/api/Afstemning?%24expand=Stemme&%24top=50', 'Complex expansion'],
             ['https://oda.ft.dk/api/Dokument?%24filter=contains(titel,%27klima%27)', 'Text search']
@@ -182,7 +182,7 @@ def benchmark_api_performance():
     
     test_queries = [
         {
-            'url': 'https://oda.ft.dk/api/Aktør?%24top=1',
+            'url': 'https://oda.ft.dk/api/AktÃ¸r?%24top=1',
             'description': 'Single record lookup',
             'expected_max': 150
         },
@@ -402,7 +402,7 @@ check_endpoint() {
 }
 
 # Run health checks
-check_endpoint "Aktør?%24top=1" "Simple query" 200
+check_endpoint "AktÃ¸r?%24top=1" "Simple query" 200
 check_endpoint "Sag?%24top=50" "Standard query" 300  
 check_endpoint "Afstemning?%24expand=Stemme&%24top=10" "Complex query" 3000
 

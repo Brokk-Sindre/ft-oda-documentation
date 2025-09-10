@@ -4,7 +4,7 @@ The Danish Parliamentary Open Data API employs a sophisticated actor type classi
 
 ## Overview
 
-The actor type classification (Aktørtype) consists of **13 distinct categories** that organize parliamentary participants into a logical hierarchy spanning from individual persons to large institutional entities. This classification system enables precise analysis of parliamentary processes, role distributions, and institutional relationships.
+The actor type classification (AktÃ¸rtype) consists of **13 distinct categories** that organize parliamentary participants into a logical hierarchy spanning from individual persons to large institutional entities. This classification system enables precise analysis of parliamentary processes, role distributions, and institutional relationships.
 
 ### Key Characteristics
 
@@ -18,7 +18,7 @@ The actor type classification (Aktørtype) consists of **13 distinct categories**
 
 Based on comprehensive API analysis, the 13 actor types are organized as follows:
 
-### 1. Ministerområde (Ministry Area)
+### 1. MinisteromrÃ¥de (Ministry Area)
 **Type ID**: 1  
 **Description**: High-level ministerial domains representing broad policy areas  
 **Usage**: Organizational classification for ministerial responsibilities  
@@ -26,7 +26,7 @@ Based on comprehensive API analysis, the 13 actor types are organized as follows
 
 ```bash
 # Query ministry areas
-curl "https://oda.ft.dk/api/Aktør?%24filter=aktørtypeid%20eq%201"
+curl "https://oda.ft.dk/api/AktÃ¸r?%24filter=aktÃ¸rtypeid%20eq%201"
 ```
 
 ### 2. Ministertitel (Ministry Title)
@@ -37,7 +37,7 @@ curl "https://oda.ft.dk/api/Aktør?%24filter=aktørtypeid%20eq%201"
 
 ```bash
 # Query ministry titles
-curl "https://oda.ft.dk/api/Aktør?%24filter=aktørtypeid%20eq%202"
+curl "https://oda.ft.dk/api/AktÃ¸r?%24filter=aktÃ¸rtypeid%20eq%202"
 ```
 
 ### 3. Udvalg (Committee)
@@ -48,7 +48,7 @@ curl "https://oda.ft.dk/api/Aktør?%24filter=aktørtypeid%20eq%202"
 
 ```bash
 # Query all parliamentary committees
-curl "https://oda.ft.dk/api/Aktør?%24filter=aktørtypeid%20eq%203"
+curl "https://oda.ft.dk/api/AktÃ¸r?%24filter=aktÃ¸rtypeid%20eq%203"
 ```
 
 ### 4. Folketingsgruppe (Parliamentary Group/Party)
@@ -59,7 +59,7 @@ curl "https://oda.ft.dk/api/Aktør?%24filter=aktørtypeid%20eq%203"
 
 ```bash
 # Query political parties
-curl "https://oda.ft.dk/api/Aktør?%24filter=aktørtypeid%20eq%204"
+curl "https://oda.ft.dk/api/AktÃ¸r?%24filter=aktÃ¸rtypeid%20eq%204"
 ```
 
 ### 5. Person (Official Person)
@@ -70,7 +70,7 @@ curl "https://oda.ft.dk/api/Aktør?%24filter=aktørtypeid%20eq%204"
 
 ```bash
 # Query official persons (politicians, ministers)
-curl "https://oda.ft.dk/api/Aktør?%24filter=aktørtypeid%20eq%205"
+curl "https://oda.ft.dk/api/AktÃ¸r?%24filter=aktÃ¸rtypeid%20eq%205"
 ```
 
 ### 6. Gruppe (Group)
@@ -116,10 +116,10 @@ curl "https://oda.ft.dk/api/Aktør?%24filter=aktørtypeid%20eq%205"
 
 ```bash
 # Query private persons (citizens, experts, witnesses)
-curl "https://oda.ft.dk/api/Aktør?%24filter=aktørtypeid%20eq%2012"
+curl "https://oda.ft.dk/api/AktÃ¸r?%24filter=aktÃ¸rtypeid%20eq%2012"
 ```
 
-### 13. Tværpolitisk netværk (Cross-Political Network)
+### 13. TvÃ¦rpolitisk netvÃ¦rk (Cross-Political Network)
 **Type ID**: 13  
 **Description**: Cross-party networks and multi-partisan initiatives  
 **Usage**: Bipartisan cooperation analysis, cross-party policy development  
@@ -131,19 +131,19 @@ curl "https://oda.ft.dk/api/Aktør?%24filter=aktørtypeid%20eq%2012"
 The actor types form a clear institutional hierarchy:
 
 ```
-Level 1 (Policy Areas): Ministerområde
+Level 1 (Policy Areas): MinisteromrÃ¥de
 Level 2 (Institutions): Ministerium, Folketingsgruppe, Udvalg
 Level 3 (Positions): Ministertitel, Person (Official)
-Level 4 (Groups): Gruppe, Anden gruppe, Tværpolitisk netværk
+Level 4 (Groups): Gruppe, Anden gruppe, TvÃ¦rpolitisk netvÃ¦rk
 Level 5 (External): Organisation, Privatperson, Parlamentarisk forsamling
 Level 6 (Special): Kommission
 ```
 
 ### Relationship Patterns
-- **Ministry Structure**: Ministerområde ’ Ministerium ’ Ministertitel ’ Person
-- **Parliamentary Structure**: Folketingsgruppe ’ Person ’ Udvalg participation
-- **Committee Structure**: Udvalg ’ Person (members) ’ specific roles
-- **External Engagement**: Organisation/Privatperson ’ specific parliamentary interactions
+- **Ministry Structure**: MinisteromrÃ¥de Â’ Ministerium Â’ Ministertitel Â’ Person
+- **Parliamentary Structure**: Folketingsgruppe Â’ Person Â’ Udvalg participation
+- **Committee Structure**: Udvalg Â’ Person (members) Â’ specific roles
+- **External Engagement**: Organisation/Privatperson Â’ specific parliamentary interactions
 
 ## Historical Evolution
 
@@ -159,7 +159,7 @@ The actor type system reflects Denmark's constitutional framework established in
 The classification has evolved to capture:
 - **Increased citizen participation** (Privatperson category expansion)
 - **European integration complexity** (Parlamentarisk forsamling expansion)
-- **Cross-party collaboration** (Tværpolitisk netværk formalization)
+- **Cross-party collaboration** (TvÃ¦rpolitisk netvÃ¦rk formalization)
 - **External stakeholder engagement** (Organisation category refinement)
 
 ## Usage Patterns and Frequency Analysis
@@ -189,44 +189,44 @@ Most frequently referenced in parliamentary processes:
 
 ```bash
 # Get all actor types
-curl "https://oda.ft.dk/api/Aktørtype"
+curl "https://oda.ft.dk/api/AktÃ¸rtype"
 
 # Count actors by type
-curl "https://oda.ft.dk/api/Aktør?%24filter=aktørtypeid%20eq%205&%24inlinecount=allpages"
+curl "https://oda.ft.dk/api/AktÃ¸r?%24filter=aktÃ¸rtypeid%20eq%205&%24inlinecount=allpages"
 
 # Get actors with type information
-curl "https://oda.ft.dk/api/Aktør?%24expand=Aktørtype&%24top=10"
+curl "https://oda.ft.dk/api/AktÃ¸r?%24expand=AktÃ¸rtype&%24top=10"
 ```
 
 ### Advanced Filtering
 
 ```bash
 # Politicians who voted on specific cases
-curl "https://oda.ft.dk/api/Aktør?%24filter=aktørtypeid%20eq%205&%24expand=Stemme"
+curl "https://oda.ft.dk/api/AktÃ¸r?%24filter=aktÃ¸rtypeid%20eq%205&%24expand=Stemme"
 
 # Parliamentary committees active in recent years
-curl "https://oda.ft.dk/api/Aktør?%24filter=aktørtypeid%20eq%203%20and%20opdateringsdato%20gt%20datetime'2020-01-01T00:00:00'"
+curl "https://oda.ft.dk/api/AktÃ¸r?%24filter=aktÃ¸rtypeid%20eq%203%20and%20opdateringsdato%20gt%20datetime'2020-01-01T00:00:00'"
 
 # Private persons involved in specific case types
-curl "https://oda.ft.dk/api/Aktør?%24filter=aktørtypeid%20eq%2012&%24expand=SagAktør"
+curl "https://oda.ft.dk/api/AktÃ¸r?%24filter=aktÃ¸rtypeid%20eq%2012&%24expand=SagAktÃ¸r"
 ```
 
 ### Complex Analysis Queries
 
 ```bash
 # Cross-party networks and their activities
-curl "https://oda.ft.dk/api/Aktør?%24filter=aktørtypeid%20eq%2013&%24expand=SagAktør,DokumentAktør"
+curl "https://oda.ft.dk/api/AktÃ¸r?%24filter=aktÃ¸rtypeid%20eq%2013&%24expand=SagAktÃ¸r,DokumentAktÃ¸r"
 
 # Ministry hierarchies with current positions
-curl "https://oda.ft.dk/api/Aktør?%24filter=aktørtypeid%20in%20(1,2,8)&%24expand=Aktørtype&%24orderby=aktørtypeid"
+curl "https://oda.ft.dk/api/AktÃ¸r?%24filter=aktÃ¸rtypeid%20in%20(1,2,8)&%24expand=AktÃ¸rtype&%24orderby=aktÃ¸rtypeid"
 
 # Active committees with recent document involvement
-curl "https://oda.ft.dk/api/Aktør?%24filter=aktørtypeid%20eq%203&%24expand=DokumentAktør(%24filter=opdateringsdato%20gt%20datetime'2024-01-01T00:00:00')"
+curl "https://oda.ft.dk/api/AktÃ¸r?%24filter=aktÃ¸rtypeid%20eq%203&%24expand=DokumentAktÃ¸r(%24filter=opdateringsdato%20gt%20datetime'2024-01-01T00:00:00')"
 ```
 
 ## Cross-References with Other Entities
 
-### Case Relationships (SagAktør)
+### Case Relationships (SagAktÃ¸r)
 Actor types interact differently with parliamentary cases:
 
 - **Person**: Individual sponsorship, voting, committee membership
@@ -235,7 +235,7 @@ Actor types interact differently with parliamentary cases:
 - **Ministerium**: Government responses, policy positions
 - **Organisation**: Stakeholder input, lobbying activities
 
-### Document Relationships (DokumentAktør)  
+### Document Relationships (DokumentAktÃ¸r)  
 Document creation and interaction patterns by actor type:
 
 - **Person**: Individual proposals, amendments, questions
@@ -252,12 +252,12 @@ Only certain actor types participate in formal voting:
 
 ## Role System Integration
 
-### SagAktørRolle (Case-Actor Roles)
+### SagAktÃ¸rRolle (Case-Actor Roles)
 Different actor types typically assume different roles in cases:
 
 ```bash
 # Analyze role patterns by actor type
-curl "https://oda.ft.dk/api/SagAktør?%24expand=Aktør,SagAktørRolle&%24filter=Aktør/aktørtypeid%20eq%205"
+curl "https://oda.ft.dk/api/SagAktÃ¸r?%24expand=AktÃ¸r,SagAktÃ¸rRolle&%24filter=AktÃ¸r/aktÃ¸rtypeid%20eq%205"
 ```
 
 **Common Role Patterns**:
@@ -266,12 +266,12 @@ curl "https://oda.ft.dk/api/SagAktør?%24expand=Aktør,SagAktørRolle&%24filter=Akt
 - **Folketingsgruppe**: Supporting party, opposing party
 - **Organisation**: Hearing participant, stakeholder, expert contributor
 
-### DokumentAktørRolle (Document-Actor Roles)
+### DokumentAktÃ¸rRolle (Document-Actor Roles)
 Document relationships vary significantly by actor type:
 
 ```bash
 # Document authorship patterns by actor type
-curl "https://oda.ft.dk/api/DokumentAktør?%24expand=Aktør,DokumentAktørRolle&%24filter=Aktør/aktørtypeid%20eq%203"
+curl "https://oda.ft.dk/api/DokumentAktÃ¸r?%24expand=AktÃ¸r,DokumentAktÃ¸rRolle&%24filter=AktÃ¸r/aktÃ¸rtypeid%20eq%203"
 ```
 
 ## Data Quality Considerations
@@ -286,16 +286,16 @@ curl "https://oda.ft.dk/api/DokumentAktør?%24expand=Aktør,DokumentAktørRolle&%24
 
 ```bash
 # Verify actor type referential integrity
-curl "https://oda.ft.dk/api/Aktør?%24expand=Aktørtype&%24filter=Aktørtype%20eq%20null"
+curl "https://oda.ft.dk/api/AktÃ¸r?%24expand=AktÃ¸rtype&%24filter=AktÃ¸rtype%20eq%20null"
 
 # Check for actor type distribution anomalies
-curl "https://oda.ft.dk/api/Aktørtype?%24expand=Aktør&%24inlinecount=allpages"
+curl "https://oda.ft.dk/api/AktÃ¸rtype?%24expand=AktÃ¸r&%24inlinecount=allpages"
 ```
 
 ### Common Data Issues
 
 1. **Historical Discontinuity**: Some historical actors may have evolved type classifications
-2. **External Entity Changes**: Organizations may change status (NGO ’ governmental)
+2. **External Entity Changes**: Organizations may change status (NGO Â’ governmental)
 3. **International Complexity**: Parliamentary assembly memberships may overlap with domestic roles
 
 ## Practical Applications
@@ -310,7 +310,7 @@ def analyze_voting_by_actor_type():
     # Get all votes with actor and actor type information
     url = "https://oda.ft.dk/api/Stemme"
     params = {
-        "$expand": "Aktør($expand=Aktørtype)",
+        "$expand": "AktÃ¸r($expand=AktÃ¸rtype)",
         "$top": "100",
         "$inlinecount": "allpages"
     }
@@ -321,7 +321,7 @@ def analyze_voting_by_actor_type():
     # Analyze by actor type
     type_analysis = {}
     for vote in votes.get('value', []):
-        actor_type = vote['Aktør']['Aktørtype']['typetekst']
+        actor_type = vote['AktÃ¸r']['AktÃ¸rtype']['typetekst']
         if actor_type not in type_analysis:
             type_analysis[actor_type] = {'for': 0, 'against': 0, 'absent': 0}
         type_analysis[actor_type][vote['stemmetypeid']] += 1
@@ -334,10 +334,10 @@ def analyze_voting_by_actor_type():
 ```python
 # Example: Evaluate committee activity by type
 def analyze_committee_activity():
-    url = "https://oda.ft.dk/api/Aktør"
+    url = "https://oda.ft.dk/api/AktÃ¸r"
     params = {
-        "$filter": "aktørtypeid eq 3",  # Committees only
-        "$expand": "SagAktør,DokumentAktør",
+        "$filter": "aktÃ¸rtypeid eq 3",  # Committees only
+        "$expand": "SagAktÃ¸r,DokumentAktÃ¸r",
         "$inlinecount": "allpages"
     }
     
@@ -347,8 +347,8 @@ def analyze_committee_activity():
     activity_metrics = {}
     for committee in committees.get('value', []):
         name = committee['navn']
-        case_count = len(committee.get('SagAktør', []))
-        doc_count = len(committee.get('DokumentAktør', []))
+        case_count = len(committee.get('SagAktÃ¸r', []))
+        doc_count = len(committee.get('DokumentAktÃ¸r', []))
         activity_metrics[name] = {
             'cases': case_count,
             'documents': doc_count,
@@ -368,10 +368,10 @@ def track_stakeholder_engagement():
     engagement_data = {}
     
     for actor_type in external_types:
-        url = "https://oda.ft.dk/api/Aktør"
+        url = "https://oda.ft.dk/api/AktÃ¸r"
         params = {
-            "$filter": f"aktørtypeid eq {actor_type}",
-            "$expand": "SagAktør,DokumentAktør",
+            "$filter": f"aktÃ¸rtypeid eq {actor_type}",
+            "$expand": "SagAktÃ¸r,DokumentAktÃ¸r",
             "$inlinecount": "allpages"
         }
         
@@ -381,8 +381,8 @@ def track_stakeholder_engagement():
         type_name = "Organisation" if actor_type == 10 else "Private Person"
         engagement_data[type_name] = {
             'total_actors': actors.get('odata.count', 0),
-            'active_in_cases': sum(1 for a in actors.get('value', []) if a.get('SagAktør')),
-            'document_contributors': sum(1 for a in actors.get('value', []) if a.get('DokumentAktør'))
+            'active_in_cases': sum(1 for a in actors.get('value', []) if a.get('SagAktÃ¸r')),
+            'document_contributors': sum(1 for a in actors.get('value', []) if a.get('DokumentAktÃ¸r'))
         }
     
     return engagement_data
@@ -397,7 +397,7 @@ Actor types play specific roles in Denmark's legislative process:
 2. **Committee Review**: Udvalg (Type 3) provides specialized review and recommendations  
 3. **Stakeholder Input**: Organisation (Type 10) and Privatperson (Type 12) provide expert input
 4. **Government Response**: Ministerium (Type 8) and Ministertitel (Type 2) provide official positions
-5. **Cross-Party Coordination**: Tværpolitisk netværk (Type 13) facilitates bipartisan cooperation
+5. **Cross-Party Coordination**: TvÃ¦rpolitisk netvÃ¦rk (Type 13) facilitates bipartisan cooperation
 
 ### Democratic Participation Framework
 The actor type system supports multiple forms of democratic engagement:
@@ -406,7 +406,7 @@ The actor type system supports multiple forms of democratic engagement:
 - **Institutional Representation**: Folketingsgruppe (Type 4), Udvalg (Type 3)
 - **Expert Input**: Organisation (Type 10), Privatperson (Type 12)
 - **International Coordination**: Parlamentarisk forsamling (Type 11)
-- **Cross-Party Collaboration**: Tværpolitisk netværk (Type 13)
+- **Cross-Party Collaboration**: TvÃ¦rpolitisk netvÃ¦rk (Type 13)
 
 ## Advanced Query Patterns
 
@@ -414,30 +414,30 @@ The actor type system supports multiple forms of democratic engagement:
 
 ```bash
 # Compare activity levels across institutional types
-curl "https://oda.ft.dk/api/Aktør?%24filter=aktørtypeid%20in%20(3,4,8)&%24expand=SagAktør(%24inlinecount=allpages),Aktørtype"
+curl "https://oda.ft.dk/api/AktÃ¸r?%24filter=aktÃ¸rtypeid%20in%20(3,4,8)&%24expand=SagAktÃ¸r(%24inlinecount=allpages),AktÃ¸rtype"
 
 # Track cross-type collaborations
-curl "https://oda.ft.dk/api/SagAktør?%24expand=Aktør,Sag&%24filter=Sag/SagAktør/%24any(sa:%20sa/Aktør/aktørtypeid%20eq%205%20and%20sa/Aktør/aktørtypeid%20eq%2013)"
+curl "https://oda.ft.dk/api/SagAktÃ¸r?%24expand=AktÃ¸r,Sag&%24filter=Sag/SagAktÃ¸r/%24any(sa:%20sa/AktÃ¸r/aktÃ¸rtypeid%20eq%205%20and%20sa/AktÃ¸r/aktÃ¸rtypeid%20eq%2013)"
 ```
 
 ### Temporal Analysis by Type
 
 ```bash
 # Track actor type evolution over time
-curl "https://oda.ft.dk/api/Aktør?%24filter=aktørtypeid%20eq%205%20and%20opdateringsdato%20gt%20datetime'2020-01-01T00:00:00'&%24orderby=opdateringsdato%20desc"
+curl "https://oda.ft.dk/api/AktÃ¸r?%24filter=aktÃ¸rtypeid%20eq%205%20and%20opdateringsdato%20gt%20datetime'2020-01-01T00:00:00'&%24orderby=opdateringsdato%20desc"
 
 # Analyze new actor registrations by type
-curl "https://oda.ft.dk/api/Aktør?%24expand=Aktørtype&%24filter=opdateringsdato%20gt%20datetime'2024-01-01T00:00:00'&%24orderby=aktørtypeid,opdateringsdato"
+curl "https://oda.ft.dk/api/AktÃ¸r?%24expand=AktÃ¸rtype&%24filter=opdateringsdato%20gt%20datetime'2024-01-01T00:00:00'&%24orderby=aktÃ¸rtypeid,opdateringsdato"
 ```
 
 ### Network Analysis Queries
 
 ```bash
 # Map actor relationships across types
-curl "https://oda.ft.dk/api/AktørAktør?%24expand=Aktør,Aktør1&%24filter=Aktør/aktørtypeid%20ne%20Aktør1/aktørtypeid"
+curl "https://oda.ft.dk/api/AktÃ¸rAktÃ¸r?%24expand=AktÃ¸r,AktÃ¸r1&%24filter=AktÃ¸r/aktÃ¸rtypeid%20ne%20AktÃ¸r1/aktÃ¸rtypeid"
 
 # Cross-type document collaborations
-curl "https://oda.ft.dk/api/DokumentAktør?%24expand=Aktør,Dokument&%24filter=Dokument/DokumentAktør/%24any(da:%20da/Aktør/aktørtypeid%20eq%205)%20and%20Dokument/DokumentAktør/%24any(da:%20da/Aktør/aktørtypeid%20eq%2010)"
+curl "https://oda.ft.dk/api/DokumentAktÃ¸r?%24expand=AktÃ¸r,Dokument&%24filter=Dokument/DokumentAktÃ¸r/%24any(da:%20da/AktÃ¸r/aktÃ¸rtypeid%20eq%205)%20and%20Dokument/DokumentAktÃ¸r/%24any(da:%20da/AktÃ¸r/aktÃ¸rtypeid%20eq%2010)"
 ```
 
 ## Performance Considerations
@@ -452,16 +452,16 @@ Different actor types have different data volumes and query performance characte
 
 ```bash
 # Efficient high-volume querying
-curl "https://oda.ft.dk/api/Aktør?%24filter=aktørtypeid%20eq%205%20and%20opdateringsdato%20gt%20datetime'2024-01-01T00:00:00'&%24top=100"
+curl "https://oda.ft.dk/api/AktÃ¸r?%24filter=aktÃ¸rtypeid%20eq%205%20and%20opdateringsdato%20gt%20datetime'2024-01-01T00:00:00'&%24top=100"
 
 # Comprehensive low-volume querying  
-curl "https://oda.ft.dk/api/Aktør?%24filter=aktørtypeid%20eq%204&%24expand=SagAktør,DokumentAktør,Aktørtype"
+curl "https://oda.ft.dk/api/AktÃ¸r?%24filter=aktÃ¸rtypeid%20eq%204&%24expand=SagAktÃ¸r,DokumentAktÃ¸r,AktÃ¸rtype"
 ```
 
 ### Caching Strategies
 - **Static Types** (Ministerium, Folketingsgruppe): Cache for hours
 - **Dynamic Types** (Person activities): Cache for minutes
-- **Reference Data** (Aktørtype enumeration): Cache for days
+- **Reference Data** (AktÃ¸rtype enumeration): Cache for days
 
 ## Conclusion
 

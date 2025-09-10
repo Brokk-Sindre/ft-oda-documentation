@@ -18,15 +18,15 @@ The Interactive Query Builder simplifies working with the Danish Parliament API 
 ### Key Features
 
 #### = **Entity Selection**
-Choose from 50+ parliamentary entities including cases (Sag), actors (Aktør), votes (Stemme), documents (Dokument), and meetings (Møde).
+Choose from 50+ parliamentary entities including cases (Sag), actors (AktÃ¸r), votes (Stemme), documents (Dokument), and meetings (MÃ¸de).
 
-#### ¡ **Smart Autocompletion**
+#### Â¡ **Smart Autocompletion**
 Field suggestions and validation based on the selected entity type with context-aware autocompletion for filters and expansions.
 
 #### = **URL Generation**
 Generates properly encoded API URLs with automatic %24 encoding for OData parameters - the critical requirement for the Danish Parliament API.
 
-#### =Ê **Query Preview**
+#### =ÃŠ **Query Preview**
 Real-time preview of generated queries with estimated result counts and performance indicators.
 
 ## Interface Components
@@ -37,12 +37,12 @@ The basic interface provides essential query construction tools:
 
 #### Entity Selector
 ```
-=Ä Sag (Cases) - 96,538+ records
-=d Aktør (Actors) - 18,139+ records  
-=ó Afstemning (Voting Sessions)
+=Ã„ Sag (Cases) - 96,538+ records
+=d AktÃ¸r (Actors) - 18,139+ records  
+=Ã³ Afstemning (Voting Sessions)
  Stemme (Individual Votes)
-=Ë Dokument (Documents)
-<Û Møde (Meetings)
+=Ã‹ Dokument (Documents)
+<Ã› MÃ¸de (Meetings)
 ```
 
 #### Parameter Controls
@@ -111,7 +111,7 @@ Select: id,titel,opdateringsdato,statusid
 **Expand Related Entities**
 Include related data in a single request:
 ```
-Expand: Sagsstatus,Sagstype,SagAktør
+Expand: Sagsstatus,Sagstype,SagAktÃ¸r
 ```
 
 ### 3. Sorting and Counting
@@ -176,7 +176,7 @@ Syntax: %24expand=RELATIONS
 Examples:
   - %24expand=Sagsstatus
   - %24expand=Sagsstatus,Sagstype
-  - %24expand=SagAktør/Aktør
+  - %24expand=SagAktÃ¸r/AktÃ¸r
 ```
 
 #### $select - Field Selection
@@ -331,7 +331,7 @@ Use Case: Exclude certain conditions
 - `Sagsstatus` - Case status details
 - `Sagstype` - Case type information
 - `Sagskategori` - Case category
-- `SagAktør` - Related actors (politicians, parties)
+- `SagAktÃ¸r` - Related actors (politicians, parties)
 - `Periode` - Parliamentary period
 
 #### Example Queries
@@ -346,7 +346,7 @@ Active government bills:
 %24filter=statusid%20in%20(8,24,25,26)&%24expand=Sagstype&%24orderby=opdateringsdato%20desc
 ```
 
-### Actors (Aktør) - 18,139+ Records
+### Actors (AktÃ¸r) - 18,139+ Records
 
 #### Common Fields
 - `id` - Unique actor identifier
@@ -357,10 +357,10 @@ Active government bills:
 - `opdateringsdato` - Last update
 
 #### Common Expansions
-- `Aktørtype` - Actor type details
+- `AktÃ¸rtype` - Actor type details
 - `Periode` - Parliamentary period
-- `SagAktør` - Cases they're involved in
-- `DokumentAktør` - Documents they've authored
+- `SagAktÃ¸r` - Cases they're involved in
+- `DokumentAktÃ¸r` - Documents they've authored
 
 #### Example Queries
 ```
@@ -368,7 +368,7 @@ Active politicians:
 %24filter=typeid%20eq%205%20and%20slutdato%20eq%20null&%24top=50
 
 Current ministers:
-%24filter=substringof('minister',navn)%20and%20slutdato%20eq%20null&%24expand=Aktørtype
+%24filter=substringof('minister',navn)%20and%20slutdato%20eq%20null&%24expand=AktÃ¸rtype
 
 Parliamentary parties:
 %24filter=typeid%20eq%206&%24orderby=navn&%24expand=Periode
@@ -386,7 +386,7 @@ Parliamentary parties:
 #### Common Expansions
 - `Stemme` - Individual votes in this session
 - `Afstemningstype` - Type of voting session
-- `Møde` - Meeting where voting occurred
+- `MÃ¸de` - Meeting where voting occurred
 - `Sag` - Case being voted on
 
 #### Example Queries
@@ -404,21 +404,21 @@ Close votes:
 - `id` - Vote identifier
 - `typeid` - Vote type (1=for, 2=against, 3=abstain)
 - `afstemningid` - Voting session ID
-- `aktørid` - Politician who cast the vote
+- `aktÃ¸rid` - Politician who cast the vote
 - `opdateringsdato` - Last update
 
 #### Common Expansions
-- `Aktør` - Politician who voted
+- `AktÃ¸r` - Politician who voted
 - `Afstemning` - Voting session details
 - `Stemmetype` - Vote type description
 
 #### Example Queries
 ```
 Recent votes by politician:
-%24filter=aktørid%20eq%20POLITICIAN_ID&%24expand=Afstemning&%24top=50
+%24filter=aktÃ¸rid%20eq%20POLITICIAN_ID&%24expand=Afstemning&%24top=50
 
 Against votes analysis:
-%24filter=typeid%20eq%202&%24expand=Aktør,Afstemning&%24top=100
+%24filter=typeid%20eq%202&%24expand=AktÃ¸r,Afstemning&%24top=100
 ```
 
 ## Common Query Patterns
@@ -444,8 +444,8 @@ Analyze voting patterns for specific topics:
 
 ```
 Entity: Afstemning
-Filter: substringof('klima', titel) or substringof('miljø', titel)
-Expand: Stemme/Aktør
+Filter: substringof('klima', titel) or substringof('miljÃ¸', titel)
+Expand: Stemme/AktÃ¸r
 Order By: opdateringsdato desc
 Include Count: true
 ```
@@ -454,9 +454,9 @@ Include Count: true
 Track specific politician's involvement:
 
 ```
-Entity: SagAktør
-Filter: aktørid eq POLITICIAN_ID
-Expand: Sag,Aktør
+Entity: SagAktÃ¸r
+Filter: aktÃ¸rid eq POLITICIAN_ID
+Expand: Sag,AktÃ¸r
 Order By: opdateringsdato desc
 Limit: 50
 ```
@@ -466,8 +466,8 @@ Search parliamentary documents:
 
 ```
 Entity: Dokument
-Filter: substringof('betænkning', titel) and year(dato) eq 2025
-Expand: Dokumenttype,DokumentAktør/Aktør
+Filter: substringof('betÃ¦nkning', titel) and year(dato) eq 2025
+Expand: Dokumenttype,DokumentAktÃ¸r/AktÃ¸r
 Order By: dato desc
 ```
 
@@ -475,9 +475,9 @@ Order By: dato desc
 Monitor committee work:
 
 ```
-Entity: Møde
+Entity: MÃ¸de
 Filter: substringof('udvalg', titel) and year(dato) eq 2025
-Expand: Mødetype,MødeAktør/Aktør
+Expand: MÃ¸detype,MÃ¸deAktÃ¸r/AktÃ¸r
 Order By: dato desc
 ```
 
@@ -511,16 +511,16 @@ Better: statusid eq 10 and year(opdateringsdato) eq 2025
 Only expand what you need:
 ```
 Efficient: %24expand=Sagsstatus
-Costly: %24expand=SagAktør/Aktør/SagAktør
+Costly: %24expand=SagAktÃ¸r/AktÃ¸r/SagAktÃ¸r
 ```
 
 ### Performance Indicators
 
 The Query Builder shows performance estimates:
 
-- **=â Fast** - Response < 500ms
-- **=á Medium** - Response 500ms-2s  
-- **=à Slow** - Response > 2s
+- **=Ã¢ Fast** - Response < 500ms
+- **=Ã¡ Medium** - Response 500ms-2s  
+- **=Ã  Slow** - Response > 2s
 - **=4 Very Slow** - Response > 5s
 
 ## Error Handling and Validation

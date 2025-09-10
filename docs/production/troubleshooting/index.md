@@ -10,7 +10,7 @@ Comprehensive guide to diagnosing and resolving issues with Danish Parliamentary
 - [ ] **Response Size**: Check if getting 100 records when expecting more (API caps at 100)
 - [ ] **Filter Fields**: Verify field names in `$filter` parameters (typos silently ignored)
 - [ ] **Network**: Confirm HTTPS connectivity and DNS resolution
-- [ ] **UTF-8 Encoding**: Ensure proper handling of Danish characters (æ, ø, å)
+- [ ] **UTF-8 Encoding**: Ensure proper handling of Danish characters (Ã¦, Ã¸, Ã¥)
 
 ## Troubleshooting Methodology
 
@@ -59,7 +59,7 @@ echo "Medium query test:"
 time curl -s "https://oda.ft.dk/api/Sag?%24top=100" > /dev/null
 
 echo "Expansion test:"
-time curl -s "https://oda.ft.dk/api/Sag?%24expand=SagAktør&%24top=10" > /dev/null
+time curl -s "https://oda.ft.dk/api/Sag?%24expand=SagAktÃ¸r&%24top=10" > /dev/null
 ```
 
 ## Common Production Issues
@@ -102,7 +102,7 @@ curl "https://oda.ft.dk/api/Sag?%24filter=wrongfieldname eq 'test'"
 curl "https://oda.ft.dk/api/\$metadata" | grep -A 10 "EntityType.*Sag"
 
 # Correct field name
-curl "https://oda.ft.dk/api/Sag?%24filter=titel contains 'klimaændring'"
+curl "https://oda.ft.dk/api/Sag?%24filter=titel contains 'klimaÃ¦ndring'"
 ```
 
 **Prevention Strategy:**
@@ -151,7 +151,7 @@ async function getAllRecords(baseUrl, totalNeeded) {
 **Diagnostic Steps:**
 ```bash
 # Test response time with timing
-curl -w "\nTime: %{time_total}s" "https://oda.ft.dk/api/Sag?%24expand=SagAktør&%24top=100"
+curl -w "\nTime: %{time_total}s" "https://oda.ft.dk/api/Sag?%24expand=SagAktÃ¸r&%24top=100"
 
 # If >3s, optimize query:
 # 1. Remove unnecessary expansions
@@ -215,7 +215,7 @@ curl -w "\nHTTP_STATUS:%{http_code}" \
 
 # Test expansion depth limit
 curl -w "\nHTTP_STATUS:%{http_code}" \
-  "https://oda.ft.dk/api/Sag?%24expand=SagAktør/Aktør/SomeDeepRelation/EvenDeeper"
+  "https://oda.ft.dk/api/Sag?%24expand=SagAktÃ¸r/AktÃ¸r/SomeDeepRelation/EvenDeeper"
 # May return: HTTP 400
 ```
 
@@ -267,7 +267,7 @@ curl -w "\nHTTP_STATUS:%{http_code}" \
 
 #### Problem: Danish Characters Not Displaying Correctly
 **Symptoms:**
-- æ, ø, å appearing as question marks or boxes
+- Ã¦, Ã¸, Ã¥ appearing as question marks or boxes
 - Garbled text in API responses
 - UTF-8 encoding issues
 

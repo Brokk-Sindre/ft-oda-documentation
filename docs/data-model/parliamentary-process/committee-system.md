@@ -29,11 +29,11 @@ The Danish Parliamentary committee system is the backbone of legislative work in
 
 ### Committee System in the API
 
-In the Parliamentary OData API, committees are represented as **Aktør** entities with `typeid = 3` (Udvalg). This classification allows committees to:
+In the Parliamentary OData API, committees are represented as **AktÃ¸r** entities with `typeid = 3` (Udvalg). This classification allows committees to:
 
-- Participate in cases through **SagAktør** relationships
-- Hold meetings recorded in **Møde** entities
-- Produce documents through **DokumentAktør** relationships
+- Participate in cases through **SagAktÃ¸r** relationships
+- Hold meetings recorded in **MÃ¸de** entities
+- Produce documents through **DokumentAktÃ¸r** relationships
 - Make recommendations through **Afstemning** (voting) records
 
 ## Committee Types and Hierarchical Structure
@@ -46,7 +46,7 @@ The Danish Parliament has approximately 25-30 standing committees that handle on
 
 ```bash
 # Get all active committees
-curl "https://oda.ft.dk/api/Aktør?%24filter=typeid%20eq%203%20and%20slutdato%20gt%20datetime'2024-01-01'&%24orderby=navn"
+curl "https://oda.ft.dk/api/AktÃ¸r?%24filter=typeid%20eq%203%20and%20slutdato%20gt%20datetime'2024-01-01'&%24orderby=navn"
 ```
 
 **Key Standing Committees:**
@@ -56,10 +56,10 @@ curl "https://oda.ft.dk/api/Aktør?%24filter=typeid%20eq%203%20and%20slutdato%20g
 - **Europaudvalget (EUU)** - European Affairs Committee
 - **Retsudvalget (REU)** - Legal Affairs Committee
 - **Forsvarsudvalget (FOU)** - Defense Committee
-- **Børne- og Undervisningsudvalget (BUU)** - Children and Education Committee
-- **Erhvervs-, Vækst- og Eksportudvalget (ERU)** - Business, Growth and Export Committee
+- **BÃ¸rne- og Undervisningsudvalget (BUU)** - Children and Education Committee
+- **Erhvervs-, VÃ¦kst- og Eksportudvalget (ERU)** - Business, Growth and Export Committee
 - **Skatteudvalget (SAU)** - Tax Committee
-- **Grønlandsudvalget (GRU)** - Greenland Committee
+- **GrÃ¸nlandsudvalget (GRU)** - Greenland Committee
 
 #### Committee Naming Convention
 
@@ -82,9 +82,9 @@ Some committees handle specific types of cases:
 // Get committee structure with relationships
 async function getCommitteeStructure() {
     const response = await fetch(
-        'https://oda.ft.dk/api/Aktør?' +
+        'https://oda.ft.dk/api/AktÃ¸r?' +
         '$filter=typeid eq 3&' +
-        '$expand=AktørAktør/Aktør&' +
+        '$expand=AktÃ¸rAktÃ¸r/AktÃ¸r&' +
         '$orderby=gruppenavnkort'
     );
     return await response.json();
@@ -97,16 +97,16 @@ async function getCommitteeStructure() {
 
 Committee participation is tracked through several relationship entities:
 
-#### SagAktør (Case-Actor) Relationships
+#### SagAktÃ¸r (Case-Actor) Relationships
 
 Politicians participate in committee work through case assignments:
 
 ```bash
 # Get committee members for a specific case
-curl "https://oda.ft.dk/api/SagAktør?%24expand=Aktør&%24filter=sagid%20eq%20102903%20and%20Aktör/typeid%20eq%205"
+curl "https://oda.ft.dk/api/SagAktÃ¸r?%24expand=AktÃ¸r&%24filter=sagid%20eq%20102903%20and%20AktÃ¶r/typeid%20eq%205"
 ```
 
-#### MødeAktør (Meeting-Actor) Relationships
+#### MÃ¸deAktÃ¸r (Meeting-Actor) Relationships
 
 Meeting participation is tracked for each committee session:
 
@@ -114,7 +114,7 @@ Meeting participation is tracked for each committee session:
 // Get committee meeting attendance
 async function getCommitteeMeetingAttendance(meetingId) {
     const response = await fetch(
-        `https://oda.ft.dk/api/MødeAktör?$expand=Aktör&$filter=mødeid eq ${meetingId}`
+        `https://oda.ft.dk/api/MÃ¸deAktÃ¶r?$expand=AktÃ¶r&$filter=mÃ¸deid eq ${meetingId}`
     );
     return await response.json();
 }
@@ -122,10 +122,10 @@ async function getCommitteeMeetingAttendance(meetingId) {
 
 ### Role Types in Committee Work
 
-The API tracks different roles through **SagAktørRolle** and other role entities:
+The API tracks different roles through **SagAktÃ¸rRolle** and other role entities:
 
 1. **Committee Chairman (Formand)**
-2. **Committee Vice-Chairman (Næstformand)**
+2. **Committee Vice-Chairman (NÃ¦stformand)**
 3. **Regular Members (Medlemmer)**
 4. **Substitute Members (Suppleanter)**
 5. **Expert Advisors (Sagkyndige)**
@@ -140,18 +140,18 @@ def analyze_committee_membership(committee_id, period_id):
     Analyze committee membership patterns over time
     """
     # Get committee cases
-    cases_url = f"https://oda.ft.dk/api/SagAktör?$expand=Sag,Aktör&$filter=aktörid eq {committee_id}"
+    cases_url = f"https://oda.ft.dk/api/SagAktÃ¶r?$expand=Sag,AktÃ¶r&$filter=aktÃ¶rid eq {committee_id}"
     cases_response = requests.get(cases_url)
     cases_data = cases_response.json()
     
     # Analyze member participation
     member_participation = {}
     for case_actor in cases_data['value']:
-        if case_actor['Aktör']['typeid'] == 5:  # Person
-            member_id = case_actor['aktörid']
+        if case_actor['AktÃ¶r']['typeid'] == 5:  # Person
+            member_id = case_actor['aktÃ¶rid']
             if member_id not in member_participation:
                 member_participation[member_id] = {
-                    'name': case_actor['Aktör']['navn'],
+                    'name': case_actor['AktÃ¶r']['navn'],
                     'cases': []
                 }
             member_participation[member_id]['cases'].append(case_actor['Sag'])
@@ -163,7 +163,7 @@ def analyze_committee_membership(committee_id, period_id):
 
 ### Meeting Types and Scheduling
 
-Committee meetings are recorded in the **Møde** entity with specific characteristics:
+Committee meetings are recorded in the **MÃ¸de** entity with specific characteristics:
 
 #### Meeting Categories
 
@@ -176,7 +176,7 @@ Committee meetings are recorded in the **Møde** entity with specific characteris
 
 ```bash
 # Get upcoming committee meetings for next 30 days
-curl "https://oda.ft.dk/api/Møde?%24expand=MødeAktör/Aktör&%24filter=dato%20gt%20datetime'$(date -u +%Y-%m-%d)T00:00:00'%20and%20dato%20lt%20datetime'$(date -u -d '+30 days' +%Y-%m-%d)T00:00:00'&%24orderby=dato"
+curl "https://oda.ft.dk/api/MÃ¸de?%24expand=MÃ¸deAktÃ¶r/AktÃ¶r&%24filter=dato%20gt%20datetime'$(date -u +%Y-%m-%d)T00:00:00'%20and%20dato%20lt%20datetime'$(date -u -d '+30 days' +%Y-%m-%d)T00:00:00'&%24orderby=dato"
 ```
 
 #### Regular Meeting Patterns
@@ -192,20 +192,20 @@ Based on API data analysis:
 ```json
 {
   "id": 15170,
-  "titel": "Møde i Europaudvalget",
+  "titel": "MÃ¸de i Europaudvalget",
   "lokale": "",
   "nummer": null,
   "dagsordenurl": "",
-  "starttidsbemærkning": "KL. 08.30",
+  "starttidsbemÃ¦rkning": "KL. 08.30",
   "offentlighedskode": "O",
   "dato": "2025-09-19T08:30:00",
   "statusid": 1,
   "typeid": 2,
   "periodeid": 163,
   "opdateringsdato": "2025-09-09T14:46:02.39",
-  "MødeAktør": [
+  "MÃ¸deAktÃ¸r": [
     {
-      "Aktör": {
+      "AktÃ¶r": {
         "id": 20951,
         "typeid": 3,
         "gruppenavnkort": "EUU",
@@ -225,16 +225,16 @@ class CommitteeMeetingAnalyzer {
     }
     
     async getCommitteeSchedule(committeeId, startDate, endDate) {
-        const filter = `MødeAktör/any(ma: ma/aktörid eq ${committeeId}) and ` +
+        const filter = `MÃ¸deAktÃ¶r/any(ma: ma/aktÃ¶rid eq ${committeeId}) and ` +
                       `dato ge datetime'${startDate}' and dato le datetime'${endDate}'`;
         
         const params = new URLSearchParams({
             '$filter': filter,
-            '$expand': 'MødeAktör/Aktör,Dagsordenspunkt',
+            '$expand': 'MÃ¸deAktÃ¶r/AktÃ¶r,Dagsordenspunkt',
             '$orderby': 'dato'
         });
         
-        const response = await fetch(`${this.baseUrl}Møde?${params}`);
+        const response = await fetch(`${this.baseUrl}MÃ¸de?${params}`);
         return await response.json();
     }
     
@@ -294,7 +294,7 @@ Every bill (Lovforslag) and most parliamentary cases are assigned to relevant co
 
 ```bash
 # Get all cases assigned to Finance Committee
-curl "https://oda.ft.dk/api/SagAktör?%24expand=Sag,Aktör&%24filter=aktörid%20eq%201%20and%20Aktör/typeid%20eq%203"
+curl "https://oda.ft.dk/api/SagAktÃ¶r?%24expand=Sag,AktÃ¶r&%24filter=aktÃ¶rid%20eq%201%20and%20AktÃ¶r/typeid%20eq%203"
 ```
 
 #### Case Types Handled by Committees
@@ -309,14 +309,14 @@ def analyze_committee_caseload():
     import requests
     
     # Get committee case assignments
-    url = "https://oda.ft.dk/api/SagAktör?$expand=Sag,Aktör&$filter=Aktör/typeid eq 3"
+    url = "https://oda.ft.dk/api/SagAktÃ¶r?$expand=Sag,AktÃ¶r&$filter=AktÃ¶r/typeid eq 3"
     response = requests.get(url)
     data = response.json()
     
     committee_caseload = {}
     
     for assignment in data['value']:
-        committee_name = assignment['Aktör']['navn']
+        committee_name = assignment['AktÃ¶r']['navn']
         case_type = assignment['Sag']['typeid']
         
         if committee_name not in committee_caseload:
@@ -336,7 +336,7 @@ The API tracks different stages of committee work through **Sagstrin** (case ste
 
 1. **Henvist til udvalg** - Referred to committee
 2. **Udvalgsbehandling** - Committee consideration  
-3. **Betænkning afgivet** - Committee report submitted
+3. **BetÃ¦nkning afgivet** - Committee report submitted
 4. **Udvalgsindstilling** - Committee recommendation
 
 ```bash
@@ -352,17 +352,17 @@ Committees produce various types of documents tracked in the API:
 
 #### Primary Document Categories
 
-1. **Betænkninger** - Committee reports
+1. **BetÃ¦nkninger** - Committee reports
 2. **Indstillinger** - Committee recommendations
-3. **Spørgsmål og svar** - Questions and answers
-4. **Høringssvar** - Hearing responses
+3. **SpÃ¸rgsmÃ¥l og svar** - Questions and answers
+4. **HÃ¸ringssvar** - Hearing responses
 5. **Arbejdsdokumenter** - Working documents
 
 ### Document Production Workflow
 
 ```javascript
 async function getCommitteeDocuments(committeeId, documentType = null) {
-    let filter = `DokumentAktör/any(da: da/aktörid eq ${committeeId})`;
+    let filter = `DokumentAktÃ¶r/any(da: da/aktÃ¶rid eq ${committeeId})`;
     
     if (documentType) {
         filter += ` and typeid eq ${documentType}`;
@@ -370,7 +370,7 @@ async function getCommitteeDocuments(committeeId, documentType = null) {
     
     const params = new URLSearchParams({
         '$filter': filter,
-        '$expand': 'DokumentAktör/Aktör,Fil',
+        '$expand': 'DokumentAktÃ¶r/AktÃ¶r,Fil',
         '$orderby': 'dato desc'
     });
     
@@ -391,13 +391,13 @@ class CommitteeDocumentTracker:
         Track document production by committee over time period
         """
         filter_clause = (
-            f"DokumentAktör/any(da: da/aktörid eq {committee_id}) and "
+            f"DokumentAktÃ¶r/any(da: da/aktÃ¶rid eq {committee_id}) and "
             f"dato ge datetime'{start_date}' and dato le datetime'{end_date}'"
         )
         
         params = {
             '$filter': filter_clause,
-            '$expand': 'DokumentAktør/Aktör,Fil',
+            '$expand': 'DokumentAktÃ¸r/AktÃ¶r,Fil',
             '$orderby': 'dato desc',
             '$inlinecount': 'allpages'
         }
@@ -430,14 +430,14 @@ Committee recommendations and decisions are recorded through the **Afstemning** 
 #### Voting Types in Committee Context
 
 1. **Udvalgsindstilling** (`typeid = 2`) - Committee recommendations
-2. **Ændringsforslag** (`typeid = 4`) - Amendment proposals
+2. **Ã†ndringsforslag** (`typeid = 4`) - Amendment proposals
 3. **Endelig vedtagelse** (`typeid = 1`) - Final adoption votes
 
 ### Committee Recommendation Analysis
 
 ```bash
 # Get committee recommendations for recent cases
-curl "https://oda.ft.dk/api/Afstemning?%24expand=Stemme/Aktör&%24filter=typeid%20eq%202&%24orderby=opdateringsdato%20desc&%24top=10"
+curl "https://oda.ft.dk/api/Afstemning?%24expand=Stemme/AktÃ¶r&%24filter=typeid%20eq%202&%24orderby=opdateringsdato%20desc&%24top=10"
 ```
 
 #### Voting Patterns in Committees
@@ -447,9 +447,9 @@ class CommitteeVotingAnalyzer {
     async getCommitteeVotingRecord(committeeId, periodId) {
         // Get cases handled by committee
         const casesResponse = await fetch(
-            `https://oda.ft.dk/api/SagAktör?` +
-            `$expand=Sag/Afstemning/Stemme/Aktör&` +
-            `$filter=aktörid eq ${committeeId}`
+            `https://oda.ft.dk/api/SagAktÃ¶r?` +
+            `$expand=Sag/Afstemning/Stemme/AktÃ¶r&` +
+            `$filter=aktÃ¶rid eq ${committeeId}`
         );
         
         const cases = await casesResponse.json();
@@ -530,7 +530,7 @@ Some complex cases require coordination between multiple committees:
 
 ```bash
 # Find cases with multiple committee involvement
-curl "https://oda.ft.dk/api/Sag?%24expand=SagAktör/Aktör&%24filter=SagAktör/any(sa:%20sa/Aktör/typeid%20eq%203)&%24top=10" | jq '.value[] | select(.SagAktör | length > 1)'
+curl "https://oda.ft.dk/api/Sag?%24expand=SagAktÃ¶r/AktÃ¶r&%24filter=SagAktÃ¶r/any(sa:%20sa/AktÃ¶r/typeid%20eq%203)&%24top=10" | jq '.value[] | select(.SagAktÃ¶r | length > 1)'
 ```
 
 #### Committee Relationship Mapping
@@ -540,8 +540,8 @@ async function mapInterCommitteeRelationships() {
     // Get all cases with multiple committee involvement
     const response = await fetch(
         'https://oda.ft.dk/api/Sag?' +
-        '$expand=SagAktör/Aktör&' +
-        '$filter=SagAktör/any(sa: sa/Aktör/typeid eq 3)&' +
+        '$expand=SagAktÃ¶r/AktÃ¶r&' +
+        '$filter=SagAktÃ¶r/any(sa: sa/AktÃ¶r/typeid eq 3)&' +
         '$top=1000'
     );
     
@@ -549,9 +549,9 @@ async function mapInterCommitteeRelationships() {
     const relationships = {};
     
     cases.value.forEach(case_ => {
-        const committees = case_.SagAktör
-            .filter(sa => sa.Aktör && sa.Aktör.typeid === 3)
-            .map(sa => sa.Aktör.gruppenavnkort);
+        const committees = case_.SagAktÃ¶r
+            .filter(sa => sa.AktÃ¶r && sa.AktÃ¶r.typeid === 3)
+            .map(sa => sa.AktÃ¶r.gruppenavnkort);
         
         if (committees.length > 1) {
             committees.forEach((c1, i) => {
@@ -637,8 +637,8 @@ class CommitteePerformanceAnalyzer:
 
 ```bash
 # Analyze committee workload distribution
-curl "https://oda.ft.dk/api/SagAktör?%24expand=Aktör&%24filter=Aktör/typeid%20eq%203&%24inlinecount=allpages" | \
-jq '[.value[] | .Aktör.gruppenavnkort] | group_by(.) | map({committee: .[0], cases: length}) | sort_by(.cases)'
+curl "https://oda.ft.dk/api/SagAktÃ¶r?%24expand=AktÃ¶r&%24filter=AktÃ¶r/typeid%20eq%203&%24inlinecount=allpages" | \
+jq '[.value[] | .AktÃ¶r.gruppenavnkort] | group_by(.) | map({committee: .[0], cases: length}) | sort_by(.cases)'
 ```
 
 ### Meeting Effectiveness Metrics
@@ -647,9 +647,9 @@ jq '[.value[] | .Aktör.gruppenavnkort] | group_by(.) | map({committee: .[0], cas
 async function analyzeMeetingEffectiveness(committeeId, startDate, endDate) {
     // Get meetings and associated decisions/documents
     const meetings = await fetch(
-        `https://oda.ft.dk/api/Møde?` +
-        `$expand=MødeAktör,Dagsordenspunkt,Afstemning&` +
-        `$filter=MødeAktør/any(ma: ma/aktörid eq ${committeeId}) and ` +
+        `https://oda.ft.dk/api/MÃ¸de?` +
+        `$expand=MÃ¸deAktÃ¶r,Dagsordenspunkt,Afstemning&` +
+        `$filter=MÃ¸deAktÃ¸r/any(ma: ma/aktÃ¶rid eq ${committeeId}) and ` +
         `dato ge datetime'${startDate}' and dato le datetime'${endDate}'`
     ).then(r => r.json());
     
@@ -702,9 +702,9 @@ class ParliamentaryCommitteeSystem {
     
     async loadCommittees(periodId) {
         const response = await fetch(
-            `${this.apiBase}Aktør?` +
+            `${this.apiBase}AktÃ¸r?` +
             `$filter=typeid eq 3 and periodeid eq ${periodId}&` +
-            `$expand=SagAktör/Sag,MødeAktör/Møde&` +
+            `$expand=SagAktÃ¶r/Sag,MÃ¸deAktÃ¶r/MÃ¸de&` +
             `$orderby=gruppenavnkort`
         );
         
@@ -723,8 +723,8 @@ class ParliamentaryCommitteeSystem {
         return {
             name: committee.navn,
             abbreviation: committee.gruppenavnkort,
-            activeCases: committee.SagAktör ? committee.SagAktør.length : 0,
-            recentMeetings: committee.MødeAktør ? committee.MødeAktör.length : 0,
+            activeCases: committee.SagAktÃ¶r ? committee.SagAktÃ¸r.length : 0,
+            recentMeetings: committee.MÃ¸deAktÃ¸r ? committee.MÃ¸deAktÃ¶r.length : 0,
             specialization: this.analyzeCommitteeSpecialization(committeeId),
             efficiency: await this.calculateEfficiencyMetrics(committeeId)
         };
@@ -732,10 +732,10 @@ class ParliamentaryCommitteeSystem {
     
     analyzeCommitteeSpecialization(committeeId) {
         const committee = this.committees.get(committeeId);
-        if (!committee || !committee.SagAktör) return {};
+        if (!committee || !committee.SagAktÃ¶r) return {};
         
         const caseTypes = {};
-        committee.SagAktör.forEach(sagAktor => {
+        committee.SagAktÃ¶r.forEach(sagAktor => {
             if (sagAktor.Sag) {
                 const typeId = sagAktor.Sag.typeid;
                 caseTypes[typeId] = (caseTypes[typeId] || 0) + 1;
@@ -778,16 +778,16 @@ class ParliamentaryCommitteeSystem {
         
         // Check for new cases
         const newCases = await fetch(
-            `${this.apiBase}SagAktör?` +
+            `${this.apiBase}SagAktÃ¶r?` +
             `$expand=Sag&` +
-            `$filter=aktörid eq ${committeeId} and opdateringsdato gt datetime'${sinceStr}'`
+            `$filter=aktÃ¶rid eq ${committeeId} and opdateringsdato gt datetime'${sinceStr}'`
         ).then(r => r.json());
         
         // Check for new meetings
         const newMeetings = await fetch(
-            `${this.apiBase}MødeAktør?` +
-            `$expand=Møde&` +
-            `$filter=aktörid eq ${committeeId} and opdateringsdato gt datetime'${sinceStr}'`
+            `${this.apiBase}MÃ¸deAktÃ¸r?` +
+            `$expand=MÃ¸de&` +
+            `$filter=aktÃ¶rid eq ${committeeId} and opdateringsdato gt datetime'${sinceStr}'`
         ).then(r => r.json());
         
         return {
@@ -836,8 +836,8 @@ class ParliamentaryCommitteeSystem {
         
         // Calculate summaries
         exportData.committees.forEach(committee => {
-            exportData.summary.totalActiveCases += committee.SagAktör?.length || 0;
-            exportData.summary.totalMeetings += committee.MødeAktör?.length || 0;
+            exportData.summary.totalActiveCases += committee.SagAktÃ¶r?.length || 0;
+            exportData.summary.totalMeetings += committee.MÃ¸deAktÃ¶r?.length || 0;
         });
         
         switch (format) {
@@ -916,17 +916,17 @@ class CommitteeDataSync:
         
         # Sync committee cases
         cases_url = (
-            f"{self.api_base}SagAktör?"
-            f"$expand=Sag,Aktör&"
-            f"$filter=aktörid eq {committee_id} and "
+            f"{self.api_base}SagAktÃ¶r?"
+            f"$expand=Sag,AktÃ¶r&"
+            f"$filter=aktÃ¶rid eq {committee_id} and "
             f"opdateringsdato gt datetime'{filter_date}'"
         )
         
         # Sync committee meetings
         meetings_url = (
-            f"{self.api_base}MødeAktör?"
-            f"$expand=Møde&"
-            f"$filter=aktörid eq {committee_id} and "
+            f"{self.api_base}MÃ¸deAktÃ¶r?"
+            f"$expand=MÃ¸de&"
+            f"$filter=aktÃ¶rid eq {committee_id} and "
             f"opdateringsdato gt datetime'{filter_date}'"
         )
         
@@ -1093,16 +1093,16 @@ ${this.generateRecommendations(metrics, trends)}
     
     private async fetchCommitteeCases(committeeId: number) {
         const response = await fetch(
-            `${this.apiBase}SagAktör?` +
-            `$expand=Sag,Aktør&` +
-            `$filter=aktörid eq ${committeeId}`
+            `${this.apiBase}SagAktÃ¶r?` +
+            `$expand=Sag,AktÃ¸r&` +
+            `$filter=aktÃ¶rid eq ${committeeId}`
         );
         
         const data = await response.json();
         
         return {
-            committeeName: data.value[0]?.Aktør?.navn || '',
-            committeeAbbr: data.value[0]?.Aktør?.gruppenavnkort || '',
+            committeeName: data.value[0]?.AktÃ¸r?.navn || '',
+            committeeAbbr: data.value[0]?.AktÃ¸r?.gruppenavnkort || '',
             cases: data.value,
             activeCases: data.value.filter((c: any) => c.Sag?.statusid === 1).length,
             completedCases: data.value.filter((c: any) => c.Sag?.statusid === 3).length
@@ -1111,10 +1111,10 @@ ${this.generateRecommendations(metrics, trends)}
     
     private async fetchCommitteeMeetings(committeeId: number) {
         const response = await fetch(
-            `${this.apiBase}MødeAktör?` +
-            `$expand=Møde&` +
-            `$filter=aktörid eq ${committeeId} and ` +
-            `Møde/dato gt datetime'${new Date().toISOString()}'`
+            `${this.apiBase}MÃ¸deAktÃ¶r?` +
+            `$expand=MÃ¸de&` +
+            `$filter=aktÃ¶rid eq ${committeeId} and ` +
+            `MÃ¸de/dato gt datetime'${new Date().toISOString()}'`
         );
         
         const data = await response.json();

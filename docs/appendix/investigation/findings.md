@@ -68,7 +68,7 @@ The Danish Parliament OData API stands as the global benchmark for government tr
 | $format |  JSON/XML | Multiple response formats |
 
 **Advanced Capabilities:**
-- **Deep Expansion**: 4-level nested object traversal (e.g., Sag ’ SagAktør ’ Aktør ’ AktørAktør)
+- **Deep Expansion**: 4-level nested object traversal (e.g., Sag Â’ SagAktÃ¸r Â’ AktÃ¸r Â’ AktÃ¸rAktÃ¸r)
 - **Complex Filtering**: Date functions, string operations, logical combinations
 - **Metadata Discovery**: Complete schema available via $metadata endpoint
 - **File System Integration**: Direct document download with authentication bypass
@@ -226,14 +226,14 @@ async function fetchAllRecords(entity, maxRecords = 10000) {
 
 1. **Start with Core Entities**
    - **Sag**: Parliamentary cases and legislation
-   - **Aktør**: Politicians and institutional actors  
+   - **AktÃ¸r**: Politicians and institutional actors  
    - **Afstemning**: Voting sessions and outcomes
    - **Stemme**: Individual vote records
 
 2. **Historical Analysis Approach**
    - Use Periode entity for temporal segmentation
    - Filter by opdateringsdato for data freshness analysis
-   - Leverage Møde entity for session-based research
+   - Leverage MÃ¸de entity for session-based research
 
 3. **Performance Optimization**
    - Batch queries during off-peak hours

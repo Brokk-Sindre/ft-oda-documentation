@@ -10,7 +10,7 @@ keywords: research methodology, api investigation, historical coverage, odata co
 
 The Appendix section provides comprehensive supplementary documentation, research findings, and technical analysis that supports the main Danish Parliament API documentation. This collection represents months of deep investigation into the API structure, historical parliamentary data coverage, and comparative analysis with similar government transparency initiatives worldwide.
 
-## =Ë Section Contents
+## =Ã‹ Section Contents
 
 ### [Investigation](investigation/index.md)
 Detailed documentation of our systematic investigation into the Danish Parliament API structure, capabilities, and characteristics.
@@ -52,7 +52,7 @@ This appendix represents a systematic investigation approach using multiple disc
 - **Comprehensive Coverage** - No known API features left undocumented
 - **Version Tracking** - Full change history and evolution documentation
 
-## =Ê Key Research Findings
+## =ÃŠ Key Research Findings
 
 ### API Characteristics
 - **96,538+ Parliamentary Cases** across 74+ years of Danish democratic history
@@ -73,7 +73,7 @@ This appendix represents a systematic investigation approach using multiple disc
 - **Robust Data Quality** with comprehensive referential integrity
 - **Scalable Architecture** handling intensive research and analysis usage
 
-## <¯ Using This Appendix
+## <Â¯ Using This Appendix
 
 ### For Researchers
 - Start with [Investigation Methodology](investigation/methodology.md) to understand our research approach
@@ -106,7 +106,7 @@ All appendix materials undergo rigorous verification:
 - **Community Feedback** - Integration of user-reported corrections and insights
 - **Professional Review** - Technical accuracy validated by parliamentary data experts
 
-## =È Research Impact
+## =Ãˆ Research Impact
 
 This appendix documentation has enabled:
 
@@ -133,7 +133,7 @@ We welcome collaboration with:
 - **Data Journalists** requiring deep API understanding for investigative work
 - **Civic Organizations** promoting government transparency and accountability
 
-## =Ú Related Documentation
+## =Ãš Related Documentation
 
 ### Core Documentation
 - **[API Reference](../api-reference/index.md)** - Complete technical specification

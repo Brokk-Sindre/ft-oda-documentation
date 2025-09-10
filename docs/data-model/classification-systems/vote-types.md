@@ -43,9 +43,9 @@ Each individual vote (Stemme) cast by a parliamentary actor is classified accord
 - Disagreement with committee conclusions
 - Opposition to procedural decisions
 
-### 3. Fravær (Absence)
+### 3. FravÃ¦r (Absence)
 **ID:** 3  
-**Danish:** Fravær  
+**Danish:** FravÃ¦r  
 **English:** Absence/Not Present  
 **Meaning:** Member was not present during the voting session  
 **Parliamentary Context:** Physical absence from the voting process  
@@ -139,7 +139,7 @@ def analyze_voting_session(afstemning_id):
     vote_counts = {
         'For': 0,
         'Imod': 0, 
-        'Fravær': 0,
+        'FravÃ¦r': 0,
         'Hverken for eller imod': 0
     }
     
@@ -149,7 +149,7 @@ def analyze_voting_session(afstemning_id):
     
     # Calculate percentages and participation
     total_votes = sum(vote_counts.values())
-    participating_votes = total_votes - vote_counts['Fravær']
+    participating_votes = total_votes - vote_counts['FravÃ¦r']
     
     results = {
         'total_members': total_votes,
@@ -157,7 +157,7 @@ def analyze_voting_session(afstemning_id):
         'for_percentage': (vote_counts['For'] / participating_votes) * 100 if participating_votes > 0 else 0,
         'against_percentage': (vote_counts['Imod'] / participating_votes) * 100 if participating_votes > 0 else 0,
         'abstention_rate': (vote_counts['Hverken for eller imod'] / total_votes) * 100,
-        'absence_rate': (vote_counts['Fravær'] / total_votes) * 100,
+        'absence_rate': (vote_counts['FravÃ¦r'] / total_votes) * 100,
         'vote_counts': vote_counts
     }
     
@@ -177,7 +177,7 @@ def analyze_member_voting_patterns(aktor_id, period_id=None):
     """Analyze voting patterns for a specific parliamentary member."""
     
     # Build query with optional period filter
-    query = f"https://oda.ft.dk/api/Stemme?%24filter=aktørid%20eq%20{aktor_id}"
+    query = f"https://oda.ft.dk/api/Stemme?%24filter=aktÃ¸rid%20eq%20{aktor_id}"
     if period_id:
         query += f"%20and%20Afstemning/periodeid%20eq%20{period_id}"
     query += "&%24expand=Stemmetype,Afstemning(%24expand=Sag)"
@@ -215,7 +215,7 @@ def analyze_member_voting_patterns(aktor_id, period_id=None):
                 patterns['case_types'][case_type]['Absent'] += 1
     
     # Calculate participation rate
-    absent_votes = patterns['vote_distribution'].get('Fravær', 0)
+    absent_votes = patterns['vote_distribution'].get('FravÃ¦r', 0)
     patterns['participation_rate'] = ((patterns['total_votes'] - absent_votes) / patterns['total_votes']) * 100
     
     return patterns
@@ -249,7 +249,7 @@ def analyze_voting_trends_over_time(start_date, end_date):
                 'total_sessions': 0,
                 'avg_participation': 0,
                 'avg_abstention': 0,
-                'vote_types': {'For': 0, 'Imod': 0, 'Fravær': 0, 'Hverken for eller imod': 0}
+                'vote_types': {'For': 0, 'Imod': 0, 'FravÃ¦r': 0, 'Hverken for eller imod': 0}
             }
         
         monthly_trends[date]['total_sessions'] += 1
@@ -259,14 +259,14 @@ def analyze_voting_trends_over_time(start_date, end_date):
             votes = session['Stemme']
             total_votes = len(votes)
             
-            session_counts = {'For': 0, 'Imod': 0, 'Fravær': 0, 'Hverken for eller imod': 0}
+            session_counts = {'For': 0, 'Imod': 0, 'FravÃ¦r': 0, 'Hverken for eller imod': 0}
             for vote in votes:
                 vote_type = vote['Stemmetype']['type']
                 session_counts[vote_type] += 1
                 monthly_trends[date]['vote_types'][vote_type] += 1
             
             # Update averages
-            absent = session_counts['Fravær']
+            absent = session_counts['FravÃ¦r']
             abstain = session_counts['Hverken for eller imod']
             
             participation = ((total_votes - absent) / total_votes) * 100 if total_votes > 0 else 0
@@ -294,13 +294,13 @@ def analyze_party_voting_cohesion(party_id, afstemning_id):
     """Calculate party voting cohesion for a specific vote."""
     
     # Get all party members who voted
-    query = f"""https://oda.ft.dk/api/Stemme?%24filter=afstemningid%20eq%20{afstemning_id}&%24expand=Aktør(%24filter=typeid%20eq%205%20and%20Partier/any(p:%20p/id%20eq%20{party_id})),Stemmetype"""
+    query = f"""https://oda.ft.dk/api/Stemme?%24filter=afstemningid%20eq%20{afstemning_id}&%24expand=AktÃ¸r(%24filter=typeid%20eq%205%20and%20Partier/any(p:%20p/id%20eq%20{party_id})),Stemmetype"""
     
     response = requests.get(query)
     votes = response.json()['value']
     
     # Filter to only party member votes
-    party_votes = [v for v in votes if 'Aktør' in v and v['Aktør']]
+    party_votes = [v for v in votes if 'AktÃ¸r' in v and v['AktÃ¸r']]
     
     if not party_votes:
         return {'cohesion_score': 0, 'vote_distribution': {}, 'unity_type': 'no_data'}
@@ -311,7 +311,7 @@ def analyze_party_voting_cohesion(party_id, afstemning_id):
     
     for vote in party_votes:
         vote_type = vote['Stemmetype']['type']
-        if vote_type != 'Fravær':
+        if vote_type != 'FravÃ¦r':
             vote_counts[vote_type] += 1
             total_participating += 1
     
@@ -362,26 +362,26 @@ curl "https://oda.ft.dk/api/Stemme?%24filter=typeid%20eq%201&%24top=100"
 
 ```bash
 # Get all "For" votes in recent voting sessions
-curl "https://oda.ft.dk/api/Stemme?%24filter=typeid%20eq%201%20and%20Afstemning/dato%20ge%20datetime'2024-01-01'&%24expand=Afstemning,Aktør&%24top=1000"
+curl "https://oda.ft.dk/api/Stemme?%24filter=typeid%20eq%201%20and%20Afstemning/dato%20ge%20datetime'2024-01-01'&%24expand=Afstemning,AktÃ¸r&%24top=1000"
 
 # Find all abstentions (Hverken for eller imod) for a specific case
-curl "https://oda.ft.dk/api/Stemme?%24filter=typeid%20eq%204%20and%20Afstemning/sagid%20eq%201234&%24expand=Aktør,Stemmetype"
+curl "https://oda.ft.dk/api/Stemme?%24filter=typeid%20eq%204%20and%20Afstemning/sagid%20eq%201234&%24expand=AktÃ¸r,Stemmetype"
 
 # Analyze absence patterns for a specific period
-curl "https://oda.ft.dk/api/Stemme?%24filter=typeid%20eq%203%20and%20Afstemning/periodeid%20eq%2020&%24expand=Aktør&%24top=5000"
+curl "https://oda.ft.dk/api/Stemme?%24filter=typeid%20eq%203%20and%20Afstemning/periodeid%20eq%2020&%24expand=AktÃ¸r&%24top=5000"
 ```
 
 ### Complex Vote Analysis Queries
 
 ```bash
 # Compare voting patterns between parties
-curl "https://oda.ft.dk/api/Stemme?%24filter=afstemningid%20eq%204249&%24expand=Aktør(%24expand=Partier),Stemmetype&%24top=200"
+curl "https://oda.ft.dk/api/Stemme?%24filter=afstemningid%20eq%204249&%24expand=AktÃ¸r(%24expand=Partier),Stemmetype&%24top=200"
 
 # Find cases with high abstention rates
 curl "https://oda.ft.dk/api/Afstemning?%24expand=Stemme(%24expand=Stemmetype)&%24filter=Stemme/any(s:%20s/typeid%20eq%204)&%24top=100"
 
 # Analyze individual member voting consistency
-curl "https://oda.ft.dk/api/Stemme?%24filter=aktørid%20eq%205&%24expand=Stemmetype,Afstemning(%24expand=Sag)&%24orderby=Afstemning/dato%20desc&%24top=500"
+curl "https://oda.ft.dk/api/Stemme?%24filter=aktÃ¸rid%20eq%205&%24expand=Stemmetype,Afstemning(%24expand=Sag)&%24orderby=Afstemning/dato%20desc&%24top=500"
 ```
 
 ## Cross-References with Related Entities
@@ -404,13 +404,13 @@ def get_session_vote_breakdown(afstemning_id):
     return breakdown
 ```
 
-### Parliamentary Actors (Aktør)
+### Parliamentary Actors (AktÃ¸r)
 Vote types reveal individual and institutional voting behavior:
 
 ```python
 # Analyze an actor's voting type preferences
 def actor_vote_preferences(aktor_id, limit=1000):
-    query = f"https://oda.ft.dk/api/Stemme?%24filter=aktørid%20eq%20{aktor_id}&%24expand=Stemmetype&%24top={limit}"
+    query = f"https://oda.ft.dk/api/Stemme?%24filter=aktÃ¸rid%20eq%20{aktor_id}&%24expand=Stemmetype&%24top={limit}"
     response = requests.get(query)
     votes = response.json()['value']
     
@@ -435,7 +435,7 @@ def case_voting_patterns(sag_id):
     case_patterns = {
         'total_sessions': len(sessions),
         'vote_evolution': [],
-        'overall_distribution': {'For': 0, 'Imod': 0, 'Fravær': 0, 'Hverken for eller imod': 0}
+        'overall_distribution': {'For': 0, 'Imod': 0, 'FravÃ¦r': 0, 'Hverken for eller imod': 0}
     }
     
     for session in sessions:
@@ -467,7 +467,7 @@ def validate_vote_type_data():
     
     validation_results = {
         'vote_type_count': len(vote_types),
-        'expected_types': ['For', 'Imod', 'Fravær', 'Hverken for eller imod'],
+        'expected_types': ['For', 'Imod', 'FravÃ¦r', 'Hverken for eller imod'],
         'missing_types': [],
         'unexpected_types': [],
         'id_consistency': True,
@@ -485,7 +485,7 @@ def validate_vote_type_data():
             validation_results['unexpected_types'].append(actual)
     
     # Check for consistent ID mapping
-    expected_ids = {1: 'For', 2: 'Imod', 3: 'Fravær', 4: 'Hverken for eller imod'}
+    expected_ids = {1: 'For', 2: 'Imod', 3: 'FravÃ¦r', 4: 'Hverken for eller imod'}
     for vote_type in vote_types:
         expected_type = expected_ids.get(vote_type['id'])
         if expected_type != vote_type['type']:
@@ -538,7 +538,7 @@ def calculate_vote_quality_metrics(period_id=None):
         
         session_stats[session_id]['total'] += 1
         
-        if vote['Stemmetype']['type'] == 'Fravær':
+        if vote['Stemmetype']['type'] == 'FravÃ¦r':
             session_stats[session_id]['absent'] += 1
         elif vote['Stemmetype']['type'] == 'Hverken for eller imod':
             session_stats[session_id]['abstain'] += 1
@@ -574,10 +574,10 @@ def analyze_opposition_voting_patterns(opposition_party_ids, period_id):
     
     for party_id in opposition_party_ids:
         # Get all votes by party members in the period
-        query = f"""https://oda.ft.dk/api/Stemme?%24filter=Afstemning/periodeid%20eq%20{period_id}&%24expand=Aktør(%24filter=Partier/any(p:%20p/id%20eq%20{party_id})),Stemmetype,Afstemning(%24expand=Sag)&%24top=5000"""
+        query = f"""https://oda.ft.dk/api/Stemme?%24filter=Afstemning/periodeid%20eq%20{period_id}&%24expand=AktÃ¸r(%24filter=Partier/any(p:%20p/id%20eq%20{party_id})),Stemmetype,Afstemning(%24expand=Sag)&%24top=5000"""
         
         response = requests.get(query)
-        votes = [v for v in response.json()['value'] if v.get('Aktør')]
+        votes = [v for v in response.json()['value'] if v.get('AktÃ¸r')]
         
         # Analyze strategic voting patterns
         patterns = {
@@ -585,7 +585,7 @@ def analyze_opposition_voting_patterns(opposition_party_ids, period_id):
             'strategic_abstentions': 0,  # Abstentions on government proposals
             'protest_absences': 0,       # High absence rates on controversial votes
             'unified_opposition': 0,     # Cases where opposition voted together
-            'vote_distribution': {'For': 0, 'Imod': 0, 'Fravær': 0, 'Hverken for eller imod': 0}
+            'vote_distribution': {'For': 0, 'Imod': 0, 'FravÃ¦r': 0, 'Hverken for eller imod': 0}
         }
         
         for vote in votes:
@@ -626,7 +626,7 @@ def analyze_party_discipline_by_vote_type():
     """Measure party discipline using vote type distribution analysis."""
     
     # Get recent legislative votes with party information
-    query = """https://oda.ft.dk/api/Afstemning?%24filter=dato%20ge%20datetime'2023-01-01'%20and%20Sag/typeid%20eq%203&%24expand=Stemme(%24expand=Aktør(%24expand=Partier),Stemmetype),Sag&%24top=100"""
+    query = """https://oda.ft.dk/api/Afstemning?%24filter=dato%20ge%20datetime'2023-01-01'%20and%20Sag/typeid%20eq%203&%24expand=Stemme(%24expand=AktÃ¸r(%24expand=Partier),Stemmetype),Sag&%24top=100"""
     
     response = requests.get(query)
     sessions = response.json()['value']
@@ -639,7 +639,7 @@ def analyze_party_discipline_by_vote_type():
         
         # Group votes by party
         for vote in votes:
-            actor = vote.get('Aktør')
+            actor = vote.get('AktÃ¸r')
             if not actor or not actor.get('Partier'):
                 continue
                 
@@ -656,7 +656,7 @@ def analyze_party_discipline_by_vote_type():
                 continue
                 
             # Exclude absences from discipline calculation
-            active_votes = [v for v in votes if v != 'Fravær']
+            active_votes = [v for v in votes if v != 'FravÃ¦r']
             
             if len(active_votes) == 0:
                 continue
@@ -710,7 +710,7 @@ def analyze_democratic_participation_metrics():
         
         # Calculate session participation metrics
         total_eligible = len(votes)
-        absent = len([v for v in votes if v['Stemmetype']['type'] == 'Fravær'])
+        absent = len([v for v in votes if v['Stemmetype']['type'] == 'FravÃ¦r'])
         abstaining = len([v for v in votes if v['Stemmetype']['type'] == 'Hverken for eller imod'])
         active_voters = total_eligible - absent - abstaining
         
@@ -751,7 +751,7 @@ def analyze_temporal_voting_evolution(start_year, end_year):
         
         year_stats = {
             'total_sessions': len(sessions),
-            'vote_type_evolution': {'For': 0, 'Imod': 0, 'Fravær': 0, 'Hverken for eller imod': 0},
+            'vote_type_evolution': {'For': 0, 'Imod': 0, 'FravÃ¦r': 0, 'Hverken for eller imod': 0},
             'polarization_index': 0,
             'engagement_score': 0
         }
@@ -766,10 +766,10 @@ def analyze_temporal_voting_evolution(start_year, end_year):
         if total_votes > 0:
             # Calculate polarization (For + Against vs Abstentions + Absences)
             decisive_votes = year_stats['vote_type_evolution']['For'] + year_stats['vote_type_evolution']['Imod']
-            non_decisive = year_stats['vote_type_evolution']['Fravær'] + year_stats['vote_type_evolution']['Hverken for eller imod']
+            non_decisive = year_stats['vote_type_evolution']['FravÃ¦r'] + year_stats['vote_type_evolution']['Hverken for eller imod']
             
             year_stats['polarization_index'] = (decisive_votes / total_votes) * 100
-            year_stats['engagement_score'] = ((total_votes - year_stats['vote_type_evolution']['Fravær']) / total_votes) * 100
+            year_stats['engagement_score'] = ((total_votes - year_stats['vote_type_evolution']['FravÃ¦r']) / total_votes) * 100
             
             # Convert to percentages
             for vote_type in year_stats['vote_type_evolution']:

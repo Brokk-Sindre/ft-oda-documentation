@@ -15,13 +15,13 @@ The parliamentary process data model captures the complete lifecycle of legislat
 - **Unique Identification**: Numerical ID and human-readable titles
 - **Lifecycle Tracking**: Status progression from proposal to completion
 - **Temporal Data**: Creation, modification, and decision timestamps
-- **Categorization**: Types include Lovforslag (Bills), Beslutningsforslag (Resolutions), Forespørgsel (Inquiries)
+- **Categorization**: Types include Lovforslag (Bills), Beslutningsforslag (Resolutions), ForespÃ¸rgsel (Inquiries)
 
 **Sagstrin (Case Step)**
 : Individual stages within a case's progression through parliament, providing granular tracking of the legislative process:
 - **Sequential Processing**: Ordered steps from introduction to final decision
 - **Status Management**: Current state tracking for each procedural stage
-- **Actor Participation**: Who participates at each step through SagstrinAktør relationships
+- **Actor Participation**: Who participates at each step through SagstrinAktÃ¸r relationships
 
 **Afstemning (Voting)**
 : Formal voting sessions that determine the outcome of parliamentary decisions:
@@ -43,8 +43,8 @@ The legislative process begins when a **Sag (Case)** is introduced to parliament
 
 - **Lovforslag** - Legislative bills proposing new laws
 - **Beslutningsforslag** - Parliamentary resolutions
-- **Forespørgsel** - Parliamentary inquiries to ministers
-- **§ 20-spørgsmål** - Question time inquiries
+- **ForespÃ¸rgsel** - Parliamentary inquiries to ministers
+- **Â§ 20-spÃ¸rgsmÃ¥l** - Question time inquiries
 - **Aktstykke** - Administrative matters requiring parliamentary approval
 
 Each case is assigned a unique identifier and progresses through a defined workflow tracked via **Sagsstatus** (68 detailed status types).
@@ -60,11 +60,11 @@ Cases are typically referred to parliamentary committees (**Udvalg**) for detail
 : Documents are reviewed, hearings conducted, and recommendations prepared for the full parliament
 
 **Actor Participation**
-: Committee members, ministers, and other stakeholders participate through **SagAktør** relationships with specific roles
+: Committee members, ministers, and other stakeholders participate through **SagAktÃ¸r** relationships with specific roles
 
 ### 3. Parliamentary Deliberation
 
-**Møde (Meeting)** entities capture formal parliamentary sessions where cases are debated:
+**MÃ¸de (Meeting)** entities capture formal parliamentary sessions where cases are debated:
 
 - **Structured Agenda**: **Dagsordenspunkt** (Agenda Items) organize session content
 - **Document Integration**: **DagsordenspunktDokument** links relevant documents to agenda items
@@ -93,10 +93,10 @@ The Danish Parliament operates through a comprehensive committee system represen
 : Standing committees, special committees, and joint committees with the EU
 
 **Membership Tracking**
-: **MødeAktør** relationships track committee participation and attendance
+: **MÃ¸deAktÃ¸r** relationships track committee participation and attendance
 
 **Workflow Integration**
-: Cases flow through committees via **SagAktør** relationships specifying committee handling
+: Cases flow through committees via **SagAktÃ¸r** relationships specifying committee handling
 
 ### Committee Workflow Patterns
 
@@ -148,7 +148,7 @@ Decisions flow through a structured process:
 : **SagDokument** relationships connect documents to specific cases with role-based semantics
 
 **Document-Actor Relationships**
-: **DokumentAktør** connections specify who authored, received, or processed each document
+: **DokumentAktÃ¸r** connections specify who authored, received, or processed each document
 
 ### Document Workflow
 
@@ -172,7 +172,7 @@ The parliamentary process involves multiple types of actors with specific roles:
 **Case Actor Roles (23 types)**
 : Specific roles actors play in case processing:
 - **Forslagsstiller** (Proposer) - Initiates legislation
-- **Ordfører** (Spokesperson) - Committee representative
+- **OrdfÃ¸rer** (Spokesperson) - Committee representative
 - **Minister** - Government representative
 - **Taler** (Speaker) - Parliamentary speaker
 
@@ -201,7 +201,7 @@ Parliamentary processes follow structured timing patterns:
 : **Periode** entities define parliamentary sessions with precise start/end dates
 
 **Meeting Scheduling**
-: **Møde** entities capture scheduled parliamentary sessions with advance planning
+: **MÃ¸de** entities capture scheduled parliamentary sessions with advance planning
 
 **Real-Time Updates**
 : API data reflects current parliamentary activity with near real-time updates (within hours)
@@ -233,10 +233,10 @@ Complete guide to parliamentary voting mechanisms, including vote types, procedu
 ### Data Model Understanding
 
 **Start with Core Entities**
-: Focus on **Sag**, **Afstemning**, **Stemme**, and **Aktør** for 80% of analytical value
+: Focus on **Sag**, **Afstemning**, **Stemme**, and **AktÃ¸r** for 80% of analytical value
 
 **Leverage Relationships**
-: Use junction tables (SagAktør, DokumentAktør, etc.) to understand process participation
+: Use junction tables (SagAktÃ¸r, DokumentAktÃ¸r, etc.) to understand process participation
 
 **Temporal Analysis**
 : Utilize timestamp fields for process timing and efficiency analysis
@@ -246,13 +246,13 @@ Complete guide to parliamentary voting mechanisms, including vote types, procedu
 **Expand Strategically**
 : Use `$expand` to retrieve related data efficiently:
 ```
-/api/Sag?$expand=SagAktør/Aktør&$filter=substringof('klima',titel)
+/api/Sag?$expand=SagAktÃ¸r/AktÃ¸r&$filter=substringof('klima',titel)
 ```
 
 **Filter Early**
 : Apply filters before expansions to reduce processing overhead:
 ```
-/api/Afstemning?$filter=year(opdateringsdato) eq 2025&$expand=Stemme/Aktør
+/api/Afstemning?$filter=year(opdateringsdato) eq 2025&$expand=Stemme/AktÃ¸r
 ```
 
 **Select Appropriately**
@@ -267,7 +267,7 @@ Complete guide to parliamentary voting mechanisms, including vote types, procedu
 : Track cases through their complete lifecycle using Sagstrin and status progression
 
 **Actor Network Analysis**
-: Analyze collaboration patterns through SagAktør and DokumentAktør relationships
+: Analyze collaboration patterns through SagAktÃ¸r and DokumentAktÃ¸r relationships
 
 **Temporal Trend Analysis**
 : Use historical data to identify patterns in parliamentary activity and decision-making

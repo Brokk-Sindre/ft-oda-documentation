@@ -6,16 +6,16 @@ Beyond the primary [Case-Actor](case-actor-roles.md) and [Document-Actor](docume
 
 The Danish Parliamentary system employs multiple sophisticated role systems to capture the full complexity of parliamentary operations. While the primary systems handle direct case and document relationships, these miscellaneous systems provide the semantic framework for:
 
-- **Inter-Actor Relationships** via AktørAktørRolle
-- **Meeting Participation** via MødeAktør
-- **Legislative Process Steps** via SagstrinAktørRolle  
+- **Inter-Actor Relationships** via AktÃ¸rAktÃ¸rRolle
+- **Meeting Participation** via MÃ¸deAktÃ¸r
+- **Legislative Process Steps** via SagstrinAktÃ¸rRolle  
 - **Administrative Functions** and procedural roles
 - **Historical and Ceremonial** positions
 - **International and Inter-Parliamentary** relationships
 
-## Inter-Actor Role System (AktørAktørRolle)
+## Inter-Actor Role System (AktÃ¸rAktÃ¸rRolle)
 
-The AktørAktør junction table with AktørAktørRolle defines relationships between different actors in the parliamentary system. This enables tracking of hierarchical relationships, substitutions, and collaborative arrangements.
+The AktÃ¸rAktÃ¸r junction table with AktÃ¸rAktÃ¸rRolle defines relationships between different actors in the parliamentary system. This enables tracking of hierarchical relationships, substitutions, and collaborative arrangements.
 
 ### Key Relationship Types
 
@@ -47,25 +47,25 @@ import json
 def get_actor_relationships(actor_id):
     """Get all inter-actor relationships for a given actor"""
     params = {
-        '$filter': f'(aktørid eq {actor_id} or aktør2id eq {actor_id})',
-        '$expand': 'Aktør,Aktør2,AktørAktørRolle',
+        '$filter': f'(aktÃ¸rid eq {actor_id} or aktÃ¸r2id eq {actor_id})',
+        '$expand': 'AktÃ¸r,AktÃ¸r2,AktÃ¸rAktÃ¸rRolle',
         '$top': 100
     }
     
-    response = requests.get('https://oda.ft.dk/api/AktørAktør', params=params)
+    response = requests.get('https://oda.ft.dk/api/AktÃ¸rAktÃ¸r', params=params)
     return response.json()
 
 # Example: Find committee substitute relationships
 def find_substitute_relationships():
     """Find substitute (suppleant) relationships"""
     params = {
-        '$expand': 'Aktør,Aktør2,AktørAktørRolle',
-        '$filter': "substringof('suppleant', AktørAktørRolle/rolle) or " +
-                   "substringof('stedfortræder', AktørAktørRolle/rolle)",
+        '$expand': 'AktÃ¸r,AktÃ¸r2,AktÃ¸rAktÃ¸rRolle',
+        '$filter': "substringof('suppleant', AktÃ¸rAktÃ¸rRolle/rolle) or " +
+                   "substringof('stedfortrÃ¦der', AktÃ¸rAktÃ¸rRolle/rolle)",
         '$top': 50
     }
     
-    response = requests.get('https://oda.ft.dk/api/AktørAktør', params=params)
+    response = requests.get('https://oda.ft.dk/api/AktÃ¸rAktÃ¸r', params=params)
     return response.json()
 ```
 
@@ -73,15 +73,15 @@ def find_substitute_relationships():
 
 ```bash
 # Get all relationships for actor ID 123
-curl "https://oda.ft.dk/api/AktørAktør?%24filter=aktørid%20eq%20123%20or%20aktør2id%20eq%20123&%24expand=Aktør,Aktør2,AktørAktørRolle"
+curl "https://oda.ft.dk/api/AktÃ¸rAktÃ¸r?%24filter=aktÃ¸rid%20eq%20123%20or%20aktÃ¸r2id%20eq%20123&%24expand=AktÃ¸r,AktÃ¸r2,AktÃ¸rAktÃ¸rRolle"
 
 # Find leadership relationships
-curl "https://oda.ft.dk/api/AktørAktør?%24expand=AktørAktørRolle&%24filter=substringof('formand',AktørAktørRolle/rolle)"
+curl "https://oda.ft.dk/api/AktÃ¸rAktÃ¸r?%24expand=AktÃ¸rAktÃ¸rRolle&%24filter=substringof('formand',AktÃ¸rAktÃ¸rRolle/rolle)"
 ```
 
-## Meeting Participation System (MødeAktør)
+## Meeting Participation System (MÃ¸deAktÃ¸r)
 
-The MødeAktør entity tracks actor participation in parliamentary meetings, capturing attendance, roles during meetings, and participation patterns.
+The MÃ¸deAktÃ¸r entity tracks actor participation in parliamentary meetings, capturing attendance, roles during meetings, and participation patterns.
 
 ### Meeting Role Categories
 
@@ -110,44 +110,44 @@ The MødeAktør entity tracks actor participation in parliamentary meetings, captu
 def get_meeting_participants(meeting_id):
     """Get all participants for a specific meeting"""
     params = {
-        '$filter': f'mødeid eq {meeting_id}',
-        '$expand': 'Aktør,Møde',
-        '$orderby': 'Aktør/navn'
+        '$filter': f'mÃ¸deid eq {meeting_id}',
+        '$expand': 'AktÃ¸r,MÃ¸de',
+        '$orderby': 'AktÃ¸r/navn'
     }
     
-    response = requests.get('https://oda.ft.dk/api/MødeAktør', params=params)
+    response = requests.get('https://oda.ft.dk/api/MÃ¸deAktÃ¸r', params=params)
     return response.json()
 
 # Track actor meeting attendance patterns
 def analyze_meeting_attendance(actor_id, start_date, end_date):
     """Analyze meeting attendance for an actor over time"""
     params = {
-        '$filter': f'aktørid eq {actor_id} and ' +
-                   f'Møde/dato ge datetime\'{start_date}\' and ' +
-                   f'Møde/dato le datetime\'{end_date}\'',
-        '$expand': 'Møde',
-        '$orderby': 'Møde/dato desc'
+        '$filter': f'aktÃ¸rid eq {actor_id} and ' +
+                   f'MÃ¸de/dato ge datetime\'{start_date}\' and ' +
+                   f'MÃ¸de/dato le datetime\'{end_date}\'',
+        '$expand': 'MÃ¸de',
+        '$orderby': 'MÃ¸de/dato desc'
     }
     
-    response = requests.get('https://oda.ft.dk/api/MødeAktør', params=params)
+    response = requests.get('https://oda.ft.dk/api/MÃ¸deAktÃ¸r', params=params)
     return response.json()
 
 # Find committee meeting chairs
 def find_meeting_chairs(committee_id):
     """Find actors who chair meetings for a specific committee"""
     params = {
-        '$filter': f'Møde/aktørid eq {committee_id}',
-        '$expand': 'Aktør,Møde',
+        '$filter': f'MÃ¸de/aktÃ¸rid eq {committee_id}',
+        '$expand': 'AktÃ¸r,MÃ¸de',
         '$top': 100
     }
     
-    response = requests.get('https://oda.ft.dk/api/MødeAktør', params=params)
+    response = requests.get('https://oda.ft.dk/api/MÃ¸deAktÃ¸r', params=params)
     return response.json()
 ```
 
-## Case Step Role System (SagstrinAktørRolle)
+## Case Step Role System (SagstrinAktÃ¸rRolle)
 
-The SagstrinAktørRolle system provides granular tracking of actor involvement at each step of the legislative process, enabling precise analysis of procedural participation.
+The SagstrinAktÃ¸rRolle system provides granular tracking of actor involvement at each step of the legislative process, enabling precise analysis of procedural participation.
 
 ### Legislative Process Roles
 
@@ -158,7 +158,7 @@ The SagstrinAktørRolle system provides granular tracking of actor involvement at
 - Amendment proposers
 
 **Committee Stages:**
-- Rapporteurs (ordførere)
+- Rapporteurs (ordfÃ¸rere)
 - Committee members present
 - Expert witnesses
 - Stakeholder representatives
@@ -177,23 +177,23 @@ def track_case_participation(case_id):
     """Track all actor participation across case steps"""
     params = {
         '$filter': f'Sagstrin/sagid eq {case_id}',
-        '$expand': 'Aktør,Sagstrin,SagstrinAktørRolle',
+        '$expand': 'AktÃ¸r,Sagstrin,SagstrinAktÃ¸rRolle',
         '$orderby': 'Sagstrin/dato'
     }
     
-    response = requests.get('https://oda.ft.dk/api/SagstrinAktør', params=params)
+    response = requests.get('https://oda.ft.dk/api/SagstrinAktÃ¸r', params=params)
     return response.json()
 
 # Analyze rapporteur (spokesperson) patterns
 def analyze_rapporteur_patterns(committee_id):
     """Analyze which actors serve as rapporteurs for committee cases"""
     params = {
-        '$filter': "substringof('ordfører', SagstrinAktørRolle/rolle)",
-        '$expand': 'Aktør,Sagstrin/Sag,SagstrinAktørRolle',
+        '$filter': "substringof('ordfÃ¸rer', SagstrinAktÃ¸rRolle/rolle)",
+        '$expand': 'AktÃ¸r,Sagstrin/Sag,SagstrinAktÃ¸rRolle',
         '$top': 100
     }
     
-    response = requests.get('https://oda.ft.dk/api/SagstrinAktør', params=params)
+    response = requests.get('https://oda.ft.dk/api/SagstrinAktÃ¸r', params=params)
     return response.json()
 ```
 
@@ -203,7 +203,7 @@ def analyze_rapporteur_patterns(committee_id):
 
 **Speaker's Office Roles:**
 - Speaker (Formand)
-- Deputy Speakers (Næstformænd)
+- Deputy Speakers (NÃ¦stformÃ¦nd)
 - Session chairs
 - Protocol officers
 
@@ -223,10 +223,10 @@ def analyze_rapporteur_patterns(committee_id):
 
 ```bash
 # Find all Speakers and Deputy Speakers
-curl "https://oda.ft.dk/api/Aktør?%24filter=substringof('formand',navn)%20or%20substringof('næstformand',navn)"
+curl "https://oda.ft.dk/api/AktÃ¸r?%24filter=substringof('formand',navn)%20or%20substringof('nÃ¦stformand',navn)"
 
 # Get committee administrative structure
-curl "https://oda.ft.dk/api/SagAktør?%24expand=Aktør,SagAktørRolle&%24filter=substringof('formand',SagAktørRolle/rolle)"
+curl "https://oda.ft.dk/api/SagAktÃ¸r?%24expand=AktÃ¸r,SagAktÃ¸rRolle&%24filter=substringof('formand',SagAktÃ¸rRolle/rolle)"
 ```
 
 ## Historical and Ceremonial Roles
@@ -254,13 +254,13 @@ The API contains rich historical data spanning decades of Danish parliamentary h
 def analyze_role_evolution(role_name):
     """Analyze how a specific role has evolved over time"""
     params = {
-        '$filter': f"substringof('{role_name}', SagAktørRolle/rolle)",
-        '$expand': 'Sag,Aktør,SagAktørRolle',
+        '$filter': f"substringof('{role_name}', SagAktÃ¸rRolle/rolle)",
+        '$expand': 'Sag,AktÃ¸r,SagAktÃ¸rRolle',
         '$orderby': 'Sag/opdateringsdato desc',
         '$top': 200
     }
     
-    response = requests.get('https://oda.ft.dk/api/SagAktør', params=params)
+    response = requests.get('https://oda.ft.dk/api/SagAktÃ¸r', params=params)
     return response.json()
 
 # Find historical vs current committee structures
@@ -268,18 +268,18 @@ def compare_committee_structures(old_period, new_period):
     """Compare committee structures between periods"""
     old_params = {
         '$filter': f'Sag/periodeid eq {old_period}',
-        '$expand': 'Aktør,SagAktørRolle',
+        '$expand': 'AktÃ¸r,SagAktÃ¸rRolle',
         '$top': 100
     }
     
     new_params = {
         '$filter': f'Sag/periodeid eq {new_period}',
-        '$expand': 'Aktør,SagAktørRolle',
+        '$expand': 'AktÃ¸r,SagAktÃ¸rRolle',
         '$top': 100
     }
     
-    old_response = requests.get('https://oda.ft.dk/api/SagAktør', params=old_params)
-    new_response = requests.get('https://oda.ft.dk/api/SagAktør', params=new_params)
+    old_response = requests.get('https://oda.ft.dk/api/SagAktÃ¸r', params=old_params)
+    new_response = requests.get('https://oda.ft.dk/api/SagAktÃ¸r', params=new_params)
     
     return {
         'historical': old_response.json(),
@@ -316,26 +316,26 @@ def compare_committee_structures(old_period, new_period):
 def find_eu_participation():
     """Find actors with EU-related roles"""
     params = {
-        '$filter': "substringof('EU', SagAktørRolle/rolle) or " +
-                   "substringof('Europa', SagAktørRolle/rolle)",
-        '$expand': 'Aktør,Sag,SagAktørRolle',
+        '$filter': "substringof('EU', SagAktÃ¸rRolle/rolle) or " +
+                   "substringof('Europa', SagAktÃ¸rRolle/rolle)",
+        '$expand': 'AktÃ¸r,Sag,SagAktÃ¸rRolle',
         '$top': 100
     }
     
-    response = requests.get('https://oda.ft.dk/api/SagAktør', params=params)
+    response = requests.get('https://oda.ft.dk/api/SagAktÃ¸r', params=params)
     return response.json()
 
 # Track international committee participation
 def track_international_committees():
     """Track participation in international committees"""
     params = {
-        '$filter': "substringof('international', Aktør/navn) or " +
-                   "substringof('nordisk', Aktør/navn)",
-        '$expand': 'SagAktør/SagAktørRolle',
+        '$filter': "substringof('international', AktÃ¸r/navn) or " +
+                   "substringof('nordisk', AktÃ¸r/navn)",
+        '$expand': 'SagAktÃ¸r/SagAktÃ¸rRolle',
         '$top': 50
     }
     
-    response = requests.get('https://oda.ft.dk/api/Aktør', params=params)
+    response = requests.get('https://oda.ft.dk/api/AktÃ¸r', params=params)
     return response.json()
 ```
 
@@ -364,26 +364,26 @@ def find_temporary_roles(start_date, end_date):
     params = {
         '$filter': f'Sag/opdateringsdato ge datetime\'{start_date}\' and ' +
                    f'Sag/opdateringsdato le datetime\'{end_date}\'',
-        '$expand': 'Aktør,Sag,SagAktørRolle',
+        '$expand': 'AktÃ¸r,Sag,SagAktÃ¸rRolle',
         '$orderby': 'Sag/opdateringsdato',
         '$top': 100
     }
     
-    response = requests.get('https://oda.ft.dk/api/SagAktør', params=params)
+    response = requests.get('https://oda.ft.dk/api/SagAktÃ¸r', params=params)
     return response.json()
 
 # Identify project-specific committee formations
 def analyze_special_committees():
     """Analyze formation of special committees"""
     params = {
-        '$filter': "substringof('særlig', Aktør/navn) or " +
-                   "substringof('special', Aktør/navn) or " +
-                   "substringof('midlertidig', Aktør/navn)",
-        '$expand': 'SagAktør/SagAktørRolle',
+        '$filter': "substringof('sÃ¦rlig', AktÃ¸r/navn) or " +
+                   "substringof('special', AktÃ¸r/navn) or " +
+                   "substringof('midlertidig', AktÃ¸r/navn)",
+        '$expand': 'SagAktÃ¸r/SagAktÃ¸rRolle',
         '$top': 100
     }
     
-    response = requests.get('https://oda.ft.dk/api/Aktør', params=params)
+    response = requests.get('https://oda.ft.dk/api/AktÃ¸r', params=params)
     return response.json()
 ```
 
@@ -410,53 +410,53 @@ class ComprehensiveRoleAnalyzer:
         return profile
         
     def _get_case_roles(self, actor_id):
-        """Get SagAktør relationships"""
+        """Get SagAktÃ¸r relationships"""
         params = {
-            '$filter': f'aktørid eq {actor_id}',
-            '$expand': 'Sag,SagAktørRolle',
+            '$filter': f'aktÃ¸rid eq {actor_id}',
+            '$expand': 'Sag,SagAktÃ¸rRolle',
             '$top': 100
         }
-        response = requests.get(f'{self.base_url}SagAktør', params=params)
+        response = requests.get(f'{self.base_url}SagAktÃ¸r', params=params)
         return response.json()
         
     def _get_document_roles(self, actor_id):
-        """Get DokumentAktør relationships"""
+        """Get DokumentAktÃ¸r relationships"""
         params = {
-            '$filter': f'aktørid eq {actor_id}',
-            '$expand': 'Dokument,DokumentAktørRolle',
+            '$filter': f'aktÃ¸rid eq {actor_id}',
+            '$expand': 'Dokument,DokumentAktÃ¸rRolle',
             '$top': 100
         }
-        response = requests.get(f'{self.base_url}DokumentAktør', params=params)
+        response = requests.get(f'{self.base_url}DokumentAktÃ¸r', params=params)
         return response.json()
         
     def _get_actor_relationships(self, actor_id):
-        """Get AktørAktør relationships"""
+        """Get AktÃ¸rAktÃ¸r relationships"""
         params = {
-            '$filter': f'aktørid eq {actor_id} or aktør2id eq {actor_id}',
-            '$expand': 'Aktør,Aktør2,AktørAktørRolle',
+            '$filter': f'aktÃ¸rid eq {actor_id} or aktÃ¸r2id eq {actor_id}',
+            '$expand': 'AktÃ¸r,AktÃ¸r2,AktÃ¸rAktÃ¸rRolle',
             '$top': 100
         }
-        response = requests.get(f'{self.base_url}AktørAktør', params=params)
+        response = requests.get(f'{self.base_url}AktÃ¸rAktÃ¸r', params=params)
         return response.json()
         
     def _get_meeting_roles(self, actor_id):
-        """Get MødeAktør participation"""
+        """Get MÃ¸deAktÃ¸r participation"""
         params = {
-            '$filter': f'aktørid eq {actor_id}',
-            '$expand': 'Møde',
+            '$filter': f'aktÃ¸rid eq {actor_id}',
+            '$expand': 'MÃ¸de',
             '$top': 100
         }
-        response = requests.get(f'{self.base_url}MødeAktør', params=params)
+        response = requests.get(f'{self.base_url}MÃ¸deAktÃ¸r', params=params)
         return response.json()
         
     def _get_case_step_roles(self, actor_id):
-        """Get SagstrinAktør involvement"""
+        """Get SagstrinAktÃ¸r involvement"""
         params = {
-            '$filter': f'aktørid eq {actor_id}',
-            '$expand': 'Sagstrin,SagstrinAktørRolle',
+            '$filter': f'aktÃ¸rid eq {actor_id}',
+            '$expand': 'Sagstrin,SagstrinAktÃ¸rRolle',
             '$top': 100
         }
-        response = requests.get(f'{self.base_url}SagstrinAktør', params=params)
+        response = requests.get(f'{self.base_url}SagstrinAktÃ¸r', params=params)
         return response.json()
 
 # Usage example
@@ -472,29 +472,29 @@ def analyze_role_correlations(actor_id):
     """Analyze how roles correlate across different systems"""
     
     # Get primary roles from case system
-    case_roles = requests.get('https://oda.ft.dk/api/SagAktør', {
-        '$filter': f'aktørid eq {actor_id}',
-        '$expand': 'SagAktørRolle',
+    case_roles = requests.get('https://oda.ft.dk/api/SagAktÃ¸r', {
+        '$filter': f'aktÃ¸rid eq {actor_id}',
+        '$expand': 'SagAktÃ¸rRolle',
         '$top': 100
     }).json()
     
     # Get document handling roles
-    doc_roles = requests.get('https://oda.ft.dk/api/DokumentAktør', {
-        '$filter': f'aktørid eq {actor_id}',
-        '$expand': 'DokumentAktørRolle',
+    doc_roles = requests.get('https://oda.ft.dk/api/DokumentAktÃ¸r', {
+        '$filter': f'aktÃ¸rid eq {actor_id}',
+        '$expand': 'DokumentAktÃ¸rRolle',
         '$top': 100
     }).json()
     
     # Get meeting participation
-    meeting_roles = requests.get('https://oda.ft.dk/api/MødeAktør', {
-        '$filter': f'aktørid eq {actor_id}',
+    meeting_roles = requests.get('https://oda.ft.dk/api/MÃ¸deAktÃ¸r', {
+        '$filter': f'aktÃ¸rid eq {actor_id}',
         '$top': 100
     }).json()
     
     # Analyze patterns
     correlation_analysis = {
-        'case_role_frequency': analyze_frequency([r['SagAktørRolle']['rolle'] for r in case_roles['value']]),
-        'document_role_frequency': analyze_frequency([r['DokumentAktørRolle']['rolle'] for r in doc_roles['value']]),
+        'case_role_frequency': analyze_frequency([r['SagAktÃ¸rRolle']['rolle'] for r in case_roles['value']]),
+        'document_role_frequency': analyze_frequency([r['DokumentAktÃ¸rRolle']['rolle'] for r in doc_roles['value']]),
         'meeting_participation_count': len(meeting_roles['value']),
         'role_combinations': find_common_combinations(case_roles, doc_roles)
     }

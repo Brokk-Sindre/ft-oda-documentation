@@ -45,10 +45,10 @@ curl "https://oda.ft.dk/api/Sag?%24top=150"     # Returns: 100 records (capped)
 curl "https://oda.ft.dk/api/Sag?%24expand=Sagskategori&%24top=10"
 
 # Two-level expansion (slower, larger response)
-curl "https://oda.ft.dk/api/Dokument?%24expand=DokumentAktør/Aktør&%24top=10"
+curl "https://oda.ft.dk/api/Dokument?%24expand=DokumentAktÃ¸r/AktÃ¸r&%24top=10"
 
 # Deep expansion impact on response size
-# Single entity: ~2KB ’ With expansion: ~15KB+
+# Single entity: ~2KB Â’ With expansion: ~15KB+
 ```
 
 ### Filter Complexity
@@ -89,7 +89,7 @@ curl "https://oda.ft.dk/api/Sag?%24top=100&%24skip=200"
 curl "https://oda.ft.dk/api/Sag?%24top=25&%24expand=Sagskategori"
 
 # Use carefully: Multiple expansions
-curl "https://oda.ft.dk/api/Sag?%24top=10&%24expand=Sagskategori,SagAktør"
+curl "https://oda.ft.dk/api/Sag?%24top=10&%24expand=Sagskategori,SagAktÃ¸r"
 ```
 
 ## Rate Limiting Policy
@@ -145,7 +145,7 @@ All datasets exceeding 100 records require pagination:
 curl "https://oda.ft.dk/api/Sag?%24inlinecount=allpages&%24top=1" | jq '.["odata.count"]'
 # Returns: 96538
 
-# Calculate pages needed: 96538 ÷ 100 = 966 pages
+# Calculate pages needed: 96538 Ã· 100 = 966 pages
 ```
 
 ### Efficient Pagination Pattern
@@ -201,7 +201,7 @@ For the largest entities in the API:
 | Entity | Record Count | Pages (100/page) | Est. Time |
 |--------|--------------|------------------|-----------|
 | Sag | 96,538+ | 966+ | ~2-3 minutes |
-| Aktør | 18,139+ | 182+ | ~30 seconds |
+| AktÃ¸r | 18,139+ | 182+ | ~30 seconds |
 | Dokument | 500,000+ | 5,000+ | ~10-15 minutes |
 | Stemme | 2,000,000+ | 20,000+ | ~45-60 minutes |
 
@@ -243,7 +243,7 @@ const fetchWithTimeout = async (url, timeoutMs = 30000) => {
 curl "https://oda.ft.dk/api/Sag?%24select=id,titel&%24top=100"
 
 # L Avoid: All fields with large expansions
-curl "https://oda.ft.dk/api/Sag?%24expand=SagAktør,Sagskategori,SagDokument&%24top=100"
+curl "https://oda.ft.dk/api/Sag?%24expand=SagAktÃ¸r,Sagskategori,SagDokument&%24top=100"
 ```
 
 ### 2. Implement Efficient Pagination
@@ -393,11 +393,11 @@ def get_500_records():
 
 ```bash
 # L Slow: Multiple expansions in single request
-curl "https://oda.ft.dk/api/Sag?%24expand=SagAktør,Sagskategori,SagDokument&%24top=50"
+curl "https://oda.ft.dk/api/Sag?%24expand=SagAktÃ¸r,Sagskategori,SagDokument&%24top=50"
 
 #  Fast: Separate requests for different expansions
 curl "https://oda.ft.dk/api/Sag?%24expand=Sagskategori&%24top=100"
-curl "https://oda.ft.dk/api/SagAktør?%24expand=Aktør&%24filter=sagid%20eq%201234"
+curl "https://oda.ft.dk/api/SagAktÃ¸r?%24expand=AktÃ¸r&%24filter=sagid%20eq%201234"
 ```
 
 ### Issue: Memory Issues with Large Dataset Processing

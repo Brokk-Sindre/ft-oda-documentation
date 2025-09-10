@@ -8,7 +8,7 @@ keywords: danish parliament api code examples, oda.ft.dk implementation, parliam
 
 Comprehensive code examples and implementations for the Danish Parliament API (oda.ft.dk) across multiple programming languages and environments.
 
-## =€ Quick Start by Language
+## =Â€ Quick Start by Language
 
 Choose your preferred programming language to get started immediately:
 
@@ -16,29 +16,29 @@ Choose your preferred programming language to get started immediately:
   <div class="language-card">
     <h3>= Python</h3>
     <p>Production-ready client with async support, pagination, and comprehensive error handling</p>
-    <a href="python/">Get Started ’</a>
+    <a href="python/">Get Started Â’</a>
   </div>
   
   <div class="language-card">
-    <h3>=è JavaScript</h3>
+    <h3>=Ã¨ JavaScript</h3>
     <p>Modern ES6+ client using fetch API, works in browser and Node.js environments</p>
-    <a href="javascript/">Get Started ’</a>
+    <a href="javascript/">Get Started Â’</a>
   </div>
   
   <div class="language-card">
-    <h3>=Ø TypeScript</h3>
+    <h3>=Ã˜ TypeScript</h3>
     <p>Fully typed client with complete type definitions for all 50+ API entities</p>
-    <a href="typescript/">Get Started ’</a>
+    <a href="typescript/">Get Started Â’</a>
   </div>
   
   <div class="language-card">
     <h3>< cURL</h3>
     <p>Command-line examples perfect for testing, scripting, and API exploration</p>
-    <a href="curl/">Get Started ’</a>
+    <a href="curl/">Get Started Â’</a>
   </div>
 </div>
 
-## =Ê Interactive Examples
+## =ÃŠ Interactive Examples
 
 Try the API live with these interactive tools:
 
@@ -46,7 +46,7 @@ Try the API live with these interactive tools:
 - **[Response Viewer](live-examples/response-viewer.md)** - Real-time API response explorer
 - **[Live Testing](live-examples/)** - Interactive API playground
 
-## <¯ Example Categories
+## <Â¯ Example Categories
 
 ### Basic Integration
 Perfect for getting started with the API:
@@ -127,7 +127,7 @@ Complex parliamentary data analysis:
     brew install jq
     ```
 
-## =È API Overview
+## =Ãˆ API Overview
 
 Understanding what you're working with:
 
@@ -148,13 +148,13 @@ Understanding what you're working with:
 | Entity | Description | Example Use |
 |--------|-------------|-------------|
 | `Sag` | Cases/Bills | Track legislation progress |
-| `Aktør` | Politicians/Parties | Analyze political actors |
+| `AktÃ¸r` | Politicians/Parties | Analyze political actors |
 | `Afstemning` | Voting Sessions | Study voting patterns |
 | `Stemme` | Individual Votes | Detailed vote analysis |
 | `Dokument` | Parliamentary Documents | Document research |
-| `Møde` | Committee Meetings | Meeting attendance |
+| `MÃ¸de` | Committee Meetings | Meeting attendance |
 
-## <¨ Code Style Guidelines
+## <Â¨ Code Style Guidelines
 
 ### Universal Patterns
 All examples follow these principles:
@@ -293,7 +293,7 @@ Track bills through the parliamentary process:
         return progress_report
     ```
 
-## =Ú Learning Path
+## =Ãš Learning Path
 
 ### Beginner (First Hour)
 1. **[Getting Started](../getting-started/)** - Basic concepts and first API call
@@ -313,7 +313,7 @@ Track bills through the parliamentary process:
 3. **[Data Mining Patterns](../guides/advanced-analysis/)** - Large-scale analysis
 4. **Production Deployment** - Scaling and monitoring
 
-## =à Development Tools
+## =Ã  Development Tools
 
 ### API Testing Tools
 - **[Query Builder](live-examples/query-builder.md)** - Visual query construction

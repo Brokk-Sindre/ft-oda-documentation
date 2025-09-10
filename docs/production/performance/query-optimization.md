@@ -31,7 +31,7 @@ Large responses significantly impact performance:
 
 ```bash
 # L SLOW: Full entity with all relationships (>50KB per record)
-curl "https://oda.ft.dk/api/Sag?%24expand=SagAktør/Aktør&%24top=100"
+curl "https://oda.ft.dk/api/Sag?%24expand=SagAktÃ¸r/AktÃ¸r&%24top=100"
 
 #  OPTIMIZED: Selective fields only (~2KB per record)  
 curl "https://oda.ft.dk/api/Sag?%24select=id,titel,opdateringsdato&%24top=100"
@@ -67,7 +67,7 @@ curl "https://oda.ft.dk/api/Sag?%24select=id,titel,statusid&%24top=1000"
 curl "https://oda.ft.dk/api/Sag?%24select=id,opdateringsdato&%24top=1000"
 
 # For search results
-curl "https://oda.ft.dk/api/Sag?%24select=id,titel,resumé&%24filter=contains(titel,'klima')"
+curl "https://oda.ft.dk/api/Sag?%24select=id,titel,resumÃ©&%24filter=contains(titel,'klima')"
 ```
 
 **Combine $select with expansions**:
@@ -138,7 +138,7 @@ curl "https://oda.ft.dk/api/Sag?%24filter=(statusid%20eq%203%20or%20statusid%20e
 **Critical**: Use proper URL encoding for complex filters:
 ```bash
 # Complex filter with proper encoding
-FILTER="(contains(titel,'klima')%20or%20contains(titel,'miljø'))%20and%20opdateringsdato%20gt%20datetime'2023-01-01'"
+FILTER="(contains(titel,'klima')%20or%20contains(titel,'miljÃ¸'))%20and%20opdateringsdato%20gt%20datetime'2023-01-01'"
 curl "https://oda.ft.dk/api/Sag?\$filter=${FILTER}&\$select=id,titel"
 ```
 
@@ -158,10 +158,10 @@ curl "https://oda.ft.dk/api/Sag?%24select=id,titel&%24top=10"
 curl "https://oda.ft.dk/api/Sag?%24expand=Sagskategori&%24select=id,titel&%24top=10"
 
 # Multiple expansions: ~300ms, 120KB
-curl "https://oda.ft.dk/api/Sag?%24expand=Sagskategori,SagAktør&%24select=id,titel&%24top=10"
+curl "https://oda.ft.dk/api/Sag?%24expand=Sagskategori,SagAktÃ¸r&%24select=id,titel&%24top=10"
 
 # Deep expansion: ~500ms, 200KB per record
-curl "https://oda.ft.dk/api/Sag?%24expand=SagAktør/Aktør&%24top=10"
+curl "https://oda.ft.dk/api/Sag?%24expand=SagAktÃ¸r/AktÃ¸r&%24top=10"
 ```
 
 ### Selective Expansion with Field Selection
@@ -169,10 +169,10 @@ curl "https://oda.ft.dk/api/Sag?%24expand=SagAktør/Aktør&%24top=10"
 **Always combine expansions with field selection**:
 ```bash
 #  OPTIMIZED: Select specific fields from expanded entities
-curl "https://oda.ft.dk/api/Sag?%24expand=Sagskategori(\$select=kategori),SagAktør(\$select=rolleid)&%24select=id,titel"
+curl "https://oda.ft.dk/api/Sag?%24expand=Sagskategori(\$select=kategori),SagAktÃ¸r(\$select=rolleid)&%24select=id,titel"
 
 #  Deep expansion with field selection
-curl "https://oda.ft.dk/api/Afstemning?%24expand=Stemme(\$select=typeid;%24expand=Aktør(\$select=navn))&%24select=id,nummer"
+curl "https://oda.ft.dk/api/Afstemning?%24expand=Stemme(\$select=typeid;%24expand=AktÃ¸r(\$select=navn))&%24select=id,nummer"
 ```
 
 ### Expansion Depth Limits
@@ -181,18 +181,18 @@ The API supports maximum **2-level expansions**:
 
 ```bash
 #  SUPPORTED: Two-level expansion
-curl "https://oda.ft.dk/api/Afstemning?%24expand=Stemme/Aktør"
+curl "https://oda.ft.dk/api/Afstemning?%24expand=Stemme/AktÃ¸r"
 
 # L ERROR: Three-level expansion returns HTTP 400
-curl "https://oda.ft.dk/api/Sag?%24expand=SagAktør/Aktør/AktørType"
+curl "https://oda.ft.dk/api/Sag?%24expand=SagAktÃ¸r/AktÃ¸r/AktÃ¸rType"
 ```
 
 **Workaround for deep relationships**:
 ```javascript
 // Use separate queries for deep data
-const cases = await fetch('https://oda.ft.dk/api/Sag?$expand=SagAktør&$select=id,titel');
-const actorIds = cases.value.flatMap(c => c.SagAktør.map(sa => sa.aktørid));
-const actors = await fetch(`https://oda.ft.dk/api/Aktør?$filter=id in (${actorIds.join(',')})`);
+const cases = await fetch('https://oda.ft.dk/api/Sag?$expand=SagAktÃ¸r&$select=id,titel');
+const actorIds = cases.value.flatMap(c => c.SagAktÃ¸r.map(sa => sa.aktÃ¸rid));
+const actors = await fetch(`https://oda.ft.dk/api/AktÃ¸r?$filter=id in (${actorIds.join(',')})`);
 ```
 
 ## Ordering and Sorting Performance
@@ -205,7 +205,7 @@ const actors = await fetch(`https://oda.ft.dk/api/Aktør?$filter=id in (${actorId
 curl "https://oda.ft.dk/api/Sag?%24orderby=opdateringsdato%20desc&%24top=100"
 curl "https://oda.ft.dk/api/Sag?%24orderby=id%20desc&%24top=100"
 
-#   SLOWER: Sort by text fields  
+# Â  SLOWER: Sort by text fields  
 curl "https://oda.ft.dk/api/Sag?%24orderby=titel&%24top=100"
 ```
 
@@ -251,10 +251,10 @@ curl "https://oda.ft.dk/api/Sag?%24orderby=opdateringsdato%20desc&%24top=100&%24
 **Avoid These Patterns**:
 ```bash
 # L VERY SLOW: Large unfiltered dataset with full expansion
-curl "https://oda.ft.dk/api/Sag?%24expand=SagAktør/Aktør&%24top=1000"
+curl "https://oda.ft.dk/api/Sag?%24expand=SagAktÃ¸r/AktÃ¸r&%24top=1000"
 
 # L TIMEOUT RISK: No limits with expensive operations
-curl "https://oda.ft.dk/api/Sag?%24expand=SagAktør/Aktør&%24filter=contains(resumé,'politik')"
+curl "https://oda.ft.dk/api/Sag?%24expand=SagAktÃ¸r/AktÃ¸r&%24filter=contains(resumÃ©,'politik')"
 ```
 
 ### Query Complexity Scoring
@@ -307,7 +307,7 @@ For multiple entity types:
 // Parallel queries for different entity types
 const [cases, actors, votes] = await Promise.all([
     fetch('https://oda.ft.dk/api/Sag?$select=id,titel&$top=100'),
-    fetch('https://oda.ft.dk/api/Aktør?$select=id,navn&$top=100'),  
+    fetch('https://oda.ft.dk/api/AktÃ¸r?$select=id,navn&$top=100'),  
     fetch('https://oda.ft.dk/api/Afstemning?$select=id,nummer&$top=100')
 ]);
 ```
@@ -363,7 +363,7 @@ await benchmarkQuery(
 );
 
 await benchmarkQuery(
-    'https://oda.ft.dk/api/Sag?$expand=SagAktør&$top=100', 
+    'https://oda.ft.dk/api/Sag?$expand=SagAktÃ¸r&$top=100', 
     'Expansion query'
 );
 ```
@@ -436,7 +436,7 @@ const cases = await client.query('https://oda.ft.dk/api/Sag?$select=id,titel&$to
 **Design queries for caching**:
 ```bash
 #  CACHEABLE: Stable query with consistent results
-curl "https://oda.ft.dk/api/Aktør?%24select=id,navn,gruppeid&%24orderby=navn"
+curl "https://oda.ft.dk/api/AktÃ¸r?%24select=id,navn,gruppeid&%24orderby=navn"
 
 # L NOT CACHEABLE: Time-dependent query  
 curl "https://oda.ft.dk/api/Sag?%24filter=opdateringsdato%20gt%20datetime'2025-09-10T10:00:00'"
@@ -480,20 +480,20 @@ async function getCasesWithCacheValidation() {
 
 ```javascript
 // L ORIGINAL: Expensive deep expansion
-// curl "https://oda.ft.dk/api/Sag?$expand=SagAktør/Aktör&$filter=contains(titel,'klima')"
+// curl "https://oda.ft.dk/api/Sag?$expand=SagAktÃ¸r/AktÃ¶r&$filter=contains(titel,'klima')"
 
 //  OPTIMIZED: Break into separate queries
 async function getClimateCasesWithActors() {
     // Step 1: Get climate cases with minimal data
-    const cases = await fetch(`https://oda.ft.dk/api/Sag?$filter=contains(titel,'klima')&$select=id,titel&$expand=SagAktør($select=aktørid,rolleid)`);
+    const cases = await fetch(`https://oda.ft.dk/api/Sag?$filter=contains(titel,'klima')&$select=id,titel&$expand=SagAktÃ¸r($select=aktÃ¸rid,rolleid)`);
     
     // Step 2: Get unique actor IDs  
     const actorIds = [...new Set(
-        cases.value.flatMap(c => c.SagAktör.map(sa => sa.aktørid))
+        cases.value.flatMap(c => c.SagAktÃ¶r.map(sa => sa.aktÃ¸rid))
     )];
     
     // Step 3: Batch fetch actors
-    const actors = await fetch(`https://oda.ft.dk/api/Aktör?$filter=id in (${actorIds.join(',')})&$select=id,navn,gruppeid`);
+    const actors = await fetch(`https://oda.ft.dk/api/AktÃ¶r?$filter=id in (${actorIds.join(',')})&$select=id,navn,gruppeid`);
     
     // Step 4: Combine results efficiently
     return combineResults(cases.value, actors.value);

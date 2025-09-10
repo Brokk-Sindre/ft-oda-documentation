@@ -10,11 +10,11 @@ Voting pattern analysis reveals the underlying political dynamics within the Dan
 
 | Entity | Purpose | Key Fields |
 |--------|---------|------------|
-| `Afstemning` | Voting sessions | `konklusion`, `vedtaget`, `mødeid`, `typeid` |
+| `Afstemning` | Voting sessions | `konklusion`, `vedtaget`, `mÃ¸deid`, `typeid` |
 | `Stemme` | Individual votes | `typeid`, `aktorid`, `afstemningid` |
-| `Aktør` | Politicians/Parties | `id`, `navn`, `gruppeid` |
-| `Sag` | Legislative cases | `afgørelse`, `afstemningskonklusion`, `typeid` |
-| `Møde` | Parliamentary meetings | `dato`, `nummer`, `periodeid` |
+| `AktÃ¸r` | Politicians/Parties | `id`, `navn`, `gruppeid` |
+| `Sag` | Legislative cases | `afgÃ¸relse`, `afstemningskonklusion`, `typeid` |
+| `MÃ¸de` | Parliamentary meetings | `dato`, `nummer`, `periodeid` |
 
 ## Pattern Analysis Fundamentals
 
@@ -41,7 +41,7 @@ class VotingPatternAnalyzer:
         """Fetch comprehensive voting data with actor and meeting details"""
         url = f"{self.base_url}/Afstemning"
         params = {
-            '$expand': 'Stemme($expand=Aktør),Møde',
+            '$expand': 'Stemme($expand=AktÃ¸r),MÃ¸de',
             '$top': limit,
             '$orderby': 'id desc'
         }
@@ -62,9 +62,9 @@ class VotingPatternAnalyzer:
                 'vote_id': vote_session['id'],
                 'conclusion': vote_session['konklusion'],
                 'passed': vote_session['vedtaget'],
-                'meeting_id': vote_session['mødeid'],
+                'meeting_id': vote_session['mÃ¸deid'],
                 'type_id': vote_session['typeid'],
-                'meeting_date': vote_session.get('Møde', {}).get('dato') if vote_session.get('Møde') else None
+                'meeting_date': vote_session.get('MÃ¸de', {}).get('dato') if vote_session.get('MÃ¸de') else None
             }
             
             # Process individual votes
@@ -74,8 +74,8 @@ class VotingPatternAnalyzer:
                     vote_record.update({
                         'actor_id': individual_vote['aktorid'],
                         'vote_type': individual_vote['typeid'],
-                        'actor_name': individual_vote.get('Aktør', {}).get('navn', ''),
-                        'party_id': individual_vote.get('Aktør', {}).get('gruppeid')
+                        'actor_name': individual_vote.get('AktÃ¸r', {}).get('navn', ''),
+                        'party_id': individual_vote.get('AktÃ¸r', {}).get('gruppeid')
                     })
                     processed.append(vote_record)
             else:
@@ -101,7 +101,7 @@ def classify_vote_types(df):
         1: 'For',           # Stemme for
         2: 'Against',       # Stemme imod  
         3: 'Abstention',    # Hverken for eller imod
-        4: 'Absent'         # Fraværende
+        4: 'Absent'         # FravÃ¦rende
     }
     
     df['vote_category'] = df['vote_type'].map(vote_type_mapping)
@@ -114,7 +114,7 @@ def classify_vote_types(df):
     
     # Amendment vs main proposal
     df['is_amendment'] = df['conclusion'].str.contains(
-        'ændringsforslag|amendment',
+        'Ã¦ndringsforslag|amendment',
         case=False, na=False
     )
     
@@ -626,7 +626,7 @@ def create_prediction_features(df):
 # Build prediction model
 prediction_results = build_voting_prediction_model(voting_df)
 print(f"Model Accuracy: {prediction_results['test_score']:.3f}")
-print(f"Cross-validation: {prediction_results['cv_mean']:.3f} (±{prediction_results['cv_std']:.3f})")
+print(f"Cross-validation: {prediction_results['cv_mean']:.3f} (Â±{prediction_results['cv_std']:.3f})")
 ```
 
 ### 2. Deep Learning Approach
@@ -1082,7 +1082,7 @@ def optimize_api_queries(batch_size=100, max_concurrent=5):
         """Fetch voting data batch asynchronously"""
         url = f"{analyzer.base_url}/Afstemning"
         params = {
-            '$expand': 'Stemme($expand=Aktør),Møde',
+            '$expand': 'Stemme($expand=AktÃ¸r),MÃ¸de',
             '$skip': offset,
             '$top': limit,
             '$orderby': 'id desc'

@@ -47,10 +47,10 @@ time curl "https://oda.ft.dk/api/Sag?\$top=100"
 #### Relationship Validation
 ```bash
 # Multi-level expansion testing
-curl "https://oda.ft.dk/api/Afstemning?\$expand=Stemme/Aktør&\$top=1"
+curl "https://oda.ft.dk/api/Afstemning?\$expand=Stemme/AktÃ¸r&\$top=1"
 
 # Deep nesting validation  
-curl "https://oda.ft.dk/api/Sag?\$expand=SagAktør/Aktør&\$top=1"
+curl "https://oda.ft.dk/api/Sag?\$expand=SagAktÃ¸r/AktÃ¸r&\$top=1"
 ```
 
 ### Phase 5-15: Advanced Feature Testing
@@ -121,7 +121,7 @@ curl -X DELETE "https://oda.ft.dk/api/Sag(1)"
 ```
 
 #### Junction Table Analysis (Phase 25)
-- **Complete Role Enumeration**: 23 SagAktørRolle types, 25 DokumentAktørRolle types
+- **Complete Role Enumeration**: 23 SagAktÃ¸rRolle types, 25 DokumentAktÃ¸rRolle types
 - **Referential Integrity**: Foreign key relationship validation
 - **Semantic Analysis**: Role-based relationship meaning documentation
 
@@ -138,7 +138,7 @@ curl -X DELETE "https://oda.ft.dk/api/Sag(1)"
 ```bash
 #!/bin/bash
 # Automated entity validation script
-ENTITIES=("Sag" "Aktør" "Dokument" "Afstemning" "Stemme")
+ENTITIES=("Sag" "AktÃ¸r" "Dokument" "Afstemning" "Stemme")
 
 for entity in "${ENTITIES[@]}"; do
   echo "Testing $entity..."
@@ -174,7 +174,7 @@ curl -w "%{http_code}" "https://oda.ft.dk/api/Sag?\$invalid=test" 2>/dev/null
 curl "https://oda.ft.dk/api/Sag?\$filter=titel eq null&\$inlinecount=allpages&\$top=0"
 
 # Field population statistics
-curl "https://oda.ft.dk/api/Sag?\$select=titel,afgørelse,baggrundsmateriale&\$top=1000"
+curl "https://oda.ft.dk/api/Sag?\$select=titel,afgÃ¸relse,baggrundsmateriale&\$top=1000"
 ```
 
 #### Temporal Data Validation
@@ -222,13 +222,13 @@ done
 #### Complex Query Performance
 ```bash
 # Multi-level expansion timing
-time curl "https://oda.ft.dk/api/Afstemning?\$expand=Stemme/Aktør&\$top=10"
+time curl "https://oda.ft.dk/api/Afstemning?\$expand=Stemme/AktÃ¸r&\$top=10"
 
 # Complex filtering performance  
 time curl "https://oda.ft.dk/api/Sag?\$filter=contains(titel,'lovforslag') and year(opdateringsdato) eq 2024&\$top=100"
 
 # Large result set handling
-time curl "https://oda.ft.dk/api/Aktør?\$top=1000"
+time curl "https://oda.ft.dk/api/AktÃ¸r?\$top=1000"
 ```
 
 #### Caching Behavior Analysis
@@ -263,7 +263,7 @@ def analyze_field_completeness(entity, fields, sample_size=1000):
 
 # Example usage
 sag_completeness = analyze_field_completeness('Sag', 
-    ['titel', 'afgørelse', 'baggrundsmateriale', 'resumé'])
+    ['titel', 'afgÃ¸relse', 'baggrundsmateriale', 'resumÃ©'])
 ```
 
 ### Integrity Validation
@@ -271,11 +271,11 @@ sag_completeness = analyze_field_completeness('Sag',
 #### Referential Integrity Testing
 ```bash
 # Foreign key validation
-curl "https://oda.ft.dk/api/SagAktør?\$expand=Sag,Aktør&\$top=100" | \
-jq '.value[] | select(.Sag == null or .Aktør == null)'
+curl "https://oda.ft.dk/api/SagAktÃ¸r?\$expand=Sag,AktÃ¸r&\$top=100" | \
+jq '.value[] | select(.Sag == null or .AktÃ¸r == null)'
 
 # Junction table consistency  
-curl "https://oda.ft.dk/api/SagAktør?\$select=rolleid&\$top=1000" | \
+curl "https://oda.ft.dk/api/SagAktÃ¸r?\$select=rolleid&\$top=1000" | \
 jq '[.value[].rolleid] | unique | length'
 ```
 
@@ -304,7 +304,7 @@ curl "https://oda.ft.dk/api/Sag?\$skip=10&\$top=1"
 curl "https://oda.ft.dk/api/Sag?\$inlinecount=allpages&\$top=1"
 
 # Advanced OData features
-curl "https://oda.ft.dk/api/Sag?\$expand=SagAktør/Aktør&\$top=1"
+curl "https://oda.ft.dk/api/Sag?\$expand=SagAktÃ¸r/AktÃ¸r&\$top=1"
 ```
 
 #### URL Encoding Requirements
@@ -314,7 +314,7 @@ curl "https://oda.ft.dk/api/Sag?$top=1"  # Fails
 curl "https://oda.ft.dk/api/Sag?%24top=1"  # Succeeds
 
 # Special character handling
-curl "https://oda.ft.dk/api/Aktør?\$filter=navn eq 'Møller'&\$top=1"
+curl "https://oda.ft.dk/api/AktÃ¸r?\$filter=navn eq 'MÃ¸ller'&\$top=1"
 ```
 
 ### Browser Compatibility Testing
@@ -363,17 +363,17 @@ curl "https://oda.ft.dk/api/Sag?\$top=-1"     # Test invalid values
 curl "https://oda.ft.dk/api/Sag?\$skip=999999" # Test large skip values
 
 # Complex query boundaries
-curl "https://oda.ft.dk/api/Sag?\$expand=SagAktør/Aktør/AktørAktør/Aktør&\$top=1"
+curl "https://oda.ft.dk/api/Sag?\$expand=SagAktÃ¸r/AktÃ¸r/AktÃ¸rAktÃ¸r/AktÃ¸r&\$top=1"
 ```
 
 #### Special Character Handling
 ```bash
 # Danish character support
-curl "https://oda.ft.dk/api/Aktør?\$filter=navn eq 'Ørsteds'&\$top=1"
-curl "https://oda.ft.dk/api/Sag?\$filter=contains(titel,'å')&\$top=1"
+curl "https://oda.ft.dk/api/AktÃ¸r?\$filter=navn eq 'Ã˜rsteds'&\$top=1"
+curl "https://oda.ft.dk/api/Sag?\$filter=contains(titel,'Ã¥')&\$top=1"
 
 # Unicode and encoding tests
-curl "https://oda.ft.dk/api/Sag?\$filter=contains(titel,'æøå')&\$top=1"
+curl "https://oda.ft.dk/api/Sag?\$filter=contains(titel,'Ã¦Ã¸Ã¥')&\$top=1"
 ```
 
 ## Documentation and Validation Processes
@@ -470,7 +470,7 @@ done
 ```bash
 # Junction table consistency
 CASES=$(curl "https://oda.ft.dk/api/Sag?\$inlinecount=allpages&\$top=0" | jq '.["odata.count"]')
-CASE_ACTORS=$(curl "https://oda.ft.dk/api/SagAktør?\$inlinecount=allpages&\$top=0" | jq '.["odata.count"]')
+CASE_ACTORS=$(curl "https://oda.ft.dk/api/SagAktÃ¸r?\$inlinecount=allpages&\$top=0" | jq '.["odata.count"]')
 
 echo "Cases: $CASES"
 echo "Case-Actor relationships: $CASE_ACTORS"

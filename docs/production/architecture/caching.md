@@ -162,7 +162,7 @@ def get_recent_cases(year: int = 2025) -> Dict[str, Any]:
 def get_politician_votes(politician_name: str) -> Dict[str, Any]:
     """Get politician voting records with caching"""
     filter_expr = f"substringof('{politician_name}', navn)"
-    url = f"https://oda.ft.dk/api/Aktør?$filter={filter_expr}&$expand=Stemme"
+    url = f"https://oda.ft.dk/api/AktÃ¸r?$filter={filter_expr}&$expand=Stemme"
     return cache.get(url)
 ```
 
@@ -198,8 +198,8 @@ def generate_cache_key(entity: str, filters: Dict[str, Any],
 cases_key = generate_cache_key("Sag", {"year": 2025}, ["Afstemning"])
 # Result: "Sag|filters=year=2025|expand=Afstemning"
 
-politician_key = generate_cache_key("Aktør", {"navn": "Frank Aaen"})  
-# Result: "Aktør|filters=navn=Frank Aaen"
+politician_key = generate_cache_key("AktÃ¸r", {"navn": "Frank Aaen"})  
+# Result: "AktÃ¸r|filters=navn=Frank Aaen"
 ```
 
 ### Time-Based Cache Invalidation
@@ -634,14 +634,14 @@ class ParliamentaryCacheWarmer {
             
             // Active politicians
             {
-                url: 'https://oda.ft.dk/api/Aktør?$filter=slutdato eq null&$top=200',
+                url: 'https://oda.ft.dk/api/AktÃ¸r?$filter=slutdato eq null&$top=200',
                 key: 'active_politicians',
                 priority: 'medium'
             },
             
             // Committee information
             {
-                url: 'https://oda.ft.dk/api/Aktør?$filter=typeid eq 4',
+                url: 'https://oda.ft.dk/api/AktÃ¸r?$filter=typeid eq 4',
                 key: 'committees',
                 priority: 'low'  
             }
@@ -701,7 +701,7 @@ class ParliamentaryCacheWarmer {
         // If user viewed a politician, they might want their voting record
         if (activity.lastViewed?.type === 'politician') {
             predictions.push({
-                url: `https://oda.ft.dk/api/Stemme?$filter=aktørid eq ${activity.lastViewed.id}&$expand=Afstemning`,
+                url: `https://oda.ft.dk/api/Stemme?$filter=aktÃ¸rid eq ${activity.lastViewed.id}&$expand=Afstemning`,
                 confidence: 0.8,
                 description: `Voting records for ${activity.lastViewed.name}`
             });

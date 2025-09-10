@@ -117,9 +117,9 @@ For applications requiring high throughput:
 # Example cache invalidation logic
 def should_refresh_cache(entity_type, last_cached):
     update_patterns = {
-        'Aktør': 86400,  # Actor data: daily updates
+        'AktÃ¸r': 86400,  # Actor data: daily updates
         'Sag': 3600,     # Cases: hourly during active sessions
-        'Møde': 1800,    # Meetings: 30-minute updates
+        'MÃ¸de': 1800,    # Meetings: 30-minute updates
         'Dokument': 7200 # Documents: 2-hour updates
     }
     return (time.now() - last_cached) > update_patterns.get(entity_type, 3600)
@@ -141,10 +141,10 @@ GET /api/Sag?$select=id,titel,statusid,opdateringsdato&$top=1000
 **Strategic Expansion**:
 ```odata
 # Avoid deep expansions unless necessary
-GET /api/Afstemning?$expand=Stemme/Aktør&$top=100
+GET /api/Afstemning?$expand=Stemme/AktÃ¸r&$top=100
 
 # Use selective expansion
-GET /api/Afstemning?$expand=Stemme&$select=id,titel,Stemme/aktørid&$top=100
+GET /api/Afstemning?$expand=Stemme&$select=id,titel,Stemme/aktÃ¸rid&$top=100
 ```
 
 **Pagination Strategy**:

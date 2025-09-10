@@ -207,7 +207,7 @@ curl "https://oda.ft.dk/api/Sag?%24filter=contains(titel,'EU')"       # EU legis
 #### By Period ID
 ```bash
 # Analyze specific parliamentary period
-curl "https://oda.ft.dk/api/Sag?%24filter=periodeid%20eq%20[PERIOD_ID]&%24expand=SagAktør"
+curl "https://oda.ft.dk/api/Sag?%24filter=periodeid%20eq%20[PERIOD_ID]&%24expand=SagAktÃ¸r"
 ```
 
 #### By Date Range
@@ -315,7 +315,7 @@ cases_2010s = api_query("Sag", filter=f"periodeid in ({','.join(period_ids_2010s
 #### Political Science Applications
 ```bash
 # Government duration analysis
-curl "https://oda.ft.dk/api/Aktør?%24filter=typeid%20eq%205&%24expand=Periode"  # Ministers by period
+curl "https://oda.ft.dk/api/AktÃ¸r?%24filter=typeid%20eq%205&%24expand=Periode"  # Ministers by period
 
 # Coalition stability research
 curl "https://oda.ft.dk/api/Sag?%24filter=contains(titel,'tillid')&%24orderby=periodeid"  # Confidence votes
@@ -324,7 +324,7 @@ curl "https://oda.ft.dk/api/Sag?%24filter=contains(titel,'tillid')&%24orderby=pe
 #### Historical Studies
 ```bash
 # Policy innovation tracking
-curl "https://oda.ft.dk/api/Sag?%24filter=contains(titel,'miljø')&%24orderby=periodeid"  # Environmental policy evolution
+curl "https://oda.ft.dk/api/Sag?%24filter=contains(titel,'miljÃ¸')&%24orderby=periodeid"  # Environmental policy evolution
 
 # Democratic participation analysis  
 curl "https://oda.ft.dk/api/Afstemning?%24expand=Stemme&%24orderby=dato"  # Voting participation trends

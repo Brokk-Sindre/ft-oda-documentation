@@ -39,15 +39,15 @@ Denmark's approach to open data is governed by several key frameworks:
 
 #### **Freedom of Information Act (Offentlighedsloven)**
 ```
-ง 4: Documents and information are public unless specifically exempted
-ง 7: Personal information may be disclosed when part of public records
+ยง 4: Documents and information are public unless specifically exempted
+ยง 7: Personal information may be disclosed when part of public records
 ```
 
 #### **Parliamentary Procedure Act**
 ```
-ง 8: Parliamentary proceedings are public
-ง 57: Voting records are public information  
-ง 61: Committee work transparency requirements
+ยง 8: Parliamentary proceedings are public
+ยง 57: Voting records are public information  
+ยง 61: Committee work transparency requirements
 ```
 
 ## Rights and Permissions
@@ -415,10 +415,10 @@ Considerations:
 
 ### Deep Dive Resources
 
-#### **=ห [Terms of Service](terms-of-service.md)**
+#### **=ร [Terms of Service](terms-of-service.md)**
 Comprehensive terms and conditions for API usage, including acceptable use policies, service limitations, and user obligations.
 
-#### **<๗ [Attribution Guidelines](attribution.md)**
+#### **<รท [Attribution Guidelines](attribution.md)**
 Detailed requirements and best practices for properly crediting the Danish Parliament as your data source, including format examples and legal considerations.
 
 ### Related Compliance Areas

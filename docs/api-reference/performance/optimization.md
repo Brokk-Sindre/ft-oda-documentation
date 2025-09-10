@@ -38,10 +38,10 @@ When using `$expand`, select specific fields from related entities:
 
 ```bash
 # L Full expansion (large response)
-curl "https://oda.ft.dk/api/Sag?%24expand=SagAktør/Aktør&%24top=50"
+curl "https://oda.ft.dk/api/Sag?%24expand=SagAktÃ¸r/AktÃ¸r&%24top=50"
 
 #  Selective expansion
-curl "https://oda.ft.dk/api/Sag?%24select=titel,SagAktør/Aktør/navn&%24expand=SagAktør/Aktør&%24top=50"
+curl "https://oda.ft.dk/api/Sag?%24select=titel,SagAktÃ¸r/AktÃ¸r/navn&%24expand=SagAktÃ¸r/AktÃ¸r&%24top=50"
 ```
 
 ### Common Field Selection Patterns
@@ -51,7 +51,7 @@ curl "https://oda.ft.dk/api/Sag?%24select=titel,SagAktør/Aktør/navn&%24expand=Sa
 curl "https://oda.ft.dk/api/Sag?%24select=id,titel,offentlighedskode,opdateringsdato"
 
 # Voting results with politician names
-curl "https://oda.ft.dk/api/Stemme?%24select=id,typeid,Afstemning/konklusion,Aktør/navn&%24expand=Afstemning,Aktør"
+curl "https://oda.ft.dk/api/Stemme?%24select=id,typeid,Afstemning/konklusion,AktÃ¸r/navn&%24expand=Afstemning,AktÃ¸r"
 
 # Document metadata without full text
 curl "https://oda.ft.dk/api/Dokument?%24select=titel,offentlighedskode,Fil/filurl,Fil/format&%24expand=Fil"
@@ -64,7 +64,7 @@ curl "https://oda.ft.dk/api/Dokument?%24select=titel,offentlighedskode,Fil/filur
 Only expand relationships when you need the related data. Each expansion increases response size and processing time.
 
 !!! warning "Performance Impact"
-    Multi-level expansions like `$expand=Stemme/Aktør` on voting data can increase response time from 200ms to 1.8s for 100 records.
+    Multi-level expansions like `$expand=Stemme/AktÃ¸r` on voting data can increase response time from 200ms to 1.8s for 100 records.
 
 **Guidelines:**
 - Expand only required relationships
@@ -81,7 +81,7 @@ Only expand relationships when you need the related data. Each expansion increas
 
 ```bash
 # L Unnecessary expansion
-curl "https://oda.ft.dk/api/Sag?%24expand=SagAktør/Aktør&%24top=100"
+curl "https://oda.ft.dk/api/Sag?%24expand=SagAktÃ¸r/AktÃ¸r&%24top=100"
 # Use only if you need politician information
 
 #  Targeted expansion
@@ -100,7 +100,7 @@ Filters should be applied before expansions to reduce the dataset size being pro
 curl "https://oda.ft.dk/api/Sag?%24filter=year(opdateringsdato)%20eq%202025&%24expand=Sagskategori&%24top=50"
 
 # L Expanding unnecessarily large datasets
-curl "https://oda.ft.dk/api/Sag?%24expand=SagAktør/Aktør&%24filter=year(opdateringsdato)%20eq%202025&%24top=50"
+curl "https://oda.ft.dk/api/Sag?%24expand=SagAktÃ¸r/AktÃ¸r&%24filter=year(opdateringsdato)%20eq%202025&%24top=50"
 ```
 
 ### Index-Friendly Filtering
@@ -122,7 +122,7 @@ Use filters that align with likely database indexes for better performance:
 #  Fast: ID and type filters
 curl "https://oda.ft.dk/api/Stemme?%24filter=afstemningid%20eq%20123%20and%20typeid%20eq%201"
 
-#   Slower: Text search
+# Â  Slower: Text search
 curl "https://oda.ft.dk/api/Sag?%24filter=substringof('klima',titel)"
 ```
 
@@ -187,14 +187,14 @@ For multiple related queries, consider the tradeoffs:
 curl "https://oda.ft.dk/api/Sag?%24filter=substringof('klima',titel)&%24select=id"
 
 # Then get detailed data for specific cases
-curl "https://oda.ft.dk/api/Sag?%24filter=id%20eq%20123&%24expand=SagAktør/Aktør"
+curl "https://oda.ft.dk/api/Sag?%24filter=id%20eq%20123&%24expand=SagAktÃ¸r/AktÃ¸r"
 ```
 
 **Parallel Queries:**
 ```bash
 # Run simultaneously in different terminals/processes
 curl "https://oda.ft.dk/api/Sag?..." &
-curl "https://oda.ft.dk/api/Aktør?..." &
+curl "https://oda.ft.dk/api/AktÃ¸r?..." &
 curl "https://oda.ft.dk/api/Afstemning?..." &
 ```
 
@@ -241,7 +241,7 @@ from datetime import datetime, timedelta
 class SmartODACache:
     def should_cache(self, entity_type, query_params):
         # Cache static data longer
-        if entity_type in ['Aktør', 'Periode', 'Sagskategori']:
+        if entity_type in ['AktÃ¸r', 'Periode', 'Sagskategori']:
             return timedelta(hours=24)
         
         # Cache recent data briefly
@@ -258,7 +258,7 @@ class SmartODACache:
 
 **L Unoptimized Query (2.1s, 450KB)**
 ```bash
-curl "https://oda.ft.dk/api/Sag?%24expand=SagAktør/Aktør,Sagstrin,SagDokument/Dokument&%24top=100"
+curl "https://oda.ft.dk/api/Sag?%24expand=SagAktÃ¸r/AktÃ¸r,Sagstrin,SagDokument/Dokument&%24top=100"
 ```
 
 ** Optimized Query (0.3s, 45KB)**
@@ -267,7 +267,7 @@ curl "https://oda.ft.dk/api/Sag?%24expand=SagAktør/Aktør,Sagstrin,SagDokument/Do
 curl "https://oda.ft.dk/api/Sag?%24filter=year(opdateringsdato)%20eq%202025&%24select=id,titel,opdateringsdato&%24top=100"
 
 # Step 2: Get specific relationships as needed
-curl "https://oda.ft.dk/api/SagAktør?%24filter=sagid%20eq%20123&%24select=rolleid,Aktør/navn&%24expand=Aktør"
+curl "https://oda.ft.dk/api/SagAktÃ¸r?%24filter=sagid%20eq%20123&%24select=rolleid,AktÃ¸r/navn&%24expand=AktÃ¸r"
 ```
 
 **Performance Improvement: 85% faster, 90% less bandwidth**
@@ -276,12 +276,12 @@ curl "https://oda.ft.dk/api/SagAktør?%24filter=sagid%20eq%20123&%24select=rollei
 
 **L Unoptimized Query (1.8s, 280KB)**
 ```bash
-curl "https://oda.ft.dk/api/Stemme?%24expand=Afstemning,Aktør&%24top=200"
+curl "https://oda.ft.dk/api/Stemme?%24expand=Afstemning,AktÃ¸r&%24top=200"
 ```
 
 ** Optimized Query (0.4s, 55KB)**
 ```bash
-curl "https://oda.ft.dk/api/Stemme?%24filter=typeid%20eq%201&%24select=id,typeid,Afstemning/konklusion,Aktør/navn&%24expand=Afstemning,Aktør&%24top=200"
+curl "https://oda.ft.dk/api/Stemme?%24filter=typeid%20eq%201&%24select=id,typeid,Afstemning/konklusion,AktÃ¸r/navn&%24expand=Afstemning,AktÃ¸r&%24top=200"
 ```
 
 **Performance Improvement: 78% faster, 80% less bandwidth**
@@ -290,7 +290,7 @@ curl "https://oda.ft.dk/api/Stemme?%24filter=typeid%20eq%201&%24select=id,typeid
 
 **L Unoptimized Query (1.2s, 320KB)**
 ```bash
-curl "https://oda.ft.dk/api/Dokument?%24expand=DokumentAktør/Aktør,Fil&%24filter=substringof('budget',titel)&%24top=50"
+curl "https://oda.ft.dk/api/Dokument?%24expand=DokumentAktÃ¸r/AktÃ¸r,Fil&%24filter=substringof('budget',titel)&%24top=50"
 ```
 
 ** Optimized Query (0.35s, 65KB)**

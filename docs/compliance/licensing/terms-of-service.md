@@ -8,10 +8,10 @@ Comprehensive terms governing the use of Denmark's Parliamentary Open Data API (
 These Terms of Service govern access to and use of the Danish Parliament Open Data API ("the Service"), provided by the Danish Parliament (Folketinget) through the domain oda.ft.dk. The Service provides structured access to parliamentary data including:
 
 - Parliamentary cases (Sager) and proceedings
-- Political actor information (Aktører) 
+- Political actor information (AktÃ¸rer) 
 - Voting records (Stemmer) and patterns
 - Parliamentary documents (Dokumenter)
-- Committee activities (Møder) and decisions
+- Committee activities (MÃ¸der) and decisions
 - Historical parliamentary data dating back to 1953
 
 ### Legal Framework
@@ -328,7 +328,7 @@ Data completeness varies by time period:
 
 - **Direct Damages Only**: No liability for indirect, consequential, or punitive damages
 - **Nominal Amounts**: Maximum liability limited to nominal amounts
-- **Service Value**: Liability cannot exceed the value of the free service (¬0)
+- **Service Value**: Liability cannot exceed the value of the free service (Â¬0)
 - **Time Limitation**: Claims must be brought within one year of occurrence
 
 #### Exclusions
@@ -424,7 +424,7 @@ Terms may be updated to comply with:
 ### General Inquiries
 - **Email**: folketinget@ft.dk
 - **Website**: [www.ft.dk](https://www.ft.dk)
-- **Address**: Christiansborg, 1240 København K, Denmark
+- **Address**: Christiansborg, 1240 KÃ¸benhavn K, Denmark
 - **Phone**: +45 33 37 55 00
 
 ### Technical Support

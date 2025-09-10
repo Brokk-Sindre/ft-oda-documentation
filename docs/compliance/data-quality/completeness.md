@@ -11,10 +11,10 @@ Data completeness in the Danish Parliamentary OData API represents one of the mo
 The Danish Parliament API maintains exceptional completeness across multiple dimensions:
 
 - **Cases (Sag)**: 96,538+ records with complete legislative tracking
-- **Political Actors (Aktør)**: 18,139+ individuals with biographical and role data
+- **Political Actors (AktÃ¸r)**: 18,139+ individuals with biographical and role data
 - **Voting Records (Afstemning/Stemme)**: Complete voting history with individual politician positions
 - **Documents (Dokument)**: Comprehensive document tracking with full metadata
-- **Meetings (Møde)**: Complete parliamentary session records
+- **Meetings (MÃ¸de)**: Complete parliamentary session records
 
 ### Real-time Data Currency
 
@@ -146,8 +146,8 @@ class CompletenessAnalyzer:
     def generate_completeness_report(self) -> Dict[str, any]:
         """Generate comprehensive completeness report"""
         entities = [
-            'Sag', 'Aktør', 'Afstemning', 'Stemme', 'Dokument', 
-            'Møde', 'Fil', 'Dagsordenspunkt'
+            'Sag', 'AktÃ¸r', 'Afstemning', 'Stemme', 'Dokument', 
+            'MÃ¸de', 'Fil', 'Dagsordenspunkt'
         ]
         
         report = {
@@ -182,7 +182,7 @@ class CompletenessAnalyzer:
                     entity, 'opdateringsdato'
                 )
                 
-            elif entity == 'Aktør':
+            elif entity == 'AktÃ¸r':
                 fields = ['navn', 'fornavn', 'efternavn', 'biografi', 
                          'opdateringsdato', 'startdato', 'slutdato']
                 entity_report['field_completeness'] = self.analyze_field_completeness(
@@ -222,19 +222,19 @@ class CompletenessAnalyzer:
         print("-"*60)
         
         for entity, data in report['entities'].items():
-            print(f"\n=Ê {entity.upper()}")
+            print(f"\n=ÃŠ {entity.upper()}")
             print(f"   Records: {data['total_records']:,}")
             
             if data['field_completeness']:
                 print("   Field Completeness:")
                 for field, pct in data['field_completeness'].items():
-                    status = "" if pct >= 90 else " " if pct >= 70 else "L"
+                    status = "" if pct >= 90 else "Â " if pct >= 70 else "L"
                     print(f"   {status} {field}: {pct:.1f}%")
             
             if data['temporal_analysis']:
                 temp = data['temporal_analysis']
-                print(f"   =Å Date Coverage: {temp.get('date_coverage', 0):.1f}%")
-                print(f"   =Å Latest: {temp.get('latest_date', 'N/A')}")
+                print(f"   =Ã… Date Coverage: {temp.get('date_coverage', 0):.1f}%")
+                print(f"   =Ã… Latest: {temp.get('latest_date', 'N/A')}")
 
 # Usage example
 def main():
@@ -308,9 +308,9 @@ class CompletenessMonitor {
     async generateDashboard() {
         const entities = [
             { name: 'Sag', fields: ['titel', 'titelkort', 'offentlighedskode', 'opdateringsdato'] },
-            { name: 'Aktør', fields: ['navn', 'fornavn', 'efternavn', 'biografi'] },
+            { name: 'AktÃ¸r', fields: ['navn', 'fornavn', 'efternavn', 'biografi'] },
             { name: 'Afstemning', fields: ['nummer', 'konklusion', 'vedtaget'] },
-            { name: 'Stemme', fields: ['typeid', 'aktørid', 'afstemningid'] },
+            { name: 'Stemme', fields: ['typeid', 'aktÃ¸rid', 'afstemningid'] },
             { name: 'Dokument', fields: ['titel', 'dokumenttypeid', 'offentlighedskode'] }
         ];
 
@@ -359,7 +359,7 @@ class CompletenessMonitor {
 
         const html = `
             <div class="completeness-report">
-                <h2>=Ê Data Completeness Dashboard</h2>
+                <h2>=ÃŠ Data Completeness Dashboard</h2>
                 <div class="summary-stats">
                     <div class="stat-box">
                         <h3>${dashboard.summary.totalRecords.toLocaleString()}</h3>
@@ -494,7 +494,7 @@ print(f"Hours since latest: {sag_patterns['hours_since_latest']:.1f}")
 -  **Temporal Integrity**: Creation dates, update timestamps, status changes
 -  **Relationship Completeness**: Links to actors, documents, votes
 
-**Aktør (Political Actors) - 18,139+ records**
+**AktÃ¸r (Political Actors) - 18,139+ records**
 -  **Comprehensive Coverage**: All parliamentarians, ministers, committee members
 -  **Biographical Data**: Names, roles, party affiliations, tenure periods
 -  **Role Tracking**: Complete position history with start/end dates
@@ -511,10 +511,10 @@ print(f"Hours since latest: {sag_patterns['hours_since_latest']:.1f}")
 ```python
 # Analyze completeness across entity categories
 ENTITY_CATEGORIES = {
-    'core': ['Sag', 'Aktør', 'Afstemning', 'Stemme'],
+    'core': ['Sag', 'AktÃ¸r', 'Afstemning', 'Stemme'],
     'documents': ['Dokument', 'Fil', 'Omtryk'],
-    'meetings': ['Møde', 'Dagsordenspunkt'],
-    'metadata': ['Sagsstatus', 'Sagstype', 'Aktørtype'],
+    'meetings': ['MÃ¸de', 'Dagsordenspunkt'],
+    'metadata': ['Sagsstatus', 'Sagstype', 'AktÃ¸rtype'],
     'empty': ['EUsag', 'Sambehandlinger']
 }
 
@@ -747,7 +747,7 @@ def assess_entity_completeness_scores(entity: str):
             'critical': ['titel', 'titelkort', 'offentlighedskode'],
             'optional': ['begrundelse', 'afstemningskonklusion', 'baggrundsmateriale']
         },
-        'Aktør': {
+        'AktÃ¸r': {
             'critical': ['navn', 'typeid'],
             'optional': ['biografi', 'fornavn', 'efternavn']
         },
@@ -798,7 +798,7 @@ def assess_entity_completeness_scores(entity: str):
     }
 
 # Generate completeness scores for key entities
-entities = ['Sag', 'Aktør', 'Afstemning']
+entities = ['Sag', 'AktÃ¸r', 'Afstemning']
 for entity in entities:
     scores = assess_entity_completeness_scores(entity)
     if 'error' not in scores:
@@ -866,7 +866,7 @@ def calculate_entity_completeness_score(entity: str) -> Dict[str, any]:
     
     # 4. Relationship integrity (20%) - simplified
     # For this example, assume good integrity for core entities
-    core_entities = ['Sag', 'Aktør', 'Afstemning', 'Stemme']
+    core_entities = ['Sag', 'AktÃ¸r', 'Afstemning', 'Stemme']
     components['relationship_integrity'] = 95 if entity in core_entities else 80
     
     # Calculate weighted final score
@@ -886,13 +886,13 @@ def calculate_entity_completeness_score(entity: str) -> Dict[str, any]:
     }
 
 # Generate entity scorecards
-entities = ['Sag', 'Aktør', 'Afstemning', 'Stemme', 'Dokument']
+entities = ['Sag', 'AktÃ¸r', 'Afstemning', 'Stemme', 'Dokument']
 print("ENTITY COMPLETENESS SCORECARDS:")
 print("=" * 80)
 
 for entity in entities:
     scorecard = calculate_entity_completeness_score(entity)
-    print(f"\n=Ê {entity.upper()} - Grade: {scorecard['grade']} ({scorecard['final_score']:.1f}%)")
+    print(f"\n=ÃŠ {entity.upper()} - Grade: {scorecard['grade']} ({scorecard['final_score']:.1f}%)")
     print(f"   Records: {scorecard['total_records']:,}")
     print(f"   Components: RC:{scorecard['components']['record_count']:.0f}% "
           f"FC:{scorecard['components']['field_completeness']:.0f}% "
@@ -967,7 +967,7 @@ def analyze_completeness_trends(entity: str, months_back: int = 12):
 
 def plot_completeness_trends():
     """Generate completeness trend visualizations"""
-    entities = ['Sag', 'Aktør', 'Afstemning']
+    entities = ['Sag', 'AktÃ¸r', 'Afstemning']
     
     fig, axes = plt.subplots(len(entities), 1, figsize=(12, 8))
     if len(entities) == 1:
@@ -994,7 +994,7 @@ def plot_completeness_trends():
 
 # Generate trend analysis
 trend_results = {}
-for entity in ['Sag', 'Aktør', 'Afstemning']:
+for entity in ['Sag', 'AktÃ¸r', 'Afstemning']:
     trend_results[entity] = analyze_completeness_trends(entity)
     
 print("COMPLETENESS TREND ANALYSIS:")
@@ -1047,7 +1047,7 @@ def generate_quality_improvement_report():
     print("=" * 60)
     
     for category, data in improvements.items():
-        print(f"\n=È {category.upper().replace('_', ' ')}")
+        print(f"\n=Ãˆ {category.upper().replace('_', ' ')}")
         print(f"   Metric: {data['metric']}")
         print(f"   2023 Baseline: {data['2023_baseline']:,}")
         print(f"   2024 Current: {data['2024_current']:,}")
@@ -1116,7 +1116,7 @@ print(f"SAG COMPLETENESS ANALYSIS:")
 print(f"Total records: {sag_analysis['total_records']:,}")
 print(f"Field completeness scores:")
 for field, pct in sag_analysis['field_analysis'].items():
-    status = "" if pct >= 90 else " " if pct >= 80 else "L"
+    status = "" if pct >= 90 else "Â " if pct >= 80 else "L"
     print(f"  {status} {field}: {pct:.1f}%")
 
 if sag_analysis['content_analysis']:
@@ -1125,14 +1125,14 @@ if sag_analysis['content_analysis']:
         print(f"  {metric}: {pct:.1f}%")
 ```
 
-#### Aktør (Political Actors) Analysis
+#### AktÃ¸r (Political Actors) Analysis
 
 ```python
 def analyze_aktor_completeness():
-    """Detailed completeness analysis for Aktør entity"""
+    """Detailed completeness analysis for AktÃ¸r entity"""
     
     # Get comprehensive sample
-    url = "https://oda.ft.dk/api/Aktør"
+    url = "https://oda.ft.dk/api/AktÃ¸r"
     params = {
         '$select': 'navn,fornavn,efternavn,biografi,startdato,slutdato,opdateringsdato',
         '$top': '1000'
@@ -1143,7 +1143,7 @@ def analyze_aktor_completeness():
     records = data.get('value', [])
     
     if not records:
-        return {'error': 'No Aktør data available'}
+        return {'error': 'No AktÃ¸r data available'}
     
     analysis = {
         'total_sampled': len(records),
@@ -1191,7 +1191,7 @@ def analyze_aktor_completeness():
 
 aktor_analysis = analyze_aktor_completeness()
 if 'error' not in aktor_analysis:
-    print(f"\nAKTØR COMPLETENESS ANALYSIS:")
+    print(f"\nAKTÃ˜R COMPLETENESS ANALYSIS:")
     print(f"Sample size: {aktor_analysis['total_sampled']} records")
     
     print(f"Name completeness:")
@@ -1376,7 +1376,7 @@ class DataQualityValidator:
 
 # Run comprehensive validation
 validator = DataQualityValidator()
-validation_report = validator.comprehensive_validation_report(['Sag', 'Aktør', 'Afstemning'])
+validation_report = validator.comprehensive_validation_report(['Sag', 'AktÃ¸r', 'Afstemning'])
 
 print("\nDATA QUALITY VALIDATION REPORT:")
 print("=" * 80)
@@ -1405,7 +1405,7 @@ class IntegrityMonitor:
         metrics = {
             'total_records': {
                 'Sag': get_entity_count('Sag'),
-                'Aktør': get_entity_count('Aktør'),
+                'AktÃ¸r': get_entity_count('AktÃ¸r'),
                 'Afstemning': get_entity_count('Afstemning')
             },
             'update_currency': {},
@@ -1413,7 +1413,7 @@ class IntegrityMonitor:
         }
         
         # Check update currency
-        for entity in ['Sag', 'Aktør', 'Afstemning']:
+        for entity in ['Sag', 'AktÃ¸r', 'Afstemning']:
             temporal_data = analyze_update_patterns(entity)
             if temporal_data:
                 metrics['update_currency'][entity] = temporal_data.get('hours_since_latest', 999)
@@ -1510,7 +1510,7 @@ if not alerts:
 <body>
     <div class="dashboard">
         <div class="header">
-            <h1><Û Danish Parliament API</h1>
+            <h1><Ã› Danish Parliament API</h1>
             <h2>Data Completeness Monitoring Dashboard</h2>
         </div>
         
@@ -1546,9 +1546,9 @@ if not alerts:
             async collectMetrics() {
                 const entities = [
                     { name: 'Sag', critical_fields: ['titel', 'offentlighedskode'] },
-                    { name: 'Aktør', critical_fields: ['navn'] },
+                    { name: 'AktÃ¸r', critical_fields: ['navn'] },
                     { name: 'Afstemning', critical_fields: ['nummer', 'konklusion'] },
-                    { name: 'Stemme', critical_fields: ['typeid', 'aktørid'] }
+                    { name: 'Stemme', critical_fields: ['typeid', 'aktÃ¸rid'] }
                 ];
 
                 const metrics = {};
@@ -1884,7 +1884,7 @@ def classify_missing_data(entity: str, field: str, sample_size: int = 500):
 
 # Example usage
 print("MISSING DATA CLASSIFICATION:")
-for entity, field in [('Sag', 'begrundelse'), ('Aktør', 'biografi'), ('Dokument', 'titel')]:
+for entity, field in [('Sag', 'begrundelse'), ('AktÃ¸r', 'biografi'), ('Dokument', 'titel')]:
     analysis = classify_missing_data(entity, field)
     if analysis:
         print(f"\n{entity}.{field}:")
@@ -1942,7 +1942,7 @@ class MissingDataHandler:
         enriched_records = []
         
         for record in records:
-            if entity == 'Aktør':
+            if entity == 'AktÃ¸r':
                 record = self.handle_missing_biography(record)
             elif entity == 'Sag':
                 record = self.handle_missing_case_description(record)
@@ -1971,7 +1971,7 @@ def demonstrate_missing_data_handling():
     """Demonstrate missing data handling strategies"""
     
     # Get sample data with potential missing fields
-    url = "https://oda.ft.dk/api/Aktør"
+    url = "https://oda.ft.dk/api/AktÃ¸r"
     params = {
         '$select': 'id,navn,fornavn,efternavn,biografi',
         '$top': '10'
@@ -1982,7 +1982,7 @@ def demonstrate_missing_data_handling():
     records = data.get('value', [])
     
     handler = MissingDataHandler()
-    enriched_records = handler.enrich_incomplete_records('Aktør', records)
+    enriched_records = handler.enrich_incomplete_records('AktÃ¸r', records)
     
     print("MISSING DATA HANDLING DEMONSTRATION:")
     print("=" * 60)

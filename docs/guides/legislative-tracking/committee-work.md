@@ -19,7 +19,7 @@ Danish parliamentary committees handle the detailed examination of legislation, 
 
 ### Committee Types and Hierarchy
 
-The API categorizes committees using the `Aktørtype` entity where type ID 3 represents "Udvalg" (Committee):
+The API categorizes committees using the `AktÃ¸rtype` entity where type ID 3 represents "Udvalg" (Committee):
 
 ```python
 import requests
@@ -29,7 +29,7 @@ from datetime import datetime, timedelta
 # Get all committees
 def get_committees():
     """Fetch all parliamentary committees"""
-    url = "https://oda.ft.dk/api/Aktør"
+    url = "https://oda.ft.dk/api/AktÃ¸r"
     params = {
         '$filter': 'typeid eq 3',  # Committee type
         '$select': 'id,navn,startdato,slutdato,opdateringsdato',
@@ -44,11 +44,11 @@ def get_committees():
 # Get committee details with current membership
 def get_committee_membership(committee_id):
     """Get current members of a specific committee"""
-    url = "https://oda.ft.dk/api/Aktør"
+    url = "https://oda.ft.dk/api/AktÃ¸r"
     params = {
         '$filter': f'id eq {committee_id}',
-        '$expand': 'AktørAktørRolle($expand=Aktør)',
-        '$select': 'id,navn,AktørAktørRolle'
+        '$expand': 'AktÃ¸rAktÃ¸rRolle($expand=AktÃ¸r)',
+        '$select': 'id,navn,AktÃ¸rAktÃ¸rRolle'
     }
     
     response = requests.get(url, params=params)
@@ -91,7 +91,7 @@ Committees follow regular meeting schedules that can be tracked and analyzed:
 ```python
 def get_committee_meetings(committee_name=None, days_ahead=60):
     """Get upcoming committee meetings"""
-    base_url = "https://oda.ft.dk/api/Møde"
+    base_url = "https://oda.ft.dk/api/MÃ¸de"
     
     # Calculate date filter
     start_date = datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
@@ -99,8 +99,8 @@ def get_committee_meetings(committee_name=None, days_ahead=60):
     
     params = {
         '$filter': f"dato gt datetime'{start_date}' and dato lt datetime'{end_date}'",
-        '$expand': 'MødeAktør($expand=Aktør)',
-        '$select': 'id,titel,dato,lokale,nummer,MødeAktør',
+        '$expand': 'MÃ¸deAktÃ¸r($expand=AktÃ¸r)',
+        '$select': 'id,titel,dato,lokale,nummer,MÃ¸deAktÃ¸r',
         '$orderby': 'dato'
     }
     
@@ -134,12 +134,12 @@ def analyze_meeting_attendance(committee_meetings):
             'attendees': []
         }
         
-        if 'MødeAktør' in meeting:
-            for attendee in meeting['MødeAktør']:
-                if 'Aktør' in attendee:
+        if 'MÃ¸deAktÃ¸r' in meeting:
+            for attendee in meeting['MÃ¸deAktÃ¸r']:
+                if 'AktÃ¸r' in attendee:
                     meeting_info['attendees'].append({
-                        'name': attendee['Aktør']['navn'],
-                        'actor_id': attendee['Aktør']['id']
+                        'name': attendee['AktÃ¸r']['navn'],
+                        'actor_id': attendee['AktÃ¸r']['id']
                     })
         
         attendance_data.append(meeting_info)
@@ -163,14 +163,14 @@ def get_committee_cases(committee_id=None, status_filter=None):
     base_url = "https://oda.ft.dk/api/Sag"
     
     params = {
-        '$expand': 'SagAktør($expand=Aktør)',
-        '$filter': 'SagAktør/any(sa: sa/Aktør/typeid eq 3)',  # Cases with committee involvement
-        '$select': 'id,titel,typeid,statusid,opdateringsdato,periodeid,SagAktør',
+        '$expand': 'SagAktÃ¸r($expand=AktÃ¸r)',
+        '$filter': 'SagAktÃ¸r/any(sa: sa/AktÃ¸r/typeid eq 3)',  # Cases with committee involvement
+        '$select': 'id,titel,typeid,statusid,opdateringsdato,periodeid,SagAktÃ¸r',
         '$orderby': 'opdateringsdato desc'
     }
     
     if committee_id:
-        params['$filter'] += f' and SagAktør/any(sa: sa/aktørid eq {committee_id})'
+        params['$filter'] += f' and SagAktÃ¸r/any(sa: sa/aktÃ¸rid eq {committee_id})'
     
     if status_filter:
         params['$filter'] += f' and statusid eq {status_filter}'
@@ -186,9 +186,9 @@ def analyze_committee_workload():
     committee_workload = {}
     
     for case in cases:
-        for actor_relation in case.get('SagAktør', []):
-            if actor_relation.get('Aktør', {}).get('typeid') == 3:  # Committee
-                committee_name = actor_relation['Aktør']['navn']
+        for actor_relation in case.get('SagAktÃ¸r', []):
+            if actor_relation.get('AktÃ¸r', {}).get('typeid') == 3:  # Committee
+                committee_name = actor_relation['AktÃ¸r']['navn']
                 if committee_name not in committee_workload:
                     committee_workload[committee_name] = {
                         'total_cases': 0,
@@ -223,9 +223,9 @@ def track_case_processing_times(committee_name):
     base_url = "https://oda.ft.dk/api/Sag"
     
     params = {
-        '$expand': 'SagAktør($expand=Aktør),Sagsstatus',
-        '$filter': f"SagAktør/any(sa: sa/Aktør/typeid eq 3 and substringof('{committee_name}', sa/Aktør/navn))",
-        '$select': 'id,titel,statusid,opdateringsdato,SagAktør,Sagsstatus'
+        '$expand': 'SagAktÃ¸r($expand=AktÃ¸r),Sagsstatus',
+        '$filter': f"SagAktÃ¸r/any(sa: sa/AktÃ¸r/typeid eq 3 and substringof('{committee_name}', sa/AktÃ¸r/navn))",
+        '$select': 'id,titel,statusid,opdateringsdato,SagAktÃ¸r,Sagsstatus'
     }
     
     response = requests.get(base_url, params=params)
@@ -258,9 +258,9 @@ def get_committee_documents(committee_id, document_type=None):
     base_url = "https://oda.ft.dk/api/Dokument"
     
     params = {
-        '$expand': 'DokumentAktør($expand=Aktør)',
-        '$filter': f'DokumentAktør/any(da: da/aktørid eq {committee_id})',
-        '$select': 'id,titel,dokumenttypeid,dato,offentlighedskode,DokumentAktør',
+        '$expand': 'DokumentAktÃ¸r($expand=AktÃ¸r)',
+        '$filter': f'DokumentAktÃ¸r/any(da: da/aktÃ¸rid eq {committee_id})',
+        '$select': 'id,titel,dokumenttypeid,dato,offentlighedskode,DokumentAktÃ¸r',
         '$orderby': 'dato desc'
     }
     
@@ -339,11 +339,11 @@ def analyze_member_activity(member_id, committee_context=True):
     """Analyze a member's committee activity"""
     
     # Get member's committee memberships
-    base_url = "https://oda.ft.dk/api/AktørAktørRolle"
+    base_url = "https://oda.ft.dk/api/AktÃ¸rAktÃ¸rRolle"
     params = {
-        '$filter': f'aktørid eq {member_id}',
-        '$expand': 'Aktør,AktørRolle',
-        '$select': 'rolleid,startdato,slutdato,Aktør,AktørRolle'
+        '$filter': f'aktÃ¸rid eq {member_id}',
+        '$expand': 'AktÃ¸r,AktÃ¸rRolle',
+        '$select': 'rolleid,startdato,slutdato,AktÃ¸r,AktÃ¸rRolle'
     }
     
     response = requests.get(base_url, params=params)
@@ -351,13 +351,13 @@ def analyze_member_activity(member_id, committee_context=True):
     
     # Get member's meeting attendance
     meeting_params = {
-        '$filter': f'MødeAktør/any(ma: ma/aktørid eq {member_id})',
-        '$expand': 'MødeAktør($expand=Aktør)',
-        '$select': 'id,titel,dato,MødeAktør',
+        '$filter': f'MÃ¸deAktÃ¸r/any(ma: ma/aktÃ¸rid eq {member_id})',
+        '$expand': 'MÃ¸deAktÃ¸r($expand=AktÃ¸r)',
+        '$select': 'id,titel,dato,MÃ¸deAktÃ¸r',
         '$orderby': 'dato desc'
     }
     
-    meeting_response = requests.get("https://oda.ft.dk/api/Møde", params=meeting_params)
+    meeting_response = requests.get("https://oda.ft.dk/api/MÃ¸de", params=meeting_params)
     meetings = meeting_response.json()['value']
     
     return {
@@ -382,11 +382,11 @@ def calculate_engagement_metrics(committee_id, period_days=90):
     end_date = datetime.now()
     start_date = end_date - timedelta(days=period_days)
     
-    base_url = "https://oda.ft.dk/api/Møde"
+    base_url = "https://oda.ft.dk/api/MÃ¸de"
     params = {
-        '$filter': f"MødeAktør/any(ma: ma/aktørid eq {committee_id}) and dato gt datetime'{start_date.strftime('%Y-%m-%dT%H:%M:%S')}'",
-        '$expand': 'MødeAktør($expand=Aktør)',
-        '$select': 'id,dato,MødeAktør'
+        '$filter': f"MÃ¸deAktÃ¸r/any(ma: ma/aktÃ¸rid eq {committee_id}) and dato gt datetime'{start_date.strftime('%Y-%m-%dT%H:%M:%S')}'",
+        '$expand': 'MÃ¸deAktÃ¸r($expand=AktÃ¸r)',
+        '$select': 'id,dato,MÃ¸deAktÃ¸r'
     }
     
     response = requests.get(base_url, params=params)
@@ -397,9 +397,9 @@ def calculate_engagement_metrics(committee_id, period_days=90):
     total_meetings = len(meetings)
     
     for meeting in meetings:
-        for attendee in meeting.get('MødeAktør', []):
-            if 'Aktør' in attendee:
-                member_name = attendee['Aktør']['navn']
+        for attendee in meeting.get('MÃ¸deAktÃ¸r', []):
+            if 'AktÃ¸r' in attendee:
+                member_name = attendee['AktÃ¸r']['navn']
                 if member_name not in member_attendance:
                     member_attendance[member_name] = 0
                 member_attendance[member_name] += 1
@@ -429,9 +429,9 @@ def analyze_committee_voting_patterns(committee_id):
     # Get committee voting sessions
     base_url = "https://oda.ft.dk/api/Afstemning"
     params = {
-        '$filter': f'mødeid ne null and konklusion ne null',
-        '$expand': 'Møde,Stemme($expand=Aktør)',
-        '$select': 'id,konklusion,vedtaget,afstemningstype,Møde,Stemme'
+        '$filter': f'mÃ¸deid ne null and konklusion ne null',
+        '$expand': 'MÃ¸de,Stemme($expand=AktÃ¸r)',
+        '$select': 'id,konklusion,vedtaget,afstemningstype,MÃ¸de,Stemme'
     }
     
     response = requests.get(base_url, params=params)
@@ -440,9 +440,9 @@ def analyze_committee_voting_patterns(committee_id):
     # Filter for committee-related votes
     committee_votes = []
     for vote in votes:
-        if 'Møde' in vote and vote['Møde']:
+        if 'MÃ¸de' in vote and vote['MÃ¸de']:
             # Check if meeting involves the committee
-            if any(str(committee_id) in str(vote['Møde'].get('titel', ''))):
+            if any(str(committee_id) in str(vote['MÃ¸de'].get('titel', ''))):
                 committee_votes.append(vote)
     
     # Analyze patterns
@@ -466,7 +466,7 @@ def track_recommendation_outcomes():
     base_url = "https://oda.ft.dk/api/Afstemning"
     params = {
         '$filter': 'afstemningstype eq 2',  # Committee recommendation type
-        '$expand': 'Stemme($expand=Aktør)',
+        '$expand': 'Stemme($expand=AktÃ¸r)',
         '$select': 'id,konklusion,vedtaget,Stemme',
         '$orderby': 'id desc',
         '$top': 100
@@ -497,8 +497,8 @@ def track_decision_timeline(case_id):
     base_url = "https://oda.ft.dk/api/Afstemning"
     params = {
         '$filter': f'sagid eq {case_id}',
-        '$expand': 'Stemme($expand=Aktør),Møde',
-        '$select': 'id,dato,afstemningstype,konklusion,vedtaget,Møde,Stemme',
+        '$expand': 'Stemme($expand=AktÃ¸r),MÃ¸de',
+        '$select': 'id,dato,afstemningstype,konklusion,vedtaget,MÃ¸de,Stemme',
         '$orderby': 'dato'
     }
     
@@ -512,7 +512,7 @@ def track_decision_timeline(case_id):
             'type': vote.get('afstemningstype'),
             'outcome': vote.get('konklusion'),
             'passed': vote.get('vedtaget', False),
-            'meeting': vote.get('Møde', {}).get('titel', 'Unknown')
+            'meeting': vote.get('MÃ¸de', {}).get('titel', 'Unknown')
         }
         timeline.append(timeline_entry)
     
@@ -532,9 +532,9 @@ def analyze_inter_committee_collaboration():
     # Get cases with multiple committee involvement
     base_url = "https://oda.ft.dk/api/Sag"
     params = {
-        '$expand': 'SagAktør($expand=Aktør)',
-        '$filter': 'SagAktør/$count gt 1',  # Cases with multiple actors
-        '$select': 'id,titel,SagAktør'
+        '$expand': 'SagAktÃ¸r($expand=AktÃ¸r)',
+        '$filter': 'SagAktÃ¸r/$count gt 1',  # Cases with multiple actors
+        '$select': 'id,titel,SagAktÃ¸r'
     }
     
     response = requests.get(base_url, params=params)
@@ -544,9 +544,9 @@ def analyze_inter_committee_collaboration():
     
     for case in cases:
         committees_involved = []
-        for actor_relation in case.get('SagAktør', []):
-            if actor_relation.get('Aktør', {}).get('typeid') == 3:  # Committee
-                committees_involved.append(actor_relation['Aktør']['navn'])
+        for actor_relation in case.get('SagAktÃ¸r', []):
+            if actor_relation.get('AktÃ¸r', {}).get('typeid') == 3:  # Committee
+                committees_involved.append(actor_relation['AktÃ¸r']['navn'])
         
         # Track collaboration patterns
         if len(committees_involved) > 1:
@@ -592,11 +592,11 @@ def analyze_joint_meetings():
     """Analyze joint committee meetings"""
     
     # Get meetings with multiple committee representation
-    base_url = "https://oda.ft.dk/api/Møde"
+    base_url = "https://oda.ft.dk/api/MÃ¸de"
     params = {
-        '$expand': 'MødeAktør($expand=Aktør)',
-        '$filter': 'MødeAktør/$count gt 5',  # Meetings with many participants
-        '$select': 'id,titel,dato,MødeAktør'
+        '$expand': 'MÃ¸deAktÃ¸r($expand=AktÃ¸r)',
+        '$filter': 'MÃ¸deAktÃ¸r/$count gt 5',  # Meetings with many participants
+        '$select': 'id,titel,dato,MÃ¸deAktÃ¸r'
     }
     
     response = requests.get(base_url, params=params)
@@ -606,9 +606,9 @@ def analyze_joint_meetings():
     
     for meeting in meetings:
         committees_present = []
-        for participant in meeting.get('MødeAktør', []):
-            if participant.get('Aktør', {}).get('typeid') == 3:  # Committee
-                committees_present.append(participant['Aktør']['navn'])
+        for participant in meeting.get('MÃ¸deAktÃ¸r', []):
+            if participant.get('AktÃ¸r', {}).get('typeid') == 3:  # Committee
+                committees_present.append(participant['AktÃ¸r']['navn'])
         
         if len(committees_present) > 1:
             joint_meetings.append({
@@ -635,7 +635,7 @@ class CommitteePerformanceDashboard:
     
     def get_committee_name(self):
         """Get committee name"""
-        url = "https://oda.ft.dk/api/Aktør"
+        url = "https://oda.ft.dk/api/AktÃ¸r"
         params = {'$filter': f'id eq {self.committee_id}', '$select': 'navn'}
         response = requests.get(url, params=params)
         return response.json()['value'][0]['navn']
@@ -659,9 +659,9 @@ class CommitteePerformanceDashboard:
     
     def calculate_meeting_frequency(self, start_date, end_date):
         """Calculate meeting frequency metrics"""
-        url = "https://oda.ft.dk/api/Møde"
+        url = "https://oda.ft.dk/api/MÃ¸de"
         params = {
-            '$filter': f"MødeAktør/any(ma: ma/aktørid eq {self.committee_id}) and dato gt datetime'{start_date.strftime('%Y-%m-%dT%H:%M:%S')}' and dato lt datetime'{end_date.strftime('%Y-%m-%dT%H:%M:%S')}'",
+            '$filter': f"MÃ¸deAktÃ¸r/any(ma: ma/aktÃ¸rid eq {self.committee_id}) and dato gt datetime'{start_date.strftime('%Y-%m-%dT%H:%M:%S')}' and dato lt datetime'{end_date.strftime('%Y-%m-%dT%H:%M:%S')}'",
             '$select': 'id,dato',
             '$orderby': 'dato'
         }
@@ -683,7 +683,7 @@ class CommitteePerformanceDashboard:
         # Get cases the committee has worked on
         url = "https://oda.ft.dk/api/Sag"
         params = {
-            '$filter': f"SagAktør/any(sa: sa/aktørid eq {self.committee_id}) and opdateringsdato gt datetime'{start_date.strftime('%Y-%m-%dT%H:%M:%S')}'",
+            '$filter': f"SagAktÃ¸r/any(sa: sa/aktÃ¸rid eq {self.committee_id}) and opdateringsdato gt datetime'{start_date.strftime('%Y-%m-%dT%H:%M:%S')}'",
             '$select': 'id,statusid,opdateringsdato'
         }
         
@@ -699,7 +699,7 @@ class CommitteePerformanceDashboard:
         """Calculate document production metrics"""
         url = "https://oda.ft.dk/api/Dokument"
         params = {
-            '$filter': f"DokumentAktør/any(da: da/aktørid eq {self.committee_id}) and dato gt datetime'{start_date.strftime('%Y-%m-%dT%H:%M:%S')}'",
+            '$filter': f"DokumentAktÃ¸r/any(da: da/aktÃ¸rid eq {self.committee_id}) and dato gt datetime'{start_date.strftime('%Y-%m-%dT%H:%M:%S')}'",
             '$select': 'id,dato,dokumenttypeid'
         }
         
@@ -794,11 +794,11 @@ class CommitteeMonitor:
         
     def check_new_meetings(self):
         """Check for newly scheduled meetings"""
-        url = "https://oda.ft.dk/api/Møde"
+        url = "https://oda.ft.dk/api/MÃ¸de"
         params = {
             '$filter': f"opdateringsdato gt datetime'{self.last_check.strftime('%Y-%m-%dT%H:%M:%S')}'",
-            '$expand': 'MødeAktør($expand=Aktør)',
-            '$select': 'id,titel,dato,lokale,MødeAktør'
+            '$expand': 'MÃ¸deAktÃ¸r($expand=AktÃ¸r)',
+            '$select': 'id,titel,dato,lokale,MÃ¸deAktÃ¸r'
         }
         
         response = requests.get(url, params=params)
@@ -814,9 +814,9 @@ class CommitteeMonitor:
         """Check for case updates in committees"""
         url = "https://oda.ft.dk/api/Sag"
         params = {
-            '$filter': f"SagAktør/any(sa: sa/Aktør/typeid eq 3) and opdateringsdato gt datetime'{self.last_check.strftime('%Y-%m-%dT%H:%M:%S')}'",
-            '$expand': 'SagAktør($expand=Aktør)',
-            '$select': 'id,titel,statusid,opdateringsdato,SagAktør'
+            '$filter': f"SagAktÃ¸r/any(sa: sa/AktÃ¸r/typeid eq 3) and opdateringsdato gt datetime'{self.last_check.strftime('%Y-%m-%dT%H:%M:%S')}'",
+            '$expand': 'SagAktÃ¸r($expand=AktÃ¸r)',
+            '$select': 'id,titel,statusid,opdateringsdato,SagAktÃ¸r'
         }
         
         response = requests.get(url, params=params)
@@ -831,9 +831,9 @@ class CommitteeMonitor:
         """Check for new committee documents"""
         url = "https://oda.ft.dk/api/Dokument"
         params = {
-            '$filter': f"DokumentAktør/any(da: da/Aktør/typeid eq 3) and opdateringsdato gt datetime'{self.last_check.strftime('%Y-%m-%dT%H:%M:%S')}'",
-            '$expand': 'DokumentAktør($expand=Aktør)',
-            '$select': 'id,titel,dato,dokumenttypeid,DokumentAktør'
+            '$filter': f"DokumentAktÃ¸r/any(da: da/AktÃ¸r/typeid eq 3) and opdateringsdato gt datetime'{self.last_check.strftime('%Y-%m-%dT%H:%M:%S')}'",
+            '$expand': 'DokumentAktÃ¸r($expand=AktÃ¸r)',
+            '$select': 'id,titel,dato,dokumenttypeid,DokumentAktÃ¸r'
         }
         
         response = requests.get(url, params=params)
@@ -846,17 +846,17 @@ class CommitteeMonitor:
     
     def alert_new_meeting(self, meeting):
         """Handle new meeting alert"""
-        print(f"=Ó New meeting scheduled: {meeting['titel']} at {meeting['dato']}")
+        print(f"=Ã“ New meeting scheduled: {meeting['titel']} at {meeting['dato']}")
         # Could send email, Slack notification, etc.
     
     def alert_case_update(self, case):
         """Handle case update alert"""
-        print(f"=Ë Case updated: {case['titel']} (ID: {case['id']})")
+        print(f"=Ã‹ Case updated: {case['titel']} (ID: {case['id']})")
         # Could send detailed notification with committee information
     
     def alert_new_document(self, document):
         """Handle new document alert"""
-        print(f"=Ä New document: {document['titel']} ({document['dato']})")
+        print(f"=Ã„ New document: {document['titel']} ({document['dato']})")
         # Could download document, analyze content, etc.
     
     def run_monitoring_cycle(self):
@@ -899,7 +899,7 @@ class CommitteeAlertSystem:
     
     def get_committee_name(self, committee_id):
         """Get committee name for subscription"""
-        url = "https://oda.ft.dk/api/Aktør"
+        url = "https://oda.ft.dk/api/AktÃ¸r"
         params = {'$filter': f'id eq {committee_id}', '$select': 'navn'}
         response = requests.get(url, params=params)
         return response.json()['value'][0]['navn']
@@ -971,7 +971,7 @@ class CommitteeReportGenerator:
     
     def get_committee_name(self):
         """Get committee name"""
-        url = "https://oda.ft.dk/api/Aktør"
+        url = "https://oda.ft.dk/api/AktÃ¸r"
         params = {'$filter': f'id eq {self.committee_id}', '$select': 'navn'}
         response = requests.get(url, params=params)
         return response.json()['value'][0]['navn']
@@ -998,11 +998,11 @@ class CommitteeReportGenerator:
     
     def get_meeting_summary(self, start_date, end_date):
         """Get meeting summary for period"""
-        url = "https://oda.ft.dk/api/Møde"
+        url = "https://oda.ft.dk/api/MÃ¸de"
         params = {
-            '$filter': f"MødeAktør/any(ma: ma/aktørid eq {self.committee_id}) and dato ge datetime'{start_date.strftime('%Y-%m-%dT%H:%M:%S')}' and dato lt datetime'{end_date.strftime('%Y-%m-%dT%H:%M:%S')}'",
-            '$expand': 'MødeAktør($expand=Aktør)',
-            '$select': 'id,titel,dato,lokale,MødeAktør',
+            '$filter': f"MÃ¸deAktÃ¸r/any(ma: ma/aktÃ¸rid eq {self.committee_id}) and dato ge datetime'{start_date.strftime('%Y-%m-%dT%H:%M:%S')}' and dato lt datetime'{end_date.strftime('%Y-%m-%dT%H:%M:%S')}'",
+            '$expand': 'MÃ¸deAktÃ¸r($expand=AktÃ¸r)',
+            '$select': 'id,titel,dato,lokale,MÃ¸deAktÃ¸r',
             '$orderby': 'dato'
         }
         
@@ -1010,7 +1010,7 @@ class CommitteeReportGenerator:
         meetings = response.json()['value']
         
         # Calculate attendance statistics
-        total_attendees = sum(len(meeting.get('MødeAktør', [])) for meeting in meetings)
+        total_attendees = sum(len(meeting.get('MÃ¸deAktÃ¸r', [])) for meeting in meetings)
         avg_attendance = total_attendees / len(meetings) if meetings else 0
         
         return {
@@ -1023,8 +1023,8 @@ class CommitteeReportGenerator:
         """Get case processing summary"""
         url = "https://oda.ft.dk/api/Sag"
         params = {
-            '$filter': f"SagAktør/any(sa: sa/aktørid eq {self.committee_id}) and opdateringsdato ge datetime'{start_date.strftime('%Y-%m-%dT%H:%M:%S')}' and opdateringsdato lt datetime'{end_date.strftime('%Y-%m-%dT%H:%M:%S')}'",
-            '$expand': 'SagAktør($expand=Aktør)',
+            '$filter': f"SagAktÃ¸r/any(sa: sa/aktÃ¸rid eq {self.committee_id}) and opdateringsdato ge datetime'{start_date.strftime('%Y-%m-%dT%H:%M:%S')}' and opdateringsdato lt datetime'{end_date.strftime('%Y-%m-%dT%H:%M:%S')}'",
+            '$expand': 'SagAktÃ¸r($expand=AktÃ¸r)',
             '$select': 'id,titel,typeid,statusid,opdateringsdato'
         }
         
@@ -1047,8 +1047,8 @@ class CommitteeReportGenerator:
         """Get document production summary"""
         url = "https://oda.ft.dk/api/Dokument"
         params = {
-            '$filter': f"DokumentAktør/any(da: da/aktørid eq {self.committee_id}) and dato ge datetime'{start_date.strftime('%Y-%m-%dT%H:%M:%S')}' and dato lt datetime'{end_date.strftime('%Y-%m-%dT%H:%M:%S')}'",
-            '$expand': 'DokumentAktør($expand=Aktør)',
+            '$filter': f"DokumentAktÃ¸r/any(da: da/aktÃ¸rid eq {self.committee_id}) and dato ge datetime'{start_date.strftime('%Y-%m-%dT%H:%M:%S')}' and dato lt datetime'{end_date.strftime('%Y-%m-%dT%H:%M:%S')}'",
+            '$expand': 'DokumentAktÃ¸r($expand=AktÃ¸r)',
             '$select': 'id,titel,dokumenttypeid,dato'
         }
         
@@ -1189,9 +1189,9 @@ def get_recent_activity(committee_id, days=7):
     }
     
     # Get recent meetings
-    url = "https://oda.ft.dk/api/Møde"
+    url = "https://oda.ft.dk/api/MÃ¸de"
     params = {
-        '$filter': f"MødeAktør/any(ma: ma/aktørid eq {committee_id}) and dato ge datetime'{start_date.strftime('%Y-%m-%dT%H:%M:%S')}'",
+        '$filter': f"MÃ¸deAktÃ¸r/any(ma: ma/aktÃ¸rid eq {committee_id}) and dato ge datetime'{start_date.strftime('%Y-%m-%dT%H:%M:%S')}'",
         '$select': 'id'
     }
     response = requests.get(url, params=params)
@@ -1200,7 +1200,7 @@ def get_recent_activity(committee_id, days=7):
     # Get recent case updates
     url = "https://oda.ft.dk/api/Sag"
     params = {
-        '$filter': f"SagAktør/any(sa: sa/aktørid eq {committee_id}) and opdateringsdato ge datetime'{start_date.strftime('%Y-%m-%dT%H:%M:%S')}'",
+        '$filter': f"SagAktÃ¸r/any(sa: sa/aktÃ¸rid eq {committee_id}) and opdateringsdato ge datetime'{start_date.strftime('%Y-%m-%dT%H:%M:%S')}'",
         '$select': 'id'
     }
     response = requests.get(url, params=params)
@@ -1209,7 +1209,7 @@ def get_recent_activity(committee_id, days=7):
     # Get recent documents
     url = "https://oda.ft.dk/api/Dokument"
     params = {
-        '$filter': f"DokumentAktør/any(da: da/aktørid eq {committee_id}) and dato ge datetime'{start_date.strftime('%Y-%m-%dT%H:%M:%S')}'",
+        '$filter': f"DokumentAktÃ¸r/any(da: da/aktÃ¸rid eq {committee_id}) and dato ge datetime'{start_date.strftime('%Y-%m-%dT%H:%M:%S')}'",
         '$select': 'id'
     }
     response = requests.get(url, params=params)
@@ -1241,7 +1241,7 @@ top_committee_ids = [1, 2, 3, 4, 5]
 dashboard_data = create_committee_dashboard_data(top_committee_ids)
 
 # Output dashboard summary
-print("=Ê Committee Dashboard Summary:")
+print("=ÃŠ Committee Dashboard Summary:")
 print(f"Committees monitored: {dashboard_data['summary_stats']['total_committees']}")
 print(f"Meetings this week: {dashboard_data['summary_stats']['total_meetings_this_week']}")
 print(f"Cases updated: {dashboard_data['summary_stats']['total_cases_updated']}")

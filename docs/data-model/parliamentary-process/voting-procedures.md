@@ -28,7 +28,7 @@ The Danish Parliament uses 4 distinct voting session types that correspond to di
 | 1 | **Endelig vedtagelse** | Final Adoption | Final vote on legislation - the ultimate decision |
 | 2 | **Udvalgsindstilling** | Committee Recommendation | Committee's formal recommendation to parliament |
 | 3 | **Forslag til vedtagelse** | Adoption Proposal | Initial proposal for adoption - preliminary voting |
-| 4 | **Ændringsforslag** | Amendment | Votes on specific amendments to legislation |
+| 4 | **Ã†ndringsforslag** | Amendment | Votes on specific amendments to legislation |
 
 #### Usage Patterns by Type
 
@@ -41,7 +41,7 @@ curl "https://oda.ft.dk/api/Afstemning?%24filter=typeid%20eq%201&%24orderby=opda
 **Committee Recommendations (Type 2)** - Expert committee guidance:
 ```bash
 # Analyze committee recommendation patterns
-curl "https://oda.ft.dk/api/Afstemning?%24filter=typeid%20eq%202&%24expand=Møde&%24top=20"
+curl "https://oda.ft.dk/api/Afstemning?%24filter=typeid%20eq%202&%24expand=MÃ¸de&%24top=20"
 ```
 
 **Amendment Votes (Type 4)** - Legislative refinements:
@@ -58,7 +58,7 @@ Each politician can cast one of 4 vote types in any voting session:
 |---------|------|---------|-------------------|
 | 1 | **For** | Yes/In Favor | Politician supports the proposal |
 | 2 | **Imod** | No/Against | Politician opposes the proposal |
-| 3 | **Fravær** | Absent | Politician was not present for voting |
+| 3 | **FravÃ¦r** | Absent | Politician was not present for voting |
 | 4 | **Hverken for eller imod** | Neither for nor against | Politician abstains from voting |
 
 #### Vote Distribution Analysis
@@ -107,7 +107,7 @@ Based on API data analysis, voting sessions follow predictable patterns:
 
 ```bash
 # Track daily voting activity patterns
-curl "https://oda.ft.dk/api/Afstemning?%24expand=Møde&%24filter=opdateringsdato%20gt%20datetime'2025-09-09T00:00:00'&%24select=nummer,opdateringsdato,Møde/dato"
+curl "https://oda.ft.dk/api/Afstemning?%24expand=MÃ¸de&%24filter=opdateringsdato%20gt%20datetime'2025-09-09T00:00:00'&%24select=nummer,opdateringsdato,MÃ¸de/dato"
 ```
 
 #### Weekly Parliamentary Schedule
@@ -132,7 +132,7 @@ The Danish Parliament follows a structured weekly schedule:
 
 ```bash
 # Identify committee voting sessions
-curl "https://oda.ft.dk/api/Afstemning?%24filter=typeid%20eq%202&%24expand=Møde&%24select=nummer,Møde/titel&%24top=10"
+curl "https://oda.ft.dk/api/Afstemning?%24filter=typeid%20eq%202&%24expand=MÃ¸de&%24select=nummer,MÃ¸de/titel&%24top=10"
 ```
 
 #### Plenary Voting Procedures
@@ -230,13 +230,13 @@ curl "https://oda.ft.dk/api/Afstemning?%24filter=substringof('hastesag',konklusi
 ### Core Relationships
 
 ```
-Møde (Meeting)
-  “
+MÃ¸de (Meeting)
+  Â“
 Dagsordenspunkt (Agenda Item)
-  “
+  Â“
 Afstemning (Voting Session)
-  “
-Stemme (Individual Vote) ’ Aktör (Politician)
+  Â“
+Stemme (Individual Vote) Â’ AktÃ¶r (Politician)
 ```
 
 ### Multi-level Data Analysis
@@ -250,9 +250,9 @@ def track_politician_votes(politician_name, session_limit=50):
     # Get politician's recent votes with context
     query = f"""
     https://oda.ft.dk/api/Stemme?
-    %24expand=Aktør,Afstemning&
-    %24filter=Aktør/navn eq '{politician_name}'&
-    %24select=typeid,Afstemning/nummer,Afstemning/konklusion,Aktör/gruppenavnkort&
+    %24expand=AktÃ¸r,Afstemning&
+    %24filter=AktÃ¸r/navn eq '{politician_name}'&
+    %24select=typeid,Afstemning/nummer,Afstemning/konklusion,AktÃ¶r/gruppenavnkort&
     %24top={session_limit}&
     %24orderby=opdateringsdato desc
     """
@@ -272,7 +272,7 @@ def analyze_voting_session(session_id):
     # Get full voting session with all individual votes
     query = f"""
     https://oda.ft.dk/api/Afstemning?
-    %24expand=Stemme/Aktör,Møde,Afstemningstype&
+    %24expand=Stemme/AktÃ¶r,MÃ¸de,Afstemningstype&
     %24filter=id eq {session_id}
     """
     
@@ -291,7 +291,7 @@ def analyze_voting_session(session_id):
     # Party breakdown
     party_votes = {}
     for vote in session['Stemme']:
-        party = vote['Aktör']['gruppenavnkort']
+        party = vote['AktÃ¶r']['gruppenavnkort']
         if party not in party_votes:
             party_votes[party] = {'for': 0, 'against': 0, 'abstain': 0, 'absent': 0}
         
@@ -310,7 +310,7 @@ def analyze_voting_session(session_id):
             'number': session['nummer'],
             'outcome': session['vedtaget'],
             'type': session['Afstemningstype']['navn'],
-            'meeting': session['Møde']['titel']
+            'meeting': session['MÃ¸de']['titel']
         },
         'vote_breakdown': vote_breakdown,
         'party_breakdown': party_votes
@@ -329,7 +329,7 @@ def analyze_cross_party_coalitions(days_back=30):
     since_date = (datetime.now() - timedelta(days=days_back)).isoformat()
     query = f"""
     https://oda.ft.dk/api/Afstemning?
-    %24expand=Stemme/Aktör&
+    %24expand=Stemme/AktÃ¶r&
     %24filter=opdateringsdato gt datetime'{since_date}'&
     %24orderby=opdateringsdato desc&
     %24top=20
@@ -345,7 +345,7 @@ def analyze_cross_party_coalitions(days_back=30):
         # Group parties by vote type
         party_positions = {}
         for vote in session['Stemme']:
-            party = vote['Aktör']['gruppenavnkort']
+            party = vote['AktÃ¶r']['gruppenavnkort']
             vote_type = vote['typeid']
             
             if party not in party_positions:
@@ -446,7 +446,7 @@ class ParliamentaryVotingMonitor {
         
         const params = new URLSearchParams({
             '$filter': `opdateringsdato gt datetime'${sinceISO}'`,
-            '$expand': 'Stemme/Aktör,Møde',
+            '$expand': 'Stemme/AktÃ¶r,MÃ¸de',
             '$orderby': 'opdateringsdato desc',
             '$top': '20'
         });
@@ -536,7 +536,7 @@ class HistoricalVotingAnalyzer:
         
         query_params = {
             '$expand': 'Afstemning',
-            '$filter': f"aktørid eq {politician_id} and opdateringsdato gt datetime'{since_date}'",
+            '$filter': f"aktÃ¸rid eq {politician_id} and opdateringsdato gt datetime'{since_date}'",
             '$select': 'typeid,opdateringsdato,Afstemning/vedtaget,Afstemning/typeid',
             '$orderby': 'opdateringsdato asc',
             '$top': '1000'
@@ -655,10 +655,10 @@ class HistoricalVotingAnalyzer:
 curl "https://oda.ft.dk/api/Afstemning?%24filter=typeid%20eq%201&%24top=20"
 
 #  Good: Use field selection for large datasets  
-curl "https://oda.ft.dk/api/Stemme?%24filter=aktørid%20eq%205&%24select=typeid,afstemningid&%24top=100"
+curl "https://oda.ft.dk/api/Stemme?%24filter=aktÃ¸rid%20eq%205&%24select=typeid,afstemningid&%24top=100"
 
 # L Avoid: Expanding large biographical data unnecessarily
-curl "https://oda.ft.dk/api/Stemme?%24expand=Aktör&%24top=1000"
+curl "https://oda.ft.dk/api/Stemme?%24expand=AktÃ¶r&%24top=1000"
 ```
 
 ### Smart Pagination Strategy
@@ -746,7 +746,7 @@ def analyze_government_opposition_voting(government_parties, days_back=30):
     
     sessions = fetch_api_data(f"""
     https://oda.ft.dk/api/Afstemning?
-    %24expand=Stemme/Aktör&
+    %24expand=Stemme/AktÃ¶r&
     %24filter=opdateringsdato gt datetime'{since_date}'&
     %24top=50
     """)
@@ -763,7 +763,7 @@ def analyze_government_opposition_voting(government_parties, days_back=30):
         opp_votes = {'for': 0, 'against': 0, 'other': 0}
         
         for vote in session['Stemme']:
-            party = vote['Aktör']['gruppenavnkort']
+            party = vote['AktÃ¶r']['gruppenavnkort']
             vote_type = vote['typeid']
             
             vote_category = 'for' if vote_type == 1 else 'against' if vote_type == 2 else 'other'
@@ -806,7 +806,7 @@ def analyze_voting_predictability(politician_id, lookback_sessions=100):
     votes = fetch_api_data(f"""
     https://oda.ft.dk/api/Stemme?
     %24expand=Afstemning&
-    %24filter=aktørid eq {politician_id}&
+    %24filter=aktÃ¸rid eq {politician_id}&
     %24select=typeid,Afstemning/vedtaget&
     %24orderby=opdateringsdato desc&
     %24top={lookback_sessions}

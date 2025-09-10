@@ -24,17 +24,17 @@ The Danish Parliamentary API provides three key entities for party voting analys
 ```mermaid
 graph TD
     A[Afstemning - Voting Session] --> B[Stemme - Individual Votes]
-    B --> C[Aktør - Politicians/Parties]
-    A --> D[Møde - Parliamentary Meeting]
-    C --> E[Aktørtype - Actor Types]
+    B --> C[AktÃ¸r - Politicians/Parties]
+    A --> D[MÃ¸de - Parliamentary Meeting]
+    C --> E[AktÃ¸rtype - Actor Types]
 ```
 
 **Core Entities**:
 
 - **Afstemning**: Voting sessions with conclusions and results
 - **Stemme**: Individual vote records linking politicians to voting sessions
-- **Aktør**: Political actors including MPs and parties
-- **Aktørtype**: Actor classification (Person, Folketingsgruppe, etc.)
+- **AktÃ¸r**: Political actors including MPs and parties
+- **AktÃ¸rtype**: Actor classification (Person, Folketingsgruppe, etc.)
 
 ### Vote Types and Their Analysis
 
@@ -42,7 +42,7 @@ The API tracks four distinct vote types via **Stemmetype**:
 
 1. **For** (Yes/Support) - `typeid: 1`
 2. **Imod** (No/Against) - `typeid: 2`  
-3. **Fravær** (Absent) - `typeid: 3`
+3. **FravÃ¦r** (Absent) - `typeid: 3`
 4. **Hverken for eller imod** (Abstain) - `typeid: 4`
 
 ### Basic Party Vote Retrieval
@@ -59,7 +59,7 @@ class PartyVotingAnalyzer:
     def get_voting_session_with_votes(self, voting_id):
         """Retrieve a complete voting session with all individual votes"""
         params = {
-            '$expand': 'Stemme/Aktør',
+            '$expand': 'Stemme/AktÃ¸r',
             '$filter': f'id eq {voting_id}'
         }
         url = f"{self.base_url}Afstemning"
@@ -76,7 +76,7 @@ class PartyVotingAnalyzer:
             votes = session_data['value'][0].get('Stemme', [])
             
             for vote in votes:
-                actor = vote.get('Aktør', {})
+                actor = vote.get('AktÃ¸r', {})
                 party = self.extract_party_from_actor(actor)
                 vote_type = vote.get('typeid')
                 
@@ -180,9 +180,9 @@ class PartyCohesionAnalyzer:
         
         # Get all voting sessions in time period
         params = {
-            '$expand': 'Møde,Stemme/Aktør',
-            '$filter': f"Møde/dato ge datetime'{start_date}' and Møde/dato le datetime'{end_date}'",
-            '$orderby': 'Møde/dato'
+            '$expand': 'MÃ¸de,Stemme/AktÃ¸r',
+            '$filter': f"MÃ¸de/dato ge datetime'{start_date}' and MÃ¸de/dato le datetime'{end_date}'",
+            '$orderby': 'MÃ¸de/dato'
         }
         
         cohesion_timeline = []
@@ -201,7 +201,7 @@ class PartyCohesionAnalyzer:
                     rice_index = self.calculate_rice_index({party: party_votes[party]})[party]
                     
                     cohesion_timeline.append({
-                        'date': session.get('Møde', {}).get('dato'),
+                        'date': session.get('MÃ¸de', {}).get('dato'),
                         'voting_id': session['id'],
                         'rice_index': rice_index,
                         'votes': party_votes[party]
@@ -458,7 +458,7 @@ class CoalitionAnalyzer:
                         'session_id': session_id,
                         'conclusion': session_info.get('konklusion', 'No conclusion'),
                         'disagreeing_parties': agreement['positions'],
-                        'meeting_date': session_info.get('Møde', {}).get('dato')
+                        'meeting_date': session_info.get('MÃ¸de', {}).get('dato')
                     })
         
         return stress_points
@@ -525,9 +525,9 @@ class PartyEvolutionAnalyzer:
         
         # Get voting sessions with case information
         params = {
-            '$expand': 'Stemme/Aktör,Møde,Sag',
-            '$filter': f"Møde/dato ge datetime'{start_date.isoformat()}' and Møde/dato le datetime'{end_date.isoformat()}'",
-            '$orderby': 'Møde/dato',
+            '$expand': 'Stemme/AktÃ¶r,MÃ¸de,Sag',
+            '$filter': f"MÃ¸de/dato ge datetime'{start_date.isoformat()}' and MÃ¸de/dato le datetime'{end_date.isoformat()}'",
+            '$orderby': 'MÃ¸de/dato',
             '$top': 100  # API limit
         }
         
@@ -556,7 +556,7 @@ class PartyEvolutionAnalyzer:
                             support_rate = votes['for'] / total_votes
                             
                             timeline.append({
-                                'date': session.get('Møde', {}).get('dato'),
+                                'date': session.get('MÃ¸de', {}).get('dato'),
                                 'session_id': session['id'],
                                 'case_title': sag_info.get('titel'),
                                 'support_rate': support_rate,
@@ -638,7 +638,7 @@ class PartyEvolutionAnalyzer:
 evolution_analyzer = PartyEvolutionAnalyzer(analyzer)
 
 # Track Social Democrats' position on climate issues
-climate_keywords = ['klima', 'miljø', 'grøn', 'bæredygtighed', 'CO2']
+climate_keywords = ['klima', 'miljÃ¸', 'grÃ¸n', 'bÃ¦redygtighed', 'CO2']
 s_climate_timeline = evolution_analyzer.track_party_positions_over_time('S', climate_keywords, months_back=24)
 
 print(f"Found {len(s_climate_timeline)} climate-related votes for Social Democrats")
@@ -655,7 +655,7 @@ reversals = evolution_analyzer.detect_position_reversals(s_climate_timeline)
 print(f"Position reversals detected: {len(reversals)}")
 
 for reversal in reversals:
-    print(f"  {reversal['from_date']} ’ {reversal['to_date']}: {reversal['from_support']:.1%} ’ {reversal['to_support']:.1%}")
+    print(f"  {reversal['from_date']} Â’ {reversal['to_date']}: {reversal['from_support']:.1%} Â’ {reversal['to_support']:.1%}")
 ```
 
 ## Government vs Opposition Dynamics
@@ -770,17 +770,17 @@ class GovernmentOppositionAnalyzer:
         """Simple topic categorization based on title keywords"""
         title_lower = case_title.lower()
         
-        if any(word in title_lower for word in ['økonomi', 'skat', 'finans']):
+        if any(word in title_lower for word in ['Ã¸konomi', 'skat', 'finans']):
             return 'Economy & Finance'
         elif any(word in title_lower for word in ['sundhed', 'hospital', 'patient']):
             return 'Healthcare'
         elif any(word in title_lower for word in ['uddannelse', 'skole', 'universitet']):
             return 'Education'
-        elif any(word in title_lower for word in ['klima', 'miljø', 'energi']):
+        elif any(word in title_lower for word in ['klima', 'miljÃ¸', 'energi']):
             return 'Environment & Climate'
         elif any(word in title_lower for word in ['forsvar', 'sikkerhed', 'politi']):
             return 'Defense & Security'
-        elif any(word in title_lower for word in ['udlændinge', 'integration', 'asyl']):
+        elif any(word in title_lower for word in ['udlÃ¦ndinge', 'integration', 'asyl']):
             return 'Immigration'
         elif any(word in title_lower for word in ['eu', 'europa', 'international']):
             return 'EU & International Affairs'
@@ -859,7 +859,7 @@ class PartyDisciplineAnalyzer:
                 party_members = []
                 
                 for vote in votes:
-                    actor = vote.get('Aktör', {})
+                    actor = vote.get('AktÃ¶r', {})
                     mp_party = self.analyzer.extract_party_from_actor(actor)
                     
                     if mp_party == party:
@@ -937,7 +937,7 @@ class PartyDisciplineAnalyzer:
                     party_votes = defaultdict(int)
                     
                     for vote in votes:
-                        actor = vote.get('Aktör', {})
+                        actor = vote.get('AktÃ¶r', {})
                         actor_name = actor.get('navn', '')
                         mp_party = self.analyzer.extract_party_from_actor(actor)
                         
@@ -961,7 +961,7 @@ class PartyDisciplineAnalyzer:
                                 'topic': self.categorize_rebellion_topic(sag_info.get('titel', '')),
                                 'party_line': party_line,
                                 'mp_vote': mp_vote,
-                                'meeting_date': session_info.get('Møde', {}).get('dato')
+                                'meeting_date': session_info.get('MÃ¸de', {}).get('dato')
                             })
             
             rebellion_analysis[mp_name] = rebellion_contexts
@@ -976,11 +976,11 @@ class PartyDisciplineAnalyzer:
             return 'Ethical Issues'
         elif any(word in title_lower for word in ['eu', 'europa', 'international']):
             return 'EU/International'
-        elif any(word in title_lower for word in ['økonomi', 'skat', 'budget']):
+        elif any(word in title_lower for word in ['Ã¸konomi', 'skat', 'budget']):
             return 'Economic Policy'
-        elif any(word in title_lower for word in ['udlændinge', 'integration']):
+        elif any(word in title_lower for word in ['udlÃ¦ndinge', 'integration']):
             return 'Immigration'
-        elif any(word in title_lower for word in ['miljø', 'klima']):
+        elif any(word in title_lower for word in ['miljÃ¸', 'klima']):
             return 'Environment'
         else:
             return 'Other'
@@ -1107,7 +1107,7 @@ class CrossPartyCollaborationAnalyzer:
                             'supporting_parties': for_parties,
                             'opposing_parties': against_parties,
                             'cross_bloc_support': True,
-                            'meeting_date': session_info.get('Møde', {}).get('dato'),
+                            'meeting_date': session_info.get('MÃ¸de', {}).get('dato'),
                             'conclusion': session_info.get('konklusion', '')
                         })
         
@@ -1133,7 +1133,7 @@ class CrossPartyCollaborationAnalyzer:
                 mp_info = {}
                 
                 for vote in votes:
-                    actor = vote.get('Aktör', {})
+                    actor = vote.get('AktÃ¶r', {})
                     mp_party = self.analyzer.extract_party_from_actor(actor)
                     mp_name = actor.get('navn', 'Unknown')
                     vote_type = vote.get('typeid')
@@ -1232,15 +1232,15 @@ class CrossPartyCollaborationAnalyzer:
         """Categorize collaboration topics"""
         title_lower = case_title.lower()
         
-        if any(word in title_lower for word in ['børn', 'familie', 'vold']):
+        if any(word in title_lower for word in ['bÃ¸rn', 'familie', 'vold']):
             return 'Social Issues'
         elif any(word in title_lower for word in ['terror', 'sikkerhed', 'forsvar']):
             return 'Security & Defense'
-        elif any(word in title_lower for word in ['miljø', 'klima', 'natur']):
+        elif any(word in title_lower for word in ['miljÃ¸', 'klima', 'natur']):
             return 'Environment'
         elif any(word in title_lower for word in ['sundhed', 'hospital', 'patient']):
             return 'Healthcare'
-        elif any(word in title_lower for word in ['erhverv', 'økonomi', 'handel']):
+        elif any(word in title_lower for word in ['erhverv', 'Ã¸konomi', 'handel']):
             return 'Business & Economy'
         elif any(word in title_lower for word in ['transport', 'infrastruktur', 'byggeri']):
             return 'Infrastructure'
@@ -1346,12 +1346,12 @@ class PartyVotingPredictor:
         
         # Topic features
         features = {
-            'is_economic': int(any(word in case_title for word in ['økonomi', 'skat', 'budget', 'finans'])),
-            'is_social': int(any(word in case_title for word in ['social', 'børn', 'familie', 'sundhed'])),
-            'is_environment': int(any(word in case_title for word in ['miljø', 'klima', 'energi', 'grøn'])),
-            'is_immigration': int(any(word in case_title for word in ['udlændinge', 'integration', 'asyl'])),
+            'is_economic': int(any(word in case_title for word in ['Ã¸konomi', 'skat', 'budget', 'finans'])),
+            'is_social': int(any(word in case_title for word in ['social', 'bÃ¸rn', 'familie', 'sundhed'])),
+            'is_environment': int(any(word in case_title for word in ['miljÃ¸', 'klima', 'energi', 'grÃ¸n'])),
+            'is_immigration': int(any(word in case_title for word in ['udlÃ¦ndinge', 'integration', 'asyl'])),
             'is_eu': int(any(word in case_title for word in ['eu', 'europa', 'international'])),
-            'is_defense': int(any(word in case_title for word in ['forsvar', 'sikkerhed', 'militær'])),
+            'is_defense': int(any(word in case_title for word in ['forsvar', 'sikkerhed', 'militÃ¦r'])),
             'is_education': int(any(word in case_title for word in ['uddannelse', 'skole', 'universitet'])),
             'is_infrastructure': int(any(word in case_title for word in ['transport', 'byggeri', 'infrastruktur'])),
         }
@@ -1373,7 +1373,7 @@ class PartyVotingPredictor:
         })
         
         # Temporal features
-        meeting_info = session_info.get('Møde', {})
+        meeting_info = session_info.get('MÃ¸de', {})
         meeting_date = meeting_info.get('dato', '')
         if meeting_date:
             try:

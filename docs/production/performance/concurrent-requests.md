@@ -29,7 +29,7 @@ Based on comprehensive load testing conducted in September 2025:
 -  **10 Concurrent Requests**: All return HTTP 200 successfully
 -  **No Rate Limiting Detected**: No 429 responses observed
 -  **Stable Under Load**: Performance remains consistent
--   **Untested Beyond 10**: Higher concurrency levels not verified
+- Â  **Untested Beyond 10**: Higher concurrency levels not verified
 
 ## Implementation Patterns
 
@@ -146,11 +146,11 @@ async def analyze_recent_cases_concurrent():
             }
         },
         {
-            'endpoint': 'Aktør',
+            'endpoint': 'AktÃ¸r',
             'params': {
                 '$filter': "typeid eq 5",  # Politicians
                 '$top': '50',
-                '$expand': 'SagAktørRel/Sag'
+                '$expand': 'SagAktÃ¸rRel/Sag'
             }
         },
         {
@@ -321,7 +321,7 @@ def create_parliamentary_dashboard():
         },
         {
             'name': 'active_politicians',
-            'endpoint': 'Aktør',
+            'endpoint': 'AktÃ¸r',
             'params': {
                 '$filter': "typeid eq 5 and year(opdateringsdato) eq 2025",
                 '$top': '30'
@@ -338,7 +338,7 @@ def create_parliamentary_dashboard():
         },
         {
             'name': 'committee_meetings',
-            'endpoint': 'Møde',
+            'endpoint': 'MÃ¸de',
             'params': {
                 '$filter': "year(dato) eq 2025",
                 '$top': '25'
@@ -379,7 +379,7 @@ def create_parliamentary_dashboard():
             successful_requests += 1
     
     batch_time = results[0]['batch_time']
-    print(f"\n=Ê Dashboard Summary:")
+    print(f"\n=ÃŠ Dashboard Summary:")
     print(f"   Total Records: {total_records}")
     print(f"   Successful Requests: {successful_requests}/{len(dashboard_requests)}")
     print(f"   Total Batch Time: {batch_time:.2f}s")
@@ -578,7 +578,7 @@ async function createLegislativeDashboard() {
         },
         {
             name: 'Active Politicians',
-            endpoint: 'Aktør',
+            endpoint: 'AktÃ¸r',
             params: {
                 '$filter': "typeid eq 5",
                 '$top': '80'
@@ -586,7 +586,7 @@ async function createLegislativeDashboard() {
         },
         {
             name: 'Committee Meetings',
-            endpoint: 'Møde',
+            endpoint: 'MÃ¸de',
             params: {
                 '$filter': "year(dato) eq 2025",
                 '$top': '60'
@@ -602,7 +602,7 @@ async function createLegislativeDashboard() {
         }
     ];
     
-    console.log(`=€ Executing ${dashboardQueries.length} concurrent requests...`);
+    console.log(`=Â€ Executing ${dashboardQueries.length} concurrent requests...`);
     console.time('Dashboard Creation');
     
     const result = await client.fetchConcurrent(dashboardQueries);
@@ -610,7 +610,7 @@ async function createLegislativeDashboard() {
     console.timeEnd('Dashboard Creation');
     
     // Display results
-    console.log('\n=Ê Dashboard Results:');
+    console.log('\n=ÃŠ Dashboard Results:');
     console.log(`   Successful: ${result.summary.successfulRequests}/${result.summary.totalRequests}`);
     console.log(`   Total Records: ${result.summary.totalRecords}`);
     console.log(`   Failed: ${result.summary.failedRequests}`);
@@ -695,8 +695,8 @@ class BatchOptimizer:
 optimizer = BatchOptimizer()
 mixed_requests = [
     {'endpoint': 'Sag', 'params': {'$top': '50'}},      # small
-    {'endpoint': 'Aktør', 'params': {'$top': '5000'}},  # large  
-    {'endpoint': 'Møde', 'params': {'$top': '100'}},    # small
+    {'endpoint': 'AktÃ¸r', 'params': {'$top': '5000'}},  # large  
+    {'endpoint': 'MÃ¸de', 'params': {'$top': '100'}},    # small
     {'endpoint': 'Dokument', 'params': {'$top': '2000'}} # large
 ]
 
@@ -735,7 +735,7 @@ class ProgressiveLoader {
             });
         }
         
-        console.log(`=æ Loading ${totalRecords} records in ${chunks} chunks of ${this.chunkSize}`);
+        console.log(`=Ã¦ Loading ${totalRecords} records in ${chunks} chunks of ${this.chunkSize}`);
         
         // Process chunks with controlled concurrency
         const allResults = [];
@@ -1093,23 +1093,23 @@ class ConcurrentPerformanceMonitor:
         summary = self.get_performance_summary()
         
         if summary.get('status') == 'no_data':
-            print("=Ê No performance data available yet")
+            print("=ÃŠ No performance data available yet")
             return
         
-        print("\n=Ê Live Performance Statistics")
+        print("\n=ÃŠ Live Performance Statistics")
         print("=" * 50)
         print(f"Total Requests: {summary['total_requests']}")
         print(f"Success Rate: {summary['success_rate']:.1f}%")
         print(f"Throughput: {summary['throughput']:.2f} req/sec")
         
         rt = summary['response_times']
-        print(f"\nñ  Response Times:")
+        print(f"\nÃ±  Response Times:")
         print(f"   Mean: {rt['mean']:.3f}s")
         print(f"   Median: {rt['median']:.3f}s")
         print(f"   95th percentile: {rt['p95']:.3f}s")
         print(f"   99th percentile: {rt['p99']:.3f}s")
         
-        print(f"\n=È Endpoint Breakdown:")
+        print(f"\n=Ãˆ Endpoint Breakdown:")
         for endpoint, stats in summary['endpoint_breakdown'].items():
             print(f"   {endpoint}: {stats['request_count']} requests, "
                   f"{stats['avg_response_time']:.3f}s avg")
@@ -1121,7 +1121,7 @@ async def monitored_concurrent_requests():
     
     requests = [
         {'endpoint': 'Sag', 'params': {'$top': '100'}},
-        {'endpoint': 'Aktør', 'params': {'$top': '50'}},
+        {'endpoint': 'AktÃ¸r', 'params': {'$top': '50'}},
         {'endpoint': 'Afstemning', 'params': {'$top': '25'}},
         # ... more requests
     ]

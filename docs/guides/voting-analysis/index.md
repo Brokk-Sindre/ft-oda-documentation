@@ -18,21 +18,21 @@ Contains voting session metadata including:
 - **vedtaget**: Boolean indicating if proposal passed
 - **nummer**: Sequential voting session number
 - **typeid**: Type of voting session (final adoption, committee recommendation, etc.)
-- **mødeid**: Link to meeting where vote occurred
+- **mÃ¸deid**: Link to meeting where vote occurred
 - **sagstrinid**: Connection to case step in legislative process
 
 #### Stemme (Individual Votes) 
 Tracks individual politician votes with:
 - **typeid**: Vote choice (1=for, 2=against, 3=absent, 4=abstain)
 - **afstemningid**: Reference to voting session
-- **aktørid**: Reference to specific politician
+- **aktÃ¸rid**: Reference to specific politician
 - **opdateringsdato**: Last update timestamp
 
 #### Stemmetype (Vote Types)
 Four possible voting choices:
 1. **For** (Yes/Support)
 2. **Imod** (No/Against) 
-3. **Fravær** (Absent)
+3. **FravÃ¦r** (Absent)
 4. **Hverken for eller imod** (Abstain/Neither)
 
 #### Afstemningstype (Voting Session Types)
@@ -40,7 +40,7 @@ Classification of voting contexts:
 1. **Endelig vedtagelse** (Final Adoption)
 2. **Udvalgsindstilling** (Committee Recommendation)
 3. **Forslag til vedtagelse** (Adoption Proposal)
-4. **Ændringsforslag** (Amendment)
+4. **Ã†ndringsforslag** (Amendment)
 
 ## Voting Analysis Capabilities
 
@@ -50,7 +50,7 @@ Track specific politicians' voting behavior with complete biographical context:
 
 ```bash
 # Get all votes by specific politician with voting session details
-curl "https://oda.ft.dk/api/Stemme?%24expand=Afstemning,Aktør&%24filter=Aktør/navn%20eq%20'[Politician Name]'"
+curl "https://oda.ft.dk/api/Stemme?%24expand=Afstemning,AktÃ¸r&%24filter=AktÃ¸r/navn%20eq%20'[Politician Name]'"
 ```
 
 **Key Insights Available:**
@@ -66,7 +66,7 @@ Analyze party cohesion and alignment patterns:
 
 ```bash
 # Get voting patterns by party affiliation
-curl "https://oda.ft.dk/api/Stemme?%24expand=Aktör,Afstemning&%24filter=Aktör/gruppenavnkort%20eq%20'[Party Abbreviation]'"
+curl "https://oda.ft.dk/api/Stemme?%24expand=AktÃ¶r,Afstemning&%24filter=AktÃ¶r/gruppenavnkort%20eq%20'[Party Abbreviation]'"
 ```
 
 **Analysis Capabilities:**
@@ -116,7 +116,7 @@ The API provides access to voting data across multiple parliamentary periods:
 
 ```bash
 # Get voting data by specific period
-curl "https://oda.ft.dk/api/Afstemning?%24expand=Møde/Periode&%24filter=Møde/Periode/id%20eq%20[PeriodID]"
+curl "https://oda.ft.dk/api/Afstemning?%24expand=MÃ¸de/Periode&%24filter=MÃ¸de/Periode/id%20eq%20[PeriodID]"
 ```
 
 **Historical Analysis Capabilities:**
@@ -163,7 +163,7 @@ Based on research findings:
 - Use `konklusion` field for official party-level results
 - Track individual votes through `Stemme` entity for detailed analysis
 - Link voting sessions to meetings for temporal context
-- Expand to `Aktör` entity for complete biographical context
+- Expand to `AktÃ¶r` entity for complete biographical context
 
 ## Navigation to Specific Guides
 
@@ -201,7 +201,7 @@ Start with a simple query to understand the data structure:
 curl "https://oda.ft.dk/api/Afstemning?%24orderby=opdateringsdato%20desc&%24top=10"
 
 # Get individual votes for a recent session
-curl "https://oda.ft.dk/api/Stemme?%24expand=Aktör&%24filter=afstemningid%20eq%20[VotingID]&%24top=100"
+curl "https://oda.ft.dk/api/Stemme?%24expand=AktÃ¶r&%24filter=afstemningid%20eq%20[VotingID]&%24top=100"
 ```
 
 ### Common Analysis Patterns
@@ -213,12 +213,12 @@ curl "https://oda.ft.dk/api/Sag?%24expand=Sagstrin/Afstemning/Stemme&%24filter=s
 
 **Monitor Recent Parliamentary Activity:**
 ```bash
-curl "https://oda.ft.dk/api/Afstemning?%24expand=Møde&%24filter=opdateringsdato%20gt%20datetime'2025-01-01'&%24orderby=opdateringsdato%20desc"
+curl "https://oda.ft.dk/api/Afstemning?%24expand=MÃ¸de&%24filter=opdateringsdato%20gt%20datetime'2025-01-01'&%24orderby=opdateringsdato%20desc"
 ```
 
 **Analyze Party Voting Alignment:**
 ```bash
-curl "https://oda.ft.dk/api/Stemme?%24expand=Aktör,Afstemning&%24filter=Aktör/gruppenavnkort%20eq%20'S'%20and%20Afstemning/vedtaget%20eq%20true"
+curl "https://oda.ft.dk/api/Stemme?%24expand=AktÃ¶r,Afstemning&%24filter=AktÃ¶r/gruppenavnkort%20eq%20'S'%20and%20Afstemning/vedtaget%20eq%20true"
 ```
 
 ## Key Technical Notes
@@ -231,8 +231,8 @@ Always use `%24` instead of `$` for OData parameters:
 
 ### Relationship Expansions
 Supported expansion patterns for voting analysis:
-- **Single Level**: `$expand=Afstemning` or `$expand=Aktör`
-- **Two Level**: `$expand=Stemme/Aktör` or `$expand=Afstemning/Møde`
+- **Single Level**: `$expand=Afstemning` or `$expand=AktÃ¶r`
+- **Two Level**: `$expand=Stemme/AktÃ¶r` or `$expand=Afstemning/MÃ¸de`
 - **Strategic Use**: Balance detail needs with performance requirements
 
 ### Data Freshness

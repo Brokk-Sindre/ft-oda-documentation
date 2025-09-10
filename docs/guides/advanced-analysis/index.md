@@ -2,7 +2,7 @@
 
 Welcome to the comprehensive guide for performing sophisticated analysis on Denmark's Parliamentary Open Data. This section covers advanced analytical approaches for researchers, data scientists, and political analysts working with the oda.ft.dk API.
 
-## =Ê Dataset Overview
+## =ÃŠ Dataset Overview
 
 The Danish Parliamentary API provides unprecedented access to legislative data with exceptional scale and quality:
 
@@ -20,7 +20,7 @@ The Danish Parliamentary API provides unprecedented access to legislative data w
 - **Multi-format Support**: JSON and XML output with identical data structure
 - **No Authentication Barriers**: Open access enabling large-scale analysis
 
-## <¯ Advanced Analysis Categories
+## <Â¯ Advanced Analysis Categories
 
 ### [Data Mining Techniques](data-mining.md)
 Extract patterns and insights from parliamentary behavior:
@@ -46,7 +46,7 @@ Understand temporal patterns and evolution:
 - **Event Impact Analysis**: Measure effects of external events on parliament
 - **Career Path Analysis**: Track politician involvement and evolution
 
-## =à Technical Prerequisites
+## =Ã  Technical Prerequisites
 
 ### Required Skills
 - **OData Querying**: Advanced knowledge of OData 3.0 syntax and capabilities
@@ -109,18 +109,18 @@ library(visNetwork)
 - **Storage**: 50-100GB for local data caching and intermediate results
 - **Network**: Stable high-speed connection for API access
 
-## =€ Common Analytical Patterns
+## =Â€ Common Analytical Patterns
 
 ### Relationship Expansion Strategy
 ```bash
 # Get comprehensive case data with all relationships
-curl "https://oda.ft.dk/api/Sag?\$expand=Sagsstatus,Sagskategori,SagAktør/Aktør,SagDokument/Dokument&\$top=1000"
+curl "https://oda.ft.dk/api/Sag?\$expand=Sagsstatus,Sagskategori,SagAktÃ¸r/AktÃ¸r,SagDokument/Dokument&\$top=1000"
 ```
 
 ### Multi-entity Correlation Analysis
 ```bash
 # Correlate voting patterns with actor characteristics
-curl "https://oda.ft.dk/api/Afstemning?\$expand=Stemme/Aktør/Aktørtype&\$filter=startswith(titel,'L ')"
+curl "https://oda.ft.dk/api/Afstemning?\$expand=Stemme/AktÃ¸r/AktÃ¸rtype&\$filter=startswith(titel,'L ')"
 ```
 
 ### Temporal Filtering for Trend Analysis
@@ -132,10 +132,10 @@ curl "https://oda.ft.dk/api/Sag?\$filter=opdateringsdato%20ge%20datetime'2020-01
 ### Cross-referencing Complex Relationships
 ```bash
 # Track document flow through case lifecycle
-curl "https://oda.ft.dk/api/SagDokument?\$expand=Sag/Sagsstatus,Dokument/DokumentAktør/Aktør"
+curl "https://oda.ft.dk/api/SagDokument?\$expand=Sag/Sagsstatus,Dokument/DokumentAktÃ¸r/AktÃ¸r"
 ```
 
-## ¡ Performance Optimization
+## Â¡ Performance Optimization
 
 ### Query Optimization Strategies
 - **Selective Field Extraction**: Use `$select` to minimize data transfer
@@ -173,7 +173,7 @@ def fetch_paginated_data(endpoint, page_size=1000):
 - **Intermediate Storage**: Save partial results to prevent data loss
 - **Garbage Collection**: Explicitly manage memory in long-running analyses
 
-## =È Data Quality Considerations
+## =Ãˆ Data Quality Considerations
 
 ### Validation Strategies
 - **Completeness Checks**: Verify expected data ranges and coverage
@@ -187,7 +187,7 @@ def fetch_paginated_data(endpoint, page_size=1000):
 - **Entity Lifecycle**: Some entities may become inactive but remain accessible
 - **Relationship Complexity**: Multi-level dependencies require careful handling
 
-## <¯ Advanced Query Patterns
+## <Â¯ Advanced Query Patterns
 
 ### Complex Filtering Examples
 ```bash
@@ -195,27 +195,27 @@ def fetch_paginated_data(endpoint, page_size=1000):
 "$filter=(opdateringsdato gt datetime'2023-01-01') and (Sagskategori/kategori eq 'Lovforslag')"
 
 # Nested relationship filtering  
-"$filter=SagAktør/any(sa: sa/Aktør/Aktørtype/type eq 'Politiker' and sa/rolle eq 'Ordfører')"
+"$filter=SagAktÃ¸r/any(sa: sa/AktÃ¸r/AktÃ¸rtype/type eq 'Politiker' and sa/rolle eq 'OrdfÃ¸rer')"
 
 # Statistical aggregation preparation
-"$filter=Stemme/any(s: s/typeid eq 1)&$expand=Stemme($filter=typeid eq 1;$expand=Aktør)"
+"$filter=Stemme/any(s: s/typeid eq 1)&$expand=Stemme($filter=typeid eq 1;$expand=AktÃ¸r)"
 ```
 
 ### Performance-optimized Expansion
 ```bash
 # Selective expansion with filtering
-"$expand=SagAktør($filter=rolle eq 'Ordfører';$expand=Aktør($select=navn,Aktørtype))"
+"$expand=SagAktÃ¸r($filter=rolle eq 'OrdfÃ¸rer';$expand=AktÃ¸r($select=navn,AktÃ¸rtype))"
 
 # Multi-level relationship mapping
-"$expand=SagDokument/Dokument/DokumentAktør($expand=Aktør($select=id,navn))"
+"$expand=SagDokument/Dokument/DokumentAktÃ¸r($expand=AktÃ¸r($select=id,navn))"
 ```
 
-## =Ú Analysis Workflow Templates
+## =Ãš Analysis Workflow Templates
 
 ### 1. Exploratory Data Analysis Workflow
 ```python
 # Phase 1: Data Discovery
-entities = ['Sag', 'Aktør', 'Afstemning', 'Dokument']
+entities = ['Sag', 'AktÃ¸r', 'Afstemning', 'Dokument']
 for entity in entities:
     sample = get_sample_data(entity, size=100)
     analyze_structure(sample)
@@ -282,7 +282,7 @@ visualize_longitudinal_patterns(trends)
 - **Topic Evolution Tracking**: Follow policy area development
 - **Cross-reference Analysis**: Link parliamentary activity to outcomes
 
-## <¯ Next Steps
+## <Â¯ Next Steps
 
 ### Choose Your Analysis Path
 1. **[Data Mining Guide](data-mining.md)** - For pattern discovery and machine learning approaches

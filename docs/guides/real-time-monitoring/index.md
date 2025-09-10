@@ -54,7 +54,7 @@ Recent monitoring reveals the API's responsiveness:
 }
 
 {
-  "entity": "Møde",
+  "entity": "MÃ¸de",
   "id": "future_meeting",
   "dato": "2025-09-12T08:30:00.000",
   "status": "Scheduled in advance"
@@ -81,7 +81,7 @@ async function getRecentChanges(entityType, hoursBack = 8) {
 }
 
 // Monitor multiple entity types
-const monitoredEntities = ['Sag', 'Afstemning', 'Dokument', 'Møde'];
+const monitoredEntities = ['Sag', 'Afstemning', 'Dokument', 'MÃ¸de'];
 const changes = await Promise.all(
   monitoredEntities.map(entity => getRecentChanges(entity, 4))
 );
@@ -161,8 +161,8 @@ Different entity types require different monitoring strategies:
 | Priority | Entity Types | Interval | Use Case |
 |----------|-------------|----------|-----------|
 | High | Afstemning, Sag | 2-5 minutes | Live voting tracking |
-| Medium | Dokument, Møde | 10-15 minutes | Document publication |
-| Low | Aktør, Periode | 1-4 hours | Reference data updates |
+| Medium | Dokument, MÃ¸de | 10-15 minutes | Document publication |
+| Low | AktÃ¸r, Periode | 1-4 hours | Reference data updates |
 | Minimal | EUSag, Sambehandlinger | Daily | Administrative data |
 
 ## Performance Considerations
@@ -187,7 +187,7 @@ const allData = await fetch('https://oda.ft.dk/api/Sag'); // Too expensive
 
 // L AVOID: Complex expansions in monitoring queries
 const expanded = await fetch(
-  `https://oda.ft.dk/api/Sag?%24expand=DokumentAktør/Dokument/Fil` // Too slow
+  `https://oda.ft.dk/api/Sag?%24expand=DokumentAktÃ¸r/Dokument/Fil` // Too slow
 );
 ```
 
@@ -386,7 +386,7 @@ async function trackLegislation(caseId) {
   const monitor = new CaseMonitor(caseId);
   
   monitor.on('status_change', (oldStatus, newStatus) => {
-    console.log(`Case ${caseId}: ${oldStatus} ’ ${newStatus}`);
+    console.log(`Case ${caseId}: ${oldStatus} Â’ ${newStatus}`);
   });
   
   monitor.on('new_document', (document) => {
@@ -425,7 +425,7 @@ class CommitteeMonitor {
     tomorrow.setDate(tomorrow.getDate() + 1);
     
     return await fetch(
-      `https://oda.ft.dk/api/Møde?%24filter=dato gt datetime'${tomorrow.toISOString()}' and udvalg eq ${this.committeeId}`
+      `https://oda.ft.dk/api/MÃ¸de?%24filter=dato gt datetime'${tomorrow.toISOString()}' and udvalg eq ${this.committeeId}`
     ).then(r => r.json());
   }
 }

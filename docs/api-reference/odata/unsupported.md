@@ -85,7 +85,7 @@ curl -X POST -H "Content-Type: multipart/mixed; boundary=batch" \
 // Instead of batch request, make multiple calls
 const [cases, actors, documents] = await Promise.all([
     fetch('https://oda.ft.dk/api/Sag?$top=10'),
-    fetch('https://oda.ft.dk/api/Aktør?$top=10'),
+    fetch('https://oda.ft.dk/api/AktÃ¸r?$top=10'),
     fetch('https://oda.ft.dk/api/Dokument?$top=10')
 ]);
 ```
@@ -166,7 +166,7 @@ Allow: GET,POST,PUT,PATCH,MERGE,DELETE
 While the API advertises XML support, using `$format=xml` can cause issues:
 
 ```bash
-#   PROBLEMATIC: May return errors in some contexts
+# Â  PROBLEMATIC: May return errors in some contexts
 curl "https://oda.ft.dk/api/Sag?%24format=xml&%24top=1"
 ```
 
@@ -416,7 +416,7 @@ The Danish Parliamentary API is a **production government system** focused on st
 - **Real-time push notifications** (polling architecture is sufficient)
 - **Batch operations** (current individual request model works well)
 
-For feature requests or API issues, contact: **folketinget@ft.dk** with subject "Åbne Data".
+For feature requests or API issues, contact: **folketinget@ft.dk** with subject "Ã…bne Data".
 
 ## Summary
 

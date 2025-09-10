@@ -23,7 +23,7 @@ class ApiHealthMonitor:
         self.base_url = base_url
         self.endpoints = {
             'cases': 'Sag',
-            'actors': 'Aktør', 
+            'actors': 'AktÃ¸r', 
             'votes': 'Afstemning',
             'documents': 'Dokument'
         }
@@ -90,7 +90,7 @@ class ApiStatusWidget {
     constructor(containerId) {
         this.container = document.getElementById(containerId);
         this.apiBase = 'https://oda.ft.dk/api';
-        this.endpoints = ['Sag', 'Aktør', 'Afstemning', 'Dokument', 'Møde'];
+        this.endpoints = ['Sag', 'AktÃ¸r', 'Afstemning', 'Dokument', 'MÃ¸de'];
         this.checkInterval = 30000; // 30 seconds
     }
 
@@ -353,7 +353,7 @@ class ApplicationMetrics:
         # Alert if data is stale (older than expected update frequency)
         expected_freshness = {
             'Sag': 24,      # Cases updated daily
-            'Aktør': 168,   # Actors updated weekly
+            'AktÃ¸r': 168,   # Actors updated weekly
             'Afstemning': 24, # Votes updated daily
             'Dokument': 24,  # Documents updated daily
         }
@@ -493,7 +493,7 @@ class AlertManager:
         slack_message = {
             'attachments': [{
                 'color': color_map.get(alert_data['severity'], '#36a64f'),
-                'title': f"=¨ {alert_data['title']}",
+                'title': f"=Â¨ {alert_data['title']}",
                 'text': alert_data['message'],
                 'fields': [
                     {
@@ -531,7 +531,7 @@ alert_manager = AlertManager(alert_config)
 
 # Integration with performance monitoring
 def check_and_alert_performance():
-    for endpoint in ['Sag', 'Aktør', 'Afstemning']:
+    for endpoint in ['Sag', 'AktÃ¸r', 'Afstemning']:
         alerts = monitor.check_performance_thresholds(endpoint)
         if alerts:
             for alert_message in alerts:
@@ -1210,7 +1210,7 @@ class IncidentManager:
                 incidents.append(incident)
         
         # Check performance incidents
-        for endpoint in ['Sag', 'Aktør', 'Afstemning', 'Dokument']:
+        for endpoint in ['Sag', 'AktÃ¸r', 'Afstemning', 'Dokument']:
             alerts = monitor.check_performance_thresholds(endpoint)
             if alerts:
                 incident = self._create_performance_incident(endpoint, alerts)
@@ -1621,7 +1621,7 @@ class ApiMetricsExporter:
         self.api_base = api_base
         self.endpoints = {
             'cases': 'Sag',
-            'actors': 'Aktør',
+            'actors': 'AktÃ¸r',
             'votes': 'Afstemning',
             'documents': 'Dokument'
         }

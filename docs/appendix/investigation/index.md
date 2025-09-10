@@ -81,7 +81,7 @@ time curl -s "https://oda.ft.dk/api/Sag?%24top=100" > /dev/null
 time curl -s "https://oda.ft.dk/api/Sag?%24top=10000" > /dev/null
 
 # Complex relationship queries
-time curl -s "https://oda.ft.dk/api/Afstemning?%24expand=Stemme/Aktør&%24top=100" > /dev/null
+time curl -s "https://oda.ft.dk/api/Afstemning?%24expand=Stemme/AktÃ¸r&%24top=100" > /dev/null
 ```
 
 **Key Findings**:
@@ -101,9 +101,9 @@ time curl -s "https://oda.ft.dk/api/Afstemning?%24expand=Stemme/Aktør&%24top=100
 **Danish Language Support Testing**:
 ```bash
 # Test special characters in filters
-curl "https://oda.ft.dk/api/Aktør?%24filter=substringof('ø',navn)&%24top=3"
-curl "https://oda.ft.dk/api/Aktør?%24filter=substringof('å',navn)&%24top=3"  
-curl "https://oda.ft.dk/api/Aktør?%24filter=substringof('æ',navn)&%24top=3"
+curl "https://oda.ft.dk/api/AktÃ¸r?%24filter=substringof('Ã¸',navn)&%24top=3"
+curl "https://oda.ft.dk/api/AktÃ¸r?%24filter=substringof('Ã¥',navn)&%24top=3"  
+curl "https://oda.ft.dk/api/AktÃ¸r?%24filter=substringof('Ã¦',navn)&%24top=3"
 ```
 
 **Result**: Perfect UTF-8 support with no encoding issues for Danish special characters.
@@ -137,7 +137,7 @@ curl "https://oda.ft.dk/api/Sag?%24filter=startswith(titel,'Forslag')&%24top=3"
 curl "https://oda.ft.dk/api/Sag?%24filter=year(opdateringsdato)%20eq%202025&%24top=3"
 
 # Boolean logic  
-curl "https://oda.ft.dk/api/Sag?%24filter=(substringof('klima',titel)%20or%20substringof('miljø',titel))%20and%20year(opdateringsdato)%20gt%202020&%24top=3"
+curl "https://oda.ft.dk/api/Sag?%24filter=(substringof('klima',titel)%20or%20substringof('miljÃ¸',titel))%20and%20year(opdateringsdato)%20gt%202020&%24top=3"
 ```
 
 **Sorting and Pagination**:
@@ -155,7 +155,7 @@ curl "https://oda.ft.dk/api/Sag?%24inlinecount=allpages&%24top=1"
 curl "https://oda.ft.dk/api/Dokument?%24expand=Fil&%24top=3"
 
 # Multi-level expansion
-curl "https://oda.ft.dk/api/Afstemning?%24expand=Stemme/Aktør&%24top=1"
+curl "https://oda.ft.dk/api/Afstemning?%24expand=Stemme/AktÃ¸r&%24top=1"
 ```
 
 #### Error Handling Validation
@@ -204,7 +204,7 @@ curl -I -v "https://oda.ft.dk/api/Sag"
 # Check most recent updates across entities
 curl "https://oda.ft.dk/api/Sag?%24orderby=opdateringsdato%20desc&%24top=5"
 curl "https://oda.ft.dk/api/Afstemning?%24orderby=opdateringsdato%20desc&%24top=3"  
-curl "https://oda.ft.dk/api/Møde?%24orderby=opdateringsdato%20desc&%24top=2"
+curl "https://oda.ft.dk/api/MÃ¸de?%24orderby=opdateringsdato%20desc&%24top=2"
 ```
 
 **Finding**: Real-time or near real-time updates during parliamentary business hours.

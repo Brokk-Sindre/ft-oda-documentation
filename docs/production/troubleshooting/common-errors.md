@@ -24,7 +24,7 @@ This comprehensive guide covers the most frequent errors encountered when workin
 **Example of Silent Failure:**
 ```bash
 # Query with typo: "title" instead of "titel"
-curl "https://oda.ft.dk/api/Sag?%24filter=title%20eq%20'klimaændringer'&%24top=5"
+curl "https://oda.ft.dk/api/Sag?%24filter=title%20eq%20'klimaÃ¦ndringer'&%24top=5"
 ```
 
 **What Happens:**
@@ -109,7 +109,7 @@ class ODataQueryBuilder {
 
 // Usage
 const url = new ODataQueryBuilder('https://oda.ft.dk/api/Sag')
-    .filter("titel eq 'klimaændringer'")
+    .filter("titel eq 'klimaÃ¦ndringer'")
     .top(10)
     .build();
 ```
@@ -133,9 +133,9 @@ Content-Length: 0
 ```javascript
 // Map of valid expansions for each entity
 const validExpansions = {
-    'Sag': ['Sagstrin', 'Sagskategori', 'SagAktør', 'SagDokument'],
-    'Aktør': ['AktørType', 'SagAktør', 'DokumentAktør'],
-    'Dokument': ['Fil', 'DokumentAktør', 'SagDokument']
+    'Sag': ['Sagstrin', 'Sagskategori', 'SagAktÃ¸r', 'SagDokument'],
+    'AktÃ¸r': ['AktÃ¸rType', 'SagAktÃ¸r', 'DokumentAktÃ¸r'],
+    'Dokument': ['Fil', 'DokumentAktÃ¸r', 'SagDokument']
 };
 
 function validateExpansion(entityName, expansions) {
@@ -639,8 +639,8 @@ class CorporateNetworkHandler {
 class DanishTextValidator {
     static validateEncoding(text) {
         // Check for proper UTF-8 encoding of Danish characters
-        const danishChars = /[æøåÆØÅ]/;
-        const corruptedChars = /[Ã’Â¦Ã¸Ã¥]/; // Common corruption patterns
+        const danishChars = /[Ã¦Ã¸Ã¥Ã†Ã˜Ã…]/;
+        const corruptedChars = /[ÃƒÂ’Ã‚Â¦ÃƒÂ¸ÃƒÂ¥]/; // Common corruption patterns
         
         if (corruptedChars.test(text)) {
             throw new Error('Text appears to have encoding corruption - ensure UTF-8 handling');
@@ -1107,7 +1107,7 @@ class ProductionErrorMonitor {
     sendAlert(alertData) {
         if (!this.options.sendAlerts) return;
         
-        console.error('=¨ ALERT:', alertData);
+        console.error('=Â¨ ALERT:', alertData);
         
         // In production, integrate with alerting systems:
         // - Slack/Discord webhooks

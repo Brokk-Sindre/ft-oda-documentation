@@ -169,11 +169,11 @@ If the API is completely unavailable or returning incorrect data:
 
 ```
 Level 1: Community Support & Documentation
-    “ (No resolution within SLA)
+    Â“ (No resolution within SLA)
 Level 2: GitHub Issues & Technical Support
-    “ (Critical issues or SLA breach)
+    Â“ (Critical issues or SLA breach)
 Level 3: Emergency Contact & Management
-    “ (System-wide outages)
+    Â“ (System-wide outages)
 Level 4: Parliamentary IT Department
 ```
 

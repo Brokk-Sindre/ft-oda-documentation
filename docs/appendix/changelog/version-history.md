@@ -34,7 +34,7 @@ Our versioning approach follows semantic versioning principles adapted for API s
 - Performance optimization reducing average response times to 85ms-2s range
 - Enhanced query reliability with improved error handling
 - Expanded entity coverage to 53+ distinct data types
-- Improved UTF-8 encoding support for Danish characters (æ, ø, å)
+- Improved UTF-8 encoding support for Danish characters (Ã¦, Ã¸, Ã¥)
 
 **Documentation Improvements**:
 - Complete restructuring with 132 comprehensive markdown files
@@ -503,7 +503,7 @@ Our versioning approach follows semantic versioning principles adapted for API s
 
 **Popular Endpoints**:
 1. **Sag (Cases)**: 35% of all queries
-2. **Aktør (Actors)**: 25% of all queries
+2. **AktÃ¸r (Actors)**: 25% of all queries
 3. **Dokument (Documents)**: 20% of all queries
 4. **Afstemning (Voting)**: 15% of all queries
 5. **Other entities**: 5% of all queries

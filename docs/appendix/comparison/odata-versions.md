@@ -497,11 +497,11 @@ Key Limitations:
 - No $count support (use $inlinecount=allpages)  
 - No batch operations (HTTP 501)
 - Maximum $top value: 100
-- URL encoding required: $ ’ %24
+- URL encoding required: $ Â’ %24
 
 Migration Notes:
-- Ready for OData 4.0 $search ’ substringof mapping
-- $inlinecount ’ $count migration path prepared
+- Ready for OData 4.0 $search Â’ substringof mapping
+- $inlinecount Â’ $count migration path prepared
 - Batch operation requirements documented
 """
 ```

@@ -8,18 +8,18 @@ The classification framework operates across four hierarchical layers:
 
 ### 1. Type Layer (Entity Classification)
 Defines the fundamental nature of entities - what kind of thing they are:
-- **Aktørtype** (13 values) - Institutional hierarchy from individuals to organizations
+- **AktÃ¸rtype** (13 values) - Institutional hierarchy from individuals to organizations
 - **Sagstype** - Case type classifications
 - **Dokumenttype** (28 values) - Complete document taxonomy
 - **Stemmetype** (4 values) - Individual voting choices
-- **Mødetype** - Meeting type classifications
+- **MÃ¸detype** - Meeting type classifications
 - **Emneordstype** - Keyword category types
 
 ### 2. Status Layer (Lifecycle Tracking)
 Captures the current state and process position of entities:
 - **Sagsstatus** (68 values) - Most granular parliamentary status system globally
 - **Dokumentstatus** - Document processing states
-- **Mødestatus** - Meeting lifecycle stages
+- **MÃ¸destatus** - Meeting lifecycle stages
 - **Sagstrinsstatus** - Case step processing states
 
 ### 3. Category Layer (Functional Grouping)
@@ -29,8 +29,8 @@ Provides semantic grouping for analysis and organization:
 
 ### 4. Role Layer (Relationship Semantics)
 Defines the nature of relationships between entities:
-- **SagAktørRolle** (23 values) - Case-actor relationship types
-- **DokumentAktørRolle** (25+ values) - Document-actor relationship types
+- **SagAktÃ¸rRolle** (23 values) - Case-actor relationship types
+- **DokumentAktÃ¸rRolle** (25+ values) - Document-actor relationship types
 - **SagDokumentRolle** - Case-document relationship types
 
 ## Classification Systems by Domain
@@ -42,7 +42,7 @@ The actor classification system recognizes the institutional complexity of Danis
 - **Hierarchical structure** distinguishing official roles (Person) from private individuals (Privatperson)
 - **Comprehensive coverage** including ministers, committees, parties, commissions, and external organizations
 
-[Learn more about Actor Types ’](actor-types.md)
+[Learn more about Actor Types Â’](actor-types.md)
 
 ### Case Classifications
 Parliamentary cases are classified through multiple overlapping systems:
@@ -53,30 +53,30 @@ Parliamentary cases are classified through multiple overlapping systems:
 
 Key process stages include:
 - **Proposal Stage**: Fremsat (Proposed), Anmeldt (Announced)
-- **Committee Process**: Henvist til udvalg (Referred to committee), Betænkning afgivet (Report submitted)
+- **Committee Process**: Henvist til udvalg (Referred to committee), BetÃ¦nkning afgivet (Report submitted)
 - **Parliamentary Readings**: 1. beh. (1st reading), 2. beh. (2nd reading), 3. beh. (3rd reading)
-- **Final Outcomes**: Vedtaget (Adopted), Forkastet (Rejected), Stadfæstet (Confirmed)
+- **Final Outcomes**: Vedtaget (Adopted), Forkastet (Rejected), StadfÃ¦stet (Confirmed)
 
-[Learn more about Case Types ’](case-types.md) | [Detailed Case Status Reference ’](case-status.md)
+[Learn more about Case Types Â’](case-types.md) | [Detailed Case Status Reference Â’](case-status.md)
 
 ### Document Classifications
 The document taxonomy reflects the comprehensive nature of parliamentary communication:
 
 - **28 document types** covering the complete document lifecycle
-- **Procedural documents**: Redegørelse (Report), Aktstykke (Bill), Forespørgsel (Question)
-- **Administrative documents**: Stedfortræderbrev (Deputy letter), Ministerredegørelse (Ministry report)
+- **Procedural documents**: RedegÃ¸relse (Report), Aktstykke (Bill), ForespÃ¸rgsel (Question)
+- **Administrative documents**: StedfortrÃ¦derbrev (Deputy letter), MinisterredegÃ¸relse (Ministry report)
 - **Correspondence tracking** through document-actor roles
 
-[Learn more about Document Types ’](document-types.md)
+[Learn more about Document Types Â’](document-types.md)
 
 ### Voting Classifications
 The voting system captures both collective and individual democratic participation:
 
-- **4 vote types** for individual choices: For (Yes), Imod (No), Fravær (Absent), Hverken for eller imod (Abstain)
+- **4 vote types** for individual choices: For (Yes), Imod (No), FravÃ¦r (Absent), Hverken for eller imod (Abstain)
 - **Voting session types** for different parliamentary procedures
-- **Clear distinction** between absence (Fravær) and abstention (Hverken for eller imod)
+- **Clear distinction** between absence (FravÃ¦r) and abstention (Hverken for eller imod)
 
-[Learn more about Vote Types ’](vote-types.md)
+[Learn more about Vote Types Â’](vote-types.md)
 
 ## Historical Evolution
 
@@ -113,8 +113,8 @@ graph TD
 ### Semantic Mapping
 Role classifications provide semantic context for relationships:
 
-- **SagAktørRolle** connects cases to actors with precise relationship semantics
-- **DokumentAktørRolle** tracks communication patterns and document ownership
+- **SagAktÃ¸rRolle** connects cases to actors with precise relationship semantics
+- **DokumentAktÃ¸rRolle** tracks communication patterns and document ownership
 - **Junction tables** maintain referential integrity across all classification layers
 
 ## Working with Classifications
@@ -152,7 +152,7 @@ GET https://oda.ft.dk/api/Sagsstatus
 GET https://oda.ft.dk/api/Sag?%24filter=sagsstatus eq 'Vedtaget'
 
 # Find all committee-type actors
-GET https://oda.ft.dk/api/Aktør?%24filter=aktørtype eq 'Udvalg'
+GET https://oda.ft.dk/api/AktÃ¸r?%24filter=aktÃ¸rtype eq 'Udvalg'
 ```
 
 ## Technical Implementation
@@ -160,7 +160,7 @@ GET https://oda.ft.dk/api/Aktør?%24filter=aktørtype eq 'Udvalg'
 ### API Endpoints
 Each classification system is accessible through dedicated endpoints:
 
-- `/api/Aktørtype` - Actor type classifications
+- `/api/AktÃ¸rtype` - Actor type classifications
 - `/api/Sagsstatus` - Case status classifications  
 - `/api/Dokumenttype` - Document type classifications
 - `/api/Stemmetype` - Vote type classifications

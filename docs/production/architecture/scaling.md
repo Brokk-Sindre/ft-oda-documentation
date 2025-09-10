@@ -120,7 +120,7 @@ async def main():
         cases = await client.get_all_records(
             entity="Sag",
             filters="startswith(samlingid, '20231')",
-            expand="SagAktør/Aktør",
+            expand="SagAktÃ¸r/AktÃ¸r",
             max_records=5000
         )
         print(f"Retrieved {len(cases)} cases")
@@ -667,7 +667,7 @@ def process_parliamentary_data(batch_result: Dict) -> Dict:
                 'status': record.get('statusid'),
                 'period': record.get('samlingid')
             }
-        elif entity == 'Aktør':
+        elif entity == 'AktÃ¸r':
             processed = {
                 'id': record.get('id'),
                 'name': record.get('navn'),
@@ -1043,10 +1043,10 @@ class CaseService:
     def _extract_case_actors(self, case: Dict) -> List[Dict]:
         """Extract and format case actors from expanded data"""
         actors = []
-        if 'SagAktør' in case:
-            for sag_actor in case['SagAktør']:
-                if 'Aktør' in sag_actor:
-                    actor = sag_actor['Aktør']
+        if 'SagAktÃ¸r' in case:
+            for sag_actor in case['SagAktÃ¸r']:
+                if 'AktÃ¸r' in sag_actor:
+                    actor = sag_actor['AktÃ¸r']
                     actors.append({
                         'id': actor.get('id'),
                         'name': actor.get('navn'),
@@ -1170,7 +1170,7 @@ class QueryOptimizer:
         # Performance characteristics from API testing
         self.entity_performance = {
             'Sag': {'base_time': 85, 'expansion_cost': 50},
-            'Aktør': {'base_time': 90, 'expansion_cost': 45},
+            'AktÃ¸r': {'base_time': 90, 'expansion_cost': 45},
             'Afstemning': {'base_time': 100, 'expansion_cost': 80},
             'Stemme': {'base_time': 110, 'expansion_cost': 60},
             'Dokument': {'base_time': 95, 'expansion_cost': 40}
@@ -1289,7 +1289,7 @@ optimizer = QueryOptimizer()
 plan = optimizer.optimize_query(
     entity="Sag",
     filters="samlingid eq '20241' and statusid eq 3",
-    expand="SagAktør/Aktør",
+    expand="SagAktÃ¸r/AktÃ¸r",
     limit=500
 )
 ```

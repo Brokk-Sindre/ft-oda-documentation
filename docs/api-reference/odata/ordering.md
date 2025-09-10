@@ -49,7 +49,7 @@ curl "https://oda.ft.dk/api/Sag?%24orderby=opdateringsdato%20desc,id%20asc&%24to
 curl "https://oda.ft.dk/api/Sag?%24orderby=typeid,titel&%24top=5"
 
 # Sort by multiple criteria with mixed directions
-curl "https://oda.ft.dk/api/Aktør?%24orderby=typeid%20asc,navn%20asc,id%20desc&%24top=5"
+curl "https://oda.ft.dk/api/AktÃ¸r?%24orderby=typeid%20asc,navn%20asc,id%20desc&%24top=5"
 ```
 
 **Important**: Use comma separation between sort fields, and encode commas as `%2C` if needed in some HTTP clients.
@@ -68,7 +68,7 @@ curl "https://oda.ft.dk/api/Sag?%24orderby=opdateringsdato%20desc&%24top=10"
 curl "https://oda.ft.dk/api/Sag?%24orderby=opdateringsdato%20asc&%24top=10"
 
 # Most recent parliamentary meetings
-curl "https://oda.ft.dk/api/Møde?%24orderby=opdateringsdato%20desc&%24top=5"
+curl "https://oda.ft.dk/api/MÃ¸de?%24orderby=opdateringsdato%20desc&%24top=5"
 
 # Recent voting activity
 curl "https://oda.ft.dk/api/Afstemning?%24orderby=opdateringsdato%20desc&%24top=5"
@@ -86,22 +86,22 @@ curl "https://oda.ft.dk/api/Sag?%24orderby=id%20desc&%24top=3"
 curl "https://oda.ft.dk/api/Sag?%24orderby=id%20asc&%24top=3"
 
 # Recent actor registrations
-curl "https://oda.ft.dk/api/Aktør?%24orderby=id%20desc&%24top=5"
+curl "https://oda.ft.dk/api/AktÃ¸r?%24orderby=id%20desc&%24top=5"
 ```
 
 ### Alphabetical Sorting
 
-Sort text fields alphabetically with Danish character support (æ, ø, å):
+Sort text fields alphabetically with Danish character support (Ã¦, Ã¸, Ã¥):
 
 ```bash
 # Politicians sorted alphabetically by name
-curl "https://oda.ft.dk/api/Aktør?%24orderby=navn&%24top=10"
+curl "https://oda.ft.dk/api/AktÃ¸r?%24orderby=navn&%24top=10"
 
 # Cases sorted by title
 curl "https://oda.ft.dk/api/Sag?%24orderby=titel&%24top=5"
 
 # Reverse alphabetical order
-curl "https://oda.ft.dk/api/Aktør?%24orderby=navn%20desc&%24top=10"
+curl "https://oda.ft.dk/api/AktÃ¸r?%24orderby=navn%20desc&%24top=10"
 ```
 
 ## Sorting with Filters and Selection
@@ -116,7 +116,7 @@ curl "https://oda.ft.dk/api/Sag?%24filter=substringof('eu',titel)&%24orderby=opd
 curl "https://oda.ft.dk/api/Sag?%24filter=year(opdateringsdato)%20eq%202025&%24orderby=titel&%24select=titel,opdateringsdato&%24top=10"
 
 # Politicians from a specific party sorted by name
-curl "https://oda.ft.dk/api/Aktør?%24filter=gruppeid%20eq%205&%24orderby=navn&%24top=20"
+curl "https://oda.ft.dk/api/AktÃ¸r?%24filter=gruppeid%20eq%205&%24orderby=navn&%24top=20"
 ```
 
 ## Sorting with Expanded Entities
@@ -128,10 +128,10 @@ Sort by fields from related entities using `$expand`:
 curl "https://oda.ft.dk/api/Sag?%24expand=Sagtype&%24orderby=Sagtype/type&%24top=5"
 
 # Actors with their group, sorted by group name then actor name
-curl "https://oda.ft.dk/api/Aktør?%24expand=Aktørgruppe&%24orderby=Aktørgruppe/gruppenavn,navn&%24top=10"
+curl "https://oda.ft.dk/api/AktÃ¸r?%24expand=AktÃ¸rgruppe&%24orderby=AktÃ¸rgruppe/gruppenavn,navn&%24top=10"
 
 # Votes with voter information, sorted by actor name
-curl "https://oda.ft.dk/api/Stemme?%24expand=Aktør&%24orderby=Aktør/navn&%24top=20"
+curl "https://oda.ft.dk/api/Stemme?%24expand=AktÃ¸r&%24orderby=AktÃ¸r/navn&%24top=20"
 ```
 
 ## URL Encoding Requirements
@@ -178,7 +178,7 @@ Based on testing with the Danish Parliament API:
 #  EFFICIENT: Sort by ID for pagination
 curl "https://oda.ft.dk/api/Sag?%24orderby=id&%24skip=1000&%24top=100"
 
-#   LESS EFFICIENT: Sort by text field on large dataset
+# Â  LESS EFFICIENT: Sort by text field on large dataset
 curl "https://oda.ft.dk/api/Sag?%24orderby=titel&%24skip=1000&%24top=100"
 ```
 
@@ -193,8 +193,8 @@ Track the most recent changes across different entities:
 const recentQueries = {
     cases: "https://oda.ft.dk/api/Sag?%24orderby=opdateringsdato%20desc&%24top=10",
     votes: "https://oda.ft.dk/api/Afstemning?%24orderby=opdateringsdato%20desc&%24top=10",
-    meetings: "https://oda.ft.dk/api/Møde?%24orderby=opdateringsdato%20desc&%24top=10",
-    actors: "https://oda.ft.dk/api/Aktør?%24orderby=opdateringsdato%20desc&%24top=10"
+    meetings: "https://oda.ft.dk/api/MÃ¸de?%24orderby=opdateringsdato%20desc&%24top=10",
+    actors: "https://oda.ft.dk/api/AktÃ¸r?%24orderby=opdateringsdato%20desc&%24top=10"
 };
 
 // Fetch most recent updates
@@ -232,7 +232,7 @@ Multi-criteria sorting for sophisticated queries:
 curl "https://oda.ft.dk/api/Sag?%24orderby=typeid,opdateringsdato%20desc&%24top=20"
 
 # Politicians by party group, then alphabetically within group
-curl "https://oda.ft.dk/api/Aktør?%24orderby=gruppeid,navn&%24top=50"
+curl "https://oda.ft.dk/api/AktÃ¸r?%24orderby=gruppeid,navn&%24top=50"
 
 # Documents by case, then by creation order within each case
 curl "https://oda.ft.dk/api/Dokument?%24orderby=sagid,id&%24top=100"
@@ -317,7 +317,7 @@ const recentCases = await sorter.getSortedData('Sag', [
 ], { top: 10 });
 
 // Multi-field sort
-const sortedActors = await sorter.getSortedData('Aktør', [
+const sortedActors = await sorter.getSortedData('AktÃ¸r', [
     { field: 'gruppeid' },              // Ascending by default
     { field: 'navn', direction: 'asc' }  // Explicit ascending
 ], { top: 50 });
@@ -376,7 +376,7 @@ recent_cases = sorter.get_sorted_data('Sag', [
 ], top=10)
 
 # Multi-field sorting
-sorted_actors = sorter.get_sorted_data('Aktør', [
+sorted_actors = sorter.get_sorted_data('AktÃ¸r', [
     {'field': 'gruppeid'},  # Ascending by default
     {'field': 'navn', 'direction': 'asc'}
 ], top=50)
@@ -394,7 +394,7 @@ climate_cases = sorter.get_sorted_data('Sag', [
 3. **Combine with other parameters**: `$top`, `$filter`, `$select` for efficient queries
 4. **Handle errors gracefully**: Check for HTTP 400 responses on invalid sort fields
 5. **Consider performance**: Multi-field sorts and expansions add response time
-6. **Test with real data**: Danish character sorting (æ, ø, å) works correctly
+6. **Test with real data**: Danish character sorting (Ã¦, Ã¸, Ã¥) works correctly
 7. **Use consistent pagination**: ID-based sorting is most efficient for large datasets
 
 The Danish Parliament API's ordering capabilities provide powerful tools for organizing and analyzing parliamentary data. With proper URL encoding and understanding of performance characteristics, you can build sophisticated applications that efficiently sort through Denmark's comprehensive legislative dataset.

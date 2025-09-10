@@ -58,7 +58,7 @@ class ParliamentaryAPI:
         Paginate through all records of a specific entity.
         
         Args:
-            entity_name: API entity name (e.g., 'Sag', 'Aktør')
+            entity_name: API entity name (e.g., 'Sag', 'AktÃ¸r')
             page_size: Records per page (1-100)
             max_records: Maximum total records to retrieve
             filter_expr: OData $filter expression
@@ -122,7 +122,7 @@ api = ParliamentaryAPI()
 climate_cases = []
 for case in api.paginate_entity(
     entity_name='Sag',
-    filter_expr="substringof('klima', titel) or substringof('miljø', titel)",
+    filter_expr="substringof('klima', titel) or substringof('miljÃ¸', titel)",
     select_fields='id,titel,opdateringsdato,resume',
     max_records=500
 ):
@@ -237,7 +237,7 @@ async function analyzeVotingPatterns() {
     const votingPatterns = new Map();
     
     for await (const vote of api.paginateEntity('Afstemning', {
-        expand: 'Stemme/Aktør',
+        expand: 'Stemme/AktÃ¸r',
         orderBy: 'opdateringsdato desc'
     })) {
         // Process vote data
@@ -945,10 +945,10 @@ class OptimizedParliamentaryAPI:
         """Return optimized field selections for common entities."""
         field_sets = {
             'Sag': 'id,titel,opdateringsdato,resume',
-            'Aktør': 'id,navn,opdateringsdato,typeid',
+            'AktÃ¸r': 'id,navn,opdateringsdato,typeid',
             'Dokument': 'id,titel,dokumenttypeid,opdateringsdato',
             'Afstemning': 'id,nummer,opdateringsdato,sagstrinid',
-            'Møde': 'id,titel,dato,lokale'
+            'MÃ¸de': 'id,titel,dato,lokale'
         }
         
         return field_sets.get(entity_name, '')
@@ -999,7 +999,7 @@ class OptimizedParliamentaryAPI:
             'Sag': 'Sagskategori',
             'Dokument': 'Dokumentkategori',
             'Afstemning': 'Sagstrin',
-            'Møde': 'Periode'
+            'MÃ¸de': 'Periode'
         }
         
         return common_expansions.get(entity_name)

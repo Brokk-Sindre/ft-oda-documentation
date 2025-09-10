@@ -42,7 +42,7 @@ curl -s "https://oda.ft.dk/api/Sag?\$top=5" | jq '.value | length'
 
 ```bash
 # Test all major entities
-entities=("Sag" "Aktør" "Afstemning" "Stemme" "Dokument" "Møde")
+entities=("Sag" "AktÃ¸r" "Afstemning" "Stemme" "Dokument" "MÃ¸de")
 for entity in "${entities[@]}"; do
     status=$(curl -s -w "%{http_code}" -o /dev/null "https://oda.ft.dk/api/$entity?%24top=1")
     echo "$entity: HTTP $status"
@@ -56,7 +56,7 @@ done
 curl -s "https://oda.ft.dk/api/Sag?%24inlinecount=allpages&%24top=1" | jq '.["odata.count"]'
 # Expected: "96538" (approximate, will grow over time)
 
-curl -s "https://oda.ft.dk/api/Aktør?%24inlinecount=allpages&%24top=1" | jq '.["odata.count"]'
+curl -s "https://oda.ft.dk/api/AktÃ¸r?%24inlinecount=allpages&%24top=1" | jq '.["odata.count"]'
 # Expected: "18139" (approximate)
 ```
 
@@ -80,7 +80,7 @@ curl -s "https://oda.ft.dk/api/Sag?%24expand=Sagskategori&%24top=1" | jq '.value
 # Expected: JSON object with category data
 
 # Test two-level expansion
-curl -s "https://oda.ft.dk/api/Afstemning?%24expand=Stemme/Aktør&%24top=1" | jq '.value[0].Stemme[0].Aktør'
+curl -s "https://oda.ft.dk/api/Afstemning?%24expand=Stemme/AktÃ¸r&%24top=1" | jq '.value[0].Stemme[0].AktÃ¸r'
 # Expected: JSON object with actor data
 ```
 
@@ -106,8 +106,8 @@ curl -H "Accept-Encoding: gzip" "https://oda.ft.dk/api/Sag?%24top=1" | gunzip | 
 # Expected: 1
 
 # Test UTF-8 encoding with Danish characters
-curl -s "https://oda.ft.dk/api/Aktør?%24filter=substringof('ø',navn)&%24top=3" | jq '.value[0].navn'
-# Should return Danish names with proper ø character
+curl -s "https://oda.ft.dk/api/AktÃ¸r?%24filter=substringof('Ã¸',navn)&%24top=3" | jq '.value[0].navn'
+# Should return Danish names with proper Ã¸ character
 ```
 
 ### Error Condition Testing
@@ -178,7 +178,7 @@ test_queries=(
     "Sag?%24top=100" 
     "Sag?%24top=1000"
     "Sag?%24expand=Sagskategori&%24top=10"
-    "Afstemning?%24expand=Stemme/Aktør&%24top=10"
+    "Afstemning?%24expand=Stemme/AktÃ¸r&%24top=10"
 )
 
 for query in "${test_queries[@]}"; do
@@ -236,12 +236,12 @@ curl -s "https://oda.ft.dk/api/Sag?%24orderby=opdateringsdato%20desc&%24top=5" |
 
 ```bash
 # Test entity relationships
-curl -s "https://oda.ft.dk/api/Sag?%24expand=SagAktør&%24top=1" | jq '.value[0].SagAktør | length'
+curl -s "https://oda.ft.dk/api/Sag?%24expand=SagAktÃ¸r&%24top=1" | jq '.value[0].SagAktÃ¸r | length'
 # Should return number > 0 for cases with actors
 
 # Verify junction table consistency
-curl -s "https://oda.ft.dk/api/SagAktør?%24top=1" | jq '.value[0]'
-# Should contain sagid and aktørid
+curl -s "https://oda.ft.dk/api/SagAktÃ¸r?%24top=1" | jq '.value[0]'
+# Should contain sagid and aktÃ¸rid
 ```
 
 ### Data Quality Checks
@@ -329,7 +329,7 @@ response_time=$(curl -s -w "%{time_total}" -o /dev/null "https://oda.ft.dk/api/S
 if (( $(echo "$response_time < 2.0" | bc -l) )); then
     echo " Response time: $response_time seconds (Good)"
 else
-    echo "  Response time: $response_time seconds (Slow)"
+    echo "Â  Response time: $response_time seconds (Slow)"
 fi
 
 # 4. Data availability
@@ -365,7 +365,7 @@ echo "=== Health Check Complete ==="
 
 ```bash
 # Check status of all major entities
-entities=("Sag" "Aktør" "Afstemning" "Stemme" "Dokument" "Møde" "DokumentAktør" "SagAktør")
+entities=("Sag" "AktÃ¸r" "Afstemning" "Stemme" "Dokument" "MÃ¸de" "DokumentAktÃ¸r" "SagAktÃ¸r")
 
 echo "Entity Status Report:"
 for entity in "${entities[@]}"; do
@@ -410,7 +410,7 @@ test_url_encoding() {
     if [[ "$incorrect" == "100" ]]; then
         log " Incorrect encoding detected properly"
     else
-        log "  Unexpected behavior with incorrect encoding: $incorrect"
+        log "Â  Unexpected behavior with incorrect encoding: $incorrect"
     fi
 }
 
@@ -466,7 +466,7 @@ test_performance() {
     log "Large query (1000 records): ${large_time}s"
     
     # Complex query
-    complex_time=$(curl -s -w "%{time_total}" -o /dev/null "$API_BASE/Afstemning?%24expand=Stemme/Aktør&%24top=10")
+    complex_time=$(curl -s -w "%{time_total}" -o /dev/null "$API_BASE/Afstemning?%24expand=Stemme/AktÃ¸r&%24top=10")
     log "Complex query (with expansion): ${complex_time}s"
 }
 
@@ -554,7 +554,7 @@ done
 ```bash
 # Monitor data growth patterns
 check_growth() {
-    entities=("Sag" "Aktør" "Afstemning" "Stemme" "Dokument")
+    entities=("Sag" "AktÃ¸r" "Afstemning" "Stemme" "Dokument")
     
     for entity in "${entities[@]}"; do
         count=$(curl -s "https://oda.ft.dk/api/$entity?%24inlinecount=allpages&%24top=1" | jq -r '.["odata.count"]')
@@ -594,7 +594,7 @@ fi
 echo "2. Checking response times..."
 critical_endpoints=(
     "Sag?%24top=1"
-    "Aktør?%24top=1" 
+    "AktÃ¸r?%24top=1" 
     "Afstemning?%24top=1"
 )
 
@@ -661,10 +661,10 @@ integrity_check() {
     echo "Performing post-incident data integrity check..."
     
     # Check record counts
-    entities=("Sag" "Aktør" "Afstemning" "Stemme")
+    entities=("Sag" "AktÃ¸r" "Afstemning" "Stemme")
     declare -A expected_counts
     expected_counts["Sag"]=96000    # Approximate, adjust as needed
-    expected_counts["Aktør"]=18000
+    expected_counts["AktÃ¸r"]=18000
     expected_counts["Afstemning"]=10000
     expected_counts["Stemme"]=500000
     
@@ -681,7 +681,7 @@ integrity_check() {
     
     # Check relationship integrity
     echo "Checking relationship integrity..."
-    junction_test=$(curl -s "https://oda.ft.dk/api/SagAktør?%24top=1" | jq '.value | length')
+    junction_test=$(curl -s "https://oda.ft.dk/api/SagAktÃ¸r?%24top=1" | jq '.value | length')
     echo "Junction table test: $junction_test (should be 1)"
     
     echo "Data integrity check complete"
@@ -722,7 +722,7 @@ curl "https://oda.ft.dk/api/Sag?%24top=5" | jq '.value | length'
 
 ```bash
 # Avoid: Large queries without field selection
-curl "https://oda.ft.dk/api/Sag?%24expand=SagAktør&%24top=1000"  # Slow
+curl "https://oda.ft.dk/api/Sag?%24expand=SagAktÃ¸r&%24top=1000"  # Slow
 
 # Better: Select only needed fields
 curl "https://oda.ft.dk/api/Sag?%24select=id,titel&%24top=1000"  # Fast
@@ -770,7 +770,7 @@ profile_queries() {
         "Filtered:Sag?%24filter=year(opdateringsdato)%20eq%202025&%24top=100"
         "Selected:Sag?%24select=id,titel&%24top=100"
         "Expanded:Sag?%24expand=Sagskategori&%24top=100"
-        "Complex:Afstemning?%24expand=Stemme/Aktør&%24filter=year(opdateringsdato)%20eq%202025&%24top=50"
+        "Complex:Afstemning?%24expand=Stemme/AktÃ¸r&%24filter=year(opdateringsdato)%20eq%202025&%24top=50"
     )
     
     for query in "${queries[@]}"; do

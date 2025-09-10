@@ -25,7 +25,7 @@ When OData `$filter` parameters contain field names that don't exist in the targ
 **Example - Dangerous Silent Failure:**
 ```bash
 # Query with typo in field name - should be "titel" not "title"
-curl "https://oda.ft.dk/api/Sag?%24filter=title%20eq%20'klimaændringer'&%24top=5"
+curl "https://oda.ft.dk/api/Sag?%24filter=title%20eq%20'klimaÃ¦ndringer'&%24top=5"
 ```
 
 **Expected Result:**
@@ -124,7 +124,7 @@ def detect_silent_filter_failure(url, expected_max_results=10):
     
     # If we got way more results than expected, filter likely ignored
     if result_count > expected_max_results * 10:
-        print(f"   WARNING: Got {result_count} results, filter may be ignored")
+        print(f"Â   WARNING: Got {result_count} results, filter may be ignored")
         return True
     
     return False
@@ -162,7 +162,7 @@ function validateResponse(response, expectedFilters) {
     
     // Check if we got suspiciously many results
     if (data.value.length >= 100 && expectedFilters.length > 0) {
-        console.warn('  Large result set despite filters - possible silent failure');
+        console.warn('Â  Large result set despite filters - possible silent failure');
     }
     
     // Validate response structure
@@ -186,7 +186,7 @@ class SafeODataClient:
         # Pre-validated field mappings for common entities
         self.valid_fields = {
             'Sag': ['id', 'titel', 'opdateringsdato', 'statusid', 'typeid'],
-            'Aktør': ['id', 'navn', 'efternavn', 'typeid'],
+            'AktÃ¸r': ['id', 'navn', 'efternavn', 'typeid'],
             # ... add more entities
         }
     
@@ -233,7 +233,7 @@ class ODataClient {
         
         // If we got default pagination size (100), filter likely ignored
         if (actualCount === 100 && expectedMaxResults < 50) {
-            console.warn(`  Got ${actualCount} results, expected max ${expectedMaxResults}`);
+            console.warn(`Â  Got ${actualCount} results, expected max ${expectedMaxResults}`);
             return true;
         }
         
@@ -317,7 +317,7 @@ def log_api_request(url: str, response_data: Dict[Any, Any], expected_count: int
     # Detect potential silent failures
     if expected_count and actual_count > expected_count * 5:
         logger.warning(
-            f"  POTENTIAL SILENT FAILURE: Expected ~{expected_count} records, "
+            f"Â  POTENTIAL SILENT FAILURE: Expected ~{expected_count} records, "
             f"got {actual_count}. Check for filter field typos."
         )
     
@@ -348,7 +348,7 @@ const AKTOR_FIELDS = {
 };
 
 // Usage - prevents typos that would cause silent failures
-const filter = `%24filter=${SAG_FIELDS.TITEL}%20eq%20'klimaændringer'`;
+const filter = `%24filter=${SAG_FIELDS.TITEL}%20eq%20'klimaÃ¦ndringer'`;
 ```
 
 ### 3. Implement Response Validation
@@ -361,7 +361,7 @@ class ResponseValidator:
     def __init__(self):
         self.expected_fields = {
             'Sag': ['id', 'titel', 'opdateringsdato'],
-            'Aktør': ['id', 'navn', 'efternavn']
+            'AktÃ¸r': ['id', 'navn', 'efternavn']
         }
     
     def validate_response(self, entity: str, data: Dict[Any, Any], 
@@ -394,7 +394,7 @@ class ResponseValidator:
 
 # Usage
 validator = ResponseValidator()
-response_data = api_client.get('Sag', filters=['titel eq klimaændringer'])
+response_data = api_client.get('Sag', filters=['titel eq klimaÃ¦ndringer'])
 validator.validate_response('Sag', response_data, ['titel'])
 ```
 
@@ -436,8 +436,8 @@ When you suspect a silent failure, work through this checklist:
 | Incorrect | Correct | Entity |
 |-----------|---------|--------|
 | `title` | `titel` | Sag |
-| `name` | `navn` | Aktør |
-| `surname` | `efternavn` | Aktør |
+| `name` | `navn` | AktÃ¸r |
+| `surname` | `efternavn` | AktÃ¸r |
 | `updateDate` | `opdateringsdato` | Sag |
 | `statusId` | `statusid` | Sag |
 
@@ -523,7 +523,7 @@ class SafeODataClient:
         # Detect silent failure
         if filter_expr and result_count > expected_max:
             self.logger.warning(
-                f"  Silent failure detected: got {result_count} results "
+                f"Â  Silent failure detected: got {result_count} results "
                 f"with filter '{filter_expr}', expected max {expected_max}"
             )
             
@@ -597,7 +597,7 @@ class SafeODataService {
         // Detect silent failure
         if (filter && data.value.length > expectedMaxResults) {
             console.warn(
-                `  Silent failure detected: got ${data.value.length} results ` +
+                `Â  Silent failure detected: got ${data.value.length} results ` +
                 `with filter '${filter}', expected max ${expectedMaxResults}`
             );
             
@@ -686,7 +686,7 @@ if [ "$BAD_COUNT" -gt 10 ]; then
     echo "   Actual: $BAD_COUNT results"
     echo "   The filter was likely ignored, returning unfiltered data."
     echo ""
-    echo "=¡ Suggested fix:"
+    echo "=Â¡ Suggested fix:"
     echo "   Check the correct field name in the API documentation."
     echo "   For Sag entity, use 'titel' instead of 'title'."
 else

@@ -16,7 +16,7 @@ All usage of data from Denmark's Parliamentary Open Data API requires proper att
 
 ### Legal Foundation
 Attribution requirements are based on:
-- Danish Open Data Standards (Fællesoffentlig digitaliseringsstrategi)
+- Danish Open Data Standards (FÃ¦llesoffentlig digitaliseringsstrategi)
 - EU Open Data Directive (2019/1024/EU)
 - Parliamentary transparency obligations
 - Academic and professional citation standards
@@ -93,7 +93,7 @@ oda.ft.dk/api/Afstemning (Accessed: [DATE])
 
 #### For Actor Information
 ```text
-Folketinget (2024) Aktør data [Parliamentary actors], Danmarks Folketing Open Data API, 
+Folketinget (2024) AktÃ¸r data [Parliamentary actors], Danmarks Folketing Open Data API, 
 oda.ft.dk/api/Aktor (Accessed: [DATE])
 ```
 
@@ -318,11 +318,11 @@ const tooltip = {
 
 #### Visual Attribution Block
 ```text
-=Ê DATA SOURCE
+=ÃŠ DATA SOURCE
 Folketinget Open Data API
 oda.ft.dk | Accessed [DATE]
 
-<Û PROVIDED BY  
+<Ã› PROVIDED BY  
 Danish Parliament (Folketinget)
 Open governmental data initiative
 ```

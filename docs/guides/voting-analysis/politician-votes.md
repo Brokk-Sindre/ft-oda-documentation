@@ -4,7 +4,7 @@
 
 The Danish Parliamentary Open Data API provides comprehensive individual voting records for detailed analysis of politician behavior patterns. This guide covers advanced techniques for analyzing individual political decision-making, career evolution, and voting consistency using the rich dataset available through the API.
 
-The API tracks individual votes through the `Stemme` (Vote) entity, linked to specific politicians (`Aktør`) and voting sessions (`Afstemning`). This enables sophisticated behavioral analysis including party loyalty measurement, voting pattern prediction, and influence network mapping.
+The API tracks individual votes through the `Stemme` (Vote) entity, linked to specific politicians (`AktÃ¸r`) and voting sessions (`Afstemning`). This enables sophisticated behavioral analysis including party loyalty measurement, voting pattern prediction, and influence network mapping.
 
 ## Individual Politician Voting Analysis Fundamentals
 
@@ -14,7 +14,7 @@ Individual voting analysis relies on three primary entities:
 
 - **`Stemme`** (Individual Votes): Records each politician's vote on each issue
 - **`Afstemning`** (Voting Sessions): Parliamentary voting sessions with outcomes  
-- **`Aktør`** (Politicians): Individual politicians with biographical data
+- **`AktÃ¸r`** (Politicians): Individual politicians with biographical data
 
 ### Basic Vote Retrieval
 
@@ -29,10 +29,10 @@ class PoliticianVotingAnalyzer:
         
     def get_politician_votes(self, politician_name, limit=1000):
         """Retrieve all votes by a specific politician"""
-        filter_expr = f"Aktør/navn eq '{politician_name}'"
+        filter_expr = f"AktÃ¸r/navn eq '{politician_name}'"
         params = {
             '$filter': filter_expr,
-            '$expand': 'Afstemning,Aktør',
+            '$expand': 'Afstemning,AktÃ¸r',
             '$top': limit,
             '$orderby': 'Afstemning/dato desc'
         }
@@ -46,7 +46,7 @@ class PoliticianVotingAnalyzer:
         """Get complete voting session with all individual votes"""
         params = {
             '$filter': f'id eq {voting_id}',
-            '$expand': 'Stemme/Aktør,Møde'
+            '$expand': 'Stemme/AktÃ¸r,MÃ¸de'
         }
         
         url = f"{self.base_url}Afstemning?" + urllib.parse.urlencode(params)
@@ -66,7 +66,7 @@ The API uses `typeid` to classify individual votes:
 1. **For** (typeid=1): Yes vote
 2. **Imod** (typeid=2): No vote  
 3. **Hverken for eller imod** (typeid=3): Abstention
-4. **Fravær** (typeid=4): Absence (didn't vote)
+4. **FravÃ¦r** (typeid=4): Absence (didn't vote)
 
 ```python
 def categorize_vote_behavior(votes_data):
@@ -248,9 +248,9 @@ def calculate_party_consensus(all_votes, party_name):
     vote_mapping = {1: 'yes', 2: 'no', 3: 'abstain', 4: 'absent'}
     
     for vote in all_votes:
-        if 'Aktør' in vote and vote['Aktør']:
+        if 'AktÃ¸r' in vote and vote['AktÃ¸r']:
             # Filter by party affiliation if provided
-            if party_name and party_name in vote['Aktør'].get('gruppenavnkort', ''):
+            if party_name and party_name in vote['AktÃ¸r'].get('gruppenavnkort', ''):
                 vote_type = vote_mapping.get(vote['typeid'], 'unknown')
                 if vote_type != 'unknown':
                     party_votes[vote_type] += 1
@@ -307,11 +307,11 @@ def find_voting_coalition(target_vote, all_votes, min_size):
     coalition = []
     
     for vote in all_votes:
-        if vote['typeid'] == target_vote and 'Aktør' in vote and vote['Aktør']:
+        if vote['typeid'] == target_vote and 'AktÃ¸r' in vote and vote['AktÃ¸r']:
             coalition.append({
-                'name': vote['Aktør'].get('navn', 'Unknown'),
-                'party': vote['Aktør'].get('gruppenavnkort', 'Unknown'),
-                'actor_id': vote['aktørid']
+                'name': vote['AktÃ¸r'].get('navn', 'Unknown'),
+                'party': vote['AktÃ¸r'].get('gruppenavnkort', 'Unknown'),
+                'actor_id': vote['aktÃ¸rid']
             })
     
     return coalition if len(coalition) >= min_size else []
@@ -525,7 +525,7 @@ def analyze_attendance_patterns(politician_name, period_days=30):
     for vote in votes['value']:
         if 'Afstemning' in vote and vote['Afstemning']:
             vote_date = datetime.fromisoformat(vote['Afstemning']['dato'])
-            is_absent = vote['typeid'] == 4  # Fravær (absence)
+            is_absent = vote['typeid'] == 4  # FravÃ¦r (absence)
             
             attendance_data.append({
                 'date': vote_date,
@@ -753,8 +753,8 @@ def build_voting_network(politicians_list, sample_size=50):
                     
                     # Find alignment with other politicians
                     for other_vote in all_votes:
-                        if other_vote['typeid'] == politician_vote_type and 'Aktør' in other_vote:
-                            other_name = other_vote['Aktör'].get('navn', 'Unknown')
+                        if other_vote['typeid'] == politician_vote_type and 'AktÃ¸r' in other_vote:
+                            other_name = other_vote['AktÃ¶r'].get('navn', 'Unknown')
                             
                             if other_name != politician and other_name in politicians_list:
                                 if other_name not in network[politician]:
@@ -810,7 +810,7 @@ def identify_voting_clusters(network):
 
 def find_cross_party_bridges(network):
     """Identify politicians who frequently vote across party lines"""
-    # This would require party affiliation data from the Aktør entity
+    # This would require party affiliation data from the AktÃ¸r entity
     # Simplified implementation focusing on high cross-connection politicians
     bridge_politicians = {}
     
@@ -935,7 +935,7 @@ def generate_comparative_insights(comparison_results):
 # Example usage for comparative analysis
 def run_comparative_analysis():
     """Run a complete comparative analysis"""
-    politicians = ["Frank Aaen", "Nicolai Wammen", "Lars Løkke Rasmussen"]  # Example politicians
+    politicians = ["Frank Aaen", "Nicolai Wammen", "Lars LÃ¸kke Rasmussen"]  # Example politicians
     
     comparison = compare_politicians(politicians)
     
@@ -1018,7 +1018,7 @@ if __name__ == "__main__":
     comparative_analysis = run_comparative_analysis()
     
     # Network analysis
-    politicians_for_network = ["Frank Aaen", "Nicolai Wammen", "Lars Løkke Rasmussen"]
+    politicians_for_network = ["Frank Aaen", "Nicolai Wammen", "Lars LÃ¸kke Rasmussen"]
     network_analysis = build_voting_network(politicians_for_network)
     
     print("\nVoting Network Clusters:")
@@ -1042,8 +1042,8 @@ def optimize_data_retrieval():
         
         while len(all_votes) < max_records:
             params = {
-                '$filter': f"Aktør/navn eq '{politician_name}'",
-                '$expand': 'Afstemning,Aktør',
+                '$filter': f"AktÃ¸r/navn eq '{politician_name}'",
+                '$expand': 'Afstemning,AktÃ¸r',
                 '$top': batch_size,
                 '$skip': skip,
                 '$orderby': 'opdateringsdato desc'
@@ -1130,7 +1130,7 @@ def handle_data_quality_issues():
                 issues.append(f"Invalid vote type: {vote.get('typeid')}")
                 continue
             
-            if not vote.get('aktørid'):
+            if not vote.get('aktÃ¸rid'):
                 issues.append("Missing actor ID")
                 continue
             

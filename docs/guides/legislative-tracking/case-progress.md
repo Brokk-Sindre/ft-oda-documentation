@@ -144,7 +144,7 @@ def get_case_steps(case_id):
     url = f"https://oda.ft.dk/api/Sagstrin"
     params = {
         "$filter": f"sagid eq {case_id}",
-        "$expand": "Sagstrinsstatus,Sagstrinstype,SagstrinAktør/Aktør",
+        "$expand": "Sagstrinsstatus,Sagstrinstype,SagstrinAktÃ¸r/AktÃ¸r",
         "$orderby": "dato asc"
     }
     
@@ -157,7 +157,7 @@ def get_case_steps(case_id):
         'date': step.get('dato'),
         'status': step.get('Sagstrinsstatus', {}).get('status'),
         'type': step.get('Sagstrinstype', {}).get('type'),
-        'actors': [actor['Aktør']['navn'] for actor in step.get('SagstrinAktør', [])]
+        'actors': [actor['AktÃ¸r']['navn'] for actor in step.get('SagstrinAktÃ¸r', [])]
     } for step in steps]
 
 # Example usage
@@ -214,9 +214,9 @@ def get_upcoming_votes():
     
     url = "https://oda.ft.dk/api/Afstemning"
     params = {
-        "$expand": "Møde,Stemme",
-        "$filter": f"Møde/dato gt datetime'{tomorrow}'",
-        "$orderby": "Møde/dato asc",
+        "$expand": "MÃ¸de,Stemme",
+        "$filter": f"MÃ¸de/dato gt datetime'{tomorrow}'",
+        "$orderby": "MÃ¸de/dato asc",
         "$top": "50"
     }
     
@@ -227,7 +227,7 @@ def track_voting_outcomes(case_id):
     """Track voting outcomes for a specific case"""
     url = "https://oda.ft.dk/api/Afstemning"
     params = {
-        "$expand": "Stemme/Aktør",
+        "$expand": "Stemme/AktÃ¸r",
         "$filter": f"sagstrinid eq {case_id}",
         "$orderby": "dato desc"
     }
@@ -268,9 +268,9 @@ class VoteTracker {
         
         const url = `${this.baseUrl}/Afstemning`;
         const params = new URLSearchParams({
-            '$expand': 'Møde',
-            '$filter': `Møde/dato ge datetime'${fromDate.toISOString()}' and Møde/dato le datetime'${toDate.toISOString()}'`,
-            '$orderby': 'Møde/dato asc',
+            '$expand': 'MÃ¸de',
+            '$filter': `MÃ¸de/dato ge datetime'${fromDate.toISOString()}' and MÃ¸de/dato le datetime'${toDate.toISOString()}'`,
+            '$orderby': 'MÃ¸de/dato asc',
             '$top': '100'
         });
         
@@ -279,9 +279,9 @@ class VoteTracker {
         
         return data.value.map(vote => ({
             id: vote.id,
-            date: vote.Møde?.dato,
+            date: vote.MÃ¸de?.dato,
             title: vote.titel,
-            meetingId: vote.mødeid,
+            meetingId: vote.mÃ¸deid,
             caseStepId: vote.sagstrinid
         }));
     }
@@ -305,7 +305,7 @@ class VoteTracker {
         const stepFilter = stepIds.map(id => `sagstrinid eq ${id}`).join(' or ');
         const votesParams = new URLSearchParams({
             '$filter': stepFilter,
-            '$expand': 'Stemme/Aktør',
+            '$expand': 'Stemme/AktÃ¸r',
             '$orderby': 'dato desc'
         });
         
@@ -382,7 +382,7 @@ def detect_publication_milestones(case_id):
         
         if 'forslag' in doc_type and not milestones['proposal_published']:
             milestones['proposal_published'] = doc['date']
-        elif 'betænkning' in doc_type and not milestones['committee_report']:
+        elif 'betÃ¦nkning' in doc_type and not milestones['committee_report']:
             milestones['committee_report'] = doc['date']
         elif 'vedtagelse' in doc_type and not milestones['final_text']:
             milestones['final_text'] = doc['date']
@@ -418,8 +418,8 @@ class ParliamentaryDashboard:
         url = f"{self.base_url}/Sag"
         params = {
             "$filter": case_filter,
-            "$expand": "Sagsstatus,Sagstrin,SagAktør/Aktør",
-            "$select": "id,titel,statusid,afgørelsesdato,opdateringsdato"
+            "$expand": "Sagsstatus,Sagstrin,SagAktÃ¸r/AktÃ¸r",
+            "$select": "id,titel,statusid,afgÃ¸relsesdato,opdateringsdato"
         }
         
         response = requests.get(url, params=params)
@@ -442,8 +442,8 @@ class ParliamentaryDashboard:
                 'title': case['titel'][:80] + '...' if len(case['titel']) > 80 else case['titel'],
                 'status': status,
                 'last_updated': case['opdateringsdato'],
-                'decision_date': case.get('afgørelsesdato'),
-                'actors': [actor['Aktør']['navn'] for actor in case.get('SagAktør', [])][:5]
+                'decision_date': case.get('afgÃ¸relsesdato'),
+                'actors': [actor['AktÃ¸r']['navn'] for actor in case.get('SagAktÃ¸r', [])][:5]
             }
             
             dashboard['cases'].append(case_data)
