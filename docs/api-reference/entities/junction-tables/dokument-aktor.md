@@ -53,7 +53,7 @@ The DokumentAktør table doesn't just link documents to actorsit provides rich 
 
 - **dokumentid**  Links to [Dokument entity](../documents/dokument.md)
 - **aktørid**  Links to [Aktør entity](../core/aktor.md) 
-- **rolleid**  Links to [DokumentAktørRolle](../../data-model/role-systems/document-actor-roles.md)
+- **rolleid**  Links to [DokumentAktørRolle](../../../data-model/role-systems/document-actor-roles.md)
 
 ## Role System Overview
 
@@ -87,7 +87,7 @@ The DokumentAktørRolle system defines 25 distinct role types that capture every
 - **Ordfører** (ID: 24) - Spokesperson
 - **Taler** (ID: 25) - Document presenter/speaker
 
-*For complete role definitions, see [Document-Actor Roles Reference](../../data-model/role-systems/document-actor-roles.md)*
+*For complete role definitions, see [Document-Actor Roles Reference](../../../data-model/role-systems/document-actor-roles.md)*
 
 ## Common Query Examples
 
@@ -376,9 +376,9 @@ curl "https://oda.ft.dk/api/DokumentAktør?$filter=rolleid eq 1&$top=10"
 
 - [Aktør Entity Reference](../core/aktor.md) - Actor entities and types
 - [Dokument Entity Reference](../documents/dokument.md) - Document entities and classifications  
-- [DokumentAktørRolle Complete Reference](../../data-model/role-systems/document-actor-roles.md) - All 25 role types
+- [DokumentAktørRolle Complete Reference](../../../data-model/role-systems/document-actor-roles.md) - All 25 role types
 - [Junction Tables Overview](index.md) - Complete junction table system
-- [Parliamentary Document Workflows](../../data-model/parliamentary-process/index.md) - Process context
+- [Parliamentary Document Workflows](../../../data-model/parliamentary-process/index.md) - Process context
 
 ## Conclusion
 

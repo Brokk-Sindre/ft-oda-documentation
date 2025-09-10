@@ -512,7 +512,7 @@ Advanced polling techniques including adaptive intervals, priority queues, circu
 
 Ready to build your real-time monitoring application? Start with these steps:
 
-1. **[Set up basic polling](../getting-started/first-query.md)** - Learn fundamental API querying
+1. **[Set up basic polling](../../getting-started/first-query.md)** - Learn fundamental API querying
 2. **[Implement change detection](change-detection.md)** - Build efficient monitoring loops
 3. **[Add error handling](../../production/troubleshooting/index.md)** - Create resilient applications  
 4. **[Optimize performance](../../api-reference/performance/index.md)** - Scale your monitoring system
